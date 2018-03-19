@@ -9,33 +9,48 @@
 		<a class="navbar-brand" href="<?=base_url()?>">Template_Preparado</a>
 	</div>
 	<div class="collapse navbar-collapse" id="navegacionPagina">
-		<ul class="nav navbar-nav navbar-left">
-			<li class="dropdown"><a class="dropdown-toggle"
-				data-toggle="dropdown" href="#">Acciones<span class="caret"></span>
-			</a>
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Peliculas<span class="caret"></span></a>
+
 				<ul class="dropdown-menu">
-
-					<li class="dropdown-header">Ciudad</li>
-					<li><a href="<?=base_url()?>ciudad/crear">Crear</a></li>
-					<li><a href="<?=base_url()?>ciudad/listar">Listar</a></li>
-					<li role="separator" class="divider"></li>
-					
-					<li class="dropdown-header">Lenguajes</li>
-					<li><a href="<?=base_url()?>lp/crear">Crear</a></li>
-					<li><a href="<?=base_url()?>lp/listar">Listar</a></li>
-					<!-- Más beans y más acciones -->
-					<li class="dropdown-header">Empleados</li>
-					<li><a href="<?=base_url()?>empleado/crear">Crear</a></li>
-					<li><a href="<?=base_url()?>empleado/listar">Listar</a></li>
-
+					<li class="dropdown-header">Peliculas</li>
+					<li><a href="<?=base_url()?>pelicula/crear">Nueva</a></li>
+					<li><a href="<?=base_url()?>pelicula/listar">Listar</a></li>
 				</ul>
 			</li>
 			
-			<!-- Más menús -->
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Actores<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li class="dropdown-header">Actores</li>
+					<li><a href="<?=base_url()?>actor/crear">Nueva</a></li>
+					<li><a href="<?=base_url()?>actor/listar">Listar</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Directores<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li class="dropdown-header">Directores</li>
+					<li><a href="<?=base_url()?>director/crear">Nueva</a></li>
+					<li><a href="<?=base_url()?>director/listar">Listar</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Noticias<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li class="dropdown-header">Noticias</li>
+					<li><a href="<?=base_url()?>articulo/crear">Nueva</a></li>
+					<li><a href="<?=base_url()?>articulo/listar">Listar</a></li>
+				</ul>
+			</li>
 
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
-				<li><a href="<?=base_url()?>lp/registro"><span class="glyphicon glyphicon-user"></span> Registrarse</a></li>
+				<li><a href="<?=base_url()?>usuario/registrar"><span class="glyphicon glyphicon-user"></span> Registrarse</a></li>
 				<li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Iniciar sesión</a></li>
 				<li class="nope">
 				<!--Agrupa el input de buscar con el boton-->

@@ -1,19 +1,27 @@
 <script type="text/javascript">
-var conexion;
-
+	var xhr;
+	window.onload = function(){
+xhr = new XMLHttpRequest();
+console.log(xhr);
+}
 function accionAJAX() {
-	document.getElementById("idMensaje").innerHTML = conexion.responseText;
+	if (xhr.readyState==4 && xhr.status==200) {	
+		document.getElementById("result").innerHTML = xhr.responseText;
+	}
 }
 
 function peticionAJAX(nombre,ape1,ape2,alias,correo,pwd,fecha) {
-	conexion = new XMLHttpRequest();
-	conexion.open('POST', '<?=base_url()?>usuario/crearPost', true);
-	conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-	conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	conexion.send("nombre="+nombre+"&apellidoUno="+ape1+"&apellidoDos="+ape2+"&alias="+alias+"&correo="+correo+"&pwd="+pwd+"&fecha="+fecha);
-	conexion.onreadystatechange = function() {
-		if (conexion.readyState==4 && conexion.status==200) {
-			accionAJAX();
+	//xhr = new XMLHttpRequest();
+	xhr.open("POST", "<?=base_url()?>usuario/crearPost", true);
+	xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xhr.send("nombre="+nombre+"&apellidoUno="+ape1+"&apellidoDos="+ape2+"&alias="+alias+"&correo="+correo+"&pwd="+pwd+"&fecha="+fecha);
+	console.log(xhr);
+	//xhr.send("nombre="+nombre);
+	xhr.onreadystatechange = function(){
+		if (xhr.readyState==4 && xhr.status==200) {	
+			console.log(xhr.readyState+"   "+xhr.status);
+			document.getElementById("result").innerHTML = xhr.responseText;
 		}
 	}
 }
@@ -36,17 +44,17 @@ function peticionAJAX(nombre,ape1,ape2,alias,correo,pwd,fecha) {
 				//Separo la primera letra para hacerla mayor, y la guardo en la variable nombre.
 				var m = nombre.charAt(0);
 				nombre= m.toUpperCase()+nombre.substring(1,nombre.length);
-				idFormulario.idNombre.style.borderColor='blue';
+				idFormulario.idNombre.style.borderColor="blue";
 				document.getElementById("aNombre").style.display="none";
 				return true;
 			} else {
-				idFormulario.idNombre.style.borderColor='red';
+				idFormulario.idNombre.style.borderColor="red";
 				document.getElementById("aNombre").style.display="initial";
 				return false;
             }
 		} else {
             document.getElementById("aNombre").style.display="initial";
-            idFormulario.idNombre.style.borderColor='red';
+            idFormulario.idNombre.style.borderColor="red";
             return false;
         }
 	}
@@ -57,17 +65,17 @@ function peticionAJAX(nombre,ape1,ape2,alias,correo,pwd,fecha) {
 			if (expresion.test(ape1)) {
 				var m = ape1.charAt(0);
 				ape1= m.toUpperCase()+ape1.substring(1,ape1.length);
-				idFormulario.idApe1.style.borderColor='blue';
+				idFormulario.idApe1.style.borderColor="blue";
 				document.getElementById("aApellido").style.display="none";
 				return true;
 			} else {
-				idFormulario.idApe1.style.borderColor='red';
+				idFormulario.idApe1.style.borderColor="red";
 				document.getElementById("aApellido").style.display="initial";
 				return false;
 			}
 		} else {
 			document.getElementById("aApellido").style.display="initial";
-			idFormulario.idApe1.style.borderColor='green';
+			idFormulario.idApe1.style.borderColor="green";
 			return false;
 		}
 	}
@@ -79,21 +87,23 @@ function peticionAJAX(nombre,ape1,ape2,alias,correo,pwd,fecha) {
 			c = ape2.split(" ");
 			ap="";
 		    //no limita a dos palabras
-			expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,20}(\s[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3-20}){0,1}$/;
+			expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{0,20}(\s[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3-20}){0,1}$/;
 			for (var i = 0; i < c.length; i++) {
 				if (expresion.test(c[i])) {
 					m = c[i].charAt(0);
 					ap += m.toUpperCase()+c[i].substring(1,c[i].length)+" ";
-					idFormulario.idApe2.style.borderColor='blue';
+					idFormulario.idApe2.style.borderColor="blue";
 					document.getElementById("aApellidoDos").style.display="none";
 				} else {
 					document.getElementById("aApellidoDos").style.display="initial";
-					idFormulario.idApe2.style.borderColor='red';
+					idFormulario.idApe2.style.borderColor="red";
 					return false;
 				}
 			}
 			//devuelve el valor correcto quitando el ultimo espacio para que no pete al volver a darle.
 			ape1 = ap.substring(0,ap.length-1);
+		} else {
+			ape2 = " ";
 		}
 		return true;
 	}
@@ -102,16 +112,16 @@ function peticionAJAX(nombre,ape1,ape2,alias,correo,pwd,fecha) {
 		if(alias!="") {
 			expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑçÇ\d]{0,4}[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑçÇ]{1,4}[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑçÇ\d]{1,6}$/;
 			if (expresion.test(alias)) {
-				idFormulario.idAlias.style.borderColor='blue';
+				idFormulario.idAlias.style.borderColor="blue";
 				document.getElementById("aAlias").style.display="none";
 				return true;
 			} else {
-				idFormulario.idAlias.style.borderColor='red';
+				idFormulario.idAlias.style.borderColor="red";
 				document.getElementById("aAlias").style.display="initial";
 			    return false;
 			}
 		} else 	{
-			idFormulario.idAlias.style.borderColor='red';
+			idFormulario.idAlias.style.borderColor="red";
 			document.getElementById("aAlias").style.display="initial";
 			return false;
 		}
@@ -122,23 +132,23 @@ function peticionAJAX(nombre,ape1,ape2,alias,correo,pwd,fecha) {
 		if (pwd!="") {
 		expresion = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}$/;
 			if (expresion.test(pwd)) {
-			    idFormulario.idPwd.style.borderColor='blue';
-			    document.getElementById('aPwd').style.display="none";
+			    idFormulario.idPwd.style.borderColor="blue";
+			    document.getElementById("aPwd").style.display="none";
 			    if( confirmarPass()){
 			    	return true;
 			    } else {
-			   	document.getElementById('aPwdD').style.display="initial";
-			    idFormulario.idPwd.style.borderColor='red';
+			   	document.getElementById("aPwdD").style.display="initial";
+			    idFormulario.idPwd.style.borderColor="red";
 			    return false;
 			    }
 			} else {
-			    document.getElementById('aPwd').style.display="initial";
-			    idFormulario.idPwd.style.borderColor='red';
+			    document.getElementById("aPwd").style.display="initial";
+			    idFormulario.idPwd.style.borderColor="red";
 			    return false;
 			}
 		} else {
-		    document.getElementById('aPwd').style.display="initial";
-		    idFormulario.idPwd.style.borderColor='green';
+		    document.getElementById("aPwd").style.display="initial";
+		    idFormulario.idPwd.style.borderColor="green";
 		    return false;
 		}
 	}
@@ -147,23 +157,23 @@ function peticionAJAX(nombre,ape1,ape2,alias,correo,pwd,fecha) {
 		if (pwdDos!="") {
 		expresion = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}$/;
 		    if (expresion.test(pwdDos)) {
-		        idFormulario.idPwdD.style.borderColor='blue';
-		        document.getElementById('aPwdD').style.display="none";
+		        idFormulario.idPwdD.style.borderColor="blue";
+		        document.getElementById("aPwdD").style.display="none";
 		    	if (pwd == pwdDos) {
 		        	return true;
 		    	} else {
-		    		document.getElementById('aPwdD').style.display="initial";
-		        	idFormulario.idPwdD.style.borderColor='red';
+		    		document.getElementById("aPwdD").style.display="initial";
+		        	idFormulario.idPwdD.style.borderColor="red";
 		        	return false;
 		    	}
 		    } else {
-		        document.getElementById('aPwdD').style.display="initial";
-		        idFormulario.idPwdD.style.borderColor='red';
+		        document.getElementById("aPwdD").style.display="initial";
+		        idFormulario.idPwdD.style.borderColor="red";
 		        return false;
 		    }
 		} else {
-		    document.getElementById('aPwdD').style.display="initial";
-		    idFormulario.idPwdD.style.borderColor='green';
+		    document.getElementById("aPwdD").style.display="initial";
+		    idFormulario.idPwdD.style.borderColor="green";
 		    return false;
 		}
 	}
@@ -174,17 +184,17 @@ function peticionAJAX(nombre,ape1,ape2,alias,correo,pwd,fecha) {
 		if (correo!="") {
 		expresion =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 		    if (expresion.test(correo)) {
-		        idFormulario.idEmail.style.borderColor='blue';
-		        document.getElementById('aEmail').style.display="none";
+		        idFormulario.idEmail.style.borderColor="blue";
+		        document.getElementById("aEmail").style.display="none";
 		        return true;
 		    } else {
-		        document.getElementById('aEmail').style.display="initial";
-		        idFormulario.idEmail.style.borderColor='red';
+		        document.getElementById("aEmail").style.display="initial";
+		        idFormulario.idEmail.style.borderColor="red";
 		        return false;
 		    }
 		} else {
-		    document.getElementById('aEmail').style.display="initial";
-		    idFormulario.idEmail.style.borderColor='green';
+		    document.getElementById("aEmail").style.display="initial";
+		    idFormulario.idEmail.style.borderColor="green";
 		    return false;
 		}
 	}
@@ -257,7 +267,6 @@ function calcularEdad() {
             ultimoDiaMes=new Date(ahora_ano, ahora_mes, 0);
             dias=ultimoDiaMes.getDate()-(dia-ahora_dia);
         }
-        console.log(typeof(edad));
         if (edad<13) {
         	document.getElementById("aFecha").style.display="initial";
         } else {
@@ -281,10 +290,8 @@ function calcularEdad() {
 	calcularEdad();
 
 	if ( validarNombre() &&	validarApeUno() &&	validarApeDos() &&	validarAlias() &&	validarCorreo() &&	validarPass()) {
-		alert("hola");
 		peticionAJAX(nombre,ape1,ape2,alias,correo,pwd,fecha);
 	} else {
-		alert("A");
 	}
 }
 
@@ -292,7 +299,7 @@ function calcularEdad() {
 
 
 <div class="container ">
-<form id="idFormulario">
+<form id="idFormulario" method="post">
 <fieldset>
 <legend>Crear nuevo usuario</legend>
 
@@ -362,7 +369,7 @@ function calcularEdad() {
 </div>
 
 <div class="form-group">
-<input type="button" class="btn btn-default" onclick="validar()" value="Enviar"/>
+<input type="button" class="btn btn-default" onclick="validar();" value="Registrarse"/>
 </div>
 </fieldset>
 	</form>

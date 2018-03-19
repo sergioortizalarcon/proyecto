@@ -18,8 +18,9 @@ class usuario_model extends CI_Model {
 			R::store($usuario);
 			R::close();
 		} else {
-			return $usuario;
+			throw new Exception("Error Processing Request", 1);
 		}
+			R::close();
 	}
 }
 

@@ -8,8 +8,9 @@
 </script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
 </script>
-<script type="text-javascript" src="<?=base_url()?>assets/js/serliaze.js"></script>
+<script type="text-javascript" src="<?=base_url()?>assets/js/serialize.js"></script>
+<script type="text-javascript" src="<?=base_url()?>assets/js/sha1.min.js"></script>
 <title>CRUD EMPLEADOS</title>
-<link rel="stylesheet" href="<?=base_url()?>assets/css/tabla.css">
+<link rel="stylesheet" href="<?=base_url()?>assets/css/estilo.css">
 </head>
 <body>

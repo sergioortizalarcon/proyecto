@@ -1,6 +1,6 @@
-<?
+<?php
 
-class usuario_model extends CI_Model {
+class Usuario_model extends CI_Model {
 
 	public function create_usuario($nombre, $ape1, $ape2, $alias, $email, $pwd, $fecha) {
 		$usuario = R::find("usuarios", "alias like ? and email like ?",[$alias,$email]);

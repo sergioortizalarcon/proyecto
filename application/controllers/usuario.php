@@ -1,5 +1,5 @@
 <?php
-class usuario extends CI_Controller {
+class Usuario extends CI_Controller {
 	
 	public function registrar(){
 		enmarcar($this, "usuario/registrar");
@@ -34,3 +34,5 @@ class usuario extends CI_Controller {
 		}
 	}
 }
+
+?>

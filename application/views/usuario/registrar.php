@@ -12,7 +12,7 @@ function peticionAJAX() {
 	conexion = new XMLHttpRequest();
 
 	var datosSerializados = serialize(document.getElementById("idFormulario"));
-	conexion.open('POST', '<?=base_url()?>Empleado/crearPost', true);
+	conexion.open('POST', '<?=base_url()?>usuario/crearPost', true);
 	conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 	conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	conexion.send(datosSerializados);

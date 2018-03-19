@@ -1,0 +1,27 @@
+
+a.boton-login {
+	color: #9d9d9d;
+	font-size: 15px;
+	font-weight:700;
+	background: none !important;
+}
+
+a.boton-login:hover {
+	transition-property: all;
+	transition-duration: 0.5s;
+	transition-timing-function: ease;
+	transition-delay: 0s; 
+	font-size: 20px;
+}
+
+
+i.fa{
+	margin: 6px -3px 0 0;
+	font-size: 22px;
+}
+
+div.iUser {
+	display: inline-block;
+	border:1px solid black;
+	position: relative;
+}

@@ -104,33 +104,33 @@ function peticionAJAX() {
 
 
 <div class="container ">
-<form id="idFormulario" class="form col-sm-4">
-<fieldset>
-<legend>Crear nuevo actor</legend>
-
-<label for="idNombre">Nombre</label>
-<input class="form-control" type="text" id="idNombre" name="nombre" />
-
-<label for="idApellido1">Apellido1</label>
-<input class="form-control" type="text" id="idApellido1" name="apellido1" />
-
-<label for="idApellido2">Apellido2</label>
-<input class="form-control" type="text" id="idApellido2" name="apellido2" />
-
-<label for="idFecha">Fecha de nacimiento</label>
-<input class="form-control" type="date" id="idFecha" name="fecha" />
-
-<label for="idPais">Nacionalidad</label>
-<select id="idPais" name="pais">
-	<option name="es">Española</option>
-	<option name="fr">Francesa</option>
-	<option name="pt">Portuguesa</option>
-	<option name="de">Alemana</option>
-</select>
-
-<br/>
-<input type="button" class="btn btn-default" onclick="comprobar();" value="Enviar" />
-
-</fieldset>
-</form>
+	<form id="idFormulario">
+		<fieldset>
+		<legend>Crear nuevo actor</legend>
+		
+		<label for="idNombre">Nombre</label>
+		<input class="form-control" type="text" id="idNombre" name="nombre" />
+		
+		<label for="idApellido1">Apellido1</label>
+		<input class="form-control" type="text" id="idApellido1" name="apellido1" />
+		
+		<label for="idApellido2">Apellido2</label>
+		<input class="form-control" type="text" id="idApellido2" name="apellido2" />
+		
+		<label for="idFecha">Fecha de nacimiento</label>
+		<input class="form-control" type="date" id="idFecha" name="fechaNac" />
+		
+		<label for="idPais">Nacionalidad</label>
+		<select class="form-control" id="idPais" name="nacionalidad">
+			<option value="es">Española</option>
+			<option value="fr">Francesa</option>
+			<option value="pt">Portuguesa</option>
+			<option value="de">Alemana</option>
+		</select>
+		
+		<br/>
+		<input type="button" class="btn btn-default" onclick="comprobar();" value="Enviar" />
+		
+		</fieldset>
+	</form>
 </div>

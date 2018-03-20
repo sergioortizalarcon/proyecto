@@ -5,17 +5,18 @@ function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];
 var conexion;
 var correcto = true;
 
-function comprobar() {
+unction comprobar() {
 	var nombre = idFormulario.nombre.value.trim();
 	correcto = comprobarNombre(nombre);
 	
 	var apellido1 = idFormulario.apellido1.value.trim();
+	correcto = comprobarApellido1(apellido1);
+
 	var apellido2 = idFormulario.apellido2.value.trim();
-	correcto = comprobarApellidos(apellido1, apellido2);
+	correcto = comprobarApellido2(apellido2);
 	
-	var fechaNac = idFormulario.idFecha.value;
-	//console.log(fechaNac);
-	correcto = comprobarFechaNac(fechaNac);
+	var fechaNacimiento = idFormulario.idFecha.value;
+	correcto = comprobarFechaNac(fechaNacimiento);
 
 	var nacionalidad = idFormulario.idPais.value;
 
@@ -39,7 +40,7 @@ function comprobarNombre(nombre) {
 	return correcto;
 }
 
-function comprobarApellidos(apellido1, apellido2) {
+function comprobarApellido1(apellido1) {
 	var expReg = /^[a-zA-Z áéíóúÁÉÍÓÚ]{2,30}$/;
 	if (expReg.test(apellido1)){
 		correcto = true;
@@ -51,6 +52,11 @@ function comprobarApellidos(apellido1, apellido2) {
 		}
 		correcto = false;
 	}
+	return correcto;
+}
+
+function comprobarApellido2(apellido2) {
+	var expReg = /^[a-zA-Z áéíóúÁÉÍÓÚ]{2,30}$/;
 	if (expReg.test(apellido2)){
 		correcto = true;
 		document.getElementById('idApellido2').style="color:black";
@@ -72,11 +78,23 @@ function comprobarFechaNac(fecha) {
 		}
 		correcto = false;
 	} else {
-		var fecha = new Date();
-		var anio = fecha.getFullYear();
-		var mes = fecha.getMonth()+1;
-		var dia = fecha.getDay();
-		correcto = true;
+		var fechaSis = new Date();
+		var anio = fechaSis.getFullYear();
+		var mes = fechaSis.getMonth()+1;
+		var dia = fechaSis.getDate();
+		mes = "0"+mes;
+		fechaSistema = anio + "-" + mes + "-" + dia
+
+		if (fechaSistema <= fecha) {
+			document.getElementById('idFecha').style="color:red";
+			if (correcto == true) {
+				document.getElementById('idFecha').focus();
+			}
+			correcto = false;
+		} else {
+			correcto = true;
+			document.getElementById('idFecha').style="color:black";
+		}
 	}
 	return correcto;
 }
@@ -118,7 +136,7 @@ function peticionAJAX() {
 		<input class="form-control" type="text" id="idApellido2" name="apellido2" />
 		
 		<label for="idFecha">Fecha de nacimiento</label>
-		<input class="form-control" type="date" id="idFecha" name="fechaNac" />
+		<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" />
 		
 		<label for="idPais">Nacionalidad</label>
 		<select class="form-control" id="idPais" name="nacionalidad">

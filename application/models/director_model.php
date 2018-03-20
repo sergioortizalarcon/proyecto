@@ -3,33 +3,27 @@
 class Director_model extends CI_Model
 {
 
-    public function existeDirector($nombre, $apellido1, $apellido2)
+    public function createDirector($nombre, $apellido1, $apellido2, $fechaNacimiento, $nacionalidad)
     {
-		return R::findOne ( 'director', 'nombre = ?','apellido1 = ?', 'apellido2 = ?' [ 
-				$nombre] [$apellido1], [$apellido2
-		] ) != null ? true : false;
-    }
-
-    public function crear($nombre, $apellido1, $apellido2, $fechaNacimiento)
-    {
-        $status = 0;
-        if (! $this->existeDirector($nombre, $apellido1, $apellido2)) {
+    	$director = R::find('director', 'nombre like ? and apellido1 like ? and apellido2 like ?', [$nombre,$apellido1,$apellido2]);
+        if ($director == null) {
             $d = R::dispense('director');
             $d->nombre = $nombre;
             $d->apellido1 = $apellido1;
             $d->apellido2 = $apellido2;
             $d->fechaNacimiento = $fechaNacimiento;
+            $d->nacionalidad = $nacionalidad;
             R::store($d);
             R::close();
         } else {
-            $status = - 1;
+        	throw new Exception("Actor duplicado");
         }
-        return $status;
+        R::close();
     }
 
-    public function getTodos()
-    {
-        return R::findAll('director', 'order by apellido1');
-    }
+    public function getAll($filtro='') {
+		$mostrar = R::find("director","nombre like ?", ["%".$filtro."%"]);
+		return $mostrar;
+	}
 }
 ?>

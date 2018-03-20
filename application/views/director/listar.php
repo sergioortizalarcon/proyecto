@@ -1,20 +1,27 @@
 <div class="container">
+	<form action="<?= base_url() ?>director/listarPost" method="post">
+		<label for="idFiltro">Filtro</label>
+		<input id="idFiltro" type="text" name="filtro" value="<?= $filtro ?>">
+		<input type="submit" value="Filtrar">
+	</form>
+
 	<table class="table table-striped">
 		<tr>
 			<th>Nombre director</th>
-			<th></th>
-			<th></th>
+			<th>Primer apellido</th>
+			<th>Segundo apellido</th>
+			<th>Fecha de nacimiento</th>
+			<th>Nacionalidad</th>
 		</tr>
-<?php foreach ($body['directores']as $director):?>
-<tr>
-			<td><?php $director['nombre']?></td>
-			<td>
-				<form action="<?php base_url()?>director/editar" id="idFormedit"
-					method="post">
-					<input type="hidden" name="id_director" value="<?php $director->id?>">
-				</form>
-			</td>
-		</tr>
-<?php endforeach;?>
+		
+		<?php foreach ($body['directores'] as $director): ?>
+			<tr>
+				<td><?= $director->nombre ?></td>
+				<td><?= $director->apellido1 ?></td>
+				<td><?= $director->apellido2 ?></td>
+				<td><?= $director->fecha_nac ?></td>
+				<td><?= $director->nacionalidad ?></td>
+			</tr>
+		<?php endforeach;?>
 	</table>
 </div>

@@ -12,7 +12,7 @@ class Actor_model extends CI_Model {
 			R::store($a);
 		}
 		else {
-			throw new Exception("Actor duplicada");
+			throw new Exception("Actor duplicado");
 		}
 		R::close();
 	}

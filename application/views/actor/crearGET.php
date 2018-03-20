@@ -19,10 +19,9 @@ function comprobar() {
 
 	var nacionalidad = idFormulario.idPais.value;
 
-	//alert(correcto);
-	//if(correcto) {
+	if(correcto) {
 		peticionAJAX();
-	//}
+	}
 }
 
 function comprobarNombre(nombre) {
@@ -66,11 +65,20 @@ function comprobarApellidos(apellido1, apellido2) {
 }
 
 function comprobarFechaNac(fecha) {
-	var fecha = new Date();
-	var anio = fecha.getFullYear();
-	var mes = fecha.getMonth()+1;
-	var dia = fecha.getDay();
-	//console.log(anio + "-" + mes + "-" + dia);
+	if (fecha == "") {
+		document.getElementById('idFecha').style="color:red";
+		if (correcto == true) {
+			document.getElementById('idFecha').focus();
+		}
+		correcto = false;
+	} else {
+		var fecha = new Date();
+		var anio = fecha.getFullYear();
+		var mes = fecha.getMonth()+1;
+		var dia = fecha.getDay();
+		correcto = true;
+	}
+	return correcto;
 }
 
 function accionAJAX() {

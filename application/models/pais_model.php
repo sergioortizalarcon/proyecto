@@ -1,22 +1,23 @@
 <?php
-
 class Pais_model extends CI_Model {
-
-	public function create_pais($nombre) {
-		$pais = R::find("paises", "nombre like ?",[$nombre]);
-
-		if ($pais != null) {
-			$pais = R:: dispense("paises");
-			$pais -> nombre = $nombre;
+	public function crear_pais($nombre) {
+		$pais = R::findOne ( "paises", "nombre=?", [ 
+				$nombre 
+		] );
+		
+		if ($pais == null) {
+			$pais = R::dispense ( "paises" );
+			$pais->nombre = $nombre;
 			
-			R::store($pais);
-			R::close();
+			R::store ( $pais );
 		} else {
-			throw new Exception("Error Processing Request", 1);
+			throw new Exception ( "Error Processing Request", 1 );
 		}
-		R::close();
+		R::close ();
+	}
+	public function getTodos() {
+		return R::findAll ( 'pais', 'order by nombre' );
 	}
 }
-
 
 ?>

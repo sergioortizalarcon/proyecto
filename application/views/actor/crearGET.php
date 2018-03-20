@@ -13,9 +13,9 @@ function comprobar() {
 	var apellido2 = idFormulario.apellido2.value.trim();
 	correcto = comprobarApellidos(apellido1, apellido2);
 	
-	var fechaNac = idFormulario.idFecha.value;
+	var fechaNacimiento = idFormulario.idFecha.value;
 	//console.log(fechaNac);
-	correcto = comprobarFechaNac(fechaNac);
+	correcto = comprobarFechaNac(fechaNacimiento);
 
 	var nacionalidad = idFormulario.idPais.value;
 
@@ -70,12 +70,27 @@ function comprobarFechaNac(fecha) {
 		if (correcto == true) {
 			document.getElementById('idFecha').focus();
 		}
-		correcto = false;
 	} else {
+
+		var fechaSis = new Date();
+		var anio = fechaSis.getFullYear();
+		var mes = fechaSis.getMonth()+1;
+		var dia = fechaSis.getDate();
+		console.log(mes.length);
+		/*if (mes.length == 1) {
+			mes = "0" + mes;
+		}*/
+		//if (fecha == 
+		console.log("Fecha pasada: " + fecha);
+		fechaSistema = anio + "-" + mes + "-" + dia
+		console.log("Fecha Sistema: " + fechaSistema);
+
+
+		/*document.getElementById('idFecha').style="color:black";
 		var fecha = new Date();
 		var anio = fecha.getFullYear();
 		var mes = fecha.getMonth()+1;
-		var dia = fecha.getDay();
+		var dia = fecha.getDay();*/
 		correcto = true;
 	}
 	return correcto;
@@ -118,7 +133,7 @@ function peticionAJAX() {
 		<input class="form-control" type="text" id="idApellido2" name="apellido2" />
 		
 		<label for="idFecha">Fecha de nacimiento</label>
-		<input class="form-control" type="date" id="idFecha" name="fechaNac" />
+		<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" />
 		
 		<label for="idPais">Nacionalidad</label>
 		<select class="form-control" id="idPais" name="nacionalidad">

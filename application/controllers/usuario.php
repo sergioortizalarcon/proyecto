@@ -4,6 +4,36 @@ class usuario extends CI_Controller {
 	public function registrar(){
 		enmarcar($this, "usuario/registrar");
 	}
+
+
+	public function comprobarDispAlias() {
+		$this -> load -> model("usuario_model");
+		$alias = isset($_POST["alias"])?$_POST["alias"]:null;
+		$comprobacion = $this -> usuario_model -> comprobar_alias($alias);
+		if ($comprobacion) {
+			$datos['mensaje']['texto'] = "Alias disponible";
+			$datos['mensaje']['nivel'] = 'ok';
+			} else {
+			$datos['mensaje']['texto'] = "Alias existente";
+			$datos['mensaje']['nivel'] = 'error';
+			$this->load->view("usuario/mensaje",$datos);
+			}
+	}
+
+	public function comprobarDispCorreo() {
+		$this -> load -> model("usuario_model");
+		$correo = isset($_POST["correo"])?$_POST["correo"]:null;
+		$comprobacion = $this -> usuario_model -> comprobar_email($correo);
+		if ($comprobacion) {
+			$datos['mensaje']['texto'] = "Mail ok";
+			$datos['mensaje']['nivel'] = 'ok';
+			} else {
+			$datos['mensaje']['texto'] = "Mail en uso";
+			$datos['mensaje']['nivel'] = 'error';
+			$this->load->view("usuario/mensaje",$datos);
+			}
+	}
+
 	
 	public function crearPost() {
 		$this -> load -> model("usuario_model");
@@ -14,28 +44,49 @@ class usuario extends CI_Controller {
 		$email = isset($_POST["correo"])?$_POST["correo"]:null;
 		$pwd = isset($_POST["pwd"])?$_POST["pwd"]:null;
 		$fecha = isset($_POST["fecha"])?$_POST["fecha"]:null;
-		
-		
-		//permitir que el almacenamento se amplíe a 255 caracteres
-		
-		if($pwd != null) {
-			//$pwd = password_hash($pwd, "PASSWORD_DEFAULT");
-		}
-		
+
 		try {
-			$debug = $this -> usuario_model -> create_usuario($nombre, $ape1, $ape2, $alias, $email, $pwd, $fecha);
-			$datos['mensaje']['texto'] = "Usuario creado correctamente";
-			$datos['mensaje']['nivel'] = 'ok';
-			//enmarcar($this,"usuario/mensaje",$datos);
-			$this->load->view("usuario/mensaje",$datos);
-		}
-		catch (Exception $e) {
-			$datos['mensaje']['texto'] = "Usuario o correo ya existente";
-			$datos['mensaje']['nivel'] = 'error';
-			enmarcar($this,"usuario/mensaje",$datos);
+			$comprobacion = $this -> usuario_model -> comprobar_usuario($alias, $email);
+			if ($comprobacion) {
+				$this -> usuario_model -> create_usuario($nombre, $ape1, $ape2, $alias, $email, $pwd, $fecha);
+				$datos['mensaje']['texto'] = "Usuario creado correctamente";
+				$datos['mensaje']['nivel'] = 'ok';
+				$this->load->view("usuario/mensaje",$datos);
+				header('Location:'.base_url().'usuario/crearOk');
+			} else {
+				$datos['mensaje']['texto'] = "Usuario o correo ya existente";
+				$datos['mensaje']['nivel'] = 'error';
+				$this->load->view("usuario/mensaje",$datos);
+				header('Location:'.base_url().'usuario/crearError');
+			}
 			//$this->load->view("usuario/mensaje",$datos);
 		}
+		catch (Exception $e) {
+			$datos['mensaje']['texto'] = "Error al crear nuevo usuario";
+			$datos['mensaje']['nivel'] = 'error';
+			$this->load->view("usuario/mensaje",$datos);
+		}
 	}
+
+	public function crearOk() {
+		$datos['mensaje']['texto'] = "Usuario creado correctamente";
+		$datos['mensaje']['nivel'] = 'ok';
+		enmarcar($this, 'usuario/mensaje', $datos);
+	}
+	
+	public function crearError() {
+		$datos['mensaje']['texto'] = "Error al crear nuevo usuario";
+		$datos['mensaje']['nivel'] = 'error';
+		enmarcar($this, 'usuario/mensaje', $datos);
+	}
+
+	public function listar() {
+		$this->load->model('alias_model');
+		$datos['body']['aliases'] = $this->alias_model->getAll();
+		enmarcar($this, 'alias/listar',$datos);
+	}
+
 }
+
 
 ?>

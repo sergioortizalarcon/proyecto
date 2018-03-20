@@ -21,7 +21,15 @@ class actor extends CI_Controller {
 	}
 
 	public function listar() {
-
+		$this->listarPost();
+	}
+	
+	public function listarPost($f='') {
+		$filtro = isset($_POST['filtro'])?$_POST['filtro']:$f;
+		$this->load->model('actor_model');
+		$datos['body']['actores'] = $this->actor_model->getAll($filtro);
+		$datos['filtro'] = $filtro;
+		enmarcar($this, 'actor/listar',$datos);
 	}
 }
 ?>

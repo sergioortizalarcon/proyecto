@@ -33,6 +33,7 @@ function comprobarCorreo(correo) {
 	xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xhr.send("correo="+correo);
+	console.log(correo)
 	xhr.onreadystatechange = function(){
 		if (xhr.readyState==4 && xhr.status==200) {
 			document.getElementById("result").innerHTML =xhr.responseText;
@@ -407,9 +408,9 @@ function activar_registro(){
 
 <div class="form-group">
 <label for="idEmail">Email</label><span class="obligatorio">*</span>
-<input class="form-control" type="text" id="idEmail" name="email" onfocusout="validarCorreo();" />
+<input class="form-control" type="text" id="idEmail" name="correo" onfocusout="validarCorreo();" />
 <span class="avisos" id="aEmail">
-	Debes escribir un email válido.
+	Debes escribir un correo válido.
 </span>
 </div>
 

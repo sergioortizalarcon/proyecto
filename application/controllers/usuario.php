@@ -82,7 +82,7 @@ class usuario extends CI_Controller {
 
 	public function listar() {
 		$this->load->model('alias_model');
-		$datos['body']['aliases'] = $this->alias_model->getAll();
+		$datos['body']['usuarios'] = $this->alias_model->getAll();
 		enmarcar($this, 'alias/listar',$datos);
 	}
 

@@ -32,7 +32,6 @@ function comprobarCorreo(correo) {
 	xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xhr.send("correo="+correo);
-	console.log(correo)
 	xhr.onreadystatechange = function(){
 		if (xhr.readyState==4 && xhr.status==200) {
 			document.getElementById("result").innerHTML =xhr.responseText;
@@ -83,6 +82,42 @@ function validarCorreo() {
 		    return false;
 		}
 	}
+
+function verificarCorreo() {
+	var verifCorreo = document.getElementById("idEmailV").value;
+	var primerCorreo = document.getElementById("idEmail").value;
+		if (verifCorreo!="") {
+		expresion =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+		    if (expresion.test(verifCorreo)) {
+		    	console.log("entro");
+		    	if (comprobarCorreo(verifCorreo) == true) {
+		    		console.log("disp2 correo:" +comprobarCorreo(verifCorreo));
+		    		if (verifCorreo == primerCorreo.trim()) {
+			        	idFormulario.idEmailV.style.borderColor="blue";
+			        	document.getElementById("aEmailDos").style.display="none";
+						return true;
+		    		} else {
+		    			idFormulario.idEmailV.style.borderColor="red";
+						document.getElementById("aEmailDos").style.display="initial";
+				    	return false;
+		    		}
+		        } else {
+		        	console.log(expresion.test(verifCorreo));
+					idFormulario.idEmailV.style.borderColor="red";
+					document.getElementById("aEmailDos").style.display="initial";
+				    return false;
+				}
+		    } else {
+		        document.getElementById("aEmailDos").style.display="initial";
+		        idFormulario.idEmailV.style.borderColor="red";
+		        return false;
+		    }
+		} else {
+		    document.getElementById("aEmailDos").style.display="initial";
+		    idFormulario.idEmailV.style.borderColor="red";
+		    return false;
+		}
+}
 
 function validarAlias() {
 	var alias = document.getElementById("idAlias").value;
@@ -336,15 +371,17 @@ function calcularEdad() {
 
 </script>
 <div class="container ">
+<div class="row"><div class="col-md-10" id="creator">
+
 <form id="idFormulario" action="<?= base_url()?>usuario/crearPost" method="post" >
 <fieldset>
-<legend>Crear nuevo usuario</legend>
-
+<legend>Crear nueva cuenta...</legend>
 <small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>
 
 <div class="form-group">
 <label for="idNombre">Nombre</label><span class="obligatorio">*</span>
-<input class="form-control" type="text" id="idNombre" name="nombre" onfocusout="validarNombre();" />
+<input class="form-control" type="text" id="idNombre" name="nombre" onfocusout="validarNombre();"
+placeholder="Nombre..." data-toogle="tooltip" data-placement="left" title="Escribe un nombre" />
 <span class="avisos" id="aNombre">
 	Debes escribir un nombre válido(3 a 20 caracteres no númericos o simbolos).
 </span>
@@ -352,7 +389,8 @@ function calcularEdad() {
 
 <div class="form-group">
 <label for="idApe1">Primer apellido</label><span class="obligatorio">*</span>
-<input class="form-control" type="text" id="idApe1" name="apellido1" onfocusout="validarApeUno();" />
+<input class="form-control" type="text" id="idApe1" name="apellido1" onfocusout="validarApeUno();" 
+placeholder="Apellido..." data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
 <span class="avisos" id="aApellido">
 	Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
 </span>
@@ -360,7 +398,8 @@ function calcularEdad() {
 
 <div class="form-group">	
 <label for="idApe2">Segundo apellido</label>
-<input class="form-control" type="text" id="idApe2" name="apellido2" onfocusout="validarApeDos();" />
+<input class="form-control" type="text" id="idApe2" name="apellido2" onfocusout="validarApeDos();"
+placeholder="apellido..." data-toogle="tooltip" data-placement="left" title="Escribe un apellido(opcional)" />
 <span class="avisos" id="aApellidoDos">
 	Debes escribir dos apellido como máximo y entre 3 a 20 caracteres no númericos o simbolos.
 </span>
@@ -368,7 +407,8 @@ function calcularEdad() {
 
 <div class="form-group">
 <label for="idAlias">Alias</label><span class="obligatorio">*</span>
-<input class="form-control" type="text" id="idAlias" name="alias" onfocusout="validarAlias();"/>
+<input class="form-control" type="text" id="idAlias" name="alias" onfocusout="validarAlias();"
+placeholder="...YouAreAmazing" data-toogle="tooltip" data-placement="left" title="Comprobar disponibilidad" />
 <span class="avisos" id="aAlias">
 	Debes tener un alias válido (máximo 14 caracteres, alfa numéricos)
 </span>
@@ -376,15 +416,26 @@ function calcularEdad() {
 
 <div class="form-group">
 <label for="idEmail">Email</label><span class="obligatorio">*</span>
-<input class="form-control" type="text" id="idEmail" name="correo" onfocusout="validarCorreo();" />
+<input class="form-control" type="text" id="idEmail" name="correo" onfocusout="validarCorreo();"
+placeholder="email@email.com" data-toogle="tooltip" data-placement="left" title="introduce un correo electrónico válido">
 <span class="avisos" id="aEmail">
 	Debes escribir un correo válido.
 </span>
 </div>
 
+<div class="form-group">
+<label for="idEmailV">Vuelva a introducir Email:</label>
+<input type="email" class="form-control" id="idEmailV" onfocusout="verificarCorreo();" placeholder="email@email.com" name="correoV"
+ data-toogle="tooltip" data-placement="left" title="vuelve a introducir tú correo electrónico"/>
+ <span class="avisos" id="aEmailDos">
+	Los correos no coinciden.
+</span>
+</div>
+
 <div class="form-group">	
 <label for="idPwd">Contraseña</label><span class="obligatorio">*</span>
-<input class="form-control" type="password" id="idPwd" name="pwd" />
+<input class="form-control" type="password" id="idPwd" name="pwd"
+data-toogle="tooltip" data-placement="left" title="contraseña"/>
 <span class="avisos" id="aPwd">
 	Entre 8 y 15 caracteres. La contraseña ha de incluir al menos tres de los siguientes elementos: números, mayúsculas, minúsculas o alguno de estos símbolos ($, @, !, %,*, &amp;).
 </span>
@@ -392,7 +443,8 @@ function calcularEdad() {
 
 <div class="form-group">	
 <label for="idPwdD">Repetir Contraseña</label><span class="obligatorio">*</span>
-<input class="form-control" type="password" id="idPwdD" name="pwdD" onfocusout="validarPass();" />
+<input class="form-control" type="password" id="idPwdD" name="pwdD" onfocusout="validarPass();"
+data-toogle="tooltip" data-placement="left" title="repite la contraseña"/>
 <span class="avisos" id="aPwdD">
 	Debe coincidir con la contraseña introducida en el recuadro anterior.
 </span>
@@ -405,14 +457,17 @@ function calcularEdad() {
 	Debes ser mayor de 13 años. 
 </div>
 
-<div class="form-group">
+<div class="nav navbar-form navbar-right">
 <input type="submit" class="btn btn-default" id="registrarse" value="Registrarse" />
 </div>
 </fieldset>
 	</form>
 
 <div id="result"></div>
+</div>
 
+<div class="row"><div class="col-md-2"></div>
+</div>
 <script>
 	document.getElementById("idNombre").value="pepe";
 document.getElementById("idApe1").value="perez";

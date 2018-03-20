@@ -24,10 +24,18 @@
 <script type="text/javascript" src="<?=base_url()?>assets/js/datatables.js"></script>
 <link rel="stylesheet" href="<?=base_url()?>assets/css/datatables.css">
 
-
+<!--Esto es opcional:
+	se debería poner para que saliesen los tooltips pero funcionan sin ello, por la librería online
+	de jquery presupongo, igual lo dejo para evitar problemas mientras
+-->
+<script>
+	  $(document).ready(function(){
+	  	$('[data-toggle="tooltip"]').tooltip();
+	  });
+  </script>
 
 
 <link rel="stylesheet" href="<?=base_url()?>assets/css/estilo.css">
 <title>CRUD EMPLEADOS</title>
 </head>
-<body>
+<body class="custom-background">

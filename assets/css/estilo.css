@@ -25,10 +25,60 @@ span.avisos{
 	display: none;
 }
 
+/* ajusta los botones de edicion de usuario */
 form.listado{
 	display: grid;
 }
-/*
-td {
-	text-align: center;
-}*/
+
+/*agrega fondo al body*/
+body.custom-background {
+	/*fondo de color por si falla la imagen*/
+	background-color:#F0EFEF;
+	background-image: url("../img/fondoPagina.jpg");
+	background-position: center top;
+	background-size: 100%;
+	background-repeat: repeat-y;
+	background-attachment:scroll;
+}
+
+
+
+	/*form de registro */
+	#creator{
+		border:1px solid black;
+		padding: 1%;
+		padding-left:5%;
+		padding-right:5%;
+	}
+
+	/*form de login y su comp registro */
+	#login{
+		border:1px solid black;
+		margin: 10px;
+	}
+
+	#crear{
+		margin:10px;
+		border:1px solid black;
+		float: right;
+	}
+
+	/* EFECTOS DE FOOTER  */
+#footer{
+    background: #161616;
+    font-size: 15px;
+}
+
+a.icono-face {
+ background-image: url("http://www.vszdrav.cz/pages/frontend/img/fcb.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+a.icono-tw{
+	background-image: url("http://www.blog.xmundo.net/wp-content/uploads/2011/10/icono-twitter-200x200.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+/* FOOTER */

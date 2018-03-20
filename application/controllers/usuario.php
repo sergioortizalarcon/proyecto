@@ -5,6 +5,7 @@ class usuario extends CI_Controller {
 		enmarcar($this, "usuario/registrar");
 	}
 
+	/*1.- COMPROBACIONES PARA REGISTRARSE  */
 	public function comprobarDispAlias() {
 		$this -> load -> model("usuario_model");
 		$alias = isset($_POST["alias"])?$_POST["alias"]:null;
@@ -33,7 +34,9 @@ class usuario extends CI_Controller {
 			}
 	}
 
-	
+	/* 1.- */
+
+	/* 2.- REGISTRO Y REDIRECCION */
 	public function crearPost() {
 		$this -> load -> model("usuario_model");
 		$nombre= isset($_POST["nombre"])?$_POST["nombre"]:null;
@@ -72,6 +75,9 @@ class usuario extends CI_Controller {
 		enmarcar($this, 'usuario/mensaje', $datos);
 	}
 
+	/*	2.- 	*/
+
+	
 	public function listar($f='') {
 		$this->load->model('usuario_model');
 		$filtro = isset($_POST['filtro'])?$_POST['filtro']:$f;
@@ -81,6 +87,14 @@ class usuario extends CI_Controller {
 		enmarcar($this, 'usuario/listar',$datos);
 	}
 
+
+
+
+	/* LOGIN USUARIO */
+
+	public function loginGet(){
+		enmarcar($this,"usuario/login");
+	}
 
 
 }

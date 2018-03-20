@@ -24,3 +24,11 @@ a.boton-login:hover {
 span.avisos{
 	display: none;
 }
+
+form.listado{
+	display: grid;
+}
+
+td {
+	text-align: center;
+}

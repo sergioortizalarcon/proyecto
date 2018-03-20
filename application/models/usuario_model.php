@@ -51,6 +51,34 @@ class usuario_model extends CI_Model {
 			throw new Exception("Error Processing Request", 1);
 		}
 	}
+
+	public function getAll($filtro='') {
+		return R::find("usuarios","email like ?", ["%".$filtro."%"]);
+	}
+
+
+	/*
+	public function borrar($id) {
+		$us = R::load ( 'usuarios', $id );
+		if ($us->id != 0) {
+			R::trash ( $us );
+		}
+		R::close ();
+	}
+	public function getByID($id) {
+		return R::load ( 'usuarios', $id );
+	}
+	public function update($id, $nombre) {
+		$us = R::load ( 'usuarios', $id );
+		
+		$us->nombre = $nombre;
+		
+		R::store($us);
+		R::close();
+		
+	}
+
+	*/
 }
 
 

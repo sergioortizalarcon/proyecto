@@ -5,7 +5,6 @@ class usuario extends CI_Controller {
 		enmarcar($this, "usuario/registrar");
 	}
 
-
 	public function comprobarDispAlias() {
 		$this -> load -> model("usuario_model");
 		$alias = isset($_POST["alias"])?$_POST["alias"]:null;

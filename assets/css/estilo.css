@@ -2,7 +2,7 @@
 
 a.boton-login {
 	color: #9d9d9d;
-	font-size: 15px;
+	font-size: 11px;
 	font-weight:700;
 	background: none !important;
 }
@@ -12,7 +12,7 @@ a.boton-login:hover {
 	transition-duration: 0.5s;
 	transition-timing-function: ease;
 	transition-delay: 0s; 
-	font-size: 20px;
+	font-size: 13px;
 }
 
 

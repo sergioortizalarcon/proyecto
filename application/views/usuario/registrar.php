@@ -1,11 +1,10 @@
 <script type="text/javascript">
 	var xhr;
-	var nombreOk=false;
-	var apeUnoOk=false;
-	var passOk=false;
+	
 	window.onload = function(){
 		xhr = new XMLHttpRequest();
 	}
+	
 	function accionAJAX() {
 		if (xhr.readyState==4 && xhr.status==200) {
 			document.getElementById("result").innerHTML = xhr.responseText;
@@ -334,37 +333,6 @@ function calcularEdad() {
         return false;
     }
 }
-/*
-function activarRegistro(){
-	totalin = document.getElementsByTagName("input");
-	console.log(totalin.length);
-		
-	var contador=0;
-	console.log(contador);
-
-	for (var i = 0; i < totalin.length; i++) {
-		console.log(totalin[i]);
-		if (totalin[i].style.borderColor!="blue") {
-			console.log(totalin[i].style.borderColor);
-			contador++;
-		}
-	}
-
-	if (contador>0) {
-		document.getElementById("registrarse").disabled = true;
-	}
-}
-*/
-
-
-/*
-function activar_registro(){
-	if ( nombreOk &&	apeUnoOk && passOk){
-	document.getElementById("registrarse").disabled=false;
-} else {
-	document.getElementById("registrarse").disabled=true;
-}
-}*/
 
 </script>
 <div class="container ">

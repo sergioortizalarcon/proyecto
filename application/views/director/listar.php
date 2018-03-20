@@ -18,11 +18,7 @@
 			<tr>
 				<td><?= $director->nombre ?></td>
 				<td><?= $director->apellido1 ?></td>
-				<?php if($actor->apellido2 == "Vacio"):?>
-					<td>&nbsp;</td>
-				<?php else:?>
-					<td><?= $actor->apellido2 ?></td>
-				<?php endif;?>
+				<td><?= $actor->apellido2 ?></td>
 				<td><?= $director->fecha_nacimiento ?></td>
 				<td><?= $director->nacionalidad ?></td>
 			</tr>

@@ -1,6 +1,9 @@
 <?php
 class actor extends CI_Controller {
 	public function crear() {
+		//TODO(Falta el model de los lenguajes
+		/*$datos['body']['nacionalidades'] = $this->nacionalidad_model->getAll();
+		enmarcar($this, "actor/crearGET", $datos);*/
 		enmarcar($this, "actor/crearGET");
 	}
 

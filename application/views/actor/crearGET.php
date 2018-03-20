@@ -152,31 +152,44 @@ function limpiar() {
 <div class="container ">
 	<form id="idFormulario">
 		<fieldset>
-		<legend>Crear nuevo actor</legend>
-		
-		<label for="idNombre">Nombre</label>
-		<input class="form-control" type="text" id="idNombre" name="nombre" />
-		
-		<label for="idApellido1">Apellido1</label>
-		<input class="form-control" type="text" id="idApellido1" name="apellido1" />
-		
-		<label for="idApellido2">Apellido2</label>
-		<input class="form-control" type="text" id="idApellido2" name="apellido2" />
-		
-		<label for="idFecha">Fecha de nacimiento</label>
-		<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" />
-		
-		<label for="idPais">Nacionalidad</label>
-		<select class="form-control" id="idPais" name="nacionalidad">
-			<option value="es">Española</option>
-			<option value="fr">Francesa</option>
-			<option value="pt">Portuguesa</option>
-			<option value="de">Alemana</option>
-		</select>
-		
-		<br/>
-		<input type="button" class="btn btn-default" onclick="comprobar();" value="Enviar" />
-		
+			<legend>Crear nuevo actor</legend>
+			
+			<label for="idNombre">Nombre</label>
+			<input class="form-control" type="text" id="idNombre" name="nombre" />
+			
+			<label for="idApellido1">Apellido1</label>
+			<input class="form-control" type="text" id="idApellido1" name="apellido1" />
+			
+			<label for="idApellido2">Apellido2</label>
+			<input class="form-control" type="text" id="idApellido2" name="apellido2" />
+			
+			<label for="idFecha">Fecha de nacimiento</label>
+			<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" />
+			
+			
+			<!-- TODO
+				Falta el model de los lenguajes para pasarlos
+				
+				<laber for="idPais">Nacionalidad</label>
+				<select class="form-control" id="idPais" name="nacionalidad">
+					<-?php foreach($body['nacionalidades'] as $nacionalidad):?>
+						<option value="<-?php $nacionalidad->codigo ?>"><-?php $nacionalidad->nombre ?></option>
+					<-?php endforeach; ?>
+				</select>
+			 -->
+			
+			<!-- TEMPORAL -->
+			<label for="idPais">Nacionalidad</label>
+			<select class="form-control" id="idPais" name="nacionalidad">
+				<option value="es">Española</option>
+				<option value="fr">Francesa</option>
+				<option value="pt">Portuguesa</option>
+				<option value="de">Alemana</option>
+			</select>
+			
+			<br/>
+			<input type="button" class="btn btn-default" onclick="comprobar();" value="Enviar" />
+			
 		</fieldset>
 	</form>
 	<br/>

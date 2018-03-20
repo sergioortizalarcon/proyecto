@@ -165,7 +165,20 @@ function limpiar() {
 					
 			<label for="idFecha">Fecha de nacimiento</label>
 			<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" />
+		
+		
+			<!-- TODO
+				Falta el model de los lenguajes para pasarlos
+				
+				<laber for="idPais">Nacionalidad</label>
+				<select class="form-control" id="idPais" name="nacionalidad">
+					<-?php foreach($body['nacionalidades'] as $nacionalidad):?>
+						<option value="<-?php $nacionalidad->codigo ?>"><-?php $nacionalidad->nombre ?></option>
+					<-?php endforeach; ?>
+				</select>
+			 -->
 			
+			<!-- TEMPORAL -->
 			<label for="idPais">Nacionalidad</label>
 			<select class="form-control" id="idPais" name="nacionalidad">
 				<option value="es">Española</option>

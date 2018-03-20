@@ -1,11 +1,13 @@
 <?php
 
-class Usuario_model extends CI_Model {
+class usuario_model extends CI_Model {
 
 	public function create_usuario($nombre, $ape1, $ape2, $alias, $email, $pwd, $fecha) {
-		$usuario = R::find("usuarios", "alias like ? and email like ?",[$alias,$email]);
+		//$usuario = R::find("usuarios", "alias like ? and email like ?",[$alias,$email]);
 
-		if ($usuario != null) {
+		$nombre = R::findOne("usuarios","alias=?",[$alias]);
+		$email = R::findOne("usuarios","email=?",[$email]);
+		if ($nombre == null && $email) {
 			$usuario = R:: dispense("usuarios");
 			$usuario -> nombre = $nombre;
 			$usuario -> apellido_uno = $ape1;
@@ -18,9 +20,9 @@ class Usuario_model extends CI_Model {
 			R::store($usuario);
 			R::close();
 		} else {
+			R::close();
 			throw new Exception("Error Processing Request", 1);
 		}
-			R::close();
 	}
 }
 

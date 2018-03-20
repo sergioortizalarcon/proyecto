@@ -19,6 +19,7 @@ function peticionAJAX(nombre,ape1,ape2,alias,correo,pwd,fecha) {
 	console.log(xhr);
 	//xhr.send("nombre="+nombre);
 	xhr.onreadystatechange = function(){
+		console.log(xhr.readyState+"  "+xhr.status);
 		if (xhr.readyState==4 && xhr.status==200) {	
 			console.log(xhr.readyState+"   "+xhr.status);
 			document.getElementById("result").innerHTML = xhr.responseText;

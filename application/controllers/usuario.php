@@ -17,11 +17,11 @@ class usuario extends CI_Controller {
 		
 		
 		//permitir que el almacenamento se amplíe a 255 caracteres
-		/*
+		
 		if($pwd != null) {
-			$pwd = password_hash($pwd, "PASSWORD_DEFAULT");
+			//$pwd = password_hash($pwd, "PASSWORD_DEFAULT");
 		}
-		*/
+		
 		try {
 			$debug = $this -> usuario_model -> create_usuario($nombre, $ape1, $ape2, $alias, $email, $pwd, $fecha);
 			$datos['mensaje']['texto'] = "Usuario creado correctamente";

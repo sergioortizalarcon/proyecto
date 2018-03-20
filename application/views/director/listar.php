@@ -23,7 +23,7 @@
 				<?php else:?>
 					<td><?= $actor->apellido2 ?></td>
 				<?php endif;?>
-				<td><?= $director->fecha_nac ?></td>
+				<td><?= $director->fecha_nacimiento ?></td>
 				<td><?= $director->nacionalidad ?></td>
 			</tr>
 		<?php endforeach;?>

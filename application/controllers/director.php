@@ -7,11 +7,11 @@ class Director extends CI_Controller {
 
     public function crearPost() {
     	$this->load->model('director_model');
-        $nombre = isset($_POST['nombre'])?$_POST['nombre']:null;
-        $apellido1 = isset($_POST['apellido1'])?$_POST['apellido1']:null;
-        $apellido2 = isset($_POST['apellido2'])?$_POST['apellido2']:null;
-        $fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
-        $nacionalidad = isset($_POST['nacionalidad'])?$_POST['nacionalidad']:null;
+    	$nombre = isset($_POST['nombre'])?$_POST['nombre']:null;
+    	$apellido1 = isset($_POST['apellido1'])?$_POST['apellido1']:null;
+    	$apellido2 = isset($_POST['apellido2'])?$_POST['apellido2']:null;
+    	$fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
+    	$nacionalidad = isset($_POST['nacionalidad'])?$_POST['nacionalidad']:null;
         
         try {
         	$debug = $this -> director_model -> createDirector($nombre, $apellido1, $apellido2, $fechaNacimiento, $nacionalidad);

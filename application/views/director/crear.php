@@ -35,8 +35,6 @@ function comprobar() {
 	if(nombreCorrecto && ape1Correcto && ape2Correcto && fechaCorrecto) {
 		peticionAJAX();
 		limpiar();
-	} else {
-		
 	}
 }
 
@@ -122,7 +120,7 @@ function comprobarFechaNac(fecha) {
 }
 
 function accionAJAX() {
-    document.getElementById("idMensaje").innerHTML = conexion.responseText;
+    document.getElementById("result").innerHTML = conexion.responseText;
 }
 
 function peticionAJAX() {
@@ -145,7 +143,7 @@ function limpiar() {
 	idFormulario.nombre.value = "";
 	idFormulario.apellido1.value = "";
 	idFormulario.apellido2.value = "";
-	idFormulario.fechaNacimiento.value = "";
+	idFormulario.fechaNacimiento.value="";
 	idFormulario.nacionalidad.value = "es";
 }
 </script>

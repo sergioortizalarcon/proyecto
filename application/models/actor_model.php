@@ -8,7 +8,7 @@ class Actor_model extends CI_Model {
 				$a -> nombre = $nombre;
 				$a -> apellido1 = $apellido1;
 				$a -> apellido2 = $apellido2;
-				$a -> fechaNac = $fechaNacimiento;
+				$a -> fechaNacimiento = $fechaNacimiento;
 				$a -> nacionalidad = $nacionalidad;
 				R::store($a);
 			} else {
@@ -22,7 +22,7 @@ class Actor_model extends CI_Model {
 				$a -> nombre = $nombre;
 				$a -> apellido1 = $apellido1;
 				$a -> apellido2 = $apellido2;
-				$a -> fechaNac = $fechaNacimiento;
+				$a -> fechaNacimiento = $fechaNacimiento;
 				$a -> nacionalidad = $nacionalidad;
 				R::store($a);
 			} else {

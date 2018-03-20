@@ -8,7 +8,7 @@ class Director_model extends CI_Model {
 				$d -> nombre = $nombre;
 				$d -> apellido1 = $apellido1;
 				$d -> apellido2 = $apellido2;
-				$d -> fechaNac = $fechaNacimiento;
+				$d -> fechaNacimiento = $fechaNacimiento;
 				$d -> nacionalidad = $nacionalidad;
 				R::store($d);
 			} else {
@@ -25,7 +25,7 @@ class Director_model extends CI_Model {
 	            $d->nacionalidad = $nacionalidad;
 	            R::store($d);
 	        } else {
-	        	throw new Exception("Actor duplicado");
+	        	throw new Exception("Director duplicado");
 	        }
 	        R::close();
 	    }

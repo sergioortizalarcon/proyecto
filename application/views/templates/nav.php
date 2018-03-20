@@ -57,13 +57,14 @@
 			</li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
-				<li><a href="<?=base_url()?>usuario/registrar" class="boton-login"><span class="glyphicon glyphicon-user"></span> Registrarse</a></li>
-				<li><a href="login.html" class="boton-login"><span class="glyphicon glyphicon-log-in"></span> Iniciar sesión</a></li>
-				<li class="nope">
-			<li><a href="<?=base_url()?>usuario/registrar"><span
-					class="glyphicon glyphicon-user"></span> Registrarse</a></li>
-			<li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span>
-					Iniciar sesión</a></li>
+				<li>
+					<a href="<?=base_url()?>usuario/registrar" class="boton-login"><span class="glyphicon glyphicon-user"></span> Registrarse</a>
+				</li>
+				<li>
+					<a href="login.html" class="boton-login">
+						<span class="glyphicon glyphicon-log-in"></span> Iniciar sesión
+					</a>
+				</li>
 			<li class="nope">
 				<!--Agrupa el input de buscar con el boton-->
 				<form class="navbar-form">

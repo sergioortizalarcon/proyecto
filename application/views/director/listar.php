@@ -18,7 +18,11 @@
 			<tr>
 				<td><?= $director->nombre ?></td>
 				<td><?= $director->apellido1 ?></td>
-				<td><?= $director->apellido2 ?></td>
+				<?php if($actor->apellido2 == "Vacio"):?>
+					<td>&nbsp;</td>
+				<?php else:?>
+					<td><?= $actor->apellido2 ?></td>
+				<?php endif;?>
 				<td><?= $director->fecha_nac ?></td>
 				<td><?= $director->nacionalidad ?></td>
 			</tr>

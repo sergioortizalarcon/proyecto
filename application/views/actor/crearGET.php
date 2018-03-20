@@ -5,24 +5,44 @@ function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];
 var conexion;
 var correcto = true;
 
-unction comprobar() {
+function comprobar() {
 	var nombre = idFormulario.nombre.value.trim();
-	correcto = comprobarNombre(nombre);
+	if (nombre != "") {
+		nombreMayus = mayuscula(nombre);
+		idFormulario.nombre.value = nombreMayus;
+	}
+	nombreCorrecto = comprobarNombre(nombre);
 	
 	var apellido1 = idFormulario.apellido1.value.trim();
-	correcto = comprobarApellido1(apellido1);
+	if (apellido1 != "") {
+		nombreMayus = mayuscula(apellido1);
+		idFormulario.apellido1.value = nombreMayus;
+	}
+	ape1Correcto = comprobarApellido1(apellido1);
 
 	var apellido2 = idFormulario.apellido2.value.trim();
-	correcto = comprobarApellido2(apellido2);
+	if (apellido2 != "") {
+		nombreMayus = mayuscula(apellido2);
+		idFormulario.apellido2.value = nombreMayus;
+		ape2Correcto = comprobarApellido2(apellido2);
+	}
 	
 	var fechaNacimiento = idFormulario.idFecha.value;
-	correcto = comprobarFechaNac(fechaNacimiento);
+	fechaCorrecto = comprobarFechaNac(fechaNacimiento);
 
 	var nacionalidad = idFormulario.idPais.value;
-
-	if(correcto) {
+	
+	if(nombreCorrecto && ape1Correcto && ape2Correcto && fechaCorrecto) {
 		peticionAJAX();
+		limpiar();
 	}
+}
+
+function mayuscula(palabra) {
+	var primeraLetra = palabra.substr(0,1);
+	palabra = palabra.slice(1);
+	palabra = primeraLetra.toUpperCase() + palabra;
+	return palabra;
 }
 
 function comprobarNombre(nombre) {
@@ -62,7 +82,7 @@ function comprobarApellido2(apellido2) {
 		document.getElementById('idApellido2').style="color:black";
 	} else {
 		document.getElementById('idApellido2').style="color:red";
-		if (correcto == true) {
+		if (correcto) {
 			document.getElementById('idApellido2').focus();
 		}
 		correcto = false;
@@ -73,7 +93,7 @@ function comprobarApellido2(apellido2) {
 function comprobarFechaNac(fecha) {
 	if (fecha == "") {
 		document.getElementById('idFecha').style="color:red";
-		if (correcto == true) {
+		if (correcto) {
 			document.getElementById('idFecha').focus();
 		}
 		correcto = false;
@@ -87,7 +107,7 @@ function comprobarFechaNac(fecha) {
 
 		if (fechaSistema <= fecha) {
 			document.getElementById('idFecha').style="color:red";
-			if (correcto == true) {
+			if (correcto) {
 				document.getElementById('idFecha').focus();
 			}
 			correcto = false;
@@ -100,23 +120,31 @@ function comprobarFechaNac(fecha) {
 }
 
 function accionAJAX() {
-	document.getElementById("idMensaje").innerHTML = conexion.responseText;
+    document.getElementById("result").innerHTML = conexion.responseText;
 }
 
 function peticionAJAX() {
-	conexion = new XMLHttpRequest();
+    conexion = new XMLHttpRequest();
+    
+    var datosSerializados = serialize(document.getElementById("idFormulario"));
+    conexion.open('POST', '<?=base_url()?>actor/crearPost', true);
+    conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    conexion.send(datosSerializados);
+    
+    conexion.onreadystatechange = function() {
+        if (conexion.readyState==4 && conexion.status==200) {
+            accionAJAX();
+        }
+    }
+}
 
-	var datosSerializados = serialize(document.getElementById("idFormulario"));
-	conexion.open('POST', '<?=base_url()?>actor/crearPost', true);
-	conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-	conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	conexion.send(datosSerializados);
-
-	conexion.onreadystatechange = function() {
-		if (conexion.readyState==4 && conexion.status==200) {
-			accionAJAX();
-		}
-	}
+function limpiar() {
+	idFormulario.nombre.value = "";
+	idFormulario.apellido1.value = "";
+	idFormulario.apellido2.value = "";
+	idFormulario.fechaNacimiento.value="";
+	idFormulario.nacionalidad.value = "es";
 }
 </script>
 
@@ -151,4 +179,6 @@ function peticionAJAX() {
 		
 		</fieldset>
 	</form>
+	<br/>
+	<div id="result"></div>
 </div>

@@ -12,21 +12,15 @@ class actor extends CI_Controller {
 		$fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
 		$nacionalidad = isset($_POST['nacionalidad'])?$_POST['nacionalidad']:null;
 		try {
-			//$this -> actor_model -> createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $nacionalidad);
-			/*$datos['mensaje']['texto'] = "Actor $nombre creado correctamente";
-			$datos['mensaje']['nivel'] = 'ok';
-			$enmarcar($this,"usuario/mensaje",$datos);*/
-			
 			$debug = $this -> actor_model -> createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $nacionalidad);
 			$datos['mensaje']['texto'] = "Actor creado correctamente";
 			$datos['mensaje']['nivel'] = 'ok';
-			//enmarcar($this,"usuario/mensaje",$datos);
 			$this->load->view("actor/mensaje",$datos);
 		}
 		catch (Exception $e) {
 			$datos['mensaje']['texto'] = "Actor ya existente";
 			$datos['mensaje']['nivel'] = 'error';
-			enmarcar($this,"actor/mensaje",$datos);
+			$this->load->view("actor/mensaje",$datos);
 		}
 	}
 

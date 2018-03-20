@@ -18,7 +18,11 @@
 			<tr>
 				<td><?= $actor->nombre ?></td>
 				<td><?= $actor->apellido1 ?></td>
-				<td><?= $actor->apellido2 ?></td>
+				<?php if($actor->apellido2 == "Vacio"):?>
+					<td></td>
+				<?php else:?>
+					<td><?= $actor->apellido2 ?></td>
+				<?php endif;?>
 				<td><?= $actor->fecha_nac ?></td>
 				<td><?= $actor->nacionalidad ?></td>
 			</tr>

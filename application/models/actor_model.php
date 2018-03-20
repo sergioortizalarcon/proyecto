@@ -1,15 +1,15 @@
 <?php
 class Actor_model extends CI_Model {
-	public function create_actor($nombre_actor, $apellido1_actor, $apellido2_actor, $fechaNac_actor, $nacionalidad_actor) {
+	public function createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $nacionalidad) {
 		
-		$actor = R::find('actor', 'nombre like ? and apellido1 like ? and apellido2 like ?', [$nombre,$ape1,$ape2]);
+		$actor = R::find('actor', 'nombre like ? and apellido1 like ? and apellido2 like ?', [$nombre,$apellido1,$apellido2]);
 		if ($actor == null) {
 			$a = R::dispense ( 'actor' );
-			$a -> nombre = $nombre_actor;
-			$a -> apellido1 = $apellido1_actor;
-			$a -> apellido2 = $apellido2_actor;
-			$a -> fechaNac = $fechaNac_actor;
-			$a -> nacionalidad = $nacionalidad_actor;
+			$a -> nombre = $nombre;
+			$a -> apellido1 = $apellido1;
+			$a -> apellido2 = $apellido2;
+			$a -> fechaNac = $fechaNacimiento;
+			$a -> nacionalidad = $nacionalidad;
 			R::store($a);
 		} else {
 			throw new Exception("Actor duplicado");

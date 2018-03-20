@@ -6,17 +6,27 @@ class actor extends CI_Controller {
 
 	public function crearPost() {
 		$this->load->model('actor_model');
-		$nombre_actor = isset($_POST['nombre'])?$_POST['nombre']:null;
-		$apellido1_actor = isset($_POST['apellido1'])?$_POST['apellido1']:null;
-		$apellido2_actor = isset($_POST['apellido2'])?$_POST['apellido2']:null;
-		$fechaNac_actor = isset($_POST['fechaNacimiento'])?$_POST['fechaNac']:null;
-		$nacionalidad_actor = isset($_POST['nacionalidad'])?$_POST['nacionalidad']:null;
+		$nombre = isset($_POST['nombre'])?$_POST['nombre']:null;
+		$apellido1 = isset($_POST['apellido1'])?$_POST['apellido1']:null;
+		$apellido2 = isset($_POST['apellido2'])?$_POST['apellido2']:null;
+		$fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
+		$nacionalidad = isset($_POST['nacionalidad'])?$_POST['nacionalidad']:null;
 		try {
-			$this -> actor_model -> create_actor($nombre_actor, $apellido1_actor, $apellido2_actor, $fechaNac_actor, $nacionalidad_actor);
-			header('Location:'.base_url().'actor/crearPOSTok?actor='.$nombre_actor);
+			//$this -> actor_model -> createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $nacionalidad);
+			/*$datos['mensaje']['texto'] = "Actor $nombre creado correctamente";
+			$datos['mensaje']['nivel'] = 'ok';
+			$enmarcar($this,"usuario/mensaje",$datos);*/
+			
+			$debug = $this -> actor_model -> createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $nacionalidad);
+			$datos['mensaje']['texto'] = "Actor creado correctamente";
+			$datos['mensaje']['nivel'] = 'ok';
+			//enmarcar($this,"usuario/mensaje",$datos);
+			$this->load->view("actor/mensaje",$datos);
 		}
 		catch (Exception $e) {
-			header('Location:'.base_url().'actor/crearPOSTerror?actor='.$nombre_actor);
+			$datos['mensaje']['texto'] = "Actor ya existente";
+			$datos['mensaje']['nivel'] = 'error';
+			enmarcar($this,"actor/mensaje",$datos);
 		}
 	}
 

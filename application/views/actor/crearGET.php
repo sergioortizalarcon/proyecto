@@ -5,16 +5,17 @@ function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];
 var conexion;
 var correcto = true;
 
-function comprobar() {
+unction comprobar() {
 	var nombre = idFormulario.nombre.value.trim();
 	correcto = comprobarNombre(nombre);
 	
 	var apellido1 = idFormulario.apellido1.value.trim();
+	correcto = comprobarApellido1(apellido1);
+
 	var apellido2 = idFormulario.apellido2.value.trim();
-	correcto = comprobarApellidos(apellido1, apellido2);
+	correcto = comprobarApellido2(apellido2);
 	
 	var fechaNacimiento = idFormulario.idFecha.value;
-	//console.log(fechaNac);
 	correcto = comprobarFechaNac(fechaNacimiento);
 
 	var nacionalidad = idFormulario.idPais.value;
@@ -39,7 +40,7 @@ function comprobarNombre(nombre) {
 	return correcto;
 }
 
-function comprobarApellidos(apellido1, apellido2) {
+function comprobarApellido1(apellido1) {
 	var expReg = /^[a-zA-Z áéíóúÁÉÍÓÚ]{2,30}$/;
 	if (expReg.test(apellido1)){
 		correcto = true;
@@ -51,6 +52,11 @@ function comprobarApellidos(apellido1, apellido2) {
 		}
 		correcto = false;
 	}
+	return correcto;
+}
+
+function comprobarApellido2(apellido2) {
+	var expReg = /^[a-zA-Z áéíóúÁÉÍÓÚ]{2,30}$/;
 	if (expReg.test(apellido2)){
 		correcto = true;
 		document.getElementById('idApellido2').style="color:black";
@@ -70,28 +76,25 @@ function comprobarFechaNac(fecha) {
 		if (correcto == true) {
 			document.getElementById('idFecha').focus();
 		}
+		correcto = false;
 	} else {
-
 		var fechaSis = new Date();
 		var anio = fechaSis.getFullYear();
 		var mes = fechaSis.getMonth()+1;
 		var dia = fechaSis.getDate();
-		console.log(mes.length);
-		/*if (mes.length == 1) {
-			mes = "0" + mes;
-		}*/
-		//if (fecha == 
-		console.log("Fecha pasada: " + fecha);
+		mes = "0"+mes;
 		fechaSistema = anio + "-" + mes + "-" + dia
-		console.log("Fecha Sistema: " + fechaSistema);
 
-
-		/*document.getElementById('idFecha').style="color:black";
-		var fecha = new Date();
-		var anio = fecha.getFullYear();
-		var mes = fecha.getMonth()+1;
-		var dia = fecha.getDay();*/
-		correcto = true;
+		if (fechaSistema <= fecha) {
+			document.getElementById('idFecha').style="color:red";
+			if (correcto == true) {
+				document.getElementById('idFecha').focus();
+			}
+			correcto = false;
+		} else {
+			correcto = true;
+			document.getElementById('idFecha').style="color:black";
+		}
 	}
 	return correcto;
 }

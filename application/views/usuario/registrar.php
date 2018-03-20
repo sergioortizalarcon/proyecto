@@ -15,7 +15,8 @@ function peticionAJAX(nombre,ape1,ape2,alias,correo,pwd,fecha) {
 	xhr.open("POST", "<?=base_url()?>usuario/crearPost", true);
 	xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xhr.send("nombre="+nombre+"&apellidoUno="+ape1+"&apellidoDos="+ape2+"&alias="+alias+"&correo="+correo+"&pwd="+pwd+"&fecha="+fecha);
+	console.log(nombre,ape1,ape2,alias,correo,pwd,fecha);
+	xhr.send("nombre="+nombre+"&apellido1="+ape1+"&apellido2="+ape2+"&alias="+alias+"&correo="+correo+"&pwd="+pwd+"&fecha="+fecha);
 	console.log(xhr);
 	//xhr.send("nombre="+nombre);
 	xhr.onreadystatechange = function(){
@@ -64,8 +65,8 @@ function peticionAJAX(nombre,ape1,ape2,alias,correo,pwd,fecha) {
         if(ape1!="") {
         expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,20}$/;
 			if (expresion.test(ape1)) {
-				var m = ape1.charAt(0);
-				ape1= m.toUpperCase()+ape1.substring(1,ape1.length);
+				var m1 = ape1.charAt(0);
+				ape1= m1.toUpperCase()+ape1.substring(1,ape1.length);
 				idFormulario.idApe1.style.borderColor="blue";
 				document.getElementById("aApellido").style.display="none";
 				return true;
@@ -88,21 +89,21 @@ function peticionAJAX(nombre,ape1,ape2,alias,correo,pwd,fecha) {
 			c = ape2.split(" ");
 			ap="";
 		    //no limita a dos palabras
-			expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{0,20}(\s[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3-20}){0,1}$/;
+			expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{0,20}$/;//(\s[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3-20}){1,2}$/;
 			for (var i = 0; i < c.length; i++) {
 				if (expresion.test(c[i])) {
-					m = c[i].charAt(0);
-					ap += m.toUpperCase()+c[i].substring(1,c[i].length)+" ";
+					m2 = c[i].charAt(0);
+					ap += m2.toUpperCase()+c[i].substring(1,c[i].length)+" ";
 					idFormulario.idApe2.style.borderColor="blue";
 					document.getElementById("aApellidoDos").style.display="none";
 				} else {
 					document.getElementById("aApellidoDos").style.display="initial";
-					idFormulario.idApe2.style.borderColor="red";
+					idFormulario.idApe2.style.borderColor="orange";
 					return false;
 				}
 			}
 			//devuelve el valor correcto quitando el ultimo espacio para que no pete al volver a darle.
-			ape1 = ap.substring(0,ap.length-1);
+			ape2 = ap.substring(0,ap.length-1);
 		} else {
 			ape2 = " ";
 		}
@@ -200,7 +201,7 @@ function peticionAJAX(nombre,ape1,ape2,alias,correo,pwd,fecha) {
 		}
 	}
 
-	function validate_fecha(){
+	function validate_fecha(fecha){
     var patron=new RegExp("^(19|20)+([0-9]{2})([-])([0-9]{1,2})([-])([0-9]{1,2})$");
  
     if(fecha.search(patron)==0){
@@ -273,7 +274,6 @@ function calcularEdad() {
         } else {
         	document.getElementById("aFecha").style.display="none";
         }
- 
         document.getElementById("result").innerHTML="Tienes "+edad+" años, "+meses+" meses y "+dias+" días";
         return true;
     } else {
@@ -380,11 +380,12 @@ function calcularEdad() {
 <script>
 	document.getElementById("idNombre").value="pepe";
 document.getElementById("idApe1").value="perez";
-document.getElementById("idApe2").value="";
+document.getElementById("idApe2").value="algo";
 document.getElementById("idAlias").value="menacio3";
 document.getElementById("idEmail").value="algo.yaparte@gmail.com";
-document.getElementById("idPwd").value="23aA$@$!%*?&";
-document.getElementById("idPwdD").value="23aA$@$!%*?&";
+//23aA$@$!%*?&
+document.getElementById("idPwd").value="23aA!25353";
+document.getElementById("idPwdD").value="23aA!25353";
 document.getElementById("idFecha").value="2002-10-25";
 </script>
 </div>

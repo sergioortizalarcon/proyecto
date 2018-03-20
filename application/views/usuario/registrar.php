@@ -4,12 +4,6 @@
 	window.onload = function(){
 		xhr = new XMLHttpRequest();
 	}
-	
-	function accionAJAX() {
-		if (xhr.readyState==4 && xhr.status==200) {
-			document.getElementById("result").innerHTML = xhr.responseText;
-		}
-	}
 
 function comprobarAlias(alias) {
 	xhr.open("POST", "<?=base_url()?>usuario/comprobarDispAlias", true);
@@ -18,10 +12,13 @@ function comprobarAlias(alias) {
 	xhr.send("alias="+alias);
 	xhr.onreadystatechange = function(){
 		if (xhr.readyState==4 && xhr.status==200) {
-			document.getElementById("result").innerHTML =xhr.responseText;
+			document.getElementById("aliasEx").innerHTML =xhr.responseText;
 			if(!xhr.responseText){
 				idFormulario.idAlias.style.borderColor="blue";
 				document.getElementById("aAlias").style.display="none";
+				document.getElementById("aliasEx").style.display="none";
+			} else {
+				document.getElementById("aliasEx").style.display="initial";
 			}
 		}
 	}
@@ -34,23 +31,15 @@ function comprobarCorreo(correo) {
 	xhr.send("correo="+correo);
 	xhr.onreadystatechange = function(){
 		if (xhr.readyState==4 && xhr.status==200) {
-			document.getElementById("result").innerHTML =xhr.responseText;
+			document.getElementById("mailAviso").innerHTML =xhr.responseText;
+			//Si no recibe nada es que esta disponible y cambia los estilos del input
 			if(!xhr.responseText){
 				idFormulario.idEmail.style.borderColor="blue";
-		        	document.getElementById("aEmail").style.display="none";
+		        document.getElementById("aEmail").style.display="none";
+				document.getElementById("mailAviso").style.display="none";
+			} else {
+				document.getElementById("mailAviso").style.display="initial";
 			}
-		}
-	}
-}
-
-function peticionAJAX(nombre,ape1,ape2,alias,correo,pwd,fecha) {
-	xhr.open("POST", "<?=base_url()?>usuario/crearPost", true);
-	xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xhr.send("nombre="+nombre+"&apellido1="+ape1+"&apellido2="+ape2+"&alias="+alias+"&correo="+correo+"&pwd="+pwd+"&fecha="+fecha);
-	xhr.onreadystatechange = function(){
-		if (xhr.readyState==4 && xhr.status==200) {
-			document.getElementById("result").innerHTML = xhr.responseText;
 		}
 	}
 }
@@ -58,25 +47,29 @@ function peticionAJAX(nombre,ape1,ape2,alias,correo,pwd,fecha) {
 function validarCorreo() {
 	var correo = document.getElementById("idEmail").value;
 		if (correo!="") {
-		expresion =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+		expresion =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,4})$/i;
+
 		    if (expresion.test(correo)) {
+			//Realiza la accion del sgte if pero muestra la consola de su correspondiente else.
 		    	if (comprobarCorreo(correo)) {
 		    		console.log("disp correo:" +comprobarCorreo(correo));
 		        	idFormulario.idEmail.style.borderColor="blue";
 		        	document.getElementById("aEmail").style.display="none";
-		        	
+		        	return true;
 		        } else {
+		        	console.log("disp ->"+ comprobarCorreo(correo));
 					idFormulario.idEmail.style.borderColor="red";
 					document.getElementById("aEmail").style.display="initial";
 				    return false;
 				}
-		        return true;
 		    } else {
+		    	console.log("algo va mal");
 		        document.getElementById("aEmail").style.display="initial";
 		        idFormulario.idEmail.style.borderColor="red";
 		        return false;
 		    }
 		} else {
+			console.log("pero q muy mal");
 		    document.getElementById("aEmail").style.display="initial";
 		    idFormulario.idEmail.style.borderColor="red";
 		    return false;
@@ -86,37 +79,29 @@ function validarCorreo() {
 function verificarCorreo() {
 	var verifCorreo = document.getElementById("idEmailV").value;
 	var primerCorreo = document.getElementById("idEmail").value;
-		if (verifCorreo!="") {
-		expresion =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-		    if (expresion.test(verifCorreo)) {
-		    	console.log("entro");
-		    	if (comprobarCorreo(verifCorreo) == true) {
-		    		console.log("disp2 correo:" +comprobarCorreo(verifCorreo));
-		    		if (verifCorreo == primerCorreo.trim()) {
-			        	idFormulario.idEmailV.style.borderColor="blue";
-			        	document.getElementById("aEmailDos").style.display="none";
-						return true;
-		    		} else {
-		    			idFormulario.idEmailV.style.borderColor="red";
-						document.getElementById("aEmailDos").style.display="initial";
-				    	return false;
-		    		}
-		        } else {
-		        	console.log(expresion.test(verifCorreo));
-					idFormulario.idEmailV.style.borderColor="red";
-					document.getElementById("aEmailDos").style.display="initial";
-				    return false;
-				}
-		    } else {
-		        document.getElementById("aEmailDos").style.display="initial";
-		        idFormulario.idEmailV.style.borderColor="red";
-		        return false;
-		    }
+	if (verifCorreo!="") {
+		expresion =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,4})$/i;
+		if (expresion.test(verifCorreo)) {
+			if (verifCorreo == primerCorreo.trim()) {
+		       	idFormulario.idEmailV.style.borderColor="blue";
+		       	document.getElementById("aEmailDos").style.display="none";
+				return true;
+		   	} else {
+		   		idFormulario.idEmailV.style.borderColor="red";
+				document.getElementById("aEmailDos").style.display="initial";
+			   	return false;
+			}
 		} else {
 		    document.getElementById("aEmailDos").style.display="initial";
 		    idFormulario.idEmailV.style.borderColor="red";
 		    return false;
 		}
+	} else {
+		    document.getElementById("aEmailDos").style.display="initial";
+		    idFormulario.idEmailV.style.borderColor="red";
+		    return false;
+		}
+		
 }
 
 function validarAlias() {
@@ -356,24 +341,40 @@ function calcularEdad() {
             ultimoDiaMes=new Date(ahora_ano, ahora_mes, 0);
             dias=ultimoDiaMes.getDate()-(dia-ahora_dia);
         }
+
+        document.getElementById("result").innerHTML="Tienes "+edad+" años, "+meses+" meses y "+dias+" días";
         if (edad<13) {
         	document.getElementById("aFecha").style.display="initial";
+			return false;
         } else {
         	document.getElementById("aFecha").style.display="none";
+        	return true;
         }
-        document.getElementById("result").innerHTML="Tienes "+edad+" años, "+meses+" meses y "+dias+" días";
-        return true;
     } else {
         document.getElementById("result").innerHTML="La fecha "+fecha+" es incorrecta";
         return false;
     }
 }
 
+function validar() {
+	if ( (validarNombre() && validarApeUno()) && (verificarCorreo() && confirmarPass() && calcularEdad()) ) {
+		console.log("todo ok");
+		document.getElementById("registrarse").disabled=false;
+	} else {
+		/*
+		console.log("nombre:"+validarNombre());
+		console.log("correo :"+validarCorreo());
+		console.log("ver correo:"+verificarCorreo());
+		console.log("aun no");
+		*/
+		document.getElementById("registrarse").disabled=true;
+	}
+}
+
 </script>
 <div class="container ">
-<div class="row"><div class="col-md-10" id="creator">
-
-<form id="idFormulario" action="<?= base_url()?>usuario/crearPost" method="post" >
+<div id="creator">
+<form id="idFormulario" action="<?= base_url()?>usuario/crearPost" method="post" onchange="validar();">
 <fieldset>
 <legend>Crear nueva cuenta...</legend>
 <small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>
@@ -413,6 +414,7 @@ placeholder="...YouAreAmazing" data-toogle="tooltip" data-placement="left" title
 	Debes tener un alias válido (máximo 14 caracteres, alfa numéricos)
 </span>
 </div>
+<div class="avisos" id="aliasEx"></div>
 
 <div class="form-group">
 <label for="idEmail">Email</label><span class="obligatorio">*</span>
@@ -422,7 +424,7 @@ placeholder="email@email.com" data-toogle="tooltip" data-placement="left" title=
 	Debes escribir un correo válido.
 </span>
 </div>
-
+<div class="avisos" id="mailAviso"></div>
 <div class="form-group">
 <label for="idEmailV">Vuelva a introducir Email:</label>
 <input type="email" class="form-control" id="idEmailV" onfocusout="verificarCorreo();" placeholder="email@email.com" name="correoV"
@@ -455,26 +457,22 @@ data-toogle="tooltip" data-placement="left" title="repite la contraseña"/>
 <input class="form-control" type="date" id="idFecha" name="fecha" onfocusout="calcularEdad();" />
 <span class="avisos" id="aFecha">
 	Debes ser mayor de 13 años. 
+</span>
 </div>
 
 <div class="nav navbar-form navbar-right">
-<input type="submit" class="btn btn-default" id="registrarse" value="Registrarse" />
+<input type="submit" class="btn btn-default" id="registrarse" value="Registrarse" disabled="disabled" />
 </div>
 </fieldset>
-	</form>
-
+</form>
+</div>
 <div id="result"></div>
-</div>
-
-<div class="row"><div class="col-md-2"></div>
-</div>
 <script>
 	document.getElementById("idNombre").value="pepe";
 document.getElementById("idApe1").value="perez";
 document.getElementById("idApe2").value="perales";
 document.getElementById("idAlias").value="menancio3";
 document.getElementById("idEmail").value="un.yaparte@gmail.com";
-//23aA$@$!%*?&
 document.getElementById("idPwd").value="23aA$@$!%*?&";
 document.getElementById("idPwdD").value="23aA$@$!%*?&";
 document.getElementById("idFecha").value="2002-10-25";

@@ -25,6 +25,7 @@ class usuario extends CI_Controller {
 		$correo = isset($_POST["correo"])?$_POST["correo"]:null;
 		$comprobacion = $this -> usuario_model -> comprobar_email($correo);
 		if ($comprobacion) {
+			//editar -> si no existe no devuelve nada por lo q si es correcto no devuelve nada y se evalua eso
 			$datos['mensaje']['texto'] = "Mail ok";
 			$datos['mensaje']['nivel'] = 'ok';
 			} else {
@@ -77,7 +78,7 @@ class usuario extends CI_Controller {
 
 	/*	2.- 	*/
 
-	
+
 	public function listar($f='') {
 		$this->load->model('usuario_model');
 		$filtro = isset($_POST['filtro'])?$_POST['filtro']:$f;

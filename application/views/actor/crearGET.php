@@ -9,7 +9,7 @@ function comprobar() {
 	var nombre = idFormulario.nombre.value.trim();
 	correcto = comprobarNombre(nombre);
 	
-	var apellido1 = idFormulario.apellido1.value.trim();
+	var apellido1 = idFsdsdfsdormulario.apellido1.value.trim();
 	var apellido2 = idFormulario.apellido2.value.trim();
 	correcto = comprobarApellidos(apellido1, apellido2);
 	

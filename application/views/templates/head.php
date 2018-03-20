@@ -13,11 +13,21 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
 </script>
-<script type="text/javascript"
-	src="<?=base_url()?>assets/js/cripto.js"></script>
-<script type="text/javascript"
-	src="<?=base_url()?>assets/js/serialize.js"></script>
-<title>CRUD EMPLEADOS</title>
+<script type="text/javascript" src="<?=base_url()?>assets/js/cripto.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js"></script>
+
+
+<!-- Esto contiene la función jquery que da el estilo a las listas que contiene una id especificada en el archivo-->
+<script type="text/javascript" src="<?=base_url()?>assets/js/sortTablesJquery.js"></script>
+
+<!--Necesarios para el sorteo de la lista-->
+<script type="text/javascript" src="<?=base_url()?>assets/js/datatables.js"></script>
+<link rel="stylesheet" href="<?=base_url()?>assets/css/datatables.css">
+
+
+
+
 <link rel="stylesheet" href="<?=base_url()?>assets/css/estilo.css">
+<title>CRUD EMPLEADOS</title>
 </head>
 <body>

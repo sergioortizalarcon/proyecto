@@ -19,7 +19,7 @@
 				<td><?= $actor->nombre ?></td>
 				<td><?= $actor->apellido1 ?></td>
 				<td><?= $actor->apellido2 ?></td>
-				<td><?= $actor->fecha_nac ?></td>
+				<td><?= $actor->fecha_nacimiento ?></td>
 				<td><?= $actor->nacionalidad ?></td>
 			</tr>
 		<?php endforeach;?>

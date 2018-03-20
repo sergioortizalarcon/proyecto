@@ -18,8 +18,8 @@
 			<tr>
 				<td><?= $director->nombre ?></td>
 				<td><?= $director->apellido1 ?></td>
-				<td><?= $director->apellido2 ?></td>
-				<td><?= $director->fecha_nac ?></td>
+				<td><?= $actor->apellido2 ?></td>
+				<td><?= $director->fecha_nacimiento ?></td>
 				<td><?= $director->nacionalidad ?></td>
 			</tr>
 		<?php endforeach;?>

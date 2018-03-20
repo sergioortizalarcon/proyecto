@@ -4,26 +4,45 @@ function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];
 <script type="text/javascript">
 var conexion;
 var correcto = true;
-console.log(correcto);
 
 function comprobar() {
 	var nombre = idFormulario.nombre.value.trim();
-	correcto = comprobarNombre(nombre);
+	if (nombre != "") {
+		nombreMayus = mayuscula(nombre);
+		idFormulario.nombre.value = nombreMayus;
+	}
+	nombreCorrecto = comprobarNombre(nombre);
 	
 	var apellido1 = idFormulario.apellido1.value.trim();
-	correcto = comprobarApellido1(apellido1);
+	if (apellido1 != "") {
+		nombreMayus = mayuscula(apellido1);
+		idFormulario.apellido1.value = nombreMayus;
+	}
+	ape1Correcto = comprobarApellido1(apellido1);
 
 	var apellido2 = idFormulario.apellido2.value.trim();
-	correcto = comprobarApellido2(apellido2);
+	if (apellido2 != "") {
+		nombreMayus = mayuscula(apellido2);
+		idFormulario.apellido2.value = nombreMayus;
+		ape2Correcto = comprobarApellido2(apellido2);
+	}
 	
 	var fechaNacimiento = idFormulario.idFecha.value;
-	correcto = comprobarFechaNac(fechaNacimiento);
+	fechaCorrecto = comprobarFechaNac(fechaNacimiento);
 
 	var nacionalidad = idFormulario.idPais.value;
-
-	if(correcto) {
+	
+	if(nombreCorrecto && ape1Correcto && ape2Correcto && fechaCorrecto) {
 		peticionAJAX();
+		limpiar();
 	}
+}
+
+function mayuscula(palabra) {
+	var primeraLetra = palabra.substr(0,1);
+	palabra = palabra.slice(1);
+	palabra = primeraLetra.toUpperCase() + palabra;
+	return palabra;
 }
 
 function comprobarNombre(nombre) {
@@ -63,7 +82,7 @@ function comprobarApellido2(apellido2) {
 		document.getElementById('idApellido2').style="color:black";
 	} else {
 		document.getElementById('idApellido2').style="color:red";
-		if (correcto == true) {
+		if (correcto) {
 			document.getElementById('idApellido2').focus();
 		}
 		correcto = false;
@@ -74,7 +93,7 @@ function comprobarApellido2(apellido2) {
 function comprobarFechaNac(fecha) {
 	if (fecha == "") {
 		document.getElementById('idFecha').style="color:red";
-		if (correcto == true) {
+		if (correcto) {
 			document.getElementById('idFecha').focus();
 		}
 		correcto = false;
@@ -88,7 +107,7 @@ function comprobarFechaNac(fecha) {
 
 		if (fechaSistema <= fecha) {
 			document.getElementById('idFecha').style="color:red";
-			if (correcto == true) {
+			if (correcto) {
 				document.getElementById('idFecha').focus();
 			}
 			correcto = false;
@@ -101,7 +120,7 @@ function comprobarFechaNac(fecha) {
 }
 
 function accionAJAX() {
-    document.getElementById("idMensaje").innerHTML = conexion.responseText;
+    document.getElementById("result").innerHTML = conexion.responseText;
 }
 
 function peticionAJAX() {
@@ -119,36 +138,59 @@ function peticionAJAX() {
         }
     }
 }
+
+function limpiar() {
+	idFormulario.nombre.value = "";
+	idFormulario.apellido1.value = "";
+	idFormulario.apellido2.value = "";
+	idFormulario.fechaNacimiento.value="";
+	idFormulario.nacionalidad.value = "es";
+}
 </script>
 
 
 <div class="container ">
-<form id="idFormulario">
-<fieldset>
-<legend>Crear nuevo director</legend>
-
-<label for="idNombre">Nombre</label>
-		<input class="form-control" type="text" id="idNombre" name="nombre" />
+	<form id="idFormulario">
+		<fieldset>
+			<legend>Crear nuevo director</legend>
+			
+			<label for="idNombre">Nombre</label>
+			<input class="form-control" type="text" id="idNombre" name="nombre" />
+					
+			<label for="idApellido1">Apellido1</label>
+			<input class="form-control" type="text" id="idApellido1" name="apellido1" />
+					
+			<label for="idApellido2">Apellido2</label>
+			<input class="form-control" type="text" id="idApellido2" name="apellido2" />
+					
+			<label for="idFecha">Fecha de nacimiento</label>
+			<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" />
 		
-		<label for="idApellido1">Apellido1</label>
-		<input class="form-control" type="text" id="idApellido1" name="apellido1" />
 		
-		<label for="idApellido2">Apellido2</label>
-		<input class="form-control" type="text" id="idApellido2" name="apellido2" />
-		
-		<label for="idFecha">Fecha de nacimiento</label>
-		<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" />
-		
-		<label for="idPais">Nacionalidad</label>
-		<select class="form-control" id="idPais" name="nacionalidad">
-			<option value="es">Española</option>
-			<option value="fr">Francesa</option>
-			<option value="pt">Portuguesa</option>
-			<option value="de">Alemana</option>
-		</select>
-
-<input type="button" class="btn btn-default" onclick="comprobar()" value="Enviar"/>
-
-</fieldset>
-</form>
+			<!-- TODO
+				Falta el model de los lenguajes para pasarlos
+				
+				<laber for="idPais">Nacionalidad</label>
+				<select class="form-control" id="idPais" name="nacionalidad">
+					<-?php foreach($body['nacionalidades'] as $nacionalidad):?>
+						<option value="<-?php $nacionalidad->codigo ?>"><-?php $nacionalidad->nombre ?></option>
+					<-?php endforeach; ?>
+				</select>
+			 -->
+			
+			<!-- TEMPORAL -->
+			<label for="idPais">Nacionalidad</label>
+			<select class="form-control" id="idPais" name="nacionalidad">
+				<option value="es">Española</option>
+				<option value="fr">Francesa</option>
+				<option value="pt">Portuguesa</option>
+				<option value="de">Alemana</option>
+			</select>
+			<br/>
+			<input type="button" class="btn btn-default" onclick="comprobar()" value="Enviar"/>
+			
+		</fieldset>
+	</form>
+	<br/>
+	<div id="result"></div>
 </div>

@@ -1,53 +1,32 @@
 <?php
 
-class Director extends CI_Controller
-{
-
-    public function crear()
-    {
+class Director extends CI_Controller {
+	public function crear(){
+		//TODO(Falta el model de los lenguajes
+		/*$datos['body']['nacionalidades'] = $this->nacionalidad_model->getAll();
+		 enmarcar($this, "director/crearGET", $datos);*/
         enmarcar($this, 'director/crear');
     }
 
-    public function crearOK()
-    {
-        enmarcar($this, 'director/crearOK');
-    }
-
-    public function crearERROR()
-    {
-        enmarcar($this, 'director/crearERROR');
-    }
-
-    public function crearPost()
-    {
-        $nombre = isset($_POST['nombre'])?$_POST['nombre']:null;
-        $apellido1 = isset($_POST['apellido1'])?$_POST['apellido1']:null;
-        $apellido2 = isset($_POST['apellido2'])?$_POST['apellido2']:null;
-        $fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
-        $nacionalidad = isset($_POST['nacionalidad'])?$_POST['nacionalidad']:null;
-        
-        $this->load->model('director_model');
+    public function crearPost() {
+    	$this->load->model('director_model');
+    	$nombre = isset($_POST['nombre'])?$_POST['nombre']:null;
+    	$apellido1 = isset($_POST['apellido1'])?$_POST['apellido1']:null;
+    	$apellido2 = isset($_POST['apellido2'])?$_POST['apellido2']:null;
+    	$fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
+    	$nacionalidad = isset($_POST['nacionalidad'])?$_POST['nacionalidad']:null;
         
         try {
-        	$this -> director_model -> createDirector($nombre, $apellido1, $apellido2, $fechaNacimiento, $nacionalidad);
-        	header('Location:'.base_url().'director/crearPOSTok?director='.$nombre_actor);
+        	$debug = $this -> director_model -> createDirector($nombre, $apellido1, $apellido2, $fechaNacimiento, $nacionalidad);
+        	$datos['mensaje']['texto'] = "Director creado correctamente";
+        	$datos['mensaje']['nivel'] = 'ok';
+        	$this->load->view("Director/mensaje",$datos);
         }
         catch (Exception $e) {
-        	header('Location:'.base_url().'director/crearPOSTerror?director='.$nombre_actor);
+        	$datos['mensaje']['texto'] = "Director ya existente";
+        	$datos['mensaje']['nivel'] = 'error';
+        	$this->load->view("director/mensaje",$datos);
         }
-        
-        
-        /*$status = $this->director_model->createDirector($nombre);
-        $status = $this->director_model->createDirector($apellido1);
-        $status = $this->director_model->createDirector($apellido2);
-        $status = $this->director_model->createDirector($fechaNacimiento);
-        $status = $this->director_model->createDirector($nacionalidad);
-        
-        if ($status >= 0) {
-            header('Location:' . base_url() . 'director/crearOK');
-        } else {
-            header('Location:' . base_url() . 'director/crearERROR');
-        }*/
     }
 
     public function listar() {

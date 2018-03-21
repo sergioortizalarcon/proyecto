@@ -23,12 +23,15 @@
 		<th>2º Apellido usuario</th>
 		<th>Alias usuario</th>
 		<th>Email usuario</th>
+		<th>País</th>
+		<th>Rol</th>
 		<th>Fecha de nacimiento del usuario</th>
 		<th>Acciones</th>
+
 	</tr>
 	</thead>
     <tbody>
-<tr><td>Ashton Cox</td><td>Junior Technical Author</td><td>San Francisco</td><td>66</td><td>2009/01/12</td><td>$86,000</td><td>$86were</td></tr>
+
 	<?php foreach ($usuarios as $key): ?>
 		<tr>
 			<td> <?=$key->nombre?> </td>
@@ -36,6 +39,8 @@
 			<td> <?=$key->apellido_dos?> </td>
 			<td> <?=$key->alias?> </td>
 			<td> <?=$key->email?> </td>
+			<td> <?=$key->paises["nombre"]?> </td>
+			<td> <?=$key->rol?> </td>
 			<td> <?=$key->fecha_nacimiento?></td>
 
 			<td>
@@ -51,23 +56,16 @@
 			</td>
 		</tr>
 	<?php endforeach;?>
-	 <tr>
-                <td>Donna Snider</td>
-                <td>Customer Support</td>
-                <td>New York</td>
-                <td>27</td>
-                <td>2011/01/25</td>
-                <td>$112,000</td>
-                <td>$86,000</td>
-            </tr>
         </tbody>
         <tfoot>
-            <tr>
-               <th>Nombre usuario</th>
+         <tr>
+        <th>Nombre usuario</th>
 		<th>1º Apellido usuario</th>
 		<th>2º Apellido usuario</th>
 		<th>Alias usuario</th>
 		<th>Email usuario</th>
+		<th>País</th>
+		<th>Rol</th>
 		<th>Fecha de nacimiento del usuario</th>
 		<th>Acciones</th>
             </tr>

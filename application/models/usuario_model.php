@@ -30,7 +30,8 @@ class usuario_model extends CI_Model {
 		}
 	}
 
-	public function create_usuario($nombre, $ape1, $ape2, $alias, $email, $pwd, $fecha) {
+	public function create_usuario($nombre, $ape1, $ape2, $alias, $email, $pwd, $fecha,$idPais) {
+		$rol = "basico";
 		$comprobNombre = R::findOne("usuarios","alias=?",[$alias]);
 		$comprobNEmail = R::findOne("usuarios","email=?",[$email]);
 		if ($comprobNombre == null && $comprobNEmail == null) {
@@ -41,9 +42,13 @@ class usuario_model extends CI_Model {
 			$usuario -> alias = $alias;
 			$usuario -> email = $email;
 			$usuario -> password = $pwd;
+			$usuario -> rol = $rol;
+			$pais = R::load("paises",$idPais);
+			$pais -> xownUsuarioList[] =$usuario;
+
 			$usuario -> fecha_nacimiento = $fecha;
 
-			R::store($usuario);
+			R::store($pais);
 			R::close();
 		} else {
 			R::close();

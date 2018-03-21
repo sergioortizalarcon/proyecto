@@ -79,10 +79,7 @@ function validarCorreo() {
 function verificarCorreo() {
 	var verifCorreo = document.getElementById("idEmailV").value;
 	var primerCorreo = document.getElementById("idEmail").value;
-	if (verifCorreo!="") {
-		expresion =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,4})$/i;
-		if (expresion.test(verifCorreo)) {
-			if (verifCorreo == primerCorreo.trim()) {
+			if (verifCorreo.trim() == primerCorreo.trim()) {
 		       	idFormulario.idEmailV.style.borderColor="blue";
 		       	document.getElementById("aEmailDos").style.display="none";
 				return true;
@@ -91,17 +88,6 @@ function verificarCorreo() {
 				document.getElementById("aEmailDos").style.display="initial";
 			   	return false;
 			}
-		} else {
-		    document.getElementById("aEmailDos").style.display="initial";
-		    idFormulario.idEmailV.style.borderColor="red";
-		    return false;
-		}
-	} else {
-		    document.getElementById("aEmailDos").style.display="initial";
-		    idFormulario.idEmailV.style.borderColor="red";
-		    return false;
-		}
-		
 }
 
 function validarAlias() {
@@ -182,23 +168,30 @@ function validarAlias() {
 
 
 	function validarApeDos() {
-		var ape2 = document.getElementById("idApe2").value;
+		var ape2 = document.getElementById("idApe2").value.trim();
 		if (ape2!=""){
 			c = ape2.split(" ");
 			ap="";
-		    //no limita a dos palabras
-			expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{0,20}$/;//(\s[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3-20}){1,2}$/;
-			for (var i = 0; i < c.length; i++) {
-				if (expresion.test(c[i])) {
-					m2 = c[i].charAt(0);
-					ap += m2.toUpperCase()+c[i].substring(1,c[i].length)+" ";
-					idFormulario.idApe2.style.borderColor="blue";
-					document.getElementById("aApellidoDos").style.display="none";
-				} else {
-					document.getElementById("aApellidoDos").style.display="initial";
-					idFormulario.idApe2.style.borderColor="red";
-					return false;
+			if (c.length<=3) {
+			    //no limita a dos palabras
+				expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{0,10}$/;
+				//(\s[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3-20}){1,2}$/;
+				for (var i = 0; i < c.length; i++) {
+					if (expresion.test(c[i])) {
+						m2 = c[i].charAt(0);
+						ap += m2.toUpperCase()+c[i].substring(1,c[i].length)+" ";
+						idFormulario.idApe2.style.borderColor="blue";
+						document.getElementById("aApellidoDos").style.display="none";
+					} else {
+						document.getElementById("aApellidoDos").style.display="initial";
+						idFormulario.idApe2.style.borderColor="red";
+						return false;
+					}
 				}
+			} else {
+				document.getElementById("aApellidoDos").style.display="initial";
+				idFormulario.idApe2.style.borderColor="red";
+				return false;
 			}
 			//devuelve el valor correcto quitando el ultimo espacio para que no pete al volver a darle.
 			ape2 = ap.substring(0,ap.length-1);
@@ -239,33 +232,19 @@ function validarAlias() {
 
 	function confirmarPass() {
 		var pwdDos = document.getElementById("idPwdD").value;
-		if (pwdDos!="") {
-		expresion = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}$/;
-		    if (expresion.test(pwdDos)) {
-		        idFormulario.idPwdD.style.borderColor="blue";
-		        document.getElementById("aPwdD").style.display="none";
 		    	if (pwd == pwdDos) {
-
 		    		//encripta la contraseña
 		    		pcripto = sha256(pwd);
 		        	//activar_registro();
 		        	passOk=true;
+		        	document.getElementById("aPwdD").style.display="none";
+		        	idFormulario.idPwdD.style.borderColor="blue";
 		        	return true;
 		    	} else {
 		    		document.getElementById("aPwdD").style.display="initial";
 		        	idFormulario.idPwdD.style.borderColor="red";
 		        	return false;
 		    	}
-		    } else {
-		        document.getElementById("aPwdD").style.display="initial";
-		        idFormulario.idPwdD.style.borderColor="red";
-		        return false;
-		    }
-		} else {
-		    document.getElementById("aPwdD").style.display="initial";
-		    idFormulario.idPwdD.style.borderColor="green";
-		    return false;
-		}
 	}
 
 	
@@ -357,18 +336,16 @@ function calcularEdad() {
 }
 
 function validar() {
-	if ( (validarNombre() && validarApeUno()) && (verificarCorreo() && confirmarPass() && calcularEdad()) ) {
+	if ( (validarNombre() && validarApeUno() && validarApeDos()) && (verificarCorreo())){
+
+		 if ( (confirmarPass() && validarPass()) && calcularEdad() ) {
 		console.log("todo ok");
 		document.getElementById("registrarse").disabled=false;
-	} else {
-		/*
-		console.log("nombre:"+validarNombre());
-		console.log("correo :"+validarCorreo());
-		console.log("ver correo:"+verificarCorreo());
-		console.log("aun no");
-		*/
+	}
 		document.getElementById("registrarse").disabled=true;
 	}
+
+	
 }
 
 </script>
@@ -454,12 +431,13 @@ data-toogle="tooltip" data-placement="left" title="repite la contraseña"/>
 
 <div class="form-group">
 <label for="idPais">Selecciona país</label><span class="obligatorio">*</span>
-<select name="pais" id="idPais"></select>
+<select class="form-control" name="pais" id="idPais" 
+data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
 <?php foreach ($paises as $pais): ?>
-	<option value=""><?=$pais?></option>
-	<option value="<?=$pais -> id?>"> <?=$pais -> nombre ?></option>
+	<option value="<?=$pais -> id?>" <?=($pais -> nombre == "España")?"selected='selected'":" "?> > 
+		<?=$pais -> nombre ?></option>
 <?php endforeach; ?>
-
+</select>
 </div>
 
 

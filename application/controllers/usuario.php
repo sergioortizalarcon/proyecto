@@ -49,11 +49,12 @@ class usuario extends CI_Controller {
 		$email = isset($_POST["correo"])?$_POST["correo"]:null;
 		$pwd = isset($_POST["pwd"])?$_POST["pwd"]:null;
 		$fecha = isset($_POST["fecha"])?$_POST["fecha"]:null;
+		$idPais = isset($_POST["pais"])?$_POST["pais"]:null;
 
 		try {
 			$comprobacion = $this -> usuario_model -> comprobar_usuario($alias, $email);
 			if ($comprobacion) {
-				$this -> usuario_model -> create_usuario($nombre, $ape1, $ape2, $alias, $email, $pwd, $fecha);
+				$this -> usuario_model -> create_usuario($nombre, $ape1, $ape2, $alias, $email, $pwd, $fecha,$idPais);
 				header('Location:'.base_url().'usuario/crearOk');
 			} else {
 				header('Location:'.base_url().'usuario/crearError');

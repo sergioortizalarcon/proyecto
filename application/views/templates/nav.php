@@ -47,7 +47,24 @@
 					<li><a href="<?=base_url()?>articulo/listar">Listar</a></li>
 				</ul>
 			</li>
-
+			
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Países<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li class="dropdown-header">Países</li>
+					<li><a href="<?=base_url()?>pais/crear">Nuevo</a></li>
+					<li><a href="<?=base_url()?>pais/listar">Listar</a></li>
+				</ul>
+			</li>
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Idiomas<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li class="dropdown-header">Idiomas</li>
+					<li><a href="<?=base_url()?>idioma/crear">Nuevo</a></li>
+					<li><a href="<?=base_url()?>idioma/listar">Listar</a></li>
+				</ul>
+			</li>
+			
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Users<span class="caret"></span></a>
 				<ul class="dropdown-menu">

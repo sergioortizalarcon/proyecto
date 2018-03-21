@@ -336,22 +336,27 @@ function calcularEdad() {
 }
 
 function validar() {
-	if ( (validarNombre() && validarApeUno() && validarApeDos()) && (verificarCorreo())){
-
-		 if ( (confirmarPass() && validarPass()) && calcularEdad() ) {
+	if (validarNombre() && validarApeUno() && validarApeDos() && verificarCorreo() &&confirmarPass() && validarPass() && calcularEdad() ) {
 		console.log("todo ok");
+		
 		document.getElementById("registrarse").disabled=false;
-	}
+	} else {
 		document.getElementById("registrarse").disabled=true;
 	}
+}
 
-	
+function enviarRegistro(){
+	pwd = document.getElementById("idPwd").value;
+		pcripto = sha256(pwd);
+		idFormulario.idPwd.value=pcripto;
+
+        idFormulario.submit();
 }
 
 </script>
 <div class="container ">
 <div id="creator">
-<form id="idFormulario" action="<?= base_url()?>usuario/crearPost" method="post" onchange="validar();">
+<form id="idFormulario" name="idFormulario" action="<?= base_url()?>usuario/crearPost" method="post" onchange="validar();">
 <fieldset>
 <legend>Crear nueva cuenta...</legend>
 <small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>
@@ -422,7 +427,7 @@ data-toogle="tooltip" data-placement="left" title="contraseña"/>
 
 <div class="form-group">	
 <label for="idPwdD">Repetir Contraseña</label><span class="obligatorio">*</span>
-<input class="form-control" type="password" id="idPwdD" name="pwdD" onfocusout="validarPass();"
+<input class="form-control" type="password" id="idPwdD" onfocusout="validarPass();"
 data-toogle="tooltip" data-placement="left" title="repite la contraseña"/>
 <span class="avisos" id="aPwdD">
 	Debe coincidir con la contraseña introducida en el recuadro anterior.
@@ -450,20 +455,22 @@ data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
 </div>
 
 <div class="nav navbar-form navbar-right">
-<input type="submit" class="btn btn-default" id="registrarse" value="Registrarse" disabled="disabled" />
+<input type="button" class="btn btn-default" id="registrarse" name ="registrarse" value="Registrarse" disabled="disabled" onclick="enviarRegistro();" />
 </div>
 </fieldset>
 </form>
 </div>
 <div id="result"></div>
 <script>
+	/*
 	document.getElementById("idNombre").value="pepe";
 document.getElementById("idApe1").value="perez";
 document.getElementById("idApe2").value="perales";
 document.getElementById("idAlias").value="menancio3";
 document.getElementById("idEmail").value="un.yaparte@gmail.com";
+*/
 document.getElementById("idPwd").value="23aA$@$!%*?&";
 document.getElementById("idPwdD").value="23aA$@$!%*?&";
-document.getElementById("idFecha").value="2002-10-25";
+//document.getElementById("idFecha").value="2002-10-25";
 </script>
 </div>

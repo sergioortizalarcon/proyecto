@@ -176,7 +176,7 @@ function limpiar() {
 			<label for="idPais">Pais de nacimiento</label>
 				<select class="form-control" id="idPais" name="pais">
 					<?php foreach($body['paises'] as $pais):?>
-						<option value="<?= $pais-> id ?>"><?= $pais->nombre?></option>
+						<option value="<?=$pais -> id?>" <?=($pais -> nombre == "España")?"selected='selected'":" "?>"><?= $pais->nombre?></option>
 					<?php endforeach; ?>
 				</select>
 			

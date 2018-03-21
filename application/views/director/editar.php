@@ -159,7 +159,7 @@
 <div class="container ">
 	<form id="idFormulario">
 		<fieldset>
-			<legend>Editar actor</legend>
+			<legend>Editar director: <?= $body['directores']->nombre ?> <?= $body['directores']->apellido1 ?> <?= $body['directores']->apellido2 ?></legend>
 			
 			<label for="idNombre">Nombre</label>
 			<input class="form-control" type="text" id="idNombre" name="nombre" />

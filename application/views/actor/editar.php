@@ -159,16 +159,16 @@
 <div class="container ">
 	<form id="idFormulario">
 		<fieldset>
-			<legend>Editar actor</legend>
+			<legend>Editar actor: <?= $body['actores']->nombre ?> <?= $body['actores']->apellido1 ?> <?= $body['actores']->apellido2 ?></legend>
 			
 			<label for="idNombre">Nombre</label>
-			<input class="form-control" type="text" id="idNombre" name="nombre" />
+			<input class="form-control" placeholder="<?= $body['actores']->nombre ?>" type="text" id="idNombre" name="nombre" />
 			
 			<label for="idApellido1">Apellido1</label>
-			<input class="form-control" type="text" id="idApellido1" name="apellido1" />
+			<input class="form-control" placeholder="<?= $body['actores']->apellido1 ?>"type="text" id="idApellido1" name="apellido1" />
 			
 			<label for="idApellido2">Apellido2</label>
-			<input class="form-control" type="text" id="idApellido2" name="apellido2" />
+			<input class="form-control" placeholder="<?= $body['actores']->apellido2 ?>"type="text" id="idApellido2" name="apellido2" />
 			
 			<label for="idFecha">Fecha de nacimiento</label>
 			<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" />

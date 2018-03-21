@@ -12,6 +12,7 @@
 			<th>Segundo apellido</th>
 			<th>Fecha de nacimiento</th>
 			<th>Pais de nacimiento</th>
+			<th colspan="2">Acciones</th>
 		</tr>
 		
 		<?php foreach ($body['directores'] as $director): ?>

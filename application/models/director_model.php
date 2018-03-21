@@ -45,32 +45,37 @@ class Director_model extends CI_Model {
 	
 	public function editar($id_director, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais) {
 		$director = R::load ( 'director', $id_director );
+		$directoresTodos = R::find("director",'nombre like ? and apellido1 like ? and apellido2 like ?', [$nombre,$apellido1,$apellido2]);
+		$pais = R::load("paises", $id_pais);
 		$pais = R::load("paises", $id_pais);
 		$cambio=false;
-		if($nombre != $director->nombre && $nombre != "") {
-			$director->nombre = $nombre;
-			$cambio=true;
-		}
 		
-		if($apellido1 != $director->apellido1 && $apellido1 != "") {
-			$director->apellido1 = $apellido1;
-			$cambio=true;
-		}
-		if($apellido2 != $director->apellido2 && $apellido2 != ""){
-			$director->apellido2 = $apellido2;
-			$cambio=true;
-		}
-		if($fechaNacimiento != $director->fechaNacimiento && $fechaNacimiento != "") {
-			$director->fechaNacimiento = $fechaNacimiento;
-			$cambio=true;
-		}
-		if($pais != $pais->id) {
-			$pais -> xownDirectorList[] = $director;
-			R::store($pais);
-			$cambio=true;
-		}
-		if ($cambio) {
-			R::store ( $director );
+		if ($directoresTodos == null) {
+			if($nombre != $director->nombre && $nombre != "") {
+				$director->nombre = $nombre;
+				$cambio=true;
+			}
+			
+			if($apellido1 != $director->apellido1 && $apellido1 != "") {
+				$director->apellido1 = $apellido1;
+				$cambio=true;
+			}
+			if($apellido2 != $director->apellido2 && $apellido2 != ""){
+				$director->apellido2 = $apellido2;
+				$cambio=true;
+			}
+			if($fechaNacimiento != $director->fechaNacimiento && $fechaNacimiento != "") {
+				$director->fechaNacimiento = $fechaNacimiento;
+				$cambio=true;
+			}
+			if($pais != $pais->id) {
+				$pais -> xownDirectorList[] = $director;
+				R::store($pais);
+				$cambio=true;
+			}
+			if ($cambio) {
+				R::store ( $director );
+			}
 		}
 	}
 	

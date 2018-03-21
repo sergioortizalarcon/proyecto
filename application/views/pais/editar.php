@@ -18,6 +18,7 @@ function peticionAJAX(nombre, id_pais) {
 	console.log(nombre);
 	xhr.send("nombre="+nombre);
 	console.log(xhr);
+
 	
 	xhr.onreadystatechange = function(){
 		console.log(xhr.readyState+"  "+xhr.status);

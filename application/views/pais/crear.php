@@ -28,6 +28,7 @@ function peticionAJAX(nombre) {
 	}
 }
 
+
  function validar(){
     var nombre = document.getElementById("idNombre").value;
     var code="";

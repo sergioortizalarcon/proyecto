@@ -17,6 +17,7 @@ class pais extends CI_Controller {
 			$this->load->view ( "pais/mensaje", $datos );
 		}
 	}
+	
 	public function listar($fil = '') {
 		$filtro = isset ( $_POST ['filtro'] ) ? $_POST ['filtro'] : $fil;
 		$this->load->model ( 'pais_model' );

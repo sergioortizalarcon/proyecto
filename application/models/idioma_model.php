@@ -1,5 +1,6 @@
 <?php
 class Idioma_model extends CI_Model {
+	
 	public function crear_idioma($nombre) {
 		$idioma = R::findOne ( "idiomas", "nombre=?", [ 
 				$nombre 
@@ -23,6 +24,11 @@ class Idioma_model extends CI_Model {
 		} else {
 			return false;
 		}
+	}
+	
+	public function getTodos($filtro='') {
+		$mostrar = R::find("idiomas","nombre like ?", ["%".$filtro."%"]);
+		return $mostrar;
 	}
 }
 

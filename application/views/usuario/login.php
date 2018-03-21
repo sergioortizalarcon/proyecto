@@ -10,7 +10,7 @@
 						<label for="pwd">contraseña:</label><br>
 					    <input type="password" class="form-control" id="pwd" placeholder="contraseña" name="pwd" data-toogle="tooltip" data-placement="left" title="contraseña">
 					</div>
-					<a href="#" id="edit-forgotten">¿Has olvidado tu contraseña?</a>
+					<a href="<?=base_url()?>usuario/recuperarPwd" id="edit-forgotten">¿Has olvidado tu contraseña?</a>
 					<div class="checkbox">
 						<label><input type="checkbox" name="remember"> Recordar</label>
 					</div>

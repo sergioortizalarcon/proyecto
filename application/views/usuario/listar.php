@@ -10,10 +10,10 @@
 
 	<br/>
 	<hr/>
-
 <table id="efectoTabla" class="display table table-bordered ">
 	<thead>
 	<tr>
+		<th>Id usuario</th>
 		<th>Nombre usuario</th>
 		<th>1º Apellido usuario</th>
 		<th>2º Apellido usuario</th>
@@ -30,6 +30,7 @@
 
 	<?php foreach ($usuarios as $key): ?>
 		<tr>
+			<td> <?=$key->id?> </td>
 			<td> <?=$key->nombre?> </td>
 			<td> <?=$key->apellido_uno?> </td>
 			<td> <?=$key->apellido_dos?> </td>
@@ -40,12 +41,12 @@
 			<td> <?=$key->fecha_nacimiento?></td>
 
 			<td>
-				<form action="/usuario/update" method="post" class="listado">
+				<form action="<?base_url()?>usuario/update" method="post" class="listado">
 					<input type="hidden" name="idEmp" value="<?=$key->id?>"/>
 					<button class="glyphicon glyphicon-pencil" type="submit"></button>
 				</form>
 
-				<form action="/usuario/borrar" method="post" class="listado">
+				<form action="<?base_url()?>usuario/borrar" method="post" class="listado">
 					<input type="hidden" name="idEmp" value="<?=$key->id?>"/>
 					<button class="glyphicon glyphicon-remove" type="submit"></button>
 				</form>
@@ -55,6 +56,7 @@
         </tbody>
         <tfoot>
          <tr>
+         	<th>Id usuario</th>
         <th>Nombre usuario</th>
 		<th>1º Apellido usuario</th>
 		<th>2º Apellido usuario</th>

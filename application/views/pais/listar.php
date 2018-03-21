@@ -5,22 +5,25 @@
 			value="Filtrar">
 	</form>
 
-	<table class="table table-striped">
+<table id="efectoTabla" class="display table table-bordered ">
+<thead>
 		<tr>
+			<th>Id del país</th>
 			<th>Nombre del país</th>
+			<th>Acciones</th>
 		</tr>
-		
+<thead>
+<tbody>
 		<?php foreach ($body['paises'] as $pais): ?>
 			<tr>
+			<td><?= $pais->id ?></td>
 			<td><?= $pais->nombre ?></td>
 			<td>
-				<form id="idFormedit" action="<?=base_url()?>pais/editar" method="post">
+				<form class="listado" id="idFormedit" action="<?=base_url()?>pais/editar" method="post">
 					<input type="hidden" name="id_pais" value="<?= $pais -> id?>">
 					<button onclick="function f() {document.getElementById('idFormEdit').submit();}"><span class="glyphicon glyphicon-pencil"></span></button>
 				</form>
-			</td>
-			<td>
-				<form id="idFormRemove" action="<?=base_url()?>pais/borrarPost" method="post">
+				<form class="listado" id="idFormRemove" action="<?=base_url()?>pais/borrarPost" method="post">
 					<input type="hidden" name="id_pais" value="<?= $pais -> id?>">
 					<input type="hidden" name="v" value="listarTodos">
 					<button onclick="function f() {document.getElementById('idFormRemove').submit();}"><span class="glyphicon glyphicon-remove"></span></button>
@@ -29,5 +32,13 @@
 			</td>
 		</tr>
 		<?php endforeach;?>
+</tbody>
+<tfoot>
+<tr>
+			<th>Id del país</th>
+			<th>Nombre del país</th>
+			<th>Acciones</th>
+		</tr>
+</tfoot>
 	</table>
 </div>

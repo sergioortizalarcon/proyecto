@@ -100,6 +100,14 @@ class usuario extends CI_Controller {
 		enmarcar($this,"usuario/login");
 	}
 
+	
+	
+	
+	/*RECUPERAR CONTRASEÑA*/
+	
+	public function recuperarPwd() {
+		enmarcar($this, "usuario/recuperarPwd");
+	}
 
 }
 

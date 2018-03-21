@@ -38,6 +38,17 @@ class pais extends CI_Controller {
 		$this->load->model ( 'pais_model' );
 		$this->pais_model->editar ( $id_pais, $nombre );
 		
+		/*try {
+			$debug = $this->pais_model->editar ( $id_pais, $nombre );
+			$datos ['mensaje'] ['texto'] = 'País modificado correctamente';
+			$datos ['mensaje'] ['nivel'] = 'ok';
+			$this->load->view ( "pais/mensaje", $datos );
+		} catch ( Exception $e ) {
+			$datos ['mensaje'] ['texto'] = "El país ya existe";
+			$datos ['mensaje'] ['nivel'] = 'error';
+			$this->load->view ( "pais/mensaje", $datos );
+		}*/
+		
 		
 	}
 	public function borrar() {

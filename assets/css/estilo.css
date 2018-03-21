@@ -2,7 +2,7 @@
 
 a.boton-login {
 	color: #9d9d9d;
-	font-size: 15px;
+	font-size: 11px;
 	font-weight:700;
 	background: none !important;
 }
@@ -12,7 +12,7 @@ a.boton-login:hover {
 	transition-duration: 0.5s;
 	transition-timing-function: ease;
 	transition-delay: 0s; 
-	font-size: 20px;
+	font-size: 13px;
 }
 
 
@@ -24,3 +24,60 @@ a.boton-login:hover {
 span.avisos{
 	display: none;
 }
+
+/* ajusta los botones de edicion de usuario */
+form.listado{
+	display: grid;
+}
+
+/*agrega fondo al body*/
+body.custom-background {
+	/*fondo de color por si falla la imagen*/
+	background-color:#F0EFEF;
+	background-image: url("../img/fondoPagina.jpg");
+	background-position: center top;
+	background-size: 100%;
+	background-repeat: repeat-y;
+	background-attachment:scroll;
+}
+
+
+
+	/*form de registro */
+	#creator{
+		padding: 1%;
+		padding-left:3%;
+		padding-right:3%;
+	}
+
+	/*form de login y su comp registro */
+	#login{
+		border:1px solid black;
+		margin: 10px;
+	}
+
+	#crear{
+		margin:10px;
+		border:1px solid black;
+		float: right;
+	}
+
+	/* EFECTOS DE FOOTER  */
+#footer{
+    background: #161616;
+    font-size: 15px;
+}
+
+a.icono-face {
+ background-image: url("http://www.vszdrav.cz/pages/frontend/img/fcb.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+a.icono-tw{
+	background-image: url("http://www.blog.xmundo.net/wp-content/uploads/2011/10/icono-twitter-200x200.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+/* FOOTER */

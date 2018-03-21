@@ -5,7 +5,7 @@ class usuario extends CI_Controller {
 		enmarcar($this, "usuario/registrar");
 	}
 
-
+	/*1.- COMPROBACIONES PARA REGISTRARSE  */
 	public function comprobarDispAlias() {
 		$this -> load -> model("usuario_model");
 		$alias = isset($_POST["alias"])?$_POST["alias"]:null;
@@ -25,6 +25,7 @@ class usuario extends CI_Controller {
 		$correo = isset($_POST["correo"])?$_POST["correo"]:null;
 		$comprobacion = $this -> usuario_model -> comprobar_email($correo);
 		if ($comprobacion) {
+			//editar -> si no existe no devuelve nada por lo q si es correcto no devuelve nada y se evalua eso
 			$datos['mensaje']['texto'] = "Mail ok";
 			$datos['mensaje']['nivel'] = 'ok';
 			} else {
@@ -34,7 +35,9 @@ class usuario extends CI_Controller {
 			}
 	}
 
-	
+	/* 1.- */
+
+	/* 2.- REGISTRO Y REDIRECCION */
 	public function crearPost() {
 		$this -> load -> model("usuario_model");
 		$nombre= isset($_POST["nombre"])?$_POST["nombre"]:null;
@@ -49,20 +52,13 @@ class usuario extends CI_Controller {
 			$comprobacion = $this -> usuario_model -> comprobar_usuario($alias, $email);
 			if ($comprobacion) {
 				$this -> usuario_model -> create_usuario($nombre, $ape1, $ape2, $alias, $email, $pwd, $fecha);
-				$datos['mensaje']['texto'] = "Usuario creado correctamente";
-				$datos['mensaje']['nivel'] = 'ok';
-				$this->load->view("usuario/mensaje",$datos);
 				header('Location:'.base_url().'usuario/crearOk');
 			} else {
-				$datos['mensaje']['texto'] = "Usuario o correo ya existente";
-				$datos['mensaje']['nivel'] = 'error';
-				$this->load->view("usuario/mensaje",$datos);
 				header('Location:'.base_url().'usuario/crearError');
 			}
-			//$this->load->view("usuario/mensaje",$datos);
 		}
 		catch (Exception $e) {
-			$datos['mensaje']['texto'] = "Error al crear nuevo usuario";
+			$datos['mensaje']['texto'] = "Error al crear nuevo usuario.";
 			$datos['mensaje']['nivel'] = 'error';
 			$this->load->view("usuario/mensaje",$datos);
 		}
@@ -75,16 +71,32 @@ class usuario extends CI_Controller {
 	}
 	
 	public function crearError() {
-		$datos['mensaje']['texto'] = "Error al crear nuevo usuario";
+		$datos['mensaje']['texto'] = "El correo o alias ya existe, intentalo de nuevo.";
 		$datos['mensaje']['nivel'] = 'error';
 		enmarcar($this, 'usuario/mensaje', $datos);
 	}
 
-	public function listar() {
-		$this->load->model('alias_model');
-		$datos['body']['usuarios'] = $this->alias_model->getAll();
-		enmarcar($this, 'alias/listar',$datos);
+	/*	2.- 	*/
+
+
+	public function listar($f='') {
+		$this->load->model('usuario_model');
+		$filtro = isset($_POST['filtro'])?$_POST['filtro']:$f;
+		
+		$datos['usuarios'] = $this->usuario_model->getAll($filtro);
+		$datos['filtro'] = $filtro;
+		enmarcar($this, 'usuario/listar',$datos);
 	}
+
+
+
+
+	/* LOGIN USUARIO */
+
+	public function loginGet(){
+		enmarcar($this,"usuario/login");
+	}
+
 
 }
 

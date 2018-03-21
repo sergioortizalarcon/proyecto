@@ -136,6 +136,7 @@
 	    conexion.open('POST', '<?=base_url()?>actor/editarPost', true);
 	    conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 	    conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	    console.log(datosSerializados);
 	    conexion.send(datosSerializados);
 	    
 	    conexion.onreadystatechange = function() {
@@ -172,14 +173,15 @@
 			<label for="idFecha">Fecha de nacimiento</label>
 			<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" />
 			
-			<input type="hidden" name="id_actor" value="<?= $body['actores']->id?>">
+			<input type="hidden" name="id_actor" value="<?= $body['actores']->id ?>" />
 			
 			<label for="idPais">Pais de nacimiento</label>
-				<select class="form-control" id="idPais" name="pais">
-					<?php foreach($body['paises'] as $pais):?>
-						<option value="<?php $pais->nombre ?>"><?= $pais->nombre?></option>
-					<?php endforeach; ?>
-				</select>
+			<select class="form-control" id="idPais" name="pais">
+				<?php foreach($body['paises'] as $pais):?>
+					<option value="<?= $pais-> id ?>"><?= $pais->nombre?></option>
+				<?php endforeach; ?>
+			</select>
+				
 			<br/>
 			<input type="button" class="btn btn-default col-md-12" onclick="comprobar();" value="Enviar" />
 			

@@ -13,10 +13,10 @@ class Director extends CI_Controller {
     	$apellido1 = isset($_POST['apellido1'])?$_POST['apellido1']:null;
     	$apellido2 = isset($_POST['apellido2'])?$_POST['apellido2']:null;
     	$fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
-    	$pais = isset($_POST['pais'])?$_POST['pais']:null;
+    	$id_pais = isset($_POST['pais'])?$_POST['pais']:null;
         
         try {
-        	$debug = $this -> director_model -> createDirector($nombre, $apellido1, $apellido2, $fechaNacimiento, $pais);
+        	$debug = $this -> director_model -> createDirector($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais);
         	$datos['mensaje']['texto'] = "Director creado correctamente";
         	$datos['mensaje']['nivel'] = 'ok';
         	$this->load->view("Director/mensaje",$datos);
@@ -42,19 +42,26 @@ class Director extends CI_Controller {
     
     public function editar() {
     	$this->load->model ( 'director_model' );
+    	$this->load->model('pais_model');
     	$id_director = $_POST ['id_director'];
     	$datos ['body'] ['directores'] = $this->director_model->getDirectorPorId ( $id_director );
+    	$datos['body']['paises'] = $this->pais_model->getTodos();
     	enmarcar ( $this, 'director/editar', $datos );
     }
+    
     public function editarPost() {
-    	$nombre = $_POST ['nombre'];
+    	$this->load->model ( 'director_model' );
+    	
+    	$nombre = isset($_POST['nombre'])?$_POST['nombre']:null;
+    	$apellido1 = isset($_POST['apellido1'])?$_POST['apellido1']:null;
+    	$apellido2 = isset($_POST['apellido2'])?$_POST['apellido2']:null;
+    	$fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
+    	$id_pais = isset($_POST['pais'])?$_POST['pais']:null;
     	$id_director = $_POST ['id_director'];
     
-    	$this->load->model ( 'director_model' );
-    	$this->director_model->editar ( $id_director, $nombre );
-    
-    
+    	$this->director_model->editar ( $id_director, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais );
     }
+    
     public function borrar() {
     	$datos ['body'] ['accion'] = 'borrar';
     	$datos ['body'] ['filtro'] = '';
@@ -64,6 +71,8 @@ class Director extends CI_Controller {
     	$this->load->model ( 'director_model' );
     	$id_director = $_POST ['id_director'];
     	$this->director_model->borrar ( $id_director );
+    	
+    	$this->listarPost();
     }
 }
 ?>

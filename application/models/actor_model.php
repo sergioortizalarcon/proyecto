@@ -3,7 +3,6 @@ class Actor_model extends CI_Model {
 	public function createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais) {
 		if ($apellido2 == "") {
 			$actor = R::find('actor', 'nombre like ? and apellido1 like ?', [$nombre,$apellido1]);
-			//$actor = R:: find("actor","nombre=?",[$nombre]);
 			if ($actor == null) {
 				$actor = R::dispense ( 'actor' );
 				$actor -> nombre = $nombre;
@@ -43,26 +42,37 @@ class Actor_model extends CI_Model {
 	public function getActorPorId($id_actor) {
 		return R::load ( 'actor', $id_actor );
 	}
-	public function editar($id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $pais) {
+	
+	public function editar($id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais) {
 		$actor = R::load ( 'actor', $id_actor );
+		$pais = R::load("paises", $id_pais);
+		$cambio=false;
 		if($nombre != $actor->nombre && $nombre != "") {
 			$actor->nombre = $nombre;
+			$cambio=true;
 		}
-		
 		if($apellido1 != $actor->apellido1 && $apellido1 != "") {
 			$actor->apellido1 = $apellido1;
+			$cambio=true;
 		}
 		if($apellido2 != $actor->apellido2 && $apellido2 != ""){
 			$actor->apellido2 = $apellido2;
+			$cambio=true;
 		}
 		if($fechaNacimiento != $actor->fechaNacimiento && $fechaNacimiento != "") {
 			$actor->fechaNacimiento = $fechaNacimiento;
+			$cambio=true;
 		}
-		if($pais != $actor->pais) {
-			$actor->pais = $pais;
+		if($pais != $pais->id) {
+			$pais -> xownActorList[] = $actor;
+			R::store($pais);
+			$cambio=true;
 		}
-		R::store ( $actor );
+		if ($cambio) {
+			R::store ( $actor );
+		}
 	}
+	
 	public function borrar($id_actor) {
 		$actor = R::load ( 'actor', $id_actor );
 		R::trash ( $actor );

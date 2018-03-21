@@ -2,7 +2,9 @@
 class usuario extends CI_Controller {
 	
 	public function registrar(){
-		enmarcar($this, "usuario/registrar");
+		$this -> load -> model("pais_model");
+		$datos["paises"] = $this -> pais_model -> getTodos();
+		enmarcar($this, "usuario/registrar",$datos);
 	}
 
 	/*1.- COMPROBACIONES PARA REGISTRARSE  */

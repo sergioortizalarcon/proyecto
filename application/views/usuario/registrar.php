@@ -453,6 +453,17 @@ data-toogle="tooltip" data-placement="left" title="repite la contraseña"/>
 </div>
 
 <div class="form-group">
+<label for="idPais">Selecciona país</label><span class="obligatorio">*</span>
+<select name="pais" id="idPais"></select>
+<?php foreach ($paises as $pais): ?>
+	<option value=""><?=$pais?></option>
+	<option value="<?=$pais -> id?>"> <?=$pais -> nombre ?></option>
+<?php endforeach; ?>
+
+</div>
+
+
+<div class="form-group">
 <label for="idFecha">Fecha de nacimiento</label><span class="obligatorio">*</span>
 <input class="form-control" type="date" id="idFecha" name="fecha" onfocusout="calcularEdad();" />
 <span class="avisos" id="aFecha">

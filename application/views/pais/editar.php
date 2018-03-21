@@ -16,7 +16,7 @@ function peticionAJAX(nombre, id_pais) {
 	xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	console.log(nombre);
-	xhr.send("nombre="+nombre);
+	xhr.send("nombre="+nombre+"&id_pais="+id_pais);
 	console.log(xhr);
 
 	
@@ -52,13 +52,15 @@ function peticionAJAX(nombre, id_pais) {
             idFormulario.idNombre.style.borderColor="red";
             return false;
         }
+        
 	}
 
     
 	validarNombre();
 	
 	if ( validarNombre()) {
-		peticionAJAX(nombre);
+		id_pais = document.getElementById("idID").value;
+		peticionAJAX(nombre, id_pais);
 	} else {
 	}
 }
@@ -67,27 +69,34 @@ function peticionAJAX(nombre, id_pais) {
 
 
 <div class="container ">
-<form id="idFormulario" method="post">
-<fieldset>
-<legend>Editar país</legend>
+	<form id="idFormulario" method="post">
+		<fieldset>
+			<legend>Editar país</legend>
 
-<div class="form-group">
-<label for="idNombre">Nombre</label><span class="obligatorio">*</span>
-<input class="form-control" type="text" id="idNombre" name="nombre" />
-<span class="avisos" id="aNombre">
-	Debes escribir un nombre válido(de 3 a 20 caracteres no númericos o símbolos).
-</span>
-</div>
+			<div class="form-group">
+				<label for="idNombreAnterior">Nombre anterior</label> <input
+					class="form-control" type="text" id="idNombreAnterior"
+					name="nombreAnterior" disabled="disabled"
+					<?= ($body["paises"]->nombre)?"value=".$body["paises"]->nombre:"" ?>>
 
-<div class="form-group">
-<input type="button" class="btn btn-default" onclick="validar();" value="Editar"/>
-</div>
-</fieldset>
+			</div>
+			<div class="form-group">
+				<label for="idNombre">Nuevo nombre</label><span class="obligatorio">*</span>
+				<input class="form-control" type="text" id="idNombre" name="nombre">
+				<input class="form-control" type="hidden" id="idID" name="id_pais"
+					<?= "value=".$body["paises"]->id?>> <span class="avisos"
+					id="aNombre"> Debes escribir un nombre válido(de 3 a 20 caracteres
+					no númericos o símbolos). </span>
+
+			</div>
+
+			<div class="form-group">
+				<input type="button" class="btn btn-default" onclick="validar();"
+					value="Editar" />
+			</div>
+		</fieldset>
 	</form>
 
-<div id="result"></div>
+	<div id="result"></div>
 
-<script>
-	document.getElementById("idNombre").value="España";
-</script>
 </div>

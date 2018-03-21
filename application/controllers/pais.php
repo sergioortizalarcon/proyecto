@@ -17,8 +17,10 @@ class pais extends CI_Controller {
 			$this->load->view ( "pais/mensaje", $datos );
 		}
 	}
-	
-	public function listar($fil = '') {
+	public function listar() {
+		$this->listarPost ();
+	}
+	public function listarPost($fil = '') {
 		$filtro = isset ( $_POST ['filtro'] ) ? $_POST ['filtro'] : $fil;
 		$this->load->model ( 'pais_model' );
 		$datos ['body'] ['paises'] = $this->pais_model->getTodos ( $filtro );
@@ -36,10 +38,9 @@ class pais extends CI_Controller {
 		$id_pais = $_POST ['id_pais'];
 		
 		$this->load->model ( 'pais_model' );
-		$this->pais_model->editar ( $id_pais, $nombre );
-		
-		/*try {
-			$debug = $this->pais_model->editar ( $id_pais, $nombre );
+		try {
+			$this->pais_model->editar ( $id_pais, $nombre );
+			//header ( "location:" . base_url () . "pais/listar" );
 			$datos ['mensaje'] ['texto'] = 'País modificado correctamente';
 			$datos ['mensaje'] ['nivel'] = 'ok';
 			$this->load->view ( "pais/mensaje", $datos );
@@ -47,9 +48,8 @@ class pais extends CI_Controller {
 			$datos ['mensaje'] ['texto'] = "El país ya existe";
 			$datos ['mensaje'] ['nivel'] = 'error';
 			$this->load->view ( "pais/mensaje", $datos );
-		}*/
-		
-		
+		}
+		// $this->listar ();
 	}
 	public function borrar() {
 		$datos ['body'] ['accion'] = 'borrar';
@@ -60,7 +60,9 @@ class pais extends CI_Controller {
 		$this->load->model ( 'pais_model' );
 		$id_pais = $_POST ['id_pais'];
 		$this->pais_model->borrar ( $id_pais );
-		}
+		
+		$this->listar ();
 	}
+}
 
 ?>

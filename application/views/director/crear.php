@@ -46,7 +46,7 @@ function mayuscula(palabra) {
 }
 
 function comprobarNombre(nombre) {
-	var expReg = /^[a-zA-Z áéíóúÁÉÍÓÚ]{2,30}$/;
+	var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
 	if (expReg.test(nombre)){
 		correcto = true;
 		document.getElementById('idNombre').style="color:black";
@@ -61,7 +61,7 @@ function comprobarNombre(nombre) {
 }
 
 function comprobarApellido1(apellido1) {
-	var expReg = /^[a-zA-Z áéíóúÁÉÍÓÚ]{2,30}$/;
+	var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
 	if (expReg.test(apellido1)){
 		correcto = true;
 		document.getElementById('idApellido1').style="color:black";
@@ -76,7 +76,7 @@ function comprobarApellido1(apellido1) {
 }
 
 function comprobarApellido2(apellido2) {
-	var expReg = /^[a-zA-Z áéíóúÁÉÍÓÚ]{2,30}$/;
+	var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
 	if (expReg.test(apellido2)){
 		correcto = true;
 		document.getElementById('idApellido2').style="color:black";
@@ -167,18 +167,14 @@ function limpiar() {
 			<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" />
 		
 		
-			<!-- TODO
-				Falta el model de los lenguajes para pasarlos
-				
-				<laber for="idPais">Nacionalidad</label>
-				<select class="form-control" id="idPais" name="nacionalidad">
-					<-?php foreach($body['nacionalidades'] as $nacionalidad):?>
-						<option value="<-?php $nacionalidad->codigo ?>"><-?php $nacionalidad->nombre ?></option>
-					<-?php endforeach; ?>
+				<label for="idPais">Pais de nacimiento</label>
+				<select class="form-control" id="idPais" name="pais">
+					<?php foreach($body['paises'] as $pais):?>
+						<option value="<?php $pais->nombre ?>"><?= $pais->nombre?></option>
+					<?php endforeach; ?>
 				</select>
-			 -->
 			
-			<!-- TEMPORAL -->
+			<!-- TEMPORAL
 			<label for="idPais">Nacionalidad</label>
 			<select class="form-control" id="idPais" name="nacionalidad">
 				<option value="es">Española</option>
@@ -186,6 +182,7 @@ function limpiar() {
 				<option value="pt">Portuguesa</option>
 				<option value="de">Alemana</option>
 			</select>
+			 -->
 			<br/>
 			<input type="button" class="btn btn-default" onclick="comprobar()" value="Enviar"/>
 			

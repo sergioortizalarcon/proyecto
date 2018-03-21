@@ -1,11 +1,9 @@
 <?php
 class actor extends CI_Controller {
 	public function crear() {
-		//TODO(Falta el model de los lenguajes
 		$this->load->model('pais_model');
 		$datos['body']['paises'] = $this->pais_model->getTodos();
 		enmarcar($this, "actor/crearGET", $datos);
-		//enmarcar($this, "actor/crearGET");
 	}
 
 	public function crearPost() {
@@ -14,9 +12,10 @@ class actor extends CI_Controller {
 		$apellido1 = isset($_POST['apellido1'])?$_POST['apellido1']:null;
 		$apellido2 = isset($_POST['apellido2'])?$_POST['apellido2']:null;
 		$fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
-		$nacionalidad = isset($_POST['nacionalidad'])?$_POST['nacionalidad']:null;
+		$pais = isset($_POST['pais'])?$_POST['pais']:null;
+		
 		try {
-			$debug = $this -> actor_model -> createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $nacionalidad);
+			$debug = $this -> actor_model -> createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $pais);
 			$datos['mensaje']['texto'] = "Actor creado correctamente";
 			$datos['mensaje']['nivel'] = 'ok';
 			$this->load->view("actor/mensaje",$datos);
@@ -38,6 +37,46 @@ class actor extends CI_Controller {
 		$datos['body']['actores'] = $this->actor_model->getAll($filtro);
 		$datos['filtro'] = $filtro;
 		enmarcar($this, 'actor/listar',$datos);
+	}
+	
+	public function editar() {
+		$this->load->model ( 'actor_model' );
+		$this->load->model('pais_model');
+		$id_actor = $_POST ['id_actor'];
+		$datos ['body']['actores'] = $this->actor_model->getActorPorId ( $id_actor );
+		$datos['body']['paises'] = $this->pais_model->getTodos();
+		enmarcar ( $this, 'actor/editar', $datos );
+	}
+	
+	public function editarPost($f='') {
+		$nombre = isset($_POST['nombre'])?$_POST['nombre']:null;
+		$apellido1 = isset($_POST['apellido1'])?$_POST['apellido1']:null;
+		$apellido2 = isset($_POST['apellido2'])?$_POST['apellido2']:null;
+		$fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
+		$pais = isset($_POST['pais'])?$_POST['pais']:null;
+		$id_actor = $_POST ['id_actor'];
+	
+		$this->load->model ( 'actor_model' );
+		$this->actor_model->editar ( $id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $pais );
+
+		$filtro = isset($_POST['filtro'])?$_POST['filtro']:$f;
+		$datos['body']['actores'] = $this->actor_model->getAll($filtro);
+		$datos['filtro'] = $filtro;
+		enmarcar($this, 'actor/listar',$datos);
+	}
+	
+	public function borrar() {
+		$datos ['body'] ['accion'] = 'borrar';
+		$datos ['body'] ['filtro'] = '';
+		$this->filtrar ( $datos );
+	}
+	
+	public function borrarPost() {
+		$this->load->model ( 'actor_model' );
+		$id_actor = $_POST ['id_actor'];
+		$this->actor_model->borrar ( $id_actor );
+		
+		$this->listarPost();
 	}
 }
 ?>

@@ -6,6 +6,11 @@ var conexion;
 var correcto = true;
 
 function comprobar() {
+	var nombreCorrecto = true;
+	var ape1Correcto = true;
+	var ape2Correcto = true;
+	var fechaCorrecto = true;
+	
 	var nombre = idFormulario.nombre.value.trim();
 	if (nombre != "") {
 		nombreMayus = mayuscula(nombre);
@@ -30,7 +35,7 @@ function comprobar() {
 	var fechaNacimiento = idFormulario.idFecha.value;
 	fechaCorrecto = comprobarFechaNac(fechaNacimiento);
 
-	var nacionalidad = idFormulario.idPais.value;
+	var pais = idFormulario.idPais.value;
 	
 	if(nombreCorrecto && ape1Correcto && ape2Correcto && fechaCorrecto) {
 		peticionAJAX();
@@ -46,7 +51,7 @@ function mayuscula(palabra) {
 }
 
 function comprobarNombre(nombre) {
-	var expReg = /^[a-zA-Z áéíóúÁÉÍÓÚ]{2,30}$/;
+	var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
 	if (expReg.test(nombre)){
 		correcto = true;
 		document.getElementById('idNombre').style="color:black";
@@ -61,7 +66,7 @@ function comprobarNombre(nombre) {
 }
 
 function comprobarApellido1(apellido1) {
-	var expReg = /^[a-zA-Z áéíóúÁÉÍÓÚ]{2,30}$/;
+	var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
 	if (expReg.test(apellido1)){
 		correcto = true;
 		document.getElementById('idApellido1').style="color:black";
@@ -76,7 +81,7 @@ function comprobarApellido1(apellido1) {
 }
 
 function comprobarApellido2(apellido2) {
-	var expReg = /^[a-zA-Z áéíóúÁÉÍÓÚ]{2,30}$/;
+	var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
 	if (expReg.test(apellido2)){
 		correcto = true;
 		document.getElementById('idApellido2').style="color:black";
@@ -130,10 +135,11 @@ function peticionAJAX() {
     conexion.open('POST', '<?=base_url()?>actor/crearPost', true);
     conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    console.log(datosSerializados);
     conexion.send(datosSerializados);
-    
     conexion.onreadystatechange = function() {
         if (conexion.readyState==4 && conexion.status==200) {
+            
             accionAJAX();
         }
     }
@@ -144,13 +150,13 @@ function limpiar() {
 	idFormulario.apellido1.value = "";
 	idFormulario.apellido2.value = "";
 	idFormulario.fechaNacimiento.value="";
-	idFormulario.nacionalidad.value = "es";
+	idFormulario.pais.value = "españa";
 }
 </script>
 
 
 <div class="container ">
-	<form id="idFormulario">
+	<form id="idFormulario" method="post">
 		<fieldset>
 			<legend>Crear nuevo actor</legend>
 			
@@ -167,22 +173,13 @@ function limpiar() {
 			<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" />
 			
 			
-			<label for="idPais">Nacionalidad</label>
-				<select class="form-control" id="idPais" name="nacionalidad">
+			<label for="idPais">Pais de nacimiento</label>
+				<select class="form-control" id="idPais" name="pais">
 					<?php foreach($body['paises'] as $pais):?>
-						<option value="<?php $pais->nombre ?>"><?php $pais->nombre ?></option>
+						<option value="<?= $pais-> id ?>"><?= $pais->nombre?></option>
 					<?php endforeach; ?>
 				</select>
 			
-			<!-- TEMPORAL
-			<label for="idPais">Nacionalidad</label>
-			<select class="form-control" id="idPais" name="nacionalidad">
-				<option value="es">Española</option>
-				<option value="fr">Francesa</option>
-				<option value="pt">Portuguesa</option>
-				<option value="de">Alemana</option>
-			</select>
-			 -->
 			<br/>
 			<input type="button" class="btn btn-default col-md-12" onclick="comprobar();" value="Enviar" />
 			

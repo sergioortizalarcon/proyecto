@@ -13,6 +13,7 @@ class Pais_model extends CI_Model {
 		} else {
 			throw new Exception ( "Error Processing Request", 1 );
 		}
+	
 		R::close ();
 	}
 	public function getTodos() {

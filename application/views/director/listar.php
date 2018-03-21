@@ -11,19 +11,20 @@
 			<th>Primer apellido</th>
 			<th>Segundo apellido</th>
 			<th>Fecha de nacimiento</th>
-			<th>Nacionalidad</th>
+			<th>Pais de nacimiento</th>
+			<th colspan="2">Acciones</th>
 		</tr>
 		
 		<?php foreach ($body['directores'] as $director): ?>
 			<tr>
 				<td><?= $director->nombre ?></td>
 				<td><?= $director->apellido1 ?></td>
-				<td><?= $actor->apellido2 ?></td>
+				<td><?= $director->apellido2 ?></td>
 				<td><?= $director->fecha_nacimiento ?></td>
-				<td><?= $director->nacionalidad ?></td>
+				<td><?= $director->paises['nombre'] ?></td>
 				<td>
 					<form id="idFormedit" action="<?=base_url()?>director/editar" method="post">
-						<input type="hidden" name="id_pais" value="<?= $director -> id?>">
+						<input type="hidden" name="id_director" value="<?= $director -> id?>">
 						<button onclick="function f() {document.getElementById('idFormEdit').submit();}"><span class="glyphicon glyphicon-pencil"></span></button>
 					</form>
 				</td>

@@ -1,9 +1,92 @@
-<div class="container">
-<h3>Introduce el nuevo nombre</h3>
-<form class="form" action="<?= base_url() ?>pais/editarPost" method="post">
-<label>Nombre</label>
-<input type="text" name="nombre" value="<?=$body['paises']->nombre ?>">
-		<input type="hidden" name="id_pais" value="<?=$body['paises']->id ?> ">
-								<input type="submit">
-								</form>
-								</div>
+<script type="text/javascript">
+	var xhr;
+	window.onload = function(){
+xhr = new XMLHttpRequest();
+console.log(xhr);
+}
+function accionAJAX() {
+	if (xhr.readyState==4 && xhr.status==200) {	
+		document.getElementById("result").innerHTML = xhr.responseText;
+	}
+}
+
+function peticionAJAX(nombre, id_pais) {
+	//xhr = new XMLHttpRequest();
+	xhr.open("POST", "<?=base_url()?>pais/editarPost", true);
+	xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	console.log(nombre);
+	xhr.send("nombre="+nombre);
+	console.log(xhr);
+	
+	xhr.onreadystatechange = function(){
+		console.log(xhr.readyState+"  "+xhr.status);
+		if (xhr.readyState==4 && xhr.status==200) {	
+			console.log(xhr.readyState+"   "+xhr.status);
+			document.getElementById("result").innerHTML = xhr.responseText;
+		}
+	}
+}
+
+ function validar(){
+    var nombre = document.getElementById("idNombre").value;
+    var code="";
+
+    function validarNombre() {
+        if(nombre!="") {
+            expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,20}$/;
+			if (expresion.test(nombre)) {
+				var m = nombre.charAt(0);
+				nombre= m.toUpperCase()+nombre.substring(1,nombre.length);
+				idFormulario.idNombre.style.borderColor="blue";
+				document.getElementById("aNombre").style.display="none";
+				return true;
+			} else {
+				idFormulario.idNombre.style.borderColor="red";
+				document.getElementById("aNombre").style.display="initial";
+				return false;
+            }
+		} else {
+            document.getElementById("aNombre").style.display="initial";
+            idFormulario.idNombre.style.borderColor="red";
+            return false;
+        }
+	}
+
+    
+	validarNombre();
+	
+	if ( validarNombre()) {
+		peticionAJAX(nombre);
+	} else {
+	}
+}
+
+</script>
+
+
+<div class="container ">
+<form id="idFormulario" method="post">
+<fieldset>
+<legend>Editar país</legend>
+
+<div class="form-group">
+<label for="idNombre">Nombre</label><span class="obligatorio">*</span>
+<input class="form-control" type="text" id="idNombre" name="nombre" />
+<span class="avisos" id="aNombre">
+	Debes escribir un nombre válido(de 3 a 20 caracteres no númericos o símbolos).
+</span>
+</div>
+
+<div class="form-group">
+<input type="button" class="btn btn-default" onclick="validar();" value="Editar"/>
+</div>
+</fieldset>
+	</form>
+
+<div id="result"></div>
+
+<script>
+	document.getElementById("idNombre").value="España";
+</script>
+</div>

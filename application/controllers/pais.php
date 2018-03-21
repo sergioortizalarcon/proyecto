@@ -28,8 +28,6 @@ class pais extends CI_Controller {
 		$this->load->model ( 'pais_model' );
 		$id_pais = $_POST ['id_pais'];
 		$datos ['body'] ['paises'] = $this->pais_model->getPaisPorId ( $id_pais );
-		//$datos ['body'] ['v'] = isset ( $_POST ['v'] ) ? $_POST ['v'] : 'listarTodos';
-		//$datos ['body'] ['filtro'] = isset ( $_POST ['filtro'] ) ? $_POST ['filtro'] : '';
 		enmarcar ( $this, 'pais/editar', $datos );
 	}
 	public function editarPost() {
@@ -39,17 +37,7 @@ class pais extends CI_Controller {
 		$this->load->model ( 'pais_model' );
 		$this->pais_model->editar ( $id_pais, $nombre );
 		
-		/*switch ($_POST ['v']) {
-			case 'filtrar' :
-				$datos ['body'] ['accion'] = 'modificar';
-				$datos ['body'] ['filtro'] = $_POST ['filtro'];
-				$datos ['head'] ['onload'] = 'filtrar()';
-				$this->filtrar ( $datos );
-				break;
-			case 'listarTodos' :
-				header ( 'Location:' . base_url () . 'pais/listar' );
-				break;
-		}*/
+		
 	}
 	public function borrar() {
 		$datos ['body'] ['accion'] = 'borrar';
@@ -60,36 +48,7 @@ class pais extends CI_Controller {
 		$this->load->model ( 'pais_model' );
 		$id_pais = $_POST ['id_pais'];
 		$this->pais_model->borrar ( $id_pais );
-		/*switch ($_POST ['v']) {
-			case 'filtrar' :
-				$datos ['body'] ['accion'] = 'borrar';
-				$datos ['body'] ['filtro'] = $_POST ['filtro'];
-				$datos ['head'] ['onload'] = 'filtrar()';
-				$this->filtrar ( $datos );
-				break;
-			case 'listarTodos' :
-				header ( 'Location:' . base_url () . 'pais/listar' );
-				break;
-		}*/
+		}
 	}
-	/*
-	public function modificar() {
-		$datos ['body'] ['accion'] = 'modificar';
-		$datos ['body'] ['filtro'] = '';
-		$this->filtrar ( $datos );
-	}*/
-	/*public function filtrar($datos) {
-		enmarcar ( $this, 'pais/filtrar', $datos );
-	}
-	public function filtrarPost() {
-		$filtro = $_POST ['filtro'];
-		$accion = $_POST ['accion'];
-		$this->load->model ( 'pais_model' );
-		$datos ['body'] ['paises'] = $this->pais_model->filtrar ( $filtro );
-		$datos ['body'] ['filtro'] = $filtro;
-		$datos ['body'] ['accion'] = $_POST ['accion'];
-		$this->load->view ( 'pais/filtro', $datos );
-	}*/
-}
 
 ?>

@@ -167,18 +167,14 @@ function limpiar() {
 			<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" />
 			
 			
-			<!-- TODO
-				Falta el model de los lenguajes para pasarlos
-				
-				<laber for="idPais">Nacionalidad</label>
+			<label for="idPais">Nacionalidad</label>
 				<select class="form-control" id="idPais" name="nacionalidad">
-					<-?php foreach($body['nacionalidades'] as $nacionalidad):?>
-						<option value="<-?php $nacionalidad->codigo ?>"><-?php $nacionalidad->nombre ?></option>
-					<-?php endforeach; ?>
+					<?php foreach($body['paises'] as $pais):?>
+						<option value="<?php $pais->nombre ?>"><?php $pais->nombre ?></option>
+					<?php endforeach; ?>
 				</select>
-			 -->
 			
-			<!-- TEMPORAL -->
+			<!-- TEMPORAL
 			<label for="idPais">Nacionalidad</label>
 			<select class="form-control" id="idPais" name="nacionalidad">
 				<option value="es">Española</option>
@@ -186,9 +182,9 @@ function limpiar() {
 				<option value="pt">Portuguesa</option>
 				<option value="de">Alemana</option>
 			</select>
-			
+			 -->
 			<br/>
-			<input type="button" class="btn btn-default" onclick="comprobar();" value="Enviar" />
+			<input type="button" class="btn btn-default col-md-12" onclick="comprobar();" value="Enviar" />
 			
 		</fieldset>
 	</form>

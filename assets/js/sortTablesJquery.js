@@ -1,6 +1,6 @@
 $(document).ready( function () {
-    $('#evd').DataTable({
+    $('#efectoTabla').DataTable({
     	"aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "Todos"]],
-        "iDisplayLength": 10
+        "iDisplayLength": 5
             });
 } );

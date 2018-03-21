@@ -10,12 +10,8 @@
 
 	<br/>
 	<hr/>
-<script type="text/javascript">
-		$(document).ready( function () {
-    $('#evd').DataTable();
-} );
-	</script>
-<table id="evd" class="display table table-bordered ">
+
+<table id="efectoTabla" class="display table table-bordered ">
 	<thead>
 	<tr>
 		<th>Nombre usuario</th>

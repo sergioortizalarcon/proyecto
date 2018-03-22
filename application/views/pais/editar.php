@@ -56,7 +56,6 @@ function validarNombre() {
 		document.getElementById("aNombre").style.display="initial";
 		idFormulario.idNombre.style.borderColor="red";
 		return false;
-
 	}
 	
 	

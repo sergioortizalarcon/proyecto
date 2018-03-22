@@ -19,12 +19,12 @@
 				<td><?= $idioma->id ?></td>
 				<td><?= $idioma->nombre ?></td>
 				<td>
-					<form class="listado" action="<?=base_url()?>idioma/editar" method="post">
-						<input type="hidden" name="id_pais" value="<?= $idioma -> id?>"/>
+					<form class="listado" action="<?=base_url()?>idioma/editarGet" method="post">
+						<input type="hidden" name="idIdioma" value="<?= $idioma -> id?>"/>
 						<button class="glyphicon glyphicon-pencil" type="submit"></button>
 					</form>
 					<form class="listado" action="<?=base_url()?>idioma/borrarPost" method="post">
-						<input type="hidden" name="id_pais" value="<?= $idioma -> id?>" />
+						<input type="hidden" name="idIdioma" value="<?= $idioma -> id?>" />
 						<button class="glyphicon glyphicon-remove" type="submit"></button>
 					</form>
 

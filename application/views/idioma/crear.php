@@ -11,7 +11,6 @@
 			xhr.onreadystatechange=function(){
 				//si no recibe nada es que esta disponible el nombre, sino envia algo(trato booleano)
 				if (xhr.readyState==4 && xhr.status==200) {
-					document.getElementById("result").innerHTML =xhr.responseText;
 					if (xhr.responseText) {
 						document.getElementById("enviar").disabled=true;
 						idFormulario.idNombre.style.borderColor="red";
@@ -42,6 +41,7 @@
 		            }
 				} else {
 		            idFormulario.idNombre.style.borderColor="red";
+		            document.getElementById("aNombre").style.display="initial";
 		            return false;
 		        }
 			}
@@ -52,6 +52,7 @@
 			if ( validarNombre()) {
 				comprobarIdioma(nombre);
 			} else {
+				document.getElementById("enviar").disabled=true;
 			}
 		}
 	</script>
@@ -62,7 +63,7 @@
 			<label for="idNombre">Nombre</label><span class="obligatorio">*</span>
 			<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validar();"/>
 			<span class="avisos" id="aNombre">
-				Debes escribir un nombre válido(caracteres no númericos o símbolos).
+				Debes escribir un nombre válido(caracteres no númericos, espacios o símbolos) mayor de dos caracteres.
 			</span>
 			</div>
 			<div class="form-group">
@@ -70,5 +71,4 @@
 			</div>
 		</fieldset>
 	</form>
-	<div id="result"></div>
 </div>

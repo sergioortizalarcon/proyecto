@@ -17,16 +17,22 @@ class Director extends CI_Controller {
         
         try {
         	$debug = $this -> director_model -> createDirector($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais);
-        	$datos['mensaje']['texto'] = "Director creado correctamente";
-        	$datos['mensaje']['nivel'] = 'ok';
-        	$this->load->view("Director/mensaje",$datos);
+        	header ("location:".base_url ()."director/crearOk");
         }
         catch (Exception $e) {
         	$datos['mensaje']['texto'] = "Director ya existente";
         	$datos['mensaje']['nivel'] = 'error';
-        	$this->load->view("director/mensaje",$datos);
+        	$datos['mensaje']['link'] = "director/crear";
+        	enmarcar($this,"director/mensaje",$datos);
         }
     }
+
+	public function crearOK() {
+		$datos['mensaje']['texto'] = "Director creado correctamente";
+		$datos['mensaje']['nivel'] = 'ok';
+		$datos['mensaje'] ['link'] = "director/listar";
+		enmarcar($this, "director/mensaje",$datos);
+	}
 
     public function listar() {
     	$this->listarPost();
@@ -59,7 +65,23 @@ class Director extends CI_Controller {
     	$id_pais = isset($_POST['pais'])?$_POST['pais']:null;
     	$id_director = $_POST ['id_director'];
     
-    	$this->director_model->editar ( $id_director, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais );
+    	try {
+    		$this->directorr_model->editar ( $id_direcor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais );
+    		header ("location:".base_url ()."director/editarOk");
+    	}
+    	catch (Exception $e) {
+    		$datos['mensaje']['texto'] = "Dirctor ya existente";
+    		$datos['mensaje']['nivel'] = 'error';
+    		$datos['mensaje']['link'] = "director/crear";
+    		enmarcar($this,"director/mensaje",$datos);
+    	}
+    }
+    
+    public function editarOK() {
+    	$datos['mensaje']['texto'] = "Director creado correctamente";
+    	$datos['mensaje']['nivel'] = 'ok';
+    	$datos['mensaje'] ['link'] = "director/listar";
+    	enmarcar($this, "director/mensaje",$datos);
     }
     
     public function borrar() {

@@ -64,10 +64,26 @@ class actor extends CI_Controller {
 		$apellido1 = isset($_POST['apellido1'])?$_POST['apellido1']:null;
 		$apellido2 = isset($_POST['apellido2'])?$_POST['apellido2']:null;
 		$fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
-		$pais = isset($_POST['pais'])?$_POST['pais']:null;
+		$id_pais = isset($_POST['pais'])?$_POST['pais']:null;
 		$id_actor = $_POST ['id_actor'];
 	
-		$this->actor_model->editar ( $id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $pais );
+		try {
+			$this->actor_model->editar ( $id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais );
+			header ("location:".base_url ()."actor/editarOk");
+		}
+		catch (Exception $e) {
+			$datos['mensaje']['texto'] = "Actor ya existente";
+			$datos['mensaje']['nivel'] = 'error';
+			$datos['mensaje']['link'] = "actor/crear";
+			enmarcar($this,"actor/mensaje",$datos);
+		}
+	}
+	
+	public function editarOK() {
+		$datos['mensaje']['texto'] = "Actor creado correctamente";
+		$datos['mensaje']['nivel'] = 'ok';
+		$datos['mensaje'] ['link'] = "actor/listar";
+		enmarcar($this, "actor/mensaje",$datos);
 	}
 	
 	public function borrar() {

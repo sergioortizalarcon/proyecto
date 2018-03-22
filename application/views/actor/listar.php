@@ -27,13 +27,11 @@
 				<td><?= $actor->fecha_nacimiento ?></td>
 				<td><?= $actor->paises['nombre'] ?></td>
 				<td>
-					<form id="idFormedit" action="<?=base_url()?>actor/editar" method="post">
+					<form class="listado" id="idFormedit" action="<?=base_url()?>actor/editar" method="post">
 						<input type="hidden" name="id_actor" value="<?= $actor -> id?>">
 						<button onclick="function f() {document.getElementById('idFormEdit').submit();}"><span class="glyphicon glyphicon-pencil"></span></button>
 					</form>
-				</td>
-				<td>
-					<form id="idFormRemove" action="<?=base_url()?>actor/borrarPost" method="post">
+					<form class="listado" id="idFormRemove" action="<?=base_url()?>actor/borrarPost" method="post">
 						<input type="hidden" name="id_actor" value="<?= $actor -> id?>">
 						<input type="hidden" name="v" value="listarTodos">
 						<button onclick="function f() {document.getElementById('idFormRemove').submit();}"><span class="glyphicon glyphicon-remove"></span></button>

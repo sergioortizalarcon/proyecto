@@ -3,6 +3,10 @@ function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];
 </script>
 <script type="text/javascript">
 var correcto = false;
+var nombreCorrecto = false;
+var apellido1Correcto = false;
+var apellido2Correcto = false;
+var fechaCorrecto = false;
 
 function mayuscula(palabra) {
 	var palabrasSeparadas = palabra.split(" ");
@@ -23,47 +27,39 @@ function mayuscula(palabra) {
 
 function validarNombre() {
 	var nombre = idFormulario.idNombre.value.trim();
-	console.log(nombre);
 	if (nombre != "") {
 		nombreMayus = mayuscula(nombre);
 		idFormulario.nombre.value = nombreMayus.trim();
-	
-		//var correcto=false;
-		
+
 		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
-		if (expReg.test(nombreMayus)){
-			console.log("nombre Correcto");
-			correcto = true;
+		if (expReg.test(nombre)){
+			nombreCorrecto = true;
 			idFormulario.idNombre.style.borderColor="blue";
 			document.getElementById("aNombre").style.display="none";
 		} else {
-			console.log("nombre Incorrecto");
 			idFormulario.idNombre.style.borderColor="red";
 			document.getElementById("aNombre").style.display="initial";
 			if (correcto == true) {
 				document.getElementById('idNombre').focus();
 			}
-			correcto = false;
+			nombreCorrecto = false;
 		}
 	} else {
 		document.getElementById("aNombre").style.display="initial";
         idFormulario.idNombre.style.borderColor="red";
-        correcto = false;
+        nombreCorrecto = false;
 	}
-	return correcto;
 }
 
 function validarApellido1() {
 	var apellido = idFormulario.idApellido1.value.trim();
 	if (apellido != "") {
 		apellidoMayus = mayuscula(apellido);
-		idFormulario.apellido1.value = apellidoMayus.trim();
-	
-		//var correcto=false;
+		idFormulario.idApellido1.value = apellidoMayus.trim();
 		
 		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
 		if (expReg.test(apellido)){
-			correcto = true;
+			apellido1Correcto = true;
 			idFormulario.idApellido1.style.borderColor="blue";
 			document.getElementById("aApellido1").style.display="none";
 		} else {
@@ -72,26 +68,24 @@ function validarApellido1() {
 			if (correcto == true) {
 				document.getElementById('idApellido1').focus();
 			}
-			correcto = false;
+			apellido1Correcto = false;
 		}
 	} else {
 		document.getElementById("aApellido1").style.display="initial";
         idFormulario.idApellido1.style.borderColor="red";
-        correcto = false;
+        apellido1Correcto = false;
 	}
-	return correcto;
 }
 
 function validarApellido2() {
-	var correcto=true;
-	var apellido = idFormulario.apellido2.value.trim();
+	var apellido = idFormulario.idApellido2.value.trim();
 	if (apellido != "") {
 		apellidoMayus = mayuscula(apellido);
-		idFormulario.apellido2.value = apellidoMayus.trim();
+		idFormulario.idApellido2.value = apellidoMayus.trim();
 		
 		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
 		if (expReg.test(apellido)){
-			correcto = true;
+			apellido2Correcto = true;
 			idFormulario.idApellido2.style.borderColor="blue";
 			document.getElementById("aApellido2").style.display="none";
 		} else {
@@ -100,27 +94,25 @@ function validarApellido2() {
 			if (correcto == true) {
 				document.getElementById('idApellido2').focus();
 			}
-			correcto = false;
+			apellido2Correcto = false;
 		}
 	} else {
-		document.getElementById("aApellido2").style.display="initial";
-        idFormulario.idApellido2.style.borderColor="red";
-        correcto = true;
+		document.getElementById("aApellido2").style.display="none";
+        idFormulario.idApellido2.style.borderColor="blue";
+        apellido2Correcto = true;
 	}
-	return correcto;
 }
 
 function validarFecha() {
 	var fecha = idFormulario.idFecha.value;
-	var correcto = false;
 	
 	if (fecha == "") {
 		idFormulario.idFecha.style.borderColor="red";
-		if (correcto) {
+		if (correcto==true) {
 			document.getElementById('idFecha').focus();
 			document.getElementById("aFecha").style.display="initial";
 		}
-		correcto = false;
+		fechaCorrecto = false;
 	} else {
 		var fechaSis = new Date();
 		var anio = fechaSis.getFullYear();
@@ -135,39 +127,24 @@ function validarFecha() {
 			if (correcto) {
 				idFormulario.idFecha.focus();
 			}
-			correcto = false;
+			fechaCorrecto = false;
 		} else {
-			correcto = true;
+			fechaCorrecto = true;
+	        idFormulario.idFecha.style.borderColor="blue";
 			document.getElementById("aFecha").style.display="none";
-			idFormulario.idFecha.style.borderColor="black";
 		}
 	}
-	return correcto;
-}
-
-function accionAJAX() {
-    document.getElementById("result").innerHTML = conexion.responseText;
-}
-
-
-
-function limpiar() {
-	idFormulario.nombre.value = "";
-	idFormulario.apellido1.value = "";
-	idFormulario.apellido2.value = "";
-	idFormulario.fechaNacimiento.value="";
-	idFormulario.pais.value = "españa";
 }
 
 function validar() {
-	if (validarNombre() && validarApellido1() && validarApellido2() && validarFecha()) {
-		document.getElementById("crearActor").disabled=false;
+	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
+		document.getElementById("crearDirector").disabled=false;
 	}else {
-		document.getElementById("crearActor").disabled=true;
+		document.getElementById("crearDirector").disabled=true;
 	}
 }
 
-function enviarActor() {
+function enviarDirector() {
 	idFormulario.submit();
 }
 </script>
@@ -175,14 +152,14 @@ function enviarActor() {
 
 <div class="container ">
 <div id="creator">
-	<form id="idFormulario" name="idFormulario" action="<?= base_url()?>director/crearPost" method="post" onChange="validar();">
+	<form id="idFormulario" name="idFormulario" action="<?= base_url()?>director/crearPost" method="post" onchange="validar();">
 		<fieldset>
-			<legend>Crear nuevo actor</legend>
+			<legend>Crear nuevo Director</legend>
 			<small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>
 			
 			<div class="form-group">
 				<label for="idNombre">Nombre</label><span class="obligatorio">*</span>
-				<input class="form-control" type="text" id="idNombre" name="nombre" onfocusout="validarNombre();"
+				<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validarNombre();"
 				placeholder="Nombre..." data-toogle="tooltip" data-placement="left" title="Escribe un nombre" />
 				<span class="avisos" id="aNombre">
 					Debes escribir un nombre válido(3 a 20 caracteres no númericos o simbolos).
@@ -191,7 +168,7 @@ function enviarActor() {
 			
 			<div class="form-group">
 				<label for="idApellido1">Primer apellido</label><span class="obligatorio">*</span>
-				<input class="form-control" type="text" id="idApellido1" name="apellido1" onfocusout="validarApellido1();" 
+				<input class="form-control" type="text" id="idApellido1" name="apellido1" onkeyup="validarApellido1();" 
 				placeholder="Apellido..." data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
 				<span class="avisos" id="aApellido1">
 					Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
@@ -200,7 +177,7 @@ function enviarActor() {
 			
 			<div class="form-group">
 				<label for="idApellido2">Segundo apellido</label>
-				<input class="form-control" type="text" id="idApellido2" name="apellido2" onfocusout="validarApellido2();" 
+				<input class="form-control" type="text" id="idApellido2" name="apellido2" onkeyup="validarApellido2();" 
 				placeholder="Apellido..." data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
 				<span class="avisos" id="aApellido2">
 					Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
@@ -209,7 +186,7 @@ function enviarActor() {
 			
 			<div class="form-group">
 				<label for="idFecha">Fecha de nacimiento</label><span class="obligatorio">*</span>
-				<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" onfocusout="validarFecha();" />
+				<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" onchange="validarFecha();" />
 				<span class="avisos" id="aFecha">
 					Debes introducir una fecha válida(Anterior al día actual).
 				</span>
@@ -222,7 +199,7 @@ function enviarActor() {
 					<?php endforeach; ?>
 				</select>
 			<br/>
-			<input type="button" disabled="disabled" class="btn btn-default col-md-12" id="crearActor" onclick="enviarActor();" value="Enviar" />
+			<input type="button" disabled="disabled" class="btn btn-default col-md-12" id="crearDirector" onclick="enviarDirector();" value="Enviar" />
 			
 		</fieldset>
 	</form>

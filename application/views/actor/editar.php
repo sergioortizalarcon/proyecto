@@ -1,191 +1,205 @@
 <script type="text/javascript">
-	var xhr;
-	var correcto = true;
-	
-	window.onload = function(){
-		xhr = new XMLHttpRequest();
-		console.log(xhr);
+var correcto = false;
+var nombreCorrecto = false;
+var apellido1Correcto = false;
+var apellido2Correcto = false;
+var fechaCorrecto = false;
+
+function mayuscula(palabra) {
+	var palabrasSeparadas = palabra.split(" ");
+	var palabraNueva="";
+	if (palabrasSeparadas.length>1) {
+		for (i=0;i<palabrasSeparadas.length; i++) {
+			var primeraLetra = palabrasSeparadas[i].substr(0,1);
+			palabra = palabrasSeparadas[i].slice(1);
+			palabraNueva += primeraLetra.toUpperCase() + palabra + " ";
+		}
+	} else {
+		var primeraLetra = palabrasSeparadas[0].substr(0,1);
+		palabra = palabrasSeparadas[0].slice(1);
+		palabraNueva = primeraLetra.toUpperCase() + palabra + " ";
 	}
+	return palabraNueva;
+}
 
-	function comprobar() {
-		var nombreCorrecto=true;
-		var ape1Correcto=true;
-		var ape2Correcto=true;
-		var fechaCorrecto=true;
-		
-		var nombre = idFormulario.nombre.value.trim();
-		if (nombre != "") {
-			nombreMayus = mayuscula(nombre);
-			idFormulario.nombre.value = nombreMayus;
-			nombreCorrecto = comprobarNombre(nombre);
-		}
-		
-		var apellido1 = idFormulario.apellido1.value.trim();
-		if (apellido1 != "") {
-			nombreMayus = mayuscula(apellido1);
-			idFormulario.apellido1.value = nombreMayus;
-			ape1Correcto = comprobarApellido1(apellido1);
-		}
+function validarNombre() {
+	var nombre = idFormulario.idNombre.value.trim();
+	if (nombre != "") {
+		nombreMayus = mayuscula(nombre);
+		idFormulario.nombre.value = nombreMayus.trim();
 
-		var apellido2 = idFormulario.apellido2.value.trim();
-		if (apellido2 != "") {
-			nombreMayus = mayuscula(apellido2);
-			idFormulario.apellido2.value = nombreMayus;
-			ape2Correcto = comprobarApellido2(apellido2);
-		}
-
-		var fechaNacimiento = idFormulario.idFecha.value;
-		console.log(fechaNacimiento);
-		if (fechaNacimiento != "") {
-			fechaCorrecto = comprobarFechaNac(fechaNacimiento);
-		}
-
-		var nacionalidad = idFormulario.idPais.value;
-		
-		if(nombreCorrecto && ape1Correcto && ape2Correcto && fechaCorrecto) {
-			peticionAJAX();
-			limpiar();
-		}
-	}
-
-	function mayuscula(palabra) {
-		var primeraLetra = palabra.substr(0,1);
-		palabra = palabra.slice(1);
-		palabra = primeraLetra.toUpperCase() + palabra;
-		return palabra;
-	}
-
-	function comprobarNombre(nombre) {
-		var expReg = /^[a-zA-Z áéíóúÁÉÍÓÚ]{2,30}$/;
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
 		if (expReg.test(nombre)){
-			correcto = true;
-			document.getElementById('idNombre').style="color:black";
+			nombreCorrecto = true;
+			idFormulario.idNombre.style.borderColor="blue";
+			document.getElementById("aNombre").style.display="none";
 		} else {
-			document.getElementById('idNombre').style="color:red";
+			idFormulario.idNombre.style.borderColor="red";
+			document.getElementById("aNombre").style.display="initial";
 			if (correcto == true) {
 				document.getElementById('idNombre').focus();
 			}
-			correcto = false;
+			nombreCorrecto = false;
 		}
-		return correcto;
+	} else {
+		document.getElementById("aNombre").style.display="initial";
+        idFormulario.idNombre.style.borderColor="red";
+        nombreCorrecto = false;
 	}
+}
 
-	function comprobarApellido1(apellido1) {
-		var expReg = /^[a-zA-Z áéíóúÁÉÍÓÚ]{2,30}$/;
-		if (expReg.test(apellido1)){
-			correcto = true;
-			document.getElementById('idApellido1').style="color:black";
+function validarApellido1() {
+	var apellido = idFormulario.idApellido1.value.trim();
+	if (apellido != "") {
+		apellidoMayus = mayuscula(apellido);
+		idFormulario.idApellido1.value = apellidoMayus.trim();
+		
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
+		if (expReg.test(apellido)){
+			apellido1Correcto = true;
+			idFormulario.idApellido1.style.borderColor="blue";
+			document.getElementById("aApellido1").style.display="none";
 		} else {
-			document.getElementById('idApellido1').style="color:red";
+			idFormulario.idApellido1.style.borderColor="red";
+			document.getElementById("aApellido1").style.display="initial";
 			if (correcto == true) {
 				document.getElementById('idApellido1').focus();
 			}
-			correcto = false;
+			apellido1Correcto = false;
 		}
-		return correcto;
+	} else {
+		document.getElementById("aApellido1").style.display="initial";
+        idFormulario.idApellido1.style.borderColor="red";
+        apellido1Correcto = false;
 	}
+}
 
-	function comprobarApellido2(apellido2) {
-		var expReg = /^[a-zA-Z áéíóúÁÉÍÓÚ]{2,30}$/;
-		if (expReg.test(apellido2)){
-			correcto = true;
-			document.getElementById('idApellido2').style="color:black";
+function validarApellido2() {
+	var apellido = idFormulario.idApellido2.value.trim();
+	if (apellido != "") {
+		apellidoMayus = mayuscula(apellido);
+		idFormulario.idApellido2.value = apellidoMayus.trim();
+		
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
+		if (expReg.test(apellido)){
+			apellido2Correcto = true;
+			idFormulario.idApellido2.style.borderColor="blue";
+			document.getElementById("aApellido2").style.display="none";
 		} else {
-			document.getElementById('idApellido2').style="color:red";
-			if (correcto) {
+			idFormulario.idApellido2.style.borderColor="red";
+			document.getElementById("aApellido2").style.display="initial";
+			if (correcto == true) {
 				document.getElementById('idApellido2').focus();
 			}
-			correcto = false;
+			apellido2Correcto = false;
 		}
-		return correcto;
+	} else {
+		document.getElementById("aApellido2").style.display="none";
+        idFormulario.idApellido2.style.borderColor="blue";
+        apellido2Correcto = true;
 	}
+}
 
-	function comprobarFechaNac(fecha) {
-		if (fecha == "") {
-			document.getElementById('idFecha').style="color:red";
+function validarFecha() {
+	var fecha = idFormulario.idFecha.value;
+	
+	if (fecha == "") {
+		idFormulario.idFecha.style.borderColor="red";
+		if (correcto==true) {
+			document.getElementById('idFecha').focus();
+			document.getElementById("aFecha").style.display="initial";
+		}
+		fechaCorrecto = false;
+	} else {
+		var fechaSis = new Date();
+		var anio = fechaSis.getFullYear();
+		var mes = fechaSis.getMonth()+1;
+		var dia = fechaSis.getDate();
+		mes = "0"+mes;
+		fechaSistema = anio + "-" + mes + "-" + dia
+
+		if (fechaSistema <= fecha) {
+			idFormulario.idFecha.style.borderColor="red";
+			document.getElementById("aFecha").style.display="initial";
 			if (correcto) {
-				document.getElementById('idFecha').focus();
+				idFormulario.idFecha.focus();
 			}
-			correcto = false;
+			fechaCorrecto = false;
 		} else {
-			var fechaSis = new Date();
-			var anio = fechaSis.getFullYear();
-			var mes = fechaSis.getMonth()+1;
-			var dia = fechaSis.getDate();
-			mes = "0"+mes;
-			fechaSistema = anio + "-" + mes + "-" + dia
-
-			if (fechaSistema <= fecha) {
-				document.getElementById('idFecha').style="color:red";
-				if (correcto) {
-					document.getElementById('idFecha').focus();
-				}
-				correcto = false;
-			} else {
-				correcto = true;
-				document.getElementById('idFecha').style="color:black";
-			}
+			fechaCorrecto = true;
+	        idFormulario.idFecha.style.borderColor="blue";
+			document.getElementById("aFecha").style.display="none";
 		}
-		return correcto;
 	}
+}
 
-	function peticionAJAX() {
-	    conexion = new XMLHttpRequest();
-	    
-	    var datosSerializados = serialize(document.getElementById("idFormulario"));
-	    conexion.open('POST', '<?=base_url()?>actor/editarPost', true);
-	    conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-	    conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	    console.log(datosSerializados);
-	    conexion.send(datosSerializados);
-	    
-	    conexion.onreadystatechange = function() {
-	        if (conexion.readyState==4 && conexion.status==200) {
-	            accionAJAX();
-	        }
-	    }
+function validar() {
+	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
+		document.getElementById("crearActor").disabled=false;
+	}else {
+		document.getElementById("crearActor").disabled=true;
 	}
+}
 
-	function limpiar() {
-		idFormulario.nombre.value = "";
-		idFormulario.apellido1.value = "";
-		idFormulario.apellido2.value = "";
-		idFormulario.fechaNacimiento.value="";
-	}
-
+function enviarActor() {
+	idFormulario.submit();
+}
 </script>
 
 
 <div class="container ">
-	<form id="idFormulario">
+<div id="creator">
+	<form id="idFormulario" name="idFormulario" action="<?= base_url()?>actor/crearPost" method="post" onchange="validar();">
 		<fieldset>
 			<legend>Editar actor: <?= $body['actores']->nombre ?> <?= $body['actores']->apellido1 ?> <?= $body['actores']->apellido2 ?></legend>
 			
-			<label for="idNombre">Nombre</label>
-			<input class="form-control" placeholder="<?= $body['actores']->nombre ?>" type="text" id="idNombre" name="nombre" />
+			<div class="form-group">
+				<label for="idNombre">Nombre</label><span class="obligatorio">*</span>
+				<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validarNombre();"
+				placeholder="<?= $body['actores']->nombre ?>" data-toogle="tooltip" data-placement="left" title="Escribe un nombre" />
+				<span class="avisos" id="aNombre">
+					Debes escribir un nombre válido(3 a 20 caracteres no númericos o simbolos).
+				</span>
+			</div>
 			
-			<label for="idApellido1">Apellido1</label>
-			<input class="form-control" placeholder="<?= $body['actores']->apellido1 ?>"type="text" id="idApellido1" name="apellido1" />
+			<div class="form-group">
+				<label for="idApellido1">Primer apellido</label><span class="obligatorio">*</span>
+				<input class="form-control" type="text" id="idApellido1" name="apellido1" onkeyup="validarApellido1();" 
+				placeholder="<?= $body['actores']->apellido1 ?>" data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
+				<span class="avisos" id="aApellido1">
+					Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
+				</span>
+			</div>
 			
-			<label for="idApellido2">Apellido2</label>
-			<input class="form-control" placeholder="<?= $body['actores']->apellido2 ?>"type="text" id="idApellido2" name="apellido2" />
+			<div class="form-group">
+				<label for="idApellido2">Segundo apellido</label>
+				<input class="form-control" type="text" id="idApellido2" name="apellido2" onkeyup="validarApellido2();" 
+				placeholder="<?= $body['actores']->apellido2 ?>" data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
+				<span class="avisos" id="aApellido2">
+					Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
+				</span>
+			</div>
 			
-			<label for="idFecha">Fecha de nacimiento</label>
-			<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" />
+			<div class="form-group">
+				<label for="idFecha">Fecha de nacimiento</label><span class="obligatorio">*</span>
+				<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" onchange="validarFecha();" />
+				<span class="avisos" id="aFecha">
+					Debes introducir una fecha válida(Anterior al día actual).
+				</span>
+			</div>
 			
-			<input type="hidden" name="id_actor" value="<?= $body['actores']->id ?>" />
-			
-			<label for="idPais">Pais de nacimiento</label>
-			<select class="form-control" id="idPais" name="pais">
-				<?php foreach($body['paises'] as $pais):?>
-					<option value="<?= $pais-> id ?>"><?= $pais->nombre?></option>
-				<?php endforeach; ?>
-			</select>
-				
+			<label for="idPais">Pais de nacimiento</label><span class="obligatorio">*</span>
+				<select class="form-control" id="idPais" name="pais">
+					<?php foreach($body['paises'] as $pais):?>
+						<option value="<?=$pais -> id?>" <?=($pais -> nombre == "España")?"selected='selected'":" "?>"><?= $pais->nombre?></option>
+					<?php endforeach; ?>
+				</select>
 			<br/>
-			<input type="button" class="btn btn-default col-md-12" onclick="comprobar();" value="Enviar" />
+			<input type="button" disabled="disabled" class="btn btn-default col-md-12" id="crearActor" onclick="enviarActor();" value="Enviar" />
 			
 		</fieldset>
 	</form>
 	<br/>
+</div>
+<div id="result"></div>
 </div>

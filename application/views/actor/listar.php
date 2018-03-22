@@ -1,9 +1,3 @@
-<script type="text/javascript">
-	$(document).ready( function () {
-    	$('#tabla').DataTable();
-	});
-</script>
-
 <div class="container">
 	<h1>Listado de actores</h1>
 	<br/>

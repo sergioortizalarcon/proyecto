@@ -87,7 +87,4 @@ function peticionAJAX(nombre) {
 
 <div id="result"></div>
 
-<script>
-	document.getElementById("idNombre").value="España";
-</script>
 </div>

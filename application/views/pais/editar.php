@@ -30,7 +30,8 @@
 }
 
 function validarNombre() {
-	var nombre = document.getElementById("idNombre").value;
+	var n = document.getElementById("idNombre").value;
+	var nombre = n.trim();
 	var nombreAnterior = document.getElementById("idNombreAnterior").value;
 
 	var distintos = true;
@@ -40,10 +41,11 @@ function validarNombre() {
 	}
 	
 	if(nombre!="" && distintos ) {
-		expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,20}$/;
+		expresion = /^([a-z]|[A-Z]|[á-ú]|[Á-Ú]|[à-ù]|[À-Ù]|[ñÑ]|\s){1,20}$/;
 		if (expresion.test(nombre)) {
 			var m = nombre.charAt(0);
 			nombre= m.toUpperCase()+nombre.substring(1,nombre.length);
+
 			idFormulario.idNombre.style.borderColor="blue";
 			document.getElementById("aNombre").style.display="none";
 			return true;
@@ -56,11 +58,9 @@ function validarNombre() {
 		document.getElementById("aNombre").style.display="initial";
 		idFormulario.idNombre.style.borderColor="red";
 		return false;
-
 	}
-	
-	
 }
+
 function validar(){
 	if (validarNombre()) {
 		document.getElementById('editar').disabled=false;
@@ -69,8 +69,10 @@ function validar(){
 	}
 }
 function enviarDatos(){
+	console.log(validarNombre());
 	idFormulario.submit();
 }
+
 
 </script>
 
@@ -98,7 +100,7 @@ function enviarDatos(){
 		</div>
 
 		<div class="form-group">
-			<input type="button"  id="editar" class="btn btn-default"
+			<input type="button"  id="editar" name="editar" class="btn btn-default"
 			value="Editar" disabled="disabled" onclick="enviarDatos();" />
 		</div>
 	</fieldset>

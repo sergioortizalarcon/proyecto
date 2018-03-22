@@ -40,17 +40,23 @@ class pais extends CI_Controller {
 		$this->load->model ( 'pais_model' );
 		try {
 			$this->pais_model->editar ( $id_pais, $nombre );
-			//header ( "location:" . base_url () . "pais/listar" );
-			$datos ['mensaje'] ['texto'] = 'País modificado correctamente';
-			$datos ['mensaje'] ['nivel'] = 'ok';
-			$this->load->view ( "pais/mensaje", $datos );
+			//header ( "location:" . base_url () . "pais/editarOk" );
+			/*$datos ['mensaje'] ['texto'] = 'País modificado correctamente';
+			$datos ['mensaje'] ['nivel'] = 'ok';*/
+			
+			//enmarcar ( $this, "pais/mensaje", $datos );
 		} catch ( Exception $e ) {
 			$datos ['mensaje'] ['texto'] = "El país ya existe";
 			$datos ['mensaje'] ['nivel'] = 'error';
 			$this->load->view ( "pais/mensaje", $datos );
 		}
-		// $this->listar ();
 	}
+	/*public function editarOk() {
+		$datos ['mensaje'] ['texto'] = 'País modificado correctamente';
+		$datos ['mensaje'] ['nivel'] = 'ok';
+		$datos ['mensaje'] ['link'] = "pais/listar";
+		enmarcar ( $this, "pais/mensaje", $datos );
+	}*/
 	public function borrar() {
 		$datos ['body'] ['accion'] = 'borrar';
 		$datos ['body'] ['filtro'] = '';

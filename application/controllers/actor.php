@@ -16,15 +16,24 @@ class actor extends CI_Controller {
 		
 		try {
 			$debug = $this -> actor_model -> createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais);
-			$datos['mensaje']['texto'] = "Actor creado correctamente";
-			$datos['mensaje']['nivel'] = 'ok';
-			$this->load->view("actor/mensaje",$datos);
+			header ("location:".base_url ()."actor/crearOk");
 		}
 		catch (Exception $e) {
 			$datos['mensaje']['texto'] = "Actor ya existente";
 			$datos['mensaje']['nivel'] = 'error';
-			$this->load->view("actor/mensaje",$datos);
+			$datos['mensaje']['link'] = "actor/crear";
+			enmarcar($this,"actor/mensaje",$datos);
 		}
+	}
+	
+	public function crearOK() {
+		$datos['mensaje']['texto'] = "Actor creado correctamente";
+		$datos['mensaje']['nivel'] = 'ok';
+		$datos['mensaje'] ['link'] = "actor/listar";
+		enmarcar($this, "actor/mensaje",$datos);
+	}
+	
+	public function crearError() {
 	}
 
 	public function listar() {

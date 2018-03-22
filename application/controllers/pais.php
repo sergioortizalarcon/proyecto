@@ -29,34 +29,33 @@ class pais extends CI_Controller {
 	}
 	public function editar() {
 		$this->load->model ( 'pais_model' );
-		$id_pais = $_POST ['id_pais'];
-		$datos ['body'] ['paises'] = $this->pais_model->getPaisPorId ( $id_pais );
-		enmarcar ( $this, 'pais/editar', $datos );
+		$id_pais = isset ( $_POST ['id_pais'] ) ? $_POST ['id_pais'] : null;
+		try {
+			$datos ['body'] ['paises'] = $this->pais_model->getPaisPorId ( $id_pais );
+			enmarcar ( $this, 'pais/editar', $datos );
+		} catch ( Exception $e ) {
+			$datos ['mensaje'] ['texto'] = "Error";
+			$datos ['mensaje'] ['nivel'] = "error";
+			enmarcar ( $this, 'pais/mensaje', $datos );
+		}
 	}
 	public function editarPost() {
-		$nombre = $_POST ['nombre'];
-		$id_pais = $_POST ['id_pais'];
-		
 		$this->load->model ( 'pais_model' );
+		$id_pais = isset ( $_POST ['id_pais'] ) ? $_POST ['id_pais'] : null;
+		$nombre = isset ( $_POST ['nombre'] ) ? $_POST ['nombre'] : null;
+		
 		try {
 			$this->pais_model->editar ( $id_pais, $nombre );
-			//header ( "location:" . base_url () . "pais/editarOk" );
-			/*$datos ['mensaje'] ['texto'] = 'País modificado correctamente';
-			$datos ['mensaje'] ['nivel'] = 'ok';*/
 			
-			//enmarcar ( $this, "pais/mensaje", $datos );
+			$datos ['mensaje'] ['texto'] = "País " . $nombre . " añadido";
+			$datos ['mensaje'] ['nivel'] = 'ok';
+			enmarcar ( $this, 'pais/mensaje', $datos );
 		} catch ( Exception $e ) {
 			$datos ['mensaje'] ['texto'] = "El país ya existe";
 			$datos ['mensaje'] ['nivel'] = 'error';
 			$this->load->view ( "pais/mensaje", $datos );
 		}
 	}
-	/*public function editarOk() {
-		$datos ['mensaje'] ['texto'] = 'País modificado correctamente';
-		$datos ['mensaje'] ['nivel'] = 'ok';
-		$datos ['mensaje'] ['link'] = "pais/listar";
-		enmarcar ( $this, "pais/mensaje", $datos );
-	}*/
 	public function borrar() {
 		$datos ['body'] ['accion'] = 'borrar';
 		$datos ['body'] ['filtro'] = '';

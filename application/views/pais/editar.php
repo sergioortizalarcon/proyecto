@@ -68,17 +68,12 @@ function validar(){
 		document.getElementById('editar').disabled=true;
 	}
 }
-function enviarDatos(){
-	console.log(validarNombre());
-	idFormulario.submit();
-}
-
 
 </script>
 
 
 <div class="container ">
-	<form id="idFormulario" method="post">
+	<form id="idFormulario" method="post" action="<?=base_url()?>pais/editarPost">
 		<fieldset>
 			<legend>Editar país</legend>
 
@@ -94,14 +89,14 @@ function enviarDatos(){
 				<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validar();">
 				<input class="form-control" type="hidden" id="idID" name="id_pais"
 				<?= "value=".$body["paises"]->id?>> <span class="avisos"
-				id="aNombre"> Debes escribir un nombre válido(de 3 a 20 caracteres
+				id="aNombre"> Debes escribir un nombre válido(caracteres
 			no númericos o símbolos). </span>
 
 		</div>
 
 		<div class="form-group">
-			<input type="button"  id="editar" name="editar" class="btn btn-default"
-			value="Editar" disabled="disabled" onclick="enviarDatos();" />
+			<input type="submit"  id="editar" name="editar" class="btn btn-default"
+			value="Editar" disabled="disabled" />
 		</div>
 	</fieldset>
 </form>

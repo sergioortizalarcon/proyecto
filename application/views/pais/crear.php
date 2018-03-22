@@ -35,8 +35,8 @@ function peticionAJAX(nombre) {
 
     function validarNombre() {
         if(nombre!="") {
-            expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,20}$/;
-			if (expresion.test(nombre)) {
+        	expresion = /^([a-z]|[A-Z]|[á-ú]|[Á-Ú]|[à-ù]|[À-Ù]|[ñÑ]|\s){1,20}$/;
+    		if (expresion.test(nombre)) {
 				var m = nombre.charAt(0);
 				nombre= m.toUpperCase()+nombre.substring(1,nombre.length);
 				idFormulario.idNombre.style.borderColor="blue";

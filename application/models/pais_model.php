@@ -11,7 +11,7 @@ class Pais_model extends CI_Model {
 			
 			R::store ( $p );
 		} else {
-			throw new Exception ( "Error Processing Request", 1 );
+			throw new Exception ( "Error" );
 		}
 	
 		R::close ();

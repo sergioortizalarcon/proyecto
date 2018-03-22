@@ -1,7 +1,7 @@
 <div class="container">
 	<form action="<?= base_url() ?>idioma/listar" method="post">
 		<label for="idFiltro">Filtro</label> <input id="idFiltro" type="text"
-			name="filtro" value="<?= $filtro ?>"> <input type="submit"
+			name="filtro" <?php isset($filtro)?"value='".$filtro."'":"" ?>"> <input type="submit"
 			value="Filtrar">
 	</form>
 

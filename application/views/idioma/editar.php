@@ -10,6 +10,7 @@
 		xhr.open("POST", "<?=base_url()?>idioma/comprobarIdioma", true);
 		xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xhr.send("nombre="+nombre);
 		xhr.onreadystatechange = function(){
 			//si no recibe nada es que esta disponible el nombre, sino envia algo(trato booleano)
 			if (xhr.readyState==4 && xhr.status==200) {
@@ -70,30 +71,31 @@ function validar(){
 </script>
 
 <div class="container ">
-	<form id="idFormulario" method="post" action="<?=base_url()?>idioma/editarPost">
+	<form id="idFormulario" method="post"
+		action="<?=base_url()?>idioma/editarPost">
 		<fieldset>
 			<legend>Editar Idioma</legend>
 			<div class="form-group">
 				<label for="idNombreAnterior">Nombre anterior</label> <input
-				class="form-control" type="text" id="idNombreAnterior"
-				name="nombreAnterior" readonly="readonly"
-				<?= ($body["idioma"]->nombre)?"value=".$body["idioma"]->nombre:"" ?>>
+					class="form-control" type="text" id="idNombreAnterior"	name="nombreAnterior" readonly="readonly"
+					<?= ($body["idioma"]->nombre)?"value=".$body["idioma"]->nombre:"" ?>>
 			</div>
 
 			<div class="form-group">
 				<label for="idNombre">Nuevo nombre</label><span class="obligatorio">*</span>
-				<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validar();">
-				<input class="form-control" type="hidden" id="idId" name="id_pais"
-				<?= "value=".$body["idioma"]->id?>> 
-			<span class="avisos" id="aNombre"> 
-				Debes escribir un nombre válido(caracteres no númericos, espacios o símbolos) mayor de dos caracteres.
-			</span>
+				<input class="form-control" type="text" id="idNombre" name="nombre"
+					onkeyup="validar();"> <input class="form-control" type="hidden"
+					id="idId" name="id_pais" <?= "value=".$body["idioma"]->id?>> <span
+					class="avisos" id="aNombre"> Debes escribir un nombre
+					válido(caracteres no númericos, espacios o símbolos) mayor de dos
+					caracteres. </span>
 			</div>
 
 			<div class="form-group">
-			<input type="submit" class="btn btn-default" name="editar" id="editar" value="Editar" disabled="disabled"/>
+				<input type="submit" class="btn btn-default" name="editar"
+					id="editar" value="Editar" disabled="disabled" />
 			</div>
 		</fieldset>
-</form>
+	</form>
 
 </div>

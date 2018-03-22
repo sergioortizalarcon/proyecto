@@ -12,7 +12,7 @@ class Idioma_model extends CI_Model {
 			
 			R::store ( $idioma );
 		} else {
-			throw new Exception ( "Error Processing Request", 1 );
+			throw new Exception ( "Error al crear el idioma");
 		}
 		R::close ();
 	}
@@ -38,17 +38,22 @@ class Idioma_model extends CI_Model {
 
 	/*			EDITADO Y BORRADO		*/
 
+	
 	public function editar_idioma($idId,$nuevo_nombre) {
 		$idioma = R::load("idiomas",$idId);
-		$idioma -> nombre = $nuevo_nombre;
-		R::store($idioma);
+		if ($idioma->id!=0){
+			$idioma -> nombre = $nuevo_nombre;
+			R::store($idioma);
+		} else {
+			 throw new Exception("Idioma inexistente.");
+		}
 		R::close();
 	}
 
-	public function borrar($id) {
-		$lp = R::load ( 'lp', $id );
-		if ($lp->id != 0) {
-			R::trash ( $lp );
+	public function borrar_idioma($id_idioma) {
+		$idioma = R::load ( 'idiomas', $id_idioma );
+		if ($idioma->id != 0) {
+			R::trash ( $idioma );
 		}
 		R::close ();
 	}

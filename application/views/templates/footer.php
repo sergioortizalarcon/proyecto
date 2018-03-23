@@ -1,4 +1,12 @@
 <footer class="container">
+
+<?php
+	$espacio = "  ---   ";
+	$enlace_actual = 'http://'.$_SERVER['HTTP_HOST'];
+	$refer = $_SERVER['HTTP_REFERER'];
+	$resto = $_SERVER['REQUEST_URI'];
+	echo $enlace_actual.$espacio.$refer.$espacio.$resto;
+?>
 	<hr/>
 revisar footer <!-- sin collapse pierde el fondo y la lista solo va en pc -->
 			<div id="footer" class="collapse navbar-collapse">

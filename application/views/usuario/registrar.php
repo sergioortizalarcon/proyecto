@@ -5,6 +5,15 @@
 		xhr = new XMLHttpRequest();
 	}
 
+
+function cancelarRegistro(){
+	var cancelarRegistro = confirm("¿Realmente quieres cancelar el registo?");
+
+	if (confirm) {
+		window.location.href = "<?=base_url()?>";
+	}
+}
+
 function comprobarAlias(alias) {
 	xhr.open("POST", "<?=base_url()?>usuario/comprobarDispAlias", true);
 	xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -52,24 +61,20 @@ function validarCorreo() {
 		    if (expresion.test(correo)) {
 			//Realiza la accion del sgte if pero muestra la consola de su correspondiente else.
 		    	if (comprobarCorreo(correo)) {
-		    		console.log("disp correo:" +comprobarCorreo(correo));
 		        	idFormulario.idEmail.style.borderColor="blue";
 		        	document.getElementById("aEmail").style.display="none";
 		        	return true;
 		        } else {
-		        	console.log("disp ->"+ comprobarCorreo(correo));
 					idFormulario.idEmail.style.borderColor="red";
 					document.getElementById("aEmail").style.display="initial";
 				    return false;
 				}
 		    } else {
-		    	console.log("algo va mal");
 		        document.getElementById("aEmail").style.display="initial";
 		        idFormulario.idEmail.style.borderColor="red";
 		        return false;
 		    }
 		} else {
-			console.log("pero q muy mal");
 		    document.getElementById("aEmail").style.display="initial";
 		    idFormulario.idEmail.style.borderColor="red";
 		    return false;
@@ -197,6 +202,7 @@ function validarAlias() {
 			ape2 = ap.substring(0,ap.length-1);
 		} else {
 			ape2 = " ";
+			idFormulario.idApe2.style.borderColor="blue";
 		}
 		return true;
 	}
@@ -278,85 +284,122 @@ function validarAlias() {
  */
 function calcularEdad() {
 	fecha = document.getElementById("idFecha").value;
-    if(validate_fecha(fecha)==true) {
-        // Si la fecha es correcta, calculamos la edad
-        var values=fecha.split("-");
-        var dia = values[2];
-        var mes = values[1];
-        var ano = values[0];
- 
-        // cogemos los valores actuales
-        var fecha_hoy = new Date();
-        var ahora_ano = fecha_hoy.getYear();
-        var ahora_mes = fecha_hoy.getMonth()+1;
-        var ahora_dia = fecha_hoy.getDate();
- 
-        // realizamos el calculo
-        var edad = (ahora_ano + 1900) - ano;
-        if ( ahora_mes < mes ) {
-            edad--;
-        }
-        if ((mes == ahora_mes) && (ahora_dia < dia)) {
-            edad--;
-        }
-        if (edad > 1900) {
-            edad -= 1900;
-        }
- 
-        // calculamos los meses
-        var meses=0;
-        if(ahora_mes>mes)
-            meses=ahora_mes-mes;
-        if(ahora_mes<mes)
-            meses=12-(mes-ahora_mes);
-        if(ahora_mes==mes && dia>ahora_dia)
-            meses=11;
- 
-        // calculamos los dias
-        var dias=0;
-        if(ahora_dia>dia)
-            dias=ahora_dia-dia;
-        if(ahora_dia<dia) {
-            ultimoDiaMes=new Date(ahora_ano, ahora_mes, 0);
-            dias=ultimoDiaMes.getDate()-(dia-ahora_dia);
-        }
+	if(fecha!=""){
+	    if(validate_fecha(fecha)==true) {
+	        // Si la fecha es correcta, calculamos la edad
+	        var values=fecha.split("-");
+	        var dia = values[2];
+	        var mes = values[1];
+	        var ano = values[0];
+	 
+	        // cogemos los valores actuales
+	        var fecha_hoy = new Date();
+	        var ahora_ano = fecha_hoy.getYear();
+	        var ahora_mes = fecha_hoy.getMonth()+1;
+	        var ahora_dia = fecha_hoy.getDate();
+	 
+	        // realizamos el calculo
+	        var edad = (ahora_ano + 1900) - ano;
+	        if ( ahora_mes < mes ) {
+	            edad--;
+	        }
+	        if ((mes == ahora_mes) && (ahora_dia < dia)) {
+	            edad--;
+	        }
+	        if (edad > 1900) {
+	            edad -= 1900;
+	        }
+	 
+	        // calculamos los meses
+	        var meses=0;
+	        if(ahora_mes>mes)
+	            meses=ahora_mes-mes;
+	        if(ahora_mes<mes)
+	            meses=12-(mes-ahora_mes);
+	        if(ahora_mes==mes && dia>ahora_dia)
+	            meses=11;
+	 
+	        // calculamos los dias
+	        var dias=0;
+	        if(ahora_dia>dia)
+	            dias=ahora_dia-dia;
+	        if(ahora_dia<dia) {
+	            ultimoDiaMes=new Date(ahora_ano, ahora_mes, 0);
+	            dias=ultimoDiaMes.getDate()-(dia-ahora_dia);
+	        }
 
-        document.getElementById("result").innerHTML="Tienes "+edad+" años, "+meses+" meses y "+dias+" días";
-        if (edad<13) {
-        	document.getElementById("aFecha").style.display="initial";
-			return false;
-        } else {
-        	document.getElementById("aFecha").style.display="none";
-        	return true;
-        }
-    } else {
-        document.getElementById("result").innerHTML="La fecha "+fecha+" es incorrecta";
-        return false;
-    }
-}
-
-function validar() {
-	if (validarNombre() && validarApeUno() && validarApeDos() && verificarCorreo() &&confirmarPass() && validarPass() && calcularEdad() ) {
-		console.log("todo ok");
-		
-		document.getElementById("registrarse").disabled=false;
+	        //debug  borrar más adelante
+	        document.getElementById("result").innerHTML="Tienes "+edad+" años, "+meses+" meses y "+dias+" días";
+	        if (edad<13) {
+	        	document.getElementById("aFecha").style.display="initial";
+				return false;
+	        } else {
+	        	document.getElementById("result").innerHTML="";
+	        	document.getElementById("aFecha").style.display="none";
+	        	return true;
+	        }
+	    } else {
+	        document.getElementById("result").innerHTML="La fecha "+fecha+" es incorrecta";
+	        return false;
+	    }
 	} else {
-		document.getElementById("registrarse").disabled=true;
+		document.getElementById("aFecha").style.display="initial";
+		document.getElementById("result").innerHTML="";
+		return false;
 	}
 }
 
-function enviarRegistro(){
-	pwd = document.getElementById("idPwd").value;
-		pcripto = sha256(pwd);
-		idFormulario.idPwd.value=pcripto;
 
-        idFormulario.submit();
+
+
+/*
+
+	Hace la comprobacion en el boton de registrar, si falla da el focus en el primer input con fallo.
+	El for empieza en uno porque el buscador de la barra es un input y se lleva el foco siempre sino.
+
+	- Queda comentado el tipo text por si se quiere reutilizar el código, no funciona( ne principio) con los chexbox/radios
+	pero eso se podría avisar en su correspondiente else.
+
+	- Queda comentado de momento la desactivacion de los botones.
+*/
+
+function validar() {
+	if (validarNombre() && validarApeUno() && validarApeDos() && verificarCorreo() &&confirmarPass() && validarPass() && calcularEdad() ) {
+
+
+		enviarRegistro();
+		function enviarRegistro(){
+			pwd = document.getElementById("idPwd").value;
+			pcripto = sha256(pwd);
+			idFormulario.idPwd.value=pcripto;
+
+	        idFormulario.submit();
+		}
+		//document.getElementById("registrarse").disabled=false;
+	} else {
+		//document.getElementById("registrarse").disabled=true;
+		//$confirm(){
+
+		var error =  document.getElementsByTagName("input");
+			for (var i = 1; i < error.length; i++) {
+                    //if (error[i].type=="text") {
+                        if (error[i].style.borderColor!="blue") {
+                            error[i].focus();
+                            break;
+                        }
+                    //}
+                    
+                }
+        }
+	
 }
+
+
 
 </script>
 <div class="container ">
 <div id="creator">
-<form id="idFormulario" name="idFormulario" action="<?= base_url()?>usuario/crearPost" method="post" onchange="validar();">
+<form id="idFormulario" name="idFormulario" action="<?= base_url()?>usuario/crearPost" method="post">
 <fieldset>
 <legend>Crear nueva cuenta...</legend>
 <small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>
@@ -452,25 +495,30 @@ data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
 <span class="avisos" id="aFecha">
 	Debes ser mayor de 13 años. 
 </span>
+<div id="result"></div>
 </div>
 
 <div class="nav navbar-form navbar-right">
-<input type="button" class="btn btn-default" id="registrarse" name ="registrarse" value="Registrarse" disabled="disabled" onclick="enviarRegistro();" />
+
+<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar registro" onclick="cancelarRegistro();"/>
+<input type="button" class="btn btn-default" id="registrarse" name ="registrarse" value="Registrarse" onclick="validar();"
+ />
 </div>
 </fieldset>
 </form>
 </div>
-<div id="result"></div>
+
+
 <script>
-	/*
-	document.getElementById("idNombre").value="pepe";
-document.getElementById("idApe1").value="perez";
-document.getElementById("idApe2").value="perales";
-document.getElementById("idAlias").value="menancio3";
-document.getElementById("idEmail").value="un.yaparte@gmail.com";
-*/
-document.getElementById("idPwd").value="23aA$@$!%*?&";
+
+	document.getElementById("idNombre").value="Maria";
+document.getElementById("idApe1").value="Crespo";
+//document.getElementById("idApe2").value="perales";
+document.getElementById("idAlias").value="creepemeria";
+document.getElementById("idEmail").value="creepemeria@gmail.com";
+document.getElementById("idEmailV").value="creepemeria@gmail.com";
+document.getElementById("idPwd").value="23aA$@$!%*?&";//aksjdEErE$3
 document.getElementById("idPwdD").value="23aA$@$!%*?&";
-//document.getElementById("idFecha").value="2002-10-25";
+document.getElementById("idFecha").value="1998-03-12";
 </script>
 </div>

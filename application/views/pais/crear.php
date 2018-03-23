@@ -11,18 +11,13 @@ function accionAJAX() {
 }
 
 function peticionAJAX(nombre) {
-	//xhr = new XMLHttpRequest();
 	xhr.open("POST", "<?=base_url()?>pais/crearPost", true);
 	xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	console.log(nombre);
 	xhr.send("nombre="+nombre);
-	console.log(xhr);
-	
 	xhr.onreadystatechange = function(){
 		console.log(xhr.readyState+"  "+xhr.status);
-		if (xhr.readyState==4 && xhr.status==200) {	
-			console.log(xhr.readyState+"   "+xhr.status);
+		if (xhr.readyState==4 && xhr.status==200) {
 			document.getElementById("result").innerHTML = xhr.responseText;
 		}
 	}

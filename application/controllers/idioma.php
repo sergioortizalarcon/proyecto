@@ -33,7 +33,7 @@ class idioma extends CI_Controller {
 			$registro = $this->idioma_model->crear_idioma ( $nombre );
 			header ( "location: " . base_url () . "idioma/crearOk?nombre=".$nombre );
 		} catch ( Exception $e ) {
-			$datos ['mensaje'] ['texto'] = "El país ya existe";
+			$datos ['mensaje'] ['texto'] = "El idioma ya existe";
 			$datos ['mensaje'] ['nivel'] = 'error';
 			$this->load->view ( "idioma/mensaje", $datos );
 		}

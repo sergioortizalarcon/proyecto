@@ -6,18 +6,21 @@ class Pais_model extends CI_Model {
 		] );
 		
 		if ($pais == null) {
-			$p = R::dispense ( "paises" );
-			$p->nombre = $nombre;
+			$pais = R::dispense ( "paises" );
+			$pais->nombre = $nombre;
 			
-			R::store ( $p );
+			R::store ( $pais );
 		} else {
-			throw new Exception ( "Error" );
+			throw new Exception ( "Error al crear el país" );
 		}
-	
+		
 		R::close ();
 	}
-	public function getTodos() {
-		return R::findAll ( 'paises', 'order by nombre' );
+	public function getTodos($filtro='') {
+		$todos = R::find ( "paises", "nombre like ?", [ 
+				"%" . $filtro . "%" 
+		] );
+		return $todos;
 	}
 	public function filtrar($filtro = '') {
 		return R::find ( 'paises', 'nombre like ?', [ 
@@ -27,14 +30,32 @@ class Pais_model extends CI_Model {
 	public function getPaisPorId($id_pais) {
 		return R::load ( 'paises', $id_pais );
 	}
-	public function editar($id_pais, $nombre) {
+	public function getPaisPorNombre($nombre) {
+		$pais = R::findOne ( "paises", "nombre=?", [ 
+				$nombre 
+		] );
+		if ($pais == null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public function editar($id_pais, $nuevo_nombre) {
 		$pais = R::load ( 'paises', $id_pais );
-		$pais->nombre = $nombre;
-		R::store ( $pais );
+		if ($pais->id != 0) {
+			$pais->nombre = $nuevo_nombre;
+			R::store ( $pais );
+		} else {
+			throw new Exception ( "El país no existe" );
+		}
+		R::close ();
 	}
 	public function borrar($id_pais) {
 		$pais = R::load ( 'paises', $id_pais );
-		R::trash ( $pais );
+		if ($pais->id != 0) {
+			R::trash ( $pais );
+		}
+		R::close ();
 	}
 }
 

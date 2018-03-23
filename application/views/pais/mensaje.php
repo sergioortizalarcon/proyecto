@@ -5,13 +5,14 @@
 <?php else: ?>
 <div class="alert alert-danger">
 <?php endif;?>
-<?= $mensaje['texto']?>
+<?= $mensaje['texto'] ?>
 </div>
-<?php if ( isset($mensaje['link']) ) :?>
-<?php foreach ($mensaje['link'] as $key => $value): ?>
-<button onclick="location.href = '<?=base_url().$mensaje['link']?>';" id="myButton" class="float-left submit-button" >Listar</button>
-<?php endforeach; ?>
-<?php endif;?>
 
-	</div>
+
+<?php if ( isset($mensaje['link']) ) :?>
+	<?php foreach ($mensaje['link'] as $key => $value): ?>
+		<button type="button" onclick="location.href = '<?=base_url().$value.'/'.$key?>';" id="myButton" class="btn btn-default" ><?=$key?></button>
+	<?php endforeach; ?>
+<?php endif;?>
+</div>
 </div>

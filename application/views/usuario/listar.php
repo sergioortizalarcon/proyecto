@@ -41,12 +41,12 @@
 			<td> <?=$key->fecha_nacimiento?></td>
 
 			<td>
-				<form action="<?base_url()?>usuario/update" method="post" class="listado">
+				<form action="<?=base_url()?>usuario/update" method="post" class="listado">
 					<input type="hidden" name="idEmp" value="<?=$key->id?>"/>
 					<button class="glyphicon glyphicon-pencil" type="submit"></button>
 				</form>
 
-				<form action="<?base_url()?>usuario/borrar" method="post" class="listado">
+				<form action="<?=base_url()?>usuario/borrar" method="post" class="listado">
 					<input type="hidden" name="idEmp" value="<?=$key->id?>"/>
 					<button class="glyphicon glyphicon-remove" type="submit"></button>
 				</form>

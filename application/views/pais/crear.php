@@ -25,7 +25,8 @@ function peticionAJAX(nombre) {
 
 
  function validar(){
-    var nombre = document.getElementById("idNombre").value;
+    var n = document.getElementById("idNombre").value;
+    var nombre=n.trim();
     var code="";
 
     function validarNombre() {

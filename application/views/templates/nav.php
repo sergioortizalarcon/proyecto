@@ -66,10 +66,18 @@
 			</li>
 			
 			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Users<span class="caret"></span></a>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Usuarios<span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					<li class="dropdown-header">Usuarios</li>
 					<li><a href="<?=base_url()?>usuario/listar">Listar</a></li>
+				</ul>
+			</li>
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Géneros<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li class="dropdown-header">Géneros</li>
+					<li><a href="<?=base_url()?>genero/crear">Nuevo</a></li>
+					<li><a href="<?=base_url()?>genero/listar">Listar</a></li>
 				</ul>
 			</li>
 		</ul>

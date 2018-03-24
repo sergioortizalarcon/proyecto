@@ -8,7 +8,7 @@ var apellido1Correcto = false;
 var apellido2Correcto = false;
 var fechaCorrecto = false;
 
-function mayuscula(palabra) {
+function mayuscula(palabra, id) {
 	var palabrasSeparadas = palabra.split(" ");
 	var palabraNueva="";
 	if (palabrasSeparadas.length>1) {
@@ -22,14 +22,18 @@ function mayuscula(palabra) {
 		palabra = palabrasSeparadas[0].slice(1);
 		palabraNueva = primeraLetra.toUpperCase() + palabra + " ";
 	}
-	return palabraNueva;
+	if (id == "idNombre") {
+		idFormulario.idNombre.value=palabraNueva;
+	} else if(id == "idApellido1") {
+		idFormulario.idApellido1.value=palabraNueva;
+	}else { 
+		idFormulario.idApellido2.value=palabraNueva;
+	}
 }
 
 function validarNombre() {
 	var nombre = idFormulario.idNombre.value.trim();
 	if (nombre != "") {
-		nombreMayus = mayuscula(nombre);
-		idFormulario.nombre.value = nombreMayus.trim();
 
 		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
 		if (expReg.test(nombre)){
@@ -59,8 +63,6 @@ function validarNombre() {
 function validarApellido1() {
 	var apellido = idFormulario.idApellido1.value.trim();
 	if (apellido != "") {
-		apellidoMayus = mayuscula(apellido);
-		idFormulario.idApellido1.value = apellidoMayus.trim();
 		
 		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
 		if (expReg.test(apellido)){
@@ -90,8 +92,6 @@ function validarApellido1() {
 function validarApellido2() {
 	var apellido = idFormulario.idApellido2.value.trim();
 	if (apellido != "") {
-		apellidoMayus = mayuscula(apellido);
-		idFormulario.idApellido2.value = apellidoMayus.trim();
 		
 		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
 		if (expReg.test(apellido)){
@@ -171,7 +171,7 @@ function cancelarRegistro(){
 			
 			<div class="form-group">
 				<label for="idNombre">Nombre</label><span class="obligatorio">*</span>
-				<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validarNombre();"
+				<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validarNombre();" onchange="mayuscula(this.value, this.id);"
 				placeholder="Nombre..." data-toogle="tooltip" data-placement="left" title="Escribe un nombre" />
 				<span class="avisos" id="aNombre">
 					Debes escribir un nombre válido(3 a 20 caracteres no númericos o simbolos).
@@ -180,7 +180,7 @@ function cancelarRegistro(){
 			
 			<div class="form-group">
 				<label for="idApellido1">Primer apellido</label><span class="obligatorio">*</span>
-				<input class="form-control" type="text" id="idApellido1" name="apellido1" onkeyup="validarApellido1();" 
+				<input class="form-control" type="text" id="idApellido1" name="apellido1" onkeyup="validarApellido1();" onchange="mayuscula(this.value, this.id);"
 				placeholder="Apellido..." data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
 				<span class="avisos" id="aApellido1">
 					Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
@@ -189,7 +189,7 @@ function cancelarRegistro(){
 			
 			<div class="form-group">
 				<label for="idApellido2">Segundo apellido</label>
-				<input class="form-control" type="text" id="idApellido2" name="apellido2" onkeyup="validarApellido2();" 
+				<input class="form-control" type="text" id="idApellido2" name="apellido2" onkeyup="validarApellido2();" onchange="mayuscula(this.value, this.id);"
 				placeholder="Apellido..." data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
 				<span class="avisos" id="aApellido2">
 					Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).

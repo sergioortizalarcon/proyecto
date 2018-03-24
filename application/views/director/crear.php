@@ -2,7 +2,7 @@
 function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];for(i=form.elements.length-1;i>=0;i=i-1){if(form.elements[i].name===""){continue}switch(form.elements[i].nodeName){case"INPUT":switch(form.elements[i].type){case"text":case"hidden":case"password":case"button":case"reset":case"submit":case"color":case"date":case"datetime-local":case"email":case"month":case"number":case"range":case"search":case"tel":case"time":case"url":case"week":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break;case"checkbox":case"radio":if(form.elements[i].checked){q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value))}break;case"file":break}break;case"TEXTAREA":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break;case"SELECT":switch(form.elements[i].type){case"select-one":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break;case"select-multiple":for(j=form.elements[i].options.length-1;j>=0;j=j-1){if(form.elements[i].options[j].selected){q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].options[j].value))}}break}break;case"BUTTON":switch(form.elements[i].type){case"reset":case"submit":case"button":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break}break}}return q.join("&")};
 </script>
 <script type="text/javascript">
-var correcto = false;
+var correcto = true;
 var nombreCorrecto = false;
 var apellido1Correcto = false;
 var apellido2Correcto = false;
@@ -41,10 +41,15 @@ function validarNombre() {
 			document.getElementById("aNombre").style.display="initial";
 			if (correcto == true) {
 				document.getElementById('idNombre').focus();
+				correcto=false;
 			}
 			nombreCorrecto = false;
 		}
 	} else {
+		if (correcto == true) {
+			document.getElementById('idNombre').focus();
+			correcto=false;
+		}
 		document.getElementById("aNombre").style.display="initial";
         idFormulario.idNombre.style.borderColor="red";
         nombreCorrecto = false;
@@ -67,10 +72,15 @@ function validarApellido1() {
 			document.getElementById("aApellido1").style.display="initial";
 			if (correcto == true) {
 				document.getElementById('idApellido1').focus();
+				correcto=false;
 			}
 			apellido1Correcto = false;
 		}
 	} else {
+		if (correcto == true) {
+			document.getElementById('idNombre').focus();
+			correcto=false;
+		}
 		document.getElementById("aApellido1").style.display="initial";
         idFormulario.idApellido1.style.borderColor="red";
         apellido1Correcto = false;
@@ -93,25 +103,22 @@ function validarApellido2() {
 			document.getElementById("aApellido2").style.display="initial";
 			if (correcto == true) {
 				document.getElementById('idApellido2').focus();
+				correcto=false;
 			}
 			apellido2Correcto = false;
 		}
 	} else {
 		document.getElementById("aApellido2").style.display="none";
-        idFormulario.idApellido2.style.borderColor="blue";
         apellido2Correcto = true;
 	}
 }
 
 function validarFecha() {
 	var fecha = idFormulario.idFecha.value;
+	idFormulario.idFecha.style.borderColor="red";
 	
 	if (fecha == "") {
-		idFormulario.idFecha.style.borderColor="red";
-		if (correcto==true) {
-			document.getElementById('idFecha').focus();
-			document.getElementById("aFecha").style.display="initial";
-		}
+		document.getElementById("aFecha").style.display="initial";
 		fechaCorrecto = false;
 	} else {
 		var fechaSis = new Date();
@@ -124,9 +131,6 @@ function validarFecha() {
 		if (fechaSistema <= fecha) {
 			idFormulario.idFecha.style.borderColor="red";
 			document.getElementById("aFecha").style.display="initial";
-			if (correcto) {
-				idFormulario.idFecha.focus();
-			}
 			fechaCorrecto = false;
 		} else {
 			fechaCorrecto = true;
@@ -138,23 +142,31 @@ function validarFecha() {
 
 function validar() {
 	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
-		document.getElementById("crearDirector").disabled=false;
-	}else {
-		document.getElementById("crearDirector").disabled=true;
+		idFormulario.submit();
+	} else {
+		validarNombre();
+		validarApellido1();
+		validarApellido2();
+		validarFecha();
+		//alert("Debes rellenar todos los campos obligatorios");
 	}
 }
 
-function enviarDirector() {
-	idFormulario.submit();
+function cancelarRegistro(){
+	var cancelarRegistro = confirm("¿Realmente quieres cancelar el registo?");
+
+	if (cancelarRegistro) {
+		window.location.href = "<?=base_url()?>";
+	}
 }
 </script>
 
 
 <div class="container ">
 <div id="creator">
-	<form id="idFormulario" name="idFormulario" action="<?= base_url()?>director/crearPost" method="post" onchange="validar();">
+	<form id="idFormulario" name="idFormulario" action="<?= base_url()?>director/crearPost" method="post">
 		<fieldset>
-			<legend>Crear nuevo Director</legend>
+			<legend>Crear nuevo director</legend>
 			<small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>
 			
 			<div class="form-group">
@@ -198,8 +210,14 @@ function enviarDirector() {
 						<option value="<?=$pais -> id?>" <?=($pais -> nombre == "España")?"selected='selected'":" "?>"><?= $pais->nombre?></option>
 					<?php endforeach; ?>
 				</select>
+			
 			<br/>
-			<input type="button" disabled="disabled" class="btn btn-default col-md-12" id="crearDirector" onclick="enviarDirector();" value="Enviar" />
+			
+			<div class="nav navbar-form navbar-right">
+				<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar registro" onclick="cancelarRegistro();"/>
+				<input type="button" class="btn btn-default" id="registrarse" name ="registrarse" value="Registrarse" onclick="validar();"
+				 />
+			</div>
 			
 		</fieldset>
 	</form>

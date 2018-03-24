@@ -66,7 +66,7 @@ class Director extends CI_Controller {
     	$id_director = $_POST ['id_director'];
     
     	try {
-    		$this->directorr_model->editar ( $id_direcor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais );
+    		$this->director_model->editar ( $id_director, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais );
     		header ("location:".base_url ()."director/editarOk");
     	}
     	catch (Exception $e) {

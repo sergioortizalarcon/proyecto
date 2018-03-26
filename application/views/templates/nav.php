@@ -1,3 +1,4 @@
+
 <nav class="container navbar navbar-inverse">
 	<div class="navbar-header">
 		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navegacionPagina">
@@ -82,28 +83,34 @@
 			</li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
+			<?php if ( !isset($_COOKIE["usuario"]) ): ?>
+				<li>
+					<a href="<?=base_url()?>login/loginGet" class="boton-login">
+						<span class="glyphicon glyphicon-log-in"></span> Login
+					</a>
+				</li>
 				<li>
 					<a href="<?=base_url()?>usuario/registrar" class="boton-login"><span class="glyphicon glyphicon-user"></span> Registrarse</a>
 				</li>
-				<li>
-					<a href="<?=base_url()?>usuario/loginGet" class="boton-login">
-						<span class="glyphicon glyphicon-log-in"></span> Iniciar sesión
-					</a>
-				</li>
-			<li class="nope">
-				<!--Agrupa el input de buscar con el boton-->
-				<form class="navbar-form">
-		     		<div class="input-group">
-		       			<input type="text" class="form-control" placeholder="Buscar">
-		       			<div class="input-group-btn">
-		       				<button class="btn btn-default" type="subtmit">
-		       					<span class="glyphicon glyphicon-search"></span>
-		       				</button>
-		       			</div>
-		    		</div>
-	    		</form>
-				</li>
-			</ul>	
+			<?php else: ?>
+			<li class="dropdown" style="background: none">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="<?=base_url()?>login/perfilUsuarioGet"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="<?=base_url()?>login/loginOut"><i class="fa fa-sign-out fa-fw"></i> Logout <?=$_COOKIE["usuario"]?></a>
+                        </li>
+                    </ul>
+               </li>
+			<?php endif;?>
+
+			
+		</ul>	
 	</div>
 </nav>
 

@@ -23,7 +23,9 @@
 <!--Necesarios para el sorteo de la lista-->
 <script type="text/javascript" src="<?=base_url()?>assets/js/datatables.js"></script>
 <link rel="stylesheet" href="<?=base_url()?>assets/css/datatables.css">
-
+<!--Iconos sociales...-->
+<link rel="stylesheet" href="<?=base_url()?>assets/css/fontawesome-all.css">
+<link rel="stylesheet" href="<?=base_url()?>assets/css/fa-brands.min.css">
 <!--Esto es opcional:
 	se debería poner para que saliesen los tooltips pero funcionan sin ello, por la librería online
 	de jquery presupongo, igual lo dejo para evitar problemas mientras

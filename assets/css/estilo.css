@@ -1,4 +1,7 @@
 
+a{
+	text-decoration: none;
+}
 
 a.boton-login {
 	color: #9d9d9d;
@@ -68,7 +71,7 @@ body.custom-background {
     font-size: 15px;
 }
 
-a.icono-face {
+i.icono-face {
  background-image: url("http://www.vszdrav.cz/pages/frontend/img/fcb.png");
 	background-repeat: no-repeat;
 	background-size: contain;

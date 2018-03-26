@@ -27,7 +27,6 @@
 	</tr>
 	</thead>
     <tbody>
-
 	<?php foreach ($usuarios as $key): ?>
 		<tr>
 			<td> <?=$key->id?> </td>
@@ -41,13 +40,13 @@
 			<td> <?=$key->fecha_nacimiento?></td>
 
 			<td>
-				<form action="<?=base_url()?>usuario/update" method="post" class="listado">
-					<input type="hidden" name="idEmp" value="<?=$key->id?>"/>
+				<form action="<?=base_url()?>usuario/editarGet" method="post" class="listado">
+					<input type="hidden" name="idUser" value="<?=$key->id?>"/>
 					<button class="glyphicon glyphicon-pencil" type="submit"></button>
 				</form>
 
 				<form action="<?=base_url()?>usuario/borrar" method="post" class="listado">
-					<input type="hidden" name="idEmp" value="<?=$key->id?>"/>
+					<input type="hidden" name="idUser" value="<?=$key->id?>"/>
 					<button class="glyphicon glyphicon-remove" type="submit"></button>
 				</form>
 			</td>

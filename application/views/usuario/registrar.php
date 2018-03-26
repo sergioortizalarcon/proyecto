@@ -9,7 +9,7 @@
 function cancelarRegistro(){
 	var cancelarRegistro = confirm("¿Realmente quieres cancelar el registo?");
 
-	if (confirm) {
+	if (cancelarRegistro) {
 		window.location.href = "<?=base_url()?>";
 	}
 }
@@ -208,22 +208,21 @@ function validarAlias() {
 	}
 
 	
-
-   var pwd="";         
+       
 	function validarPass() {
-	pwd = document.getElementById("idPwd").value;
+	var pwd = document.getElementById("idPwd").value;
 		if (pwd!="") {
 		expresion = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}$/;
 			if (expresion.test(pwd)) {
 			    idFormulario.idPwd.style.borderColor="blue";
 			    document.getElementById("aPwd").style.display="none";
-			    if( confirmarPass()){
+			    //if( confirmarPass()){
 			    	return true;
-			    } else {
+			   /* } else {
 			   	document.getElementById("aPwdD").style.display="initial";
 			    idFormulario.idPwd.style.borderColor="red";
 			    return false;
-			    }
+			    }*/
 			} else {
 			    document.getElementById("aPwd").style.display="initial";
 			    idFormulario.idPwd.style.borderColor="red";
@@ -237,12 +236,10 @@ function validarAlias() {
 	}
 
 	function confirmarPass() {
+		var pwd = document.getElementById("idPwd").value;
 		var pwdDos = document.getElementById("idPwdD").value;
 		    	if (pwd == pwdDos) {
-		    		//encripta la contraseña
-		    		pcripto = sha256(pwd);
-		        	//activar_registro();
-		        	passOk=true;
+
 		        	document.getElementById("aPwdD").style.display="none";
 		        	idFormulario.idPwdD.style.borderColor="blue";
 		        	return true;
@@ -387,8 +384,7 @@ function validar() {
                             error[i].focus();
                             break;
                         }
-                    //}
-                    
+                    //} 
                 }
         }
 	
@@ -462,7 +458,7 @@ placeholder="email@email.com" data-toogle="tooltip" data-placement="left" title=
 <div class="form-group">	
 <label for="idPwd">Contraseña</label><span class="obligatorio">*</span>
 <input class="form-control" type="password" id="idPwd" name="pwd"
-data-toogle="tooltip" data-placement="left" title="contraseña"/>
+data-toogle="tooltip" data-placement="left" title="contraseña" onfocusout="validarPass()"/>
 <span class="avisos" id="aPwd">
 	Entre 8 y 15 caracteres. La contraseña ha de incluir al menos tres de los siguientes elementos: números, mayúsculas, minúsculas o alguno de estos símbolos ($, @, !, %,*, &amp;).
 </span>
@@ -470,7 +466,7 @@ data-toogle="tooltip" data-placement="left" title="contraseña"/>
 
 <div class="form-group">	
 <label for="idPwdD">Repetir Contraseña</label><span class="obligatorio">*</span>
-<input class="form-control" type="password" id="idPwdD" onfocusout="validarPass();"
+<input class="form-control" type="password" id="idPwdD" onfocusout="confirmarPass();"
 data-toogle="tooltip" data-placement="left" title="repite la contraseña"/>
 <span class="avisos" id="aPwdD">
 	Debe coincidir con la contraseña introducida en el recuadro anterior.
@@ -511,14 +507,12 @@ data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
 
 <script>
 
-	document.getElementById("idNombre").value="Maria";
-document.getElementById("idApe1").value="Crespo";
-//document.getElementById("idApe2").value="perales";
-document.getElementById("idAlias").value="creepemeria";
-document.getElementById("idEmail").value="creepemeria@gmail.com";
-document.getElementById("idEmailV").value="creepemeria@gmail.com";
+	document.getElementById("idNombre").value="hernesto";
+document.getElementById("idApe1").value="cabezon";
+document.getElementById("idAlias").value="cp08";
+document.getElementById("idEmail").value="19pc@gmail.com";
+document.getElementById("idEmailV").value="19pc@gmail.com";
 document.getElementById("idPwd").value="23aA$@$!%*?&";//aksjdEErE$3
 document.getElementById("idPwdD").value="23aA$@$!%*?&";
-document.getElementById("idFecha").value="1998-03-12";
 </script>
 </div>

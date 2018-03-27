@@ -5,7 +5,7 @@ a{
 
 a.boton-login {
 	color: #9d9d9d;
-	font-size: 11px;
+	font-size: 12px;
 	font-weight:700;
 	background: none !important;
 }
@@ -82,5 +82,14 @@ a.icono-tw{
 	background-repeat: no-repeat;
 	background-size: contain;
 }
+
+#cabecera {
+		background-image: url("../img/crud.png");
+		height: 150px;
+		opacity:0.9;
+		background-size: 100% 100%;
+		border: 1px solid black;
+		/*margin-bottom: 2%;*/
+	}
 
 /* FOOTER */

@@ -4,18 +4,6 @@ class usuario_model extends CI_Model {
 
 	public function comprobar_login($usuario,$pwd) {
 		$identidicar = R::findOne("usuarios", "alias like ? or email like ? and password like ?",[$usuario,$usuario,$pwd]);
-		/*
-		$identidicar = [];
-		$mail = $this -> comprobar_email($usuario);
-		$nick = $this -> comprobar_alias($usuario);
-		if (!$mail) {
-			$identidicar = R:: find("usuarios","email like ? and password like ? ",[$usuario,$pwd]);
-		} else if (!$nick) {
-			$identidicar = R:: find("usuarios","alias like ? and password like ? ",[$usuario,$pwd]);
-		} else {
-			return false;
-		}
-*/
 		if($identidicar != null) {
 			R::close();
 			return $identidicar;
@@ -105,35 +93,8 @@ class usuario_model extends CI_Model {
 		}
 	}
 
-	public function getAll($filtro='') {
-		return R::find("usuarios","email like ?", ["%".$filtro."%"]);
-	}
-
-	public function getByID($id) {
-		return R::load ( 'usuarios', $id );
-	}
 
 
-	/*
-	public function borrar($id) {
-		$us = R::load ( 'usuarios', $id );
-		if ($us->id != 0) {
-			R::trash ( $us );
-		}
-		R::close ();
-	}
-	
-	public function update($id, $nombre) {
-		$us = R::load ( 'usuarios', $id );
-		
-		$us->nombre = $nombre;
-		
-		R::store($us);
-		R::close();
-		
-	}
-
-	*/
 }
 
 

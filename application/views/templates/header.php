@@ -29,13 +29,3 @@
 		    		</div>
 	    		</form>
 </div>
-<style>
-	#cabecera {
-		background-image: url("assets/img/crud.png");
-		height: 150px;
-		opacity:0.9;
-		background-size: 100% 100%;
-		border: 1px solid black;
-		/*margin-bottom: 2%;*/
-	}
-</style>

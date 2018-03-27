@@ -1,3 +1,18 @@
+<script type="text/javascript">
+	function borrarUsuario() {
+		var accion = confirm("¿Estas seguro de que quieres borrar a este usuario?");
+		if (accion) {
+			alert("terminar accion");
+			//realizarAccion();
+		} else {
+			return false;
+		}
+	}
+
+	function realizarAccion() {
+		formulario.submit();
+	}
+</script>
 <div class="container">
 	<h1>Listado de usuarios</h1>
 	<br/>
@@ -10,6 +25,7 @@
 
 	<br/>
 	<hr/>
+
 <table id="efectoTabla" class="display table table-bordered ">
 	<thead>
 	<tr>
@@ -36,18 +52,17 @@
 			<td> <?=$key->alias?> </td>
 			<td> <?=$key->email?> </td>
 			<td> <?=$key->paises["nombre"]?> </td>
-			<td> <?=$key->rol?> </td>
+			<td> <?=$key->roles["rol"]?> </td>
 			<td> <?=$key->fecha_nacimiento?></td>
 
 			<td>
-				<form action="<?=base_url()?>usuario/editarGet" method="post" class="listado">
+				<form action="<?=base_url()?>administrador/editarGet" method="post" class="listado">
 					<input type="hidden" name="idUser" value="<?=$key->id?>"/>
 					<button class="glyphicon glyphicon-pencil" type="submit"></button>
 				</form>
-
-				<form action="<?=base_url()?>usuario/borrar" method="post" class="listado">
+				<form action="<?=base_url()?>administrador/borrarUsuarioPost" name="formulario" method="post" class="listado">
 					<input type="hidden" name="idUser" value="<?=$key->id?>"/>
-					<button class="glyphicon glyphicon-remove" type="submit"></button>
+					<button class="glyphicon glyphicon-remove" onclick ="return borrarUsuario();"></button>
 				</form>
 			</td>
 		</tr>

@@ -37,13 +37,23 @@ revisar footer <!-- sin collapse pierde el fondo y la lista solo va en pc -->
 <div id="barraaceptacion" style="display: block;">
     <div class="inner">
         <h4 style="font-size:15px !important;line-height:15px !important">Uso de cookies</h4>
-        SEste sitio web utiliza cookies para que usted tenga la mejor experiencia de usuario. Si continúa navegando está dando su consentimiento para la aceptación de las mencionadas cookies y la aceptación de nuestra
-            <a href="#">política de cookies</a>
+        SEste sitio web utiliza cookies para que usted tenga la mejor experiencia de usuario. Si continúa navegando está dando su consentimiento para la aceptación de las mencionadas cookies y la aceptación de nuestra <br/>
+        <a href="#">política de cookies</a>
         <a href="javascript:void(0);" class="ok" onclick="PonerCookie();"><b>OK</b></a> | 
         <a href="http://youtube.com" target="_blank" class="info">Más información</a>
     </div>
 </div>
- 
+
+ <!--¿Qué significa javascript:void(0)?
+
+Para entender esto primeramente nos vamos a referir a qué significa javascript: en el contexto del atributo href cuando escribimos javascript: estamos indicando que en lugar de llevar a una dirección web, se ejecute el código javascript que vaya indicado a continuación de los dos puntos.
+
+Equivalentes:
+
+<a href="#" onclick="return false;"> Pulsa aquí por favor </a>
+Piensa en otra alternativa como esta: <a href="javascript://"> Pulsa aquí por favor </a>
+
+-->
 <script>
 function getCookie(c_name){
     var c_value = document.cookie;
@@ -75,7 +85,7 @@ if(getCookie('pruebaCookie')!="1"){
     document.getElementById("barraaceptacion").style.display="block";
 }
 function PonerCookie(){
-    setCookie('pruebaCookie','1',365);
+    setCookie('pruebaCookie','1',365,'/');
     document.getElementById("barraaceptacion").style.display="none";
 }
 </script>
@@ -83,19 +93,14 @@ function PonerCookie(){
 <style>
 	#barraaceptacion {
     position:fixed;
-    left:0px;
+    left:0%;
     background-color: rgba(0, 0, 0, 0.5);
     bottom:0px;
-    padding-bottom:20px;
+    padding-bottom:0.8%;
     color:#fff;
     text-align:center;
-    /*
-    width:100%;
-    min-height:40px;
-    display:none;
-    right:0px;
-    z-index:99999;
-    */
+    right:0%;
+    
 }
  
 .inner {

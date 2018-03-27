@@ -36,7 +36,6 @@
 	  });
   </script>
 
-
 <link rel="stylesheet" href="<?=base_url()?>assets/css/estilo.css">
 <title>CRUD EMPLEADOS</title>
 </head>

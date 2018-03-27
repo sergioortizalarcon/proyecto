@@ -85,24 +85,6 @@ class usuario extends CI_Controller {
 		enmarcar($this, 'usuario/mensaje', $datos);
 	}
 
-
-
-
-			/*	 	LISTAR		*/
-
-
-	public function listar($f='') {
-		$this->load->model('usuario_model');
-		$filtro = isset($_POST['filtro'])?$_POST['filtro']:$f;
-
-		$datos['roles'] = $this->usuario_model->listar_roles();
-
-		$datos['usuarios'] = $this->usuario_model->getAll($filtro);
-		$datos['filtro'] = $filtro;
-		enmarcar($this, 'usuario/listar',$datos);
-	}
-
-
 			/*		UPDATE 		*/
 
 
@@ -111,8 +93,7 @@ class usuario extends CI_Controller {
 		$idUser = isset($_POST['idUser'])?$_POST['idUser']:null;
 		if ($idUser) {
 			$datos['usuario'] = $this->usuario_model->getByID($idUser);
-			$datos['roles'] = $this->usuario_model->listar_roles();
-			enmarcar($this,"usuario/editar",$datos);
+			enmarcar($this,"usuario/editar_usuario",$datos);
 		}
 	}
 
@@ -138,6 +119,10 @@ class usuario extends CI_Controller {
 		}
 	}
 	
+
+
+
+
 
 //Para usar esto hay q instalar phpmailer ( con composer en la raiz del proyecto)
 	public function enviarCorreoAUsuario ($correo) {

@@ -1,6 +1,6 @@
 <script type="text/javascript">
 	var xhr;
-	
+
 	window.onload = function(){
 		xhr = new XMLHttpRequest();
 	}
@@ -103,7 +103,7 @@ function validarAlias() {
 				if (comprobarAlias(alias)) {
 					idFormulario.idAlias.style.borderColor="blue";
 					document.getElementById("aAlias").style.display="none";
-		        	
+
 				} else {
 					idFormulario.idAlias.style.borderColor="red";
 					document.getElementById("aAlias").style.display="initial";
@@ -207,8 +207,8 @@ function validarAlias() {
 		return true;
 	}
 
-	
-       
+
+
 	function validarPass() {
 	var pwd = document.getElementById("idPwd").value;
 		if (pwd!="") {
@@ -250,13 +250,13 @@ function validarAlias() {
 		    	}
 	}
 
-	
 
-	
+
+
 
 	function validate_fecha(fecha){
     var patron=new RegExp("^(19|20)+([0-9]{2})([-])([0-9]{1,2})([-])([0-9]{1,2})$");
- 
+
     if(fecha.search(patron)==0){
         var values=fecha.split("-");
         function isValidDate(day,month,year){
@@ -273,7 +273,7 @@ function validarAlias() {
     }
     return false;
 }
- 
+
 /**
  * Esta función calcula la edad de una persona y los meses
  * La fecha la tiene que tener el formato yyyy-mm-dd que es
@@ -288,13 +288,13 @@ function calcularEdad() {
 	        var dia = values[2];
 	        var mes = values[1];
 	        var ano = values[0];
-	 
+
 	        // cogemos los valores actuales
 	        var fecha_hoy = new Date();
 	        var ahora_ano = fecha_hoy.getYear();
 	        var ahora_mes = fecha_hoy.getMonth()+1;
 	        var ahora_dia = fecha_hoy.getDate();
-	 
+
 	        // realizamos el calculo
 	        var edad = (ahora_ano + 1900) - ano;
 	        if ( ahora_mes < mes ) {
@@ -306,7 +306,7 @@ function calcularEdad() {
 	        if (edad > 1900) {
 	            edad -= 1900;
 	        }
-	 
+
 	        // calculamos los meses
 	        var meses=0;
 	        if(ahora_mes>mes)
@@ -315,7 +315,7 @@ function calcularEdad() {
 	            meses=12-(mes-ahora_mes);
 	        if(ahora_mes==mes && dia>ahora_dia)
 	            meses=11;
-	 
+
 	        // calculamos los dias
 	        var dias=0;
 	        if(ahora_dia>dia)
@@ -384,10 +384,10 @@ function validar() {
                             error[i].focus();
                             break;
                         }
-                    //} 
+                    //}
                 }
         }
-	
+
 }
 
 
@@ -395,7 +395,7 @@ function validar() {
 </script>
 <div class="container ">
 <div id="creator">
-<form id="idFormulario" name="idFormulario" action="<?= base_url()?>usuario/crearPost" method="post">
+<form id="idFormulario" name="idFormulario" action="<?=base_url()?>usuario/crearPost" method="post">
 <fieldset>
 <legend>Crear nueva cuenta...</legend>
 <small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>
@@ -411,14 +411,14 @@ placeholder="Nombre..." data-toogle="tooltip" data-placement="left" title="Escri
 
 <div class="form-group">
 <label for="idApe1">Primer apellido</label><span class="obligatorio">*</span>
-<input class="form-control" type="text" id="idApe1" name="apellido1" onfocusout="validarApeUno();" 
+<input class="form-control" type="text" id="idApe1" name="apellido1" onfocusout="validarApeUno();"
 placeholder="Apellido..." data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
 <span class="avisos" id="aApellido">
 	Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
 </span>
 </div>
 
-<div class="form-group">	
+<div class="form-group">
 <label for="idApe2">Segundo apellido</label>
 <input class="form-control" type="text" id="idApe2" name="apellido2" onfocusout="validarApeDos();"
 placeholder="apellido..." data-toogle="tooltip" data-placement="left" title="Escribe un apellido(opcional)" />
@@ -440,7 +440,7 @@ placeholder="...YouAreAmazing" data-toogle="tooltip" data-placement="left" title
 <div class="form-group">
 <label for="idEmail">Email</label><span class="obligatorio">*</span>
 <input class="form-control" type="text" id="idEmail" name="correo" onfocusout="validarCorreo();"
-placeholder="email@email.com" data-toogle="tooltip" data-placement="left" title="introduce un correo electrónico válido">
+placeholder="email@email.com" data-toogle="tooltip" data-placement="left" title="introduce un correo electrónico válido"/>
 <span class="avisos" id="aEmail">
 	Debes escribir un correo válido.
 </span>
@@ -455,7 +455,7 @@ placeholder="email@email.com" data-toogle="tooltip" data-placement="left" title=
 </span>
 </div>
 
-<div class="form-group">	
+<div class="form-group">
 <label for="idPwd">Contraseña</label><span class="obligatorio">*</span>
 <input class="form-control" type="password" id="idPwd" name="pwd"
 data-toogle="tooltip" data-placement="left" title="contraseña" onfocusout="validarPass()"/>
@@ -464,7 +464,7 @@ data-toogle="tooltip" data-placement="left" title="contraseña" onfocusout="vali
 </span>
 </div>
 
-<div class="form-group">	
+<div class="form-group">
 <label for="idPwdD">Repetir Contraseña</label><span class="obligatorio">*</span>
 <input class="form-control" type="password" id="idPwdD" onfocusout="confirmarPass();"
 data-toogle="tooltip" data-placement="left" title="repite la contraseña"/>
@@ -475,12 +475,12 @@ data-toogle="tooltip" data-placement="left" title="repite la contraseña"/>
 
 <div class="form-group">
 <label for="idPais">Selecciona país</label><span class="obligatorio">*</span>
-<select class="form-control" name="pais" id="idPais" 
+<select class="form-control" name="pais" id="idPais"
 data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
 <?php foreach ($paises as $pais): ?>
-	<option value="<?=$pais -> id?>" <?=($pais -> nombre == "España")?"selected='selected'":" "?> > 
-		<?=$pais -> nombre ?></option>
-<?php endforeach; ?>
+	<option value="<?=$pais->id?>" <?=($pais->nombre == "España") ? "selected='selected'" : " "?> >
+		<?=$pais->nombre?></option>
+<?php endforeach;?>
 </select>
 </div>
 
@@ -489,7 +489,7 @@ data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
 <label for="idFecha">Fecha de nacimiento</label><span class="obligatorio">*</span>
 <input class="form-control" type="date" id="idFecha" name="fecha" onfocusout="calcularEdad();" />
 <span class="avisos" id="aFecha">
-	Debes ser mayor de 13 años. 
+	Debes ser mayor de 13 años.
 </span>
 <div id="result"></div>
 </div>

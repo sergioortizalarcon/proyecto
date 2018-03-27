@@ -70,7 +70,7 @@
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Usuarios<span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					<li class="dropdown-header">Usuarios</li>
-					<li><a href="<?=base_url()?>usuario/listar">Listar</a></li>
+					<li><a href="<?=base_url()?>administrador/listar">Listar</a></li>
 				</ul>
 			</li>
 			<li class="dropdown">

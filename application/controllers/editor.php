@@ -2,8 +2,8 @@
 
 class Editor extends CI_Controller {
 
-	public function publicarGet() {
-		enmarcar($this,"editor/publicarGet");
+	public function crear() {
+		enmarcar($this,"articulo/publicarGet");
 	}
 
 	public function publicarPost(){

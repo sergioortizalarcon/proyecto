@@ -44,8 +44,8 @@
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Noticias<span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					<li class="dropdown-header">Noticias</li>
-					<li><a href="<?=base_url()?>articulo/crear">Nueva</a></li>
-					<li><a href="<?=base_url()?>articulo/listar">Listar</a></li>
+					<li><a href="<?=base_url()?>editor/crear">Nueva</a></li>
+					<li><a href="<?=base_url()?>editor/listar">Ver noticias</a></li>
 				</ul>
 			</li>
 			

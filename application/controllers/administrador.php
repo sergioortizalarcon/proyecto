@@ -36,6 +36,6 @@ class Administrador extends CI_Controller {
 
 		$datos['usuarios'] = $this->administrador_model->getAll($filtro);
 		$datos['filtro'] = $filtro;
-		enmarcar($this, 'usuario/listar',$datos);
+		enmarcar($this, 'administrador/listar',$datos);
 	}
 }

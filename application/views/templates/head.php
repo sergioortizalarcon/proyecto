@@ -36,6 +36,23 @@
 	  });
   </script>
 
+
+<style>
+	button.button2:hover {
+    border-color: #3072b3;
+    color: #fff;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#599bdc), to(#3072b3));
+    cursor: pointer;
+}
+button.button2 {
+    padding: 4px;
+    margin-top: 4px;
+    width: 34px;
+    height: 34px;
+    border: 1px solid #b4bac0;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f4f4f4), to(#ececec));
+</style>
+
 <link rel="stylesheet" href="<?=base_url()?>assets/css/estilo.css">
 <title>CRUD EMPLEADOS</title>
 </head>

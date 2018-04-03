@@ -472,12 +472,9 @@ function getCaretPosition(txtarea) {
 		<textarea name="message" id="message" rows="15" cols="76" tabindex="4" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onfocus="initInsertions();" class="inputbox"></textarea>
 	</div>
 
-		</fieldset>
-
-
-			</div>
+	</fieldset>
 	</div>
-
+	</div>
 </form>
 </div>
 </div>

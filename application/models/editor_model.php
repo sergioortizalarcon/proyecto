@@ -8,9 +8,9 @@ class Editor_model extends CI_Model {
 			$articulo -> titulo = $titulo;
 			$articulo -> contenido = $contenido;
 			$articulo -> fecha = $articulo;
-			foreach ($ids_categorias as $categorias) {
-				$categoria = R::load('lp',$categorias);
-				$articulo -> sharedCategoriaList []= $categoria
+			foreach ($ids_categorias as $id_categoria) {
+				$categoria = R::load('categorias',$id_categoria);
+				$articulo -> sharedCategoriaList []= $id_categoria;
 			}
 			$autor -> xownArticuloList [] = $articulo;
 			R::store($autor);

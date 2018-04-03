@@ -22,7 +22,7 @@ class Administrador extends CI_Controller {
 			try {
 				$this -> administrador_model -> editar_rol_usuario($id_user,$id_rol);
 			} catch (Exception $e) {
-				
+			
 			}
 		}
 	}

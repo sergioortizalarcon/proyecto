@@ -1,7 +1,7 @@
 <div class="container">
 	<h1>Editar de usuarios</h1>
 	<br/>
-	
+
 <table id="efectoTabla" class="display table table-bordered ">
 	<thead>
 	<tr>

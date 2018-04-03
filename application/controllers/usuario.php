@@ -12,8 +12,9 @@ class usuario extends CI_Controller {
 		$datos["paises"] = $this -> pais_model -> getTodos();
 		enmarcar($this, "usuario/registrar",$datos);
 	}
-
+	
 	/*1.- COMPROBACIONES PARA REGISTRARSE  */
+	
 	public function comprobarDispAlias() {
 		$this -> load -> model("usuario_model");
 		$alias = isset($_POST["alias"])?$_POST["alias"]:null;

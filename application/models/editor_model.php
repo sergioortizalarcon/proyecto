@@ -15,4 +15,5 @@ class Editor_model extends CI_Model {
 			$autor -> xownArticuloList [] = $articulo;
 			R::store($autor);
 	}
+
 }

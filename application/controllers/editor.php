@@ -23,7 +23,6 @@ class Editor extends CI_Controller {
 				try {
 					$this -> editor_model -> publicar_articulo($titulo,$contenido,$alias_autor,$fecha,$ids_categorias);
 				} catch (Exception $e ) {
-
 				}
 			}
 		}

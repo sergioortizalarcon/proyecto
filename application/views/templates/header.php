@@ -2,7 +2,6 @@
 	<!--
 	<a href="< base_url()?>"><img class="center-block" alt="logo" height="200px" width="100%" src="< base_url()?>assets/img/crud.png"></a>
 -->
-
    <?= isset($header ['usuario'] ['nombre'])?$header ['usuario'] ['nombre']:'anonimo' ?>
    <div align="right">
 			<form id="guest_form" action="#" method="post">

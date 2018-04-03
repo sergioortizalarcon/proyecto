@@ -10,7 +10,6 @@ class Administrador_model extends CI_Model {
 		return R::load ( 'usuarios', $id );
 	}
 
-
 	public function editar_rol_usuario($id_user,$id_rol) {
 		$usuario = $this->getByID($id_user);
 		if ($usuario -> id != 0) {

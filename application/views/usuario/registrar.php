@@ -178,9 +178,11 @@ function validarAlias() {
 			c = ape2.split(" ");
 			ap="";
 			if (c.length<=3) {
-			    //no limita a dos palabras
-				expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{0,10}$/;
-				//(\s[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3-20}){1,2}$/;
+			    /* Tres palabras max. limita numero de caracteres minimo(4) y maximo (10) pero no segun las palabras permitidas
+			    *	se espera un ape(10 caract) o apellido compuesto de 2 a tres palabras.(Ej: de almendruco)
+			    *	""	"	" que limite los caracteres de las palabras si son 3(Ej: de los angeles)
+			    */
+				expresion = /^([a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{4,10}|([\s][a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,10}|[\s][a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{2,5}[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,10}))$/;
 				for (var i = 0; i < c.length; i++) {
 					if (expresion.test(c[i])) {
 						m2 = c[i].charAt(0);
@@ -414,7 +416,7 @@ placeholder="Nombre..." data-toogle="tooltip" data-placement="left" title="Escri
 <input class="form-control" type="text" id="idApe1" name="apellido1" onfocusout="validarApeUno();"
 placeholder="Apellido..." data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
 <span class="avisos" id="aApellido">
-	Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
+	Debes escribir un apellido válido( 3 a 20 caracteres no númericos o simbolos).
 </span>
 </div>
 
@@ -423,7 +425,7 @@ placeholder="Apellido..." data-toogle="tooltip" data-placement="left" title="Esc
 <input class="form-control" type="text" id="idApe2" name="apellido2" onfocusout="validarApeDos();"
 placeholder="apellido..." data-toogle="tooltip" data-placement="left" title="Escribe un apellido(opcional)" />
 <span class="avisos" id="aApellidoDos">
-	Debes escribir dos apellido como máximo y entre 3 a 20 caracteres no númericos o simbolos.
+	Puedes escribir tres apellido como máximo( 3 a 10 caracteres no númericos o simbolos).
 </span>
 </div>
 

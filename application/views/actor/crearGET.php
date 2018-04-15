@@ -158,7 +158,7 @@ function cancelarRegistro(){
 	var cancelarRegistro = confirm("¿Realmente quieres cancelar el registro?");
 
 	if (cancelarRegistro) {
-		window.location.href = "<?=base_url()?>";
+		window.location.href = "<?=base_url()?>actor/listar";
 	}
 }
 </script>

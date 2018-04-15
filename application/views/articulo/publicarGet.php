@@ -377,12 +377,11 @@ function getCaretPosition(txtarea) {
 	<form action="" method="post">
 		<fieldset>
 			<legend>Publicar comentario</legend>
-			<label for="idFecha">Fecha</label>
-			<input type="text" id="idFecha" name="idFecha" readonly="readonly">
-			value="<?php date_default_timezone_set("Europe/Madrid"); echo date("Y-m-d H:i:s");?>" />
+			<label for="idFecha">Fecha: </label>
+			<span id="idFecha" name="idFecha"><?php date_default_timezone_set("Europe/Madrid"); echo date("Y-m-d H:i:s");?></span>
 			<br/>
-			<label for="idNickname">NickName</label>
-			<input type="text" id="idNickname" name="idNickname"/>
+			<label for="idNickname">NickName: </label>
+			<span type="text" id="idNickname" name="idNickname"><?php echo"Anom" ?></span>
 			<br/>
 			<label for="idComentario">comentario</label><br/>
 			<textarea id="idComentario" name="idComentario" rows="12" cols="70"/>
@@ -396,7 +395,7 @@ function getCaretPosition(txtarea) {
 
 	<div id="page-body">
 	<h2 class="posting-title"><a href="#/noticias/#">Apartado noticias</a></h2>
-<form id="postform" method="post" action="http://www.pirateking.es/foro/posting.php?mode=post&amp;f=3">
+<form id="postform" method="post" action="#">
 
 
 

@@ -28,7 +28,7 @@
 
 			function validarNombre() {
 				if(nombre!="") {
-					expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,20}$/;
+					expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,10}([\s][a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,10}){0,1}$/;
 					if (expresion.test(nombre)) {
 						var m = nombre.charAt(0);
 						nombre= m.toUpperCase()+nombre.substring(1,nombre.length);

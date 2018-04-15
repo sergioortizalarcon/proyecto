@@ -56,6 +56,14 @@
 				document.getElementById("enviar").disabled=true;
 			}
 		}
+
+		function cancelarRegistro(){
+			var cancelarRegistro = confirm("¿Realmente quieres cancelar el registro?");
+
+			if (cancelarRegistro) {
+				window.location.href = "<?=base_url()?>pais/listar";
+			}
+		}
 	</script>
 	<form id="idFormulario" method="post" action="<?=base_url()?>pais/crearPost">
 		<fieldset>
@@ -67,7 +75,9 @@
 				Debes escribir un nombre válido(caracteres no númericos, espacios o símbolos).
 			</span>
 			</div>
-			<div class="form-group">
+			
+			<div class="nav navbar-form navbar-right">
+				<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar registro" onclick="cancelarRegistro();"/>
 			<input type="submit" class="btn btn-default" name="enviar" id="enviar" value="Enviar" disabled="disabled"/>
 			</div>
 		</fieldset>

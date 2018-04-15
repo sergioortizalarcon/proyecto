@@ -78,7 +78,7 @@ function validarPass() {
 				    </div>
 					<div class="form-group">
 						<label for="pwd">contraseña:</label><br>
-					    <input type="password" class="form-control" id="pwd" placeholder="contraseña" name="pwd" data-toogle="tooltip" data-placement="left" title="contraseña">
+					    <input type="password" class="form-control" id="pwd" placeholder="contraseña" name="pwd" data-toogle="tooltip" data-placement="left" title="contraseña"/>
 					</div>
 					<a href="<?=base_url()?>usuario/recuperarPwd" id="edit-forgotten">¿Has olvidado tu contraseña?</a>
 					<div class="form-check">

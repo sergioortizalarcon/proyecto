@@ -145,6 +145,7 @@ function validarFecha() {
 
 function validar() {
 	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
+		idFormulario.registrase.disabled = false;
 		idFormulario.submit();
 	} else {
 		validarNombre();
@@ -217,7 +218,7 @@ function cancelarRegistro(){
 			
 			<div class="nav navbar-form navbar-right">
 				<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar registro" onclick="cancelarRegistro();"/>
-				<input type="button" class="btn btn-default" id="registrarse" name ="registrarse" value="Registrarse" onclick="validar();"
+				<input type="button" class="btn btn-default" id="registrarse" name ="registrarse" disabled="true" value="Registrarse" onclick="validar();"
 				 />
 			</div>
 			

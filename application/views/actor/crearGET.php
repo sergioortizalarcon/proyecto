@@ -143,6 +143,53 @@ function validarFecha() {
 	}
 }
 
+function validarFoto() {
+    <?php
+    	if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
+    	    # verificamos el formato de la imagen
+    	    /*if ($_FILES["foto"]["type"]=="image/jpeg" || $_FILES["foto"]["type"]=="image/pjpeg" || $_FILES["foto"]["type"]=="image/png")
+    	    {*/
+    	        echo "alert('Formato correcto')";
+    	        # Cogemos la anchura y altura de la imagen
+    	        
+    	        
+    	        
+    	        //$info=getimagesize($_FILES["userfile"]["tmp_name"]);
+    	        
+    	        
+    	        //echo "<BR>".$info[0]; //anchura
+    	        //echo "<BR>".$info[1]; //altura
+    	        //echo "<BR>".$info[2]; //1-GIF, 2-JPG, 3-PNG
+    	        //echo "<BR>".$info[3]; //cadena de texto para el tag <img
+    	 
+    	        # Escapa caracteres especiales
+    	        
+    	        
+    	        //$imagenEscapes=$mysqli->real_escape_string(file_get_contents($_FILES["userfile"]["tmp_name"]));
+    	 
+    	        # Agregamos la imagen a la base de datos
+    	        
+    	        
+    	        //$sql="INSERT INTO `imagephp` (anchura,altura,tipo,imagen) VALUES (".$info[0].",".$info[1].",'".$_FILES["userfile"]["type"]."','".$imagenEscapes."')";
+    	        //$mysqli->query($sql);
+    	 
+    	        # Cogemos el identificador con que se ha guardado
+    	        
+    	        
+    	        
+    	        //$id=$mysqli->insert_id;
+    	 
+    	        # Mostramos la imagen agregada
+    	        //echo "<div class='mensaje'>Imagen agregada con el id ".$id."</div>";
+    	    }else{
+    	        //echo "<div class='error'>Error: El formato de archivo tiene que ser JPG, GIF, BMP o PNG.</div>";
+    	        
+    	        echo "alert('Formato incorrecto')";
+    	    }
+    	//}
+	?>
+}
+
 function validar() {
 	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
 		idFormulario.registrase.disabled = false;
@@ -167,7 +214,7 @@ function cancelarRegistro(){
 
 <div class="container ">
 <div id="creator">
-	<form id="idFormulario" name="idFormulario" action="<?= base_url()?>actor/crearPost" method="post">
+	<form id="idFormulario" name="idFormulario" action="<?= base_url()?>actor/crearPost" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Crear nuevo actor</legend>
 			<small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>
@@ -213,13 +260,20 @@ function cancelarRegistro(){
 						<option value="<?=$pais -> id?>" <?=($pais -> nombre == "España")?"selected='selected'":" "?>"><?= $pais->nombre?></option>
 					<?php endforeach; ?>
 				</select>
-			
-			<br/>
+				
+			<br />
+				
+			<div class="form-group">
+				<label for="idFoto">Foto:</label>
+				<input type="file" class="form-control" id="idFoto" name="foto" onchange="validarFoto();" />
+				<span class="avisos" id="idFoto">
+					Debes introducir una foto con formato y tamaño correcto.
+				</span>
+			</div>
 			
 			<div class="nav navbar-form navbar-right">
-				<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar registro" onclick="cancelarRegistro();"/>
-				<input type="button" class="btn btn-default" id="registrarse" name ="registrarse" disabled value="Registrarse" onclick="validar();"
-				 />
+				<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar registro" onclick="cancelarRegistro();" />
+				<input type="button" class="btn btn-default" id="registrarse" name ="registrarse" disabled value="Registrarse" onclick="validar();" />
 			</div>
 			
 		</fieldset>

@@ -159,7 +159,7 @@ function cancelarRegistro(){
 
 <div class="container ">
 <div id="creator">
-	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>director/editarPost" method="post">
+	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>director/editarPost" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Editar director: <?= $body['directores']->nombre ?> <?= $body['directores']->apellido1 ?> <?= $body['directores']->apellido2 ?></legend>
 			

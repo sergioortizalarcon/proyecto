@@ -1,14 +1,16 @@
 <?php
 class Director_model extends CI_Model {
-	public function createDirector($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais) {
+    public function createDirector($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $foto) {
 		if ($apellido2 == "") {
-			$director = R::find('director', 'nombre like ? and apellido1 like ?', [$nombre,$apellido1]);
+			$director = R::find('director', 'nombre like ? and apellido1 like ? and fechaNacimiento like ?', [$nombre,$apellido1,$fechaNacimiento]);
 			if ($director == null) {
 				$director = R::dispense ( 'director' );
 				$director -> nombre = $nombre;
 				$director -> apellido1 = $apellido1;
 				$director -> apellido2 = $apellido2;
 				$director -> fechaNacimiento = $fechaNacimiento;
+				$director -> biografia = $biografia;
+				$director -> rutaFoto = $foto;
 				$pais = R::load("paises", $id_pais);
 				$pais -> xownDirectorList[] = $director;
 				R::store($pais);
@@ -17,13 +19,15 @@ class Director_model extends CI_Model {
 			}
 			R::close();
 		} else {
-			$director = R::find('director', 'nombre like ? and apellido1 like ? and apellido2 like ?', [$nombre,$apellido1,$apellido2]);
+			$director = R::find('director', 'nombre like ? and apellido1 like ? and apellido2 like ? and fechaNacimiento like ?', [$nombre,$apellido1,$apellido2,$fechaNacimiento]);
 			if ($director == null) {
 				$director = R::dispense('director');
 				$director->nombre = $nombre;
 				$director->apellido1 = $apellido1;
 				$director->apellido2 = $apellido2;
 				$director->fechaNacimiento = $fechaNacimiento;
+				$director -> biografia = $biografia;
+				$director -> rutaFoto = $foto;
 				$pais = R::load("paises", $id_pais);
 				$pais -> xownDirectorList[] = $director;
 				R::store($pais);
@@ -43,7 +47,7 @@ class Director_model extends CI_Model {
 		return R::load ( 'director', $id_director );
 	}
 	
-	public function editar($id_director, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais) {
+	public function editar($id_director, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $foto) {
 		$director = R::load ( 'director', $id_director );
 		$directoresTodos = R::find("director",'nombre like ? and apellido1 like ? and apellido2 like ?', [$nombre,$apellido1,$apellido2]);
 		$pais = R::load("paises", $id_pais);
@@ -67,6 +71,14 @@ class Director_model extends CI_Model {
 			if($fechaNacimiento != $director->fechaNacimiento && $fechaNacimiento != "") {
 				$director->fechaNacimiento = $fechaNacimiento;
 				$cambio=true;
+			}
+			if($biografia != $director->biografia && $biografia != "") {
+			    $director->biografia = $biografia;
+			    $cambio=true;
+			}
+			if($foto != "") {
+			    $director->rutaFoto = $foto;
+			    $cambio=true;
 			}
 			if($pais != $pais->id) {
 				$pais -> xownDirectorList[] = $director;

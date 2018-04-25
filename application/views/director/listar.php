@@ -10,6 +10,7 @@
 	<table id="efectoTabla" class="display table table-bordered ">
 		<thead>
 			<tr>
+				<th>Foto</th>
 				<th>Nombre director</th>
 				<th>Primer apellido</th>
 				<th>Segundo apellido</th>
@@ -21,6 +22,7 @@
 		<tbody>
 			<?php foreach ($body['directores'] as $director): ?>
 				<tr>
+					<td><img src="<?=base_url()?><?= $director->rutaFoto ?>" height="60" width="50"></td>
 					<td><?= $director->nombre ?></td>
 					<td><?= $director->apellido1 ?></td>
 					<td><?= $director->apellido2 ?></td>
@@ -42,6 +44,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
+				<th>Foto</th>
 				<th>Nombre actor</th>
 				<th>Primer apellido</th>
 				<th>Segundo apellido</th>

@@ -8,6 +8,10 @@ var apellido1Correcto = true;
 var apellido2Correcto = true;
 var fechaCorrecto = true;
 
+var nombre="";
+var apellido1="";
+var apellido2="";
+
 function mayuscula(palabra) {
 	var palabrasSeparadas = palabra.split(" ");
 	var palabraNueva="";
@@ -26,7 +30,7 @@ function mayuscula(palabra) {
 }
 
 function validarNombre() {
-	var nombre = idFormulario.idNombre.value.trim();
+	nombre = idFormulario.idNombre.value.trim();
 	if (nombre != "") {
 		nombreMayus = mayuscula(nombre);
 		idFormulario.nombre.value = nombreMayus.trim();
@@ -50,13 +54,13 @@ function validarNombre() {
 }
 
 function validarApellido1() {
-	var apellido = idFormulario.idApellido1.value.trim();
-	if (apellido != "") {
+	apellido1 = idFormulario.idApellido1.value.trim();
+	if (apellido1 != "") {
 		apellidoMayus = mayuscula(apellido);
 		idFormulario.idApellido1.value = apellidoMayus.trim();
 		
 		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
-		if (expReg.test(apellido)){
+		if (expReg.test(apellido1)){
 			apellido1Correcto = true;
 			correcto=true;
 			idFormulario.idApellido1.style.borderColor="blue";
@@ -74,13 +78,13 @@ function validarApellido1() {
 }
 
 function validarApellido2() {
-	var apellido = idFormulario.idApellido2.value.trim();
-	if (apellido != "") {
-		apellidoMayus = mayuscula(apellido);
+	apellido2 = idFormulario.idApellido2.value.trim();
+	if (apellido2 != "") {
+		apellidoMayus = mayuscula(apellido2);
 		idFormulario.idApellido2.value = apellidoMayus.trim();
 		
 		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
-		if (expReg.test(apellido)){
+		if (expReg.test(apellido2)){
 			apellido2Correcto = true;
 			correcto=true;
 			idFormulario.idApellido2.style.borderColor="blue";
@@ -120,15 +124,26 @@ function validarFecha() {
 	}
 }
 
+function permitirEnvio() {
+	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
+		idFormulario.idRegistro.disabled=false;
+	}
+}
+
 function validar() {
 	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
+		nombre = nombre.trim();
+		idFormulario.idNombre.value = nombre;
+		apellido1 = apellido1.trim();
+		idFormulario.idApellido1.value = apellido1;
+		apellido2 = apellido2.trim();
+		idFormulario.idApellido2.value = apellido2;
 		idFormulario.submit();
 	} else {
 		validarNombre();
 		validarApellido1();
 		validarApellido2();
 		validarFecha();
-		//alert("Debes rellenar todos los campos obligatorios");
 	}
 }
 
@@ -144,7 +159,7 @@ function cancelarRegistro(){
 
 <div class="container ">
 <div id="creator">
-	<form id="idFormulario" name="idFormulario" action="<?= base_url()?>actor/editarPost" method="post" enctype="multipart/form-data">
+	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>actor/editarPost" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Editar actor: <?= $body['actores']->nombre ?> <?= $body['actores']->apellido1 ?> <?= $body['actores']->apellido2 ?></legend>
 			

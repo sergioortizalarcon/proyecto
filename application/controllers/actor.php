@@ -31,13 +31,12 @@ class actor extends CI_Controller {
     		    
     		    if ($_FILES["foto"]["size"] < 25000000) {
     		        //Tamaño y extensión correctos, guardar imagen en carpeta
-    		        echo "<br />assets/img/fotoActor/Actor_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
+    		        //echo "<br />assets/img/fotoActor/Actor_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
     		        copy($_FILES["foto"]['tmp_name'], "assets/img/fotoActor/Actor_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension);
     		        $foto = "assets/img/fotoActor/Actor_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
     		    }
 		    }
 		}
-		
 		
 		try {
 			$debug = $this -> actor_model -> createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $foto);

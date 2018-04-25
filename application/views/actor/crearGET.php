@@ -147,7 +147,7 @@ function validarFecha() {
 	}
 }
 
-function prueba() {
+function permitirEnvio() {
 	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
 		idFormulario.idRegistro.disabled=false;
 	}
@@ -182,7 +182,7 @@ function cancelarRegistro(){
 
 <div class="container ">
 <div id="creator">
-	<form id="idFormulario" onchange="prueba();" name="idFormulario" action="<?= base_url()?>actor/crearPost" method="post" enctype="multipart/form-data">
+	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>actor/crearPost" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Crear nuevo actor</legend>
 			<small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>

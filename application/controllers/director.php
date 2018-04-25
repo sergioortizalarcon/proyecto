@@ -14,9 +14,33 @@ class Director extends CI_Controller {
     	$apellido2 = isset($_POST['apellido2'])?$_POST['apellido2']:null;
     	$fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
     	$id_pais = isset($_POST['pais'])?$_POST['pais']:null;
+    	$biografia = isset($_POST['biografia'])?$_POST['biografia']:null;
+    	
+    	if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
+    	    # verificamos el formato de la imagen
+    	    if ($_FILES["foto"]["type"]=="image/jpeg" || $_FILES["foto"]["type"]=="image/pjpeg" || $_FILES["foto"]["type"]=="image/png"){
+    	        
+    	        # Cogemos la anchura y altura de la imagen
+    	        $info=getimagesize($_FILES["foto"]["tmp_name"]);
+    	        
+    	        $extension = 0;
+    	        if ($info[2] == 2) {
+    	            $extension = "jpg";
+    	        } else if ($info[2] == 3) {
+    	            $extension = "png";
+    	        }
+    	        
+    	        if ($_FILES["foto"]["size"] < 25000000) {
+    	            //Tamaño y extensión correctos, guardar imagen en carpeta
+    	            //echo "<br />assets/img/fotoDirector/Director_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
+    	            copy($_FILES["foto"]['tmp_name'], "assets/img/fotoDirector/Director_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension);
+    	            $foto = "assets/img/fotoDirector/Director_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
+    	        }
+    	    }
+    	}
         
         try {
-        	$debug = $this -> director_model -> createDirector($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais);
+            $debug = $this -> director_model -> createDirector($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $foto);
         	header ("location:".base_url ()."director/crearOk");
         }
         catch (Exception $e) {
@@ -63,10 +87,34 @@ class Director extends CI_Controller {
     	$apellido2 = isset($_POST['apellido2'])?$_POST['apellido2']:null;
     	$fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
     	$id_pais = isset($_POST['pais'])?$_POST['pais']:null;
+    	$biografia = isset($_POST['biografia'])?$_POST['biografia']:null;
     	$id_director = $_POST ['id_director'];
+    	
+    	if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
+    	    # verificamos el formato de la imagen
+    	    if ($_FILES["foto"]["type"]=="image/jpeg" || $_FILES["foto"]["type"]=="image/pjpeg" || $_FILES["foto"]["type"]=="image/png"){
+    	        
+    	        # Cogemos la anchura y altura de la imagen
+    	        $info=getimagesize($_FILES["foto"]["tmp_name"]);
+    	        
+    	        $extension = 0;
+    	        if ($info[2] == 2) {
+    	            $extension = "jpg";
+    	        } else if ($info[2] == 3) {
+    	            $extension = "png";
+    	        }
+    	        
+    	        if ($_FILES["foto"]["size"] < 25000000) {
+    	            //Tamaño y extensión correctos, guardar imagen en carpeta
+    	            //echo "<br />assets/img/fotoDirector/Director_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
+    	            copy($_FILES["foto"]['tmp_name'], "assets/img/fotoDirector/Director_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension);
+    	            $foto = "assets/img/fotoDirector/Director_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
+    	        }
+    	    }
+    	}
     
     	try {
-    		$this->director_model->editar ( $id_director, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais );
+    		$this->director_model->editar ( $id_director, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $foto);
     		header ("location:".base_url ()."director/editarOk");
     	}
     	catch (Exception $e) {

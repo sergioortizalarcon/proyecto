@@ -8,6 +8,10 @@ var apellido1Correcto = true;
 var apellido2Correcto = true;
 var fechaCorrecto = true;
 
+var nombre="";
+var apellido1="";
+var apellido2="";
+
 function mayuscula(palabra) {
 	var palabrasSeparadas = palabra.split(" ");
 	var palabraNueva="";
@@ -26,7 +30,7 @@ function mayuscula(palabra) {
 }
 
 function validarNombre() {
-	var nombre = idFormulario.idNombre.value.trim();
+	nombre = idFormulario.idNombre.value.trim();
 	if (nombre != "") {
 		nombreMayus = mayuscula(nombre);
 		idFormulario.nombre.value = nombreMayus.trim();
@@ -50,13 +54,13 @@ function validarNombre() {
 }
 
 function validarApellido1() {
-	var apellido = idFormulario.idApellido1.value.trim();
-	if (apellido != "") {
-		apellidoMayus = mayuscula(apellido);
+	apellido1 = idFormulario.idApellido1.value.trim();
+	if (apellido1 != "") {
+		apellidoMayus = mayuscula(apellido1);
 		idFormulario.idApellido1.value = apellidoMayus.trim();
 		
 		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
-		if (expReg.test(apellido)){
+		if (expReg.test(apellido1)){
 			apellido1Correcto = true;
 			correcto=true;
 			idFormulario.idApellido1.style.borderColor="blue";
@@ -74,13 +78,13 @@ function validarApellido1() {
 }
 
 function validarApellido2() {
-	var apellido = idFormulario.idApellido2.value.trim();
-	if (apellido != "") {
-		apellidoMayus = mayuscula(apellido);
+	apellido2 = idFormulario.idApellido2.value.trim();
+	if (apellido2 != "") {
+		apellidoMayus = mayuscula(apellido2);
 		idFormulario.idApellido2.value = apellidoMayus.trim();
 		
 		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
-		if (expReg.test(apellido)){
+		if (expReg.test(apellido2)){
 			apellido2Correcto = true;
 			correcto=true;
 			idFormulario.idApellido2.style.borderColor="blue";
@@ -120,15 +124,26 @@ function validarFecha() {
 	}
 }
 
+function permitirEnvio() {
+	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
+		idFormulario.idRegistro.disabled=false;
+	}
+}
+
 function validar() {
 	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
+		nombre = nombre.trim();
+		idFormulario.idNombre.value = nombre;
+		apellido1 = apellido1.trim();
+		idFormulario.idApellido1.value = apellido1;
+		apellido2 = apellido2.trim();
+		idFormulario.idApellido2.value = apellido2;
 		idFormulario.submit();
 	} else {
 		validarNombre();
 		validarApellido1();
 		validarApellido2();
 		validarFecha();
-		//alert("Debes rellenar todos los campos obligatorios");
 	}
 }
 
@@ -144,14 +159,14 @@ function cancelarRegistro(){
 
 <div class="container ">
 <div id="creator">
-	<form id="idFormulario" name="idFormulario" action="<?= base_url()?>director/editarPost" method="post">
+	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>director/editarPost" method="post">
 		<fieldset>
 			<legend>Editar director: <?= $body['directores']->nombre ?> <?= $body['directores']->apellido1 ?> <?= $body['directores']->apellido2 ?></legend>
 			
 			<div class="form-group">
 				<label for="idNombre">Nombre</label>
 				<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validarNombre();"
-				placeholder="<?= $body['directores']->nombre ?>" data-toogle="tooltip" data-placement="left" title="Escribe un nombre" />
+				value="<?= $body['directores']->nombre ?>" data-toogle="tooltip" data-placement="left" title="Escribe un nombre" />
 				<span class="avisos" id="aNombre">
 					Debes escribir un nombre válido(3 a 20 caracteres no númericos o simbolos).
 				</span>
@@ -160,7 +175,7 @@ function cancelarRegistro(){
 			<div class="form-group">
 				<label for="idApellido1">Primer apellido</label>
 				<input class="form-control" type="text" id="idApellido1" name="apellido1" onkeyup="validarApellido1();" 
-				placeholder="<?= $body['directores']->apellido1 ?>" data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
+				value="<?= $body['directores']->apellido1 ?>" data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
 				<span class="avisos" id="aApellido1">
 					Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
 				</span>
@@ -169,7 +184,7 @@ function cancelarRegistro(){
 			<div class="form-group">
 				<label for="idApellido2">Segundo apellido</label>
 				<input class="form-control" type="text" id="idApellido2" name="apellido2" onkeyup="validarApellido2();" 
-				placeholder="<?= $body['directores']->apellido2 ?>" data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
+				value="<?= $body['directores']->apellido2 ?>" data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
 				<span class="avisos" id="aApellido2">
 					Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
 				</span>
@@ -179,20 +194,33 @@ function cancelarRegistro(){
 			
 			<div class="form-group">
 				<label for="idFecha">Fecha de nacimiento</label>
-				<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" onchange="validarFecha();" />
+				<input class="form-control" type="date" value="<?= $body['directores']->fechaNacimiento ?>" id="idFecha" name="fechaNacimiento" onchange="validarFecha();" />
 				<span class="avisos" id="aFecha">
 					Debes introducir una fecha válida(Anterior al día actual).
 				</span>
 			</div>
 			
+			<div class="form-group">
 			<label for="idPais">Pais de nacimiento</label><span class="obligatorio">*</span>
 				<select class="form-control" id="idPais" name="pais">
 					<?php foreach($body['paises'] as $pais):?>
 						<option value="<?=$pais -> id?>" <?=($pais -> nombre == "España")?"selected='selected'":" "?>"><?= $pais->nombre?></option>
 					<?php endforeach; ?>
 				</select>
+			</div>
 			
-			<br/>
+			<div class="form-group">
+				<label for="idBiografia">Biografía:</label>
+				<textarea class="form-control" name="biografia" id="idBiografia" placeholder="Biografía"></textarea>
+			</div>
+				
+			<div class="form-group">
+				<label for="idFoto">Foto:</label>
+				<input type="file" class="form-control" id="idFoto" name="foto" />
+				<span class="avisos" id="idFoto">
+					Debes introducir una foto con formato y tamaño correcto.
+				</span>
+			</div>
 			
 			<div class="nav navbar-form navbar-right">
 				<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar cambio" onclick="cancelarCambio();"/>

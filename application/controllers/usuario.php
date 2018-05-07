@@ -54,7 +54,7 @@ class usuario extends CI_Controller {
 		$ape2 = isset($_POST["apellido2"])?$_POST["apellido2"]:"";
 		$alias = isset($_POST["alias"])?$_POST["alias"]:null;
 		$email = isset($_POST["correo"])?$_POST["correo"]:null;
-		$pwd = isset($_POST["pwd"])?$_POST["pwd"]:null;
+		$pwd = isset($_POST["hash_passwrd"])?$_POST["hash_passwrd"]:null;
 		$fecha = isset($_POST["fecha"])?$_POST["fecha"]:null;
 		$idPais = isset($_POST["pais"])?$_POST["pais"]:null;
 
@@ -130,6 +130,24 @@ class usuario extends CI_Controller {
 	
 		$mail = new PHPMailer(true); 
 		try {
+			$mail->CharSet = 'UTF-8';
+				//Server settings
+		    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
+		    $mail->isSMTP();                                      // Set mailer to use SMTP
+		    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+		    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+		    $mail->Username = $email_user;                 // SMTP username
+		    $mail->Password = $email_word;                           // SMTP password
+		    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+		    $mail->Port = 587;                                    // TCP port to connect to
+		    //Recipients
+		    $mail->setFrom($email_user, 'Admin Films');
+		    $mail->addAddress($correo, 'Joe User');     // Add a recipient
+		    //$mail->setLanguage('es','includes/phpmailer/language');   no funciona
+		    $mail->isHTML(true);                                  // Set email format to HTML
+		    $mail->Subject = $the_subject;
+		    $mail-> Body = $cuerpoMensaje;
+		    $mail->AltBody = 'Prueba xxx add-25';
 			$the_subject = "Primera prueba mailer";
 			$email_user = "usuariodosfilms@gmail.com";
 			$email_word = "usuarioDosFilm";
@@ -144,25 +162,6 @@ class usuario extends CI_Controller {
 			        'allow_self_signed' => true
 			    )
 			);
-				//Server settings
-		    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
-		    $mail->isSMTP();                                      // Set mailer to use SMTP
-		    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-		    $mail->SMTPAuth = true;                               // Enable SMTP authentication
-		    $mail->Username = $email_user;                 // SMTP username
-		    $mail->Password = $email_word;                           // SMTP password
-		    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-		    $mail->Port = 587;                                    // TCP port to connect to
-		    $mail->CharSet = "UTF-8";
-		    //Recipients
-		    $mail->setFrom($email_user, 'Admin Films');
-		    $mail->addAddress($correo, 'Joe User');     // Add a recipient
-		    //$mail->setLanguage('es','includes/phpmailer/language');   no funciona
-		    $mail->isHTML(true);                                  // Set email format to HTML
-		    $mail->Subject = $the_subject;
-		    $mail-> Body = $cuerpoMensaje;
-		    $mail->AltBody = 'Prueba xxx add-25';
-			
 		    $exito =  $mail->send();
 
 			if($exito){
@@ -182,7 +181,7 @@ class usuario extends CI_Controller {
 			 } 
 	*/
 		} catch (Exception $e) {
-		$datos['mensaje']['texto'] = "El mensaje no se ha podido enviar. $e";
+		$datos['mensaje']['texto'] = "Ocurrió un error inesperado con él envió del correo electrónico, inténtelo de nuevo más tarde, disculpa las molestias. $e";
 		$datos['mensaje']['nivel'] = 'error';
 		enmarcar($this, 'usuario/mensaje', $datos);
 		}
@@ -203,13 +202,13 @@ class usuario extends CI_Controller {
 	 */
 	
 	public function recuperacionOk() {
-		$datos['mensaje']['texto'] = "Mensaje enviado. Comprueba tu correo.";
+		$datos['mensaje']['texto'] = "Se envió correctamente el correo electrónico.";
 		$datos['mensaje']['nivel'] = 'ok';
 		enmarcar($this, 'usuario/mensaje', $datos);
 	}
 	
 	public function recuperacionErronea() {
-		$datos['mensaje']['texto'] = "El mensaje no se ha podido enviar. ";
+		$datos['mensaje']['texto'] = "El email ingresado no existe en nuestros registros. ";
 		$datos['mensaje']['nivel'] = 'error';
 		enmarcar($this, 'usuario/mensaje', $datos);
 	}

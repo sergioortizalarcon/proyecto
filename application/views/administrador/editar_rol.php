@@ -1,3 +1,19 @@
+<script type="text/javascript">
+	function banearUsuario() {
+
+		var accion = confirm("¿Estas seguro de que quieres banear a este usuario?");
+		if (accion) {
+			alert("terminar accion");
+			//realizarAccion();
+		} else {
+			return false;
+		}
+	}
+	
+	function realizarAccion() {
+		formulario.submit();
+	}
+</script>
 <div class="container">
 	<h1>Editar de usuarios</h1>
 	<br/>
@@ -13,6 +29,7 @@
 		<th>Email usuario</th>
 		<th>País</th>
 		<th>Rol</th>
+		<th>Estado</th>
 		<th>Fecha de nacimiento del usuario</th>
 		<th>Acciones</th>
 
@@ -30,6 +47,20 @@
 			<form action="<?=base_url()?>administrador/editarRolPost" method="post">
 				<td>
 					<select name="idRol" id="idRol">
+						<?php foreach ($roles as $rol_existentes): ?>
+							<?php if($rol_existentes!=null): ?>
+								<option value="<?=$rol_existentes->id?>"
+									<?php echo ($usuario->roles["id"]==$rol_existentes->id)?'selected="selected"':"g";?> >
+									<?=$rol_existentes['rol']?>
+								</option>
+							<?php else: ?>
+								<td>solo debug--> <?=$usuario->rol_existentes?> </td>
+							<?php endif;?>
+						<?php endforeach; ?>
+					</select>
+				</td>
+				<td>
+					<select name="idEstado" id="idEstado">
 						<?php foreach ($roles as $rol_existentes): ?>
 							<?php if($rol_existentes!=null): ?>
 								<option value="<?=$rol_existentes->id?>"
@@ -60,6 +91,7 @@
 		<th>Email usuario</th>
 		<th>País</th>
 		<th>Rol</th>
+		<th>Estado</th>
 		<th>Fecha de nacimiento del usuario</th>
 		<th>Acciones</th>
             </tr>

@@ -11156,7 +11156,8 @@
 		 *      } );
 		 *    } )
 		 */
-		"iDisplayLength": 10,
+		//"iDisplayLength": 10,
+		"iDisplayLength": 25,
 	
 	
 		/**
@@ -13603,7 +13604,7 @@
 		 *  @type int
 		 *  @default 10
 		 */
-		"_iDisplayLength": 10,
+		"_iDisplayLength": 6,
 	
 		/**
 		 * Paging start point - aiDisplay index

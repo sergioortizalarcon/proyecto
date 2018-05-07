@@ -17,15 +17,21 @@
 <script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js"></script>
 
 
+<script type="text/javascript" src="<?=base_url()?>assets/js/jquery-ui.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/js/datepicker-es.js"></script>
 <!-- Esto contiene la función jquery que da el estilo a las listas que contiene una id especificada en el archivo-->
 <script type="text/javascript" src="<?=base_url()?>assets/js/sortTablesJquery.js"></script>
 
 <!--Necesarios para el sorteo de la lista-->
 <script type="text/javascript" src="<?=base_url()?>assets/js/datatables.js"></script>
 <link rel="stylesheet" href="<?=base_url()?>assets/css/datatables.css">
+
+<link rel="stylesheet" href="<?=base_url()?>assets/css/jquery-ui.css">
 <!--Iconos sociales...-->
 <link rel="stylesheet" href="<?=base_url()?>assets/css/fontawesome-all.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/css/fa-brands.min.css">
+
+<link rel="stylesheet" href="<?=base_url()?>assets/css/vistaImagenActor.css">
 <!--Esto es opcional:
 	se debería poner para que saliesen los tooltips pero funcionan sin ello, por la librería online
 	de jquery presupongo, igual lo dejo para evitar problemas mientras
@@ -51,9 +57,17 @@ button.button2 {
     height: 34px;
     border: 1px solid #b4bac0;
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f4f4f4), to(#ececec));
+}
+
+
+.affix {
+      top:0;
+      width: 100%;
+      z-index: 9999 !important;
+  }
 </style>
 
 <link rel="stylesheet" href="<?=base_url()?>assets/css/estilo.css">
 <title>CRUD EMPLEADOS</title>
 </head>
-<body class="custom-background">
+<body class="custom-background" data-spy="scroll" data-target=".navbar" data-offset="50">

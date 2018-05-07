@@ -61,9 +61,13 @@ class usuario_model extends CI_Model {
 		return R:: findAll('roles');
 	}
 
+
+
+	
+
 	public function create_usuario($nombre, $ape1, $ape2, $alias, $email, $pwd, $fecha,$idPais) {
 		//id del rol basico q se crea arriba
-		$rol_basico = 3;
+		$rol_basico = 1;
 		//obtiene el valor devuelto por function
 		$rol = $this -> registro_roles($rol_basico);
 

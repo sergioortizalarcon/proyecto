@@ -4,13 +4,13 @@ class Login extends CI_Controller{
 
 	public function loginGet() {
 		session_start();
-		$value = " ";
-		$valuePass = " ";
 		if (isset($_SESSION["recordar"])) {
 			$value = "value=\"". $_SESSION["recordar"] ."\"";
 			$valuePass = "value=\"". $_SESSION['usuarios'][$_SESSION["recordar"]]['pwd'] ."\"";
-		} else {
 			session_destroy();
+		} else {
+			$value = " ";
+			$valuePass = " ";
 		}
 		$datos["valor"]["usuario"] = $value;
 		$datos["valor"]["pwd"] = $valuePass;
@@ -21,10 +21,9 @@ class Login extends CI_Controller{
 	public function loginPost(){
 		$this -> load ->model("usuario_model");
 		$usuario = isset($_POST["nUsuario"])?$_POST["nUsuario"]:"anonimo";
-		$pwd = isset($_POST["pwd"])?$_POST["pwd"]:null;
+		$pwd = isset($_POST["hash_passwrd"])?$_POST["hash_passwrd"]:null;
 		$recordar = isset($_POST["recordar"])?$_POST["recordar"]:"";
 		if(strcmp($usuario, "anonimo") !== 0) {
-			
 			try {
 				$identificarse = $this -> usuario_model -> comprobar_login($usuario,$pwd);
 
@@ -32,8 +31,10 @@ class Login extends CI_Controller{
 					$aliasLogeado  = $identificarse["alias"];
 					setcookie("usuario", $aliasLogeado,0,"/");
 					session_start();
+					$this -> load ->model("administrador_model");
+					$obt_id = $this -> administrador_model -> getUsuario($usuario);
+					$_SESSION['rol'] = $this -> administrador_model -> obtener_rol_user($obt_id["roles_id"]);
 					if (strcmp($recordar,"recordar") === 0) {
-						
 						$_SESSION['usuarios'][$aliasLogeado]=['pwd'=>$pwd];
 						$_SESSION['recordar'] = $aliasLogeado;
 					} else {
@@ -76,9 +77,9 @@ class Login extends CI_Controller{
 
 	public function loginOut(){
 		setcookie("usuario","", time() - 3600,'/');
-		session_start();
-		unset($_SESSION["usuarios"]);
-		session_destroy();
+		//session_start();
+		//unset($_SESSION["usuarios"]);
+		//session_destroy();
 		
 		header("location:".base_url());
 		$datos["mensaje"]["texto"]="Has cerrado sesión con éxito. Hasta la próxima.";

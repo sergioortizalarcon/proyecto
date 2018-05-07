@@ -15,12 +15,15 @@
 ?>
 	<hr/>
 revisar footer <!-- sin collapse pierde el fondo y la lista solo va en pc -->
-			<div id="footer" class="collapse navbar-collapse">
+	<div id="footer">
+        <div class="wrap">
 				<ul>
-						<li><a href="#">FAQ</a></li>
-						<li><a href="#">Contactanos</a></li>
+                    <li class="titulo">Información</li>
+					<li><a href="#">FAQ</a></li>
+					<li><a href="#">Contactanos</a></li>
 				</ul>
 				<ul>
+                    <li class="titulo">Redes</li>
 					<li>
 						<a href="https://www.facebook.com/"><span class="fab fa-facebook"> Facebook</span></a>
 					</li>
@@ -28,7 +31,8 @@ revisar footer <!-- sin collapse pierde el fondo y la lista solo va en pc -->
     				<a href="https://www.twitter.com/"><span class="fab fa-twitter"> Twitter</span></a>
   					</li>
 				</ul>
-			</div>
+		</div>
+    </div>
 
 
 <!--//BLOQUE COOKIES-->
@@ -46,12 +50,12 @@ revisar footer <!-- sin collapse pierde el fondo y la lista solo va en pc -->
 
  <!--¿Qué significa javascript:void(0)?
 
-Para entender esto primeramente nos vamos a referir a qué significa javascript: en el contexto del atributo href cuando escribimos javascript: estamos indicando que en lugar de llevar a una dirección web, se ejecute el código javascript que vaya indicado a continuación de los dos puntos.
+Para entender esto primeramente nos vamos a referir a qué significa 'javascript': en el contexto del atributo href cuando escribimos javascript: estamos indicando que en lugar de llevar a una dirección web, se ejecute el código javascript que vaya indicado a continuación de los dos puntos.
 
 Equivalentes:
 
 <a href="#" onclick="return false;"> Pulsa aquí por favor </a>
-Piensa en otra alternativa como esta: <a href="javascript://"> Pulsa aquí por favor </a>
+Otra alternativa como esta: <a href="javascript://"> Pulsa aquí por favor </a>
 
 -->
 <script>
@@ -69,20 +73,22 @@ function getCookie(c_name){
         if (c_end == -1){
             c_end = c_value.length;
         }
-        c_value = unescape(c_value.substring(c_start,c_end));
+        c_value = encodeURI(c_value.substring(c_start,c_end));
     }
     return c_value;
 }
  
-function setCookie(c_name,value,exdays){
+function setCookie(c_name,value,exdays,path){
     var exdate=new Date();
     exdate.setDate(exdate.getDate() + exdays);
-    var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+    var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString())+ ";path=/";
     document.cookie=c_name + "=" + c_value;
 }
  
 if(getCookie('pruebaCookie')!="1"){
     document.getElementById("barraaceptacion").style.display="block";
+} else{
+     document.getElementById("barraaceptacion").style.display="none";
 }
 function PonerCookie(){
     setCookie('pruebaCookie','1',365,'/');

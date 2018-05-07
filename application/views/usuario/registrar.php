@@ -132,7 +132,7 @@ function validarAlias() {
 				nombre= m.toUpperCase()+nombre.substring(1,nombre.length);
 				idFormulario.idNombre.style.borderColor="blue";
 				document.getElementById("aNombre").style.display="none";
-		        	nombreOk=true;
+		        idFormulario.idNombre.value=nombre;
 				return true;
 			} else {
 				idFormulario.idNombre.style.borderColor="red";
@@ -175,36 +175,17 @@ function validarAlias() {
 	function validarApeDos() {
 		var ape2 = document.getElementById("idApe2").value.trim();
 		if (ape2!=""){
-			c = ape2.split(" ");
-			ap="";
-			if (c.length<=3) {
-			    /* Tres palabras max. limita numero de caracteres minimo(4) y maximo (10) pero no segun las palabras permitidas
-			    *	se espera un ape(10 caract) o apellido compuesto de 2 a tres palabras.(Ej: de almendruco)
-			    *	""	"	" que limite los caracteres de las palabras si son 3(Ej: de los angeles)
-			    */
-				expresion = /^([a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{4,10}|([\s][a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,10}|[\s][a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{2,5}[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,10}))$/;
-				for (var i = 0; i < c.length; i++) {
-					if (expresion.test(c[i])) {
-						m2 = c[i].charAt(0);
-						ap += m2.toUpperCase()+c[i].substring(1,c[i].length)+" ";
-						idFormulario.idApe2.style.borderColor="blue";
-						document.getElementById("aApellidoDos").style.display="none";
-					} else {
-						document.getElementById("aApellidoDos").style.display="initial";
-						idFormulario.idApe2.style.borderColor="red";
-						return false;
-					}
-				}
+			expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{0,15}$/;
+			if (expresion.test(ape2)) {
+				m2 = ape2.charAt(0);
+				ape2= ape2.toUpperCase()+ape2.substring(1,ape2.length);
+				idFormulario.idApe2.style.borderColor="blue";
+				document.getElementById("aApellidoDos").style.display="none";
 			} else {
 				document.getElementById("aApellidoDos").style.display="initial";
 				idFormulario.idApe2.style.borderColor="red";
 				return false;
 			}
-			//devuelve el valor correcto quitando el ultimo espacio para que no pete al volver a darle.
-			ape2 = ap.substring(0,ap.length-1);
-		} else {
-			ape2 = " ";
-			idFormulario.idApe2.style.borderColor="blue";
 		}
 		return true;
 	}
@@ -252,15 +233,12 @@ function validarAlias() {
 		    	}
 	}
 
-
-
-
-
-	function validate_fecha(fecha){
-    var patron=new RegExp("^(19|20)+([0-9]{2})([-])([0-9]{1,2})([-])([0-9]{1,2})$");
+function validate_fecha(fecha){
+    var patron=new RegExp("^(19|20)+([0-9]{2})([/])([0-9]{1,2})([/])([0-9]{1,2})$");
 
     if(fecha.search(patron)==0){
-        var values=fecha.split("-");
+        var values=fecha.split("/");
+        console.log("entro: "+values);
         function isValidDate(day,month,year){
 		    var dteDate;
 		    //En javascript mes empieza en la posicion 0 y termina en la 11 por esta razon, tenemos que restar 1 al mes
@@ -284,13 +262,14 @@ function validarAlias() {
 function calcularEdad() {
 	fecha = document.getElementById("idFecha").value;
 	if(fecha!=""){
+		console.log(fecha)
 	    if(validate_fecha(fecha)==true) {
 	        // Si la fecha es correcta, calculamos la edad
-	        var values=fecha.split("-");
+	        var values=fecha.split("/");
 	        var dia = values[2];
 	        var mes = values[1];
 	        var ano = values[0];
-
+	        console.log(dia,mes,ano)
 	        // cogemos los valores actuales
 	        var fecha_hoy = new Date();
 	        var ahora_ano = fecha_hoy.getYear();
@@ -348,11 +327,7 @@ function calcularEdad() {
 	}
 }
 
-
-
-
 /*
-
 	Hace la comprobacion en el boton de registrar, si falla da el focus en el primer input con fallo.
 	El for empieza en uno porque el buscador de la barra es un input y se lleva el foco siempre sino.
 
@@ -363,30 +338,22 @@ function calcularEdad() {
 */
 
 function validar() {
+	console.log("a"+idFormulario.idFecha.value)
 	if (validarNombre() && validarApeUno() && validarApeDos() && verificarCorreo() &&confirmarPass() && validarPass() && calcularEdad() ) {
-
-
 		enviarRegistro();
 		function enviarRegistro(){
 			pwd = document.getElementById("idPwd").value;
 			pcripto = sha256(pwd);
-			idFormulario.idPwd.value=pcripto;
-
+			idFormulario.hash_passwrd.value=pcripto;
 	        idFormulario.submit();
 		}
-		//document.getElementById("registrarse").disabled=false;
 	} else {
-		//document.getElementById("registrarse").disabled=true;
-		//$confirm(){
-
 		var error =  document.getElementsByTagName("input");
 			for (var i = 1; i < error.length; i++) {
-                    //if (error[i].type=="text") {
-                        if (error[i].style.borderColor!="blue") {
-                            error[i].focus();
-                            break;
-                        }
-                    //}
+                    if (error[i].style.borderColor!="blue") {
+                        error[i].focus();
+                        break;
+                    }
                 }
         }
 
@@ -459,8 +426,9 @@ placeholder="email@email.com" data-toogle="tooltip" data-placement="left" title=
 
 <div class="form-group">
 <label for="idPwd">Contraseña</label><span class="obligatorio">*</span>
-<input class="form-control" type="password" id="idPwd" name="pwd"
+<input class="form-control" type="password" id="idPwd"
 data-toogle="tooltip" data-placement="left" title="contraseña" onfocusout="validarPass()"/>
+<input class="form-control" type="hidden" id="hash_passwrd" name="hash_passwrd" />
 <span class="avisos" id="aPwd">
 	Entre 8 y 15 caracteres. La contraseña ha de incluir al menos tres de los siguientes elementos: números, mayúsculas, minúsculas o alguno de estos símbolos ($, @, !, %,*, &amp;).
 </span>
@@ -489,7 +457,7 @@ data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
 
 <div class="form-group">
 <label for="idFecha">Fecha de nacimiento</label><span class="obligatorio">*</span>
-<input class="form-control" type="date" id="idFecha" name="fecha" onfocusout="calcularEdad();" />
+<input class="form-control" type="text" id="idFecha" name="fecha" onfocusout="calcularEdad();" />
 <span class="avisos" id="aFecha">
 	Debes ser mayor de 13 años.
 </span>
@@ -505,12 +473,23 @@ data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
 </fieldset>
 </form>
 </div>
-
+<script>
+	
+	$(document).ready(function(){
+		//$("#idFecha").datepicker("option",$.datepicker.regional["es"]);
+		$("#idFecha").datepicker({
+		changeMonth: true,
+      	changeYear: true,
+      	regional: "es",
+      	yearRange: '1918:2018'
+		});
+	});
+	</script>
 
 <script>
 
-	document.getElementById("idNombre").value="hernesto";
-document.getElementById("idApe1").value="cabezon";
+	document.getElementById("idNombre").value="juan";
+document.getElementById("idApe1").value="Fernández";
 document.getElementById("idAlias").value="cp08";
 document.getElementById("idEmail").value="19pc@gmail.com";
 document.getElementById("idEmailV").value="19pc@gmail.com";

@@ -235,14 +235,19 @@ function cancelarRegistro(){
 				<label for="idBiografia">Biografía:</label>
 				<textarea class="form-control" name="biografia" id="idBiografia" placeholder="Biografía"></textarea>
 			</div>
-				
+			
 			<div class="form-group">
 				<label for="idFoto">Foto:</label>
-				<input type="file" class="form-control" id="idFoto" name="foto" />
+				<input type="file" class="form-control" id="idFoto" name="foto[]"/>
 				<span class="avisos" id="idFoto">
 					Debes introducir una foto con formato y tamaño correcto.
-				</span>
-			</div>
+				</span><br/>
+				<div id="list">
+					
+				</div>
+			</div>	
+			
+
 			
 			<div class="nav navbar-form navbar-right">
 				<input type="button" class="btn btn-default" id="idCancelar" name="cancelar" value="Cancelar registro" onclick="cancelarRegistro();" />
@@ -255,3 +260,29 @@ function cancelarRegistro(){
 </div>
 <div id="result"></div>
 </div>
+<script>
+              function archivo(evt) {
+                  var files = evt.target.files; // FileList object
+             
+                  // Obtenemos la imagen del campo "file".
+                  for (var i = 0, f; f = files[i]; i++) {
+                    //Solo admitimos imágenes.
+                    if (!f.type.match('image.*')) {
+                        continue;
+                    }
+             
+                    var reader = new FileReader();
+             
+                    reader.onload = (function(theFile) {
+                        return function(e) {
+                          // Insertamos la imagen
+                         document.getElementById("list").innerHTML = ['<img class="thumb" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
+                        };
+                    })(f);
+             
+                    reader.readAsDataURL(f);
+                  }
+              }
+             
+              document.getElementById('idFoto').addEventListener('change', archivo, false);
+      </script>

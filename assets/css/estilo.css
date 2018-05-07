@@ -69,6 +69,24 @@ body.custom-background {
 #footer{
     background: #161616;
     font-size: 15px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    line-height: 1.8;
+    background-color: black;
+}
+
+#footer ul{
+	float: left;
+	list-style:none;
+}
+
+.wrap {
+	overflow: hidden;
+}
+
+li.titulo {
+	font-weight: 600;
+	color:white;
 }
 
 i.icono-face {
@@ -85,11 +103,11 @@ a.icono-tw{
 
 #cabecera {
 		background-image: url("../img/crud.png");
-		height: 150px;
+		/*height: 150px;*/
+		padding: 0px;
 		opacity:0.9;
 		background-size: 100% 100%;
 		border: 1px solid black;
-		/*margin-bottom: 2%;*/
 	}
 
 /* FOOTER */

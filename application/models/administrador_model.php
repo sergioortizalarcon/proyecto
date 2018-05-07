@@ -6,6 +6,10 @@ class Administrador_model extends CI_Model {
 		return R::find("usuarios","email like ?", ["%".$filtro."%"]);
 	}
 
+	public function getUsuario($filtro='') {
+		return R::findOne("usuarios","email or alias like ?", [$filtro]);
+	}
+
 	public function getByID($id) {
 		return R::load ( 'usuarios', $id );
 	}
@@ -17,6 +21,16 @@ class Administrador_model extends CI_Model {
 		}
 	}
 
+	public function obtener_rol_user($id_rol){
+		$rol = R::findOne("roles","id=?",[$id_rol]);
+		if ($rol != null) {
+			return $rol;
+		} else {
+			R::close();
+			throw new Exception("Se ha producido algún error");
+		}
+	}
+	
 		/*
 	public function borrar($id) {
 		$us = R::load ( 'usuarios', $id );

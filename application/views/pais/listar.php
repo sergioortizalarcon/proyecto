@@ -4,7 +4,6 @@
 			name="filtro" value="<?= $filtro ?>"> <input type="submit"
 			value="Filtrar">
 	</form>
-
 <table id="efectoTabla" class="display table table-bordered ">
 <thead>
 		<tr>

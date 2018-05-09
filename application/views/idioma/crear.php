@@ -21,6 +21,7 @@
 				}
 			}
 		}
+
 		
 		function validar(){
 		    var nombre = document.getElementById("idNombre").value;

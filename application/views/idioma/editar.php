@@ -4,7 +4,6 @@
 		xhr = new XMLHttpRequest();
 		console.log(xhr);
 	}
-
 	function peticionAJAX() {
 		var nombre = document.getElementById("idNombre").value;
 		xhr.open("POST", "<?=base_url()?>idioma/comprobarIdioma", true);

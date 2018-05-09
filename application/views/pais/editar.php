@@ -4,103 +4,98 @@
 		xhr = new XMLHttpRequest();
 		console.log(xhr);
 	}
-	function accionAJAX() {
-		if (xhr.readyState==4 && xhr.status==200) {	
-			document.getElementById("result").innerHTML = xhr.responseText;
+
+	function peticionAJAX() {
+		var nombre = document.getElementById("idNombre").value;
+		xhr.open("POST", "<?=base_url()?>pais/comprobarpais", true);
+		xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xhr.send("nombre="+nombre);
+		xhr.onreadystatechange = function(){
+			//si no recibe nada es que esta disponible el nombre, sino envia algo(trato booleano)
+			if (xhr.readyState==4 && xhr.status==200) {
+				if (xhr.responseText) {
+					document.getElementById("editar").disabled=true;
+					idFormulario.idNombre.style.borderColor="red";
+				} else {
+					document.getElementById("editar").disabled=false;
+					idFormulario.idNombre.style.borderColor="blue";
+				}
+			}
 		}
 	}
 
-	function peticionAJAX(nombre, id_pais) {
-	//xhr = new XMLHttpRequest();
-	xhr.open("POST", "<?=base_url()?>pais/editarPost", true);
-	xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	console.log(nombre);
-	xhr.send("nombre="+nombre+"&id_pais="+id_pais);
-	console.log(xhr);
 
-	
-	xhr.onreadystatechange = function(){
-		console.log(xhr.readyState+"  "+xhr.status);
-		if (xhr.readyState==4 && xhr.status==200) {	
-			console.log(xhr.readyState+"   "+xhr.status);
-			document.getElementById("result").innerHTML = xhr.responseText;
+	function validar(){
+		var nombre = document.getElementById("idNombre").value.trim();
+		var nombreAnterior = document.getElementById("idNombreAnterior").value.trim();
+
+		function validarNombre() {
+
+			var distintos = true;
+
+			if (nombre.toLowerCase()==nombreAnterior.toLowerCase()) {
+				distintos=false;
+			}
+
+			if(nombre!="" && distintos ) {
+				expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ ]{3,20}$/;
+				if (expresion.test(nombre)) {
+					var m = nombre.charAt(0);
+					nombre= m.toUpperCase()+nombre.substring(1,nombre.length);
+					document.getElementById("idNombre").value=nombre;
+					idFormulario.idNombre.style.borderColor="blue";
+					document.getElementById("aNombre").style.display="none";
+					return true;
+				} else {
+					idFormulario.idNombre.style.borderColor="red";
+					document.getElementById("aNombre").style.display="initial";
+					return false;
+				}
+			} else {
+				idFormulario.idNombre.style.borderColor="red";
+				document.getElementById("aNombre").style.display="initial";
+				return false;
+			}
+		}
+
+		validarNombre();
+
+		if (validarNombre()) {
+			peticionAJAX();
+		}else{
+			document.getElementById('editar').disabled=true;
 		}
 	}
-}
-
-function validarNombre() {
-	var n = document.getElementById("idNombre").value;
-	var nombre = n.trim();
-	var nombreAnterior = document.getElementById("idNombreAnterior").value;
-
-	var distintos = true;
-
-	if (nombre.toLowerCase()==nombreAnterior.toLowerCase()) {
-		distintos=false;
-	}
-	
-	if(nombre!="" && distintos ) {
-		expresion = /^([a-z]|[A-Z]|[á-ú]|[Á-Ú]|[à-ù]|[À-Ù]|[ñÑ]|\s){1,20}$/;
-		if (expresion.test(nombre)) {
-			var m = nombre.charAt(0);
-			nombre= m.toUpperCase()+nombre.substring(1,nombre.length);
-
-			idFormulario.idNombre.style.borderColor="blue";
-			document.getElementById("aNombre").style.display="none";
-			return true;
-		} else {
-			idFormulario.idNombre.style.borderColor="red";
-			document.getElementById("aNombre").style.display="initial";
-			return false;
-		}
-	} else {
-		document.getElementById("aNombre").style.display="initial";
-		idFormulario.idNombre.style.borderColor="red";
-		return false;
-	}
-}
-
-function validar(){
-	if (validarNombre()) {
-		document.getElementById('editar').disabled=false;
-	}else{
-		document.getElementById('editar').disabled=true;
-	}
-}
 
 </script>
 
-
 <div class="container ">
-	<form id="idFormulario" method="post" action="<?=base_url()?>pais/editarPost">
-		<fieldset>
-			<legend>Editar país</legend>
-
-			<div class="form-group">
-				<label for="idNombreAnterior">Nombre anterior</label> <input
-				class="form-control" type="text" id="idNombreAnterior"
-				name="nombreAnterior" disabled="disabled"
-				<?= ($body["paises"]->nombre)?"value=".$body["paises"]->nombre:"" ?>>
-
-			</div>
-			<div class="form-group">
-				<label for="idNombre">Nuevo nombre</label><span class="obligatorio">*</span>
-				<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validar();">
-				<input class="form-control" type="hidden" id="idID" name="id_pais"
-				<?= "value=".$body["paises"]->id?>> <span class="avisos"
-				id="aNombre"> Debes escribir un nombre válido(caracteres
-			no númericos o símbolos). </span>
-
+	<form id="idFormulario" method="post"
+	action="<?=base_url()?>pais/editarPost">
+	<fieldset>
+		<legend>Editar pais</legend>
+		<div class="form-group">
+			<label for="idNombreAnterior">Nombre anterior</label> <input
+			class="form-control" type="text" id="idNombreAnterior"	name="nombreAnterior" readonly="readonly"
+			value="<?= isset($body["paises"])?$body["paises"]->nombre:""?>"/>
 		</div>
 
 		<div class="form-group">
-			<input type="submit"  id="editar" name="editar" class="btn btn-default"
-			value="Editar" disabled="disabled" />
-		</div>
-	</fieldset>
-</form>
+			<label for="idNombre">Nuevo nombre</label><span class="obligatorio">*</span>
+			<input class="form-control" type="text" id="idNombre" name="nombre"
+			onkeyup ="validar();"> <input class="form-control" type="hidden"
+			id="idId" name="id_pais" <?= "value=".$body["paises"]->id?>> <span
+			class="avisos" id="aNombre"> Debes escribir un nombre
+			válido(caracteres no númericos, espacios o símbolos) mayor de dos
+		caracteres. </span>
+	</div>
 
-<div id="result"></div>
+	<div class="form-group">
+		<input type="submit" class="btn btn-default" name="editar"
+		id="editar" value="Editar" disabled="disabled" />
+	</div>
+</fieldset>
+</form>
 
 </div>

@@ -16,6 +16,7 @@ class Idioma_model extends CI_Model {
 		}
 		R::close ();
 	}
+	
 
 	public function getIdiomaPorNombre($nombre){
 		$idioma = R::findOne("idiomas","nombre=?",[$nombre]);

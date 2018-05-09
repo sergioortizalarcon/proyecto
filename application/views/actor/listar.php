@@ -1,3 +1,5 @@
+
+
 <div class="container">
 	<h1>Listado de actores</h1>
 	<br/>
@@ -55,3 +57,12 @@
 		</tfoot>
 	</table>
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#efectoTabla").on({'click':function() {
+			var p = Editar<?= $actor->id ?>.id_actor.value;
+			alert(p);
+		}});
+	});
+</script>

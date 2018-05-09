@@ -148,5 +148,11 @@ class actor extends CI_Controller {
 		
 		$this->listarPost();
 	}
+	
+	public function abrirFicha() {
+		$id_actor = $_POST ['id_actor'];
+		$datos = $this->actor_model->getActorPorId($id_actor);
+		enmarcar($this, "actor/ficha",$datos);
+	}
 }
 ?>

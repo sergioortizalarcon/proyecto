@@ -155,11 +155,11 @@ function permitirEnvio() {
 
 function validar() {
 	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
-		nombre = nombre.trim();
+		nombre = idFormulario.idNombre.value.trim();
 		idFormulario.idNombre.value = nombre;
-		apellido1 = apellido1.trim();
+		apellido1 = idFormulario.idApellido1.value.trim();
 		idFormulario.idApellido1.value = apellido1;
-		apellido2 = apellido2.trim();
+		apellido2 = idFormulario.idApellido2.value.trim();
 		idFormulario.idApellido2.value = apellido2;
 		idFormulario.submit();
 	} else {
@@ -238,7 +238,7 @@ function cancelarRegistro(){
 			
 			<div class="form-group">
 				<label for="idFoto">Foto:</label>
-				<input type="file" class="form-control" id="idFoto" name="foto[]"/>
+				<input type="file" class="form-control" id="idFoto" name="foto"/>
 				<span class="avisos" id="idFoto">
 					Debes introducir una foto con formato y tamaño correcto.
 				</span><br/>

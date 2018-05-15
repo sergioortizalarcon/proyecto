@@ -23,7 +23,7 @@
 		</thead>
 		<tbody>
 			<?php foreach ($body['actores'] as $actor): ?>
-				<tr>
+				<tr id="<?= $actor->id ?>"onclick="mostrarFicha(this.id);" >
 					<td><img src="<?=base_url()?><?= $actor->rutaFoto ?>" height="60" width="50"></td>
 					<td><?= $actor->nombre ?></td>
 					<td><?= $actor->apellido1 ?></td>
@@ -59,10 +59,7 @@
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$("#efectoTabla").on({'click':function() {
-			var p = Editar<?= $actor->id ?>.id_actor.value;
-			alert(p);
-		}});
-	});
+	function mostrarFicha(id) {
+		window.location="<?= base_url() ?>actor/abrirFicha?id_actor="+id;
+	}
 </script>

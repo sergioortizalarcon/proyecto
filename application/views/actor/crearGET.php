@@ -155,12 +155,12 @@ function permitirEnvio() {
 
 function validar() {
 	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
-		nombre = nombre.trim();
+		nombre = idFormulario.idNombre.value.trim();
 		idFormulario.idNombre.value = nombre;
 		apellido1 = apellido1.trim();
-		idFormulario.idApellido1.value = apellido1;
+		apellido1 = idFormulario.idApellido1.value.trim();
 		apellido2 = apellido2.trim();
-		idFormulario.idApellido2.value = apellido2;
+		apellido2 = idFormulario.idApellido2.value.trim();
 		idFormulario.submit();
 	} else {
 		validarNombre();
@@ -180,7 +180,14 @@ function cancelarRegistro(){
 </script>
 
 
-<div class="container ">
+<div class="content-wrapper">
+	<section class="content-header">
+      <h1>
+        <i class="fas fa-address-card"></i>
+        &nbsp;&nbsp;Crear nueva ficha para Actor/Actriz
+      </h1>
+    </section>
+	<section class="content">
 <div id="creator">
 	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>actor/crearPost" method="post" enctype="multipart/form-data">
 		<fieldset>
@@ -238,7 +245,7 @@ function cancelarRegistro(){
 			
 			<div class="form-group">
 				<label for="idFoto">Foto:</label>
-				<input type="file" class="form-control" id="idFoto" name="foto[]"/>
+				<input type="file" class="form-control" id="idFoto" name="foto"/>
 				<span class="avisos" id="idFoto">
 					Debes introducir una foto con formato y tamaño correcto.
 				</span><br/>
@@ -259,6 +266,7 @@ function cancelarRegistro(){
 	<br/>
 </div>
 <div id="result"></div>
+</section>
 </div>
 <script>
               function archivo(evt) {

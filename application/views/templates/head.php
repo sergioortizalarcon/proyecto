@@ -4,19 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
-</script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
-</script>
+<link rel="stylesheet" href="<?=base_url()?>assets/css/datatables.css">
+<link rel="stylesheet" href="<?=base_url()?>assets/css/jquery-ui.css">
+
+<link rel="stylesheet" href="<?=base_url()?>assets/css/fontawesome-all.css">
+<link rel="stylesheet" href="<?=base_url()?>assets/css/fa-brands.min.css">
+<link rel="stylesheet" href="<?=base_url()?>assets/css/vistaImagenActor.css">
+<link rel="stylesheet" href="<?=base_url()?>assets/css/bootstrap.css">
+
+<script type="text/javascript" src="<?=base_url()?>assets/js/jquery-3.1.1.js"></script>
+
 <script type="text/javascript" src="<?=base_url()?>assets/js/cripto.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js"></script>
-
-
+<script type="text/javascript" src="<?=base_url()?>assets/js/bootstrap.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/jquery-ui.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/datepicker-es.js"></script>
 <!-- Esto contiene la función jquery que da el estilo a las listas que contiene una id especificada en el archivo-->
@@ -24,14 +24,9 @@
 
 <!--Necesarios para el sorteo de la lista-->
 <script type="text/javascript" src="<?=base_url()?>assets/js/datatables.js"></script>
-<link rel="stylesheet" href="<?=base_url()?>assets/css/datatables.css">
 
-<link rel="stylesheet" href="<?=base_url()?>assets/css/jquery-ui.css">
 <!--Iconos sociales...-->
-<link rel="stylesheet" href="<?=base_url()?>assets/css/fontawesome-all.css">
-<link rel="stylesheet" href="<?=base_url()?>assets/css/fa-brands.min.css">
 
-<link rel="stylesheet" href="<?=base_url()?>assets/css/vistaImagenActor.css">
 <!--Esto es opcional:
 	se debería poner para que saliesen los tooltips pero funcionan sin ello, por la librería online
 	de jquery presupongo, igual lo dejo para evitar problemas mientras
@@ -41,7 +36,18 @@
 	  	$('[data-toggle="tooltip"]').tooltip();
 	  });
   </script>
-
+<script>
+  $(document).ready(function(){
+    //$("#idFecha").datepicker("option",$.datepicker.regional["es"]);
+    $("#idFecha").datepicker({
+    changeMonth: true,
+        changeYear: true,
+        regional: "es",
+        yearRange: '1918:2018',
+        showAnim: 'clip'
+    });
+  });
+  </script>
 
 <style>
 	button.button2:hover {

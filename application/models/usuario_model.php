@@ -45,7 +45,7 @@ class usuario_model extends CI_Model {
 	public function registro_roles($id_rol=""){
 		$comprobar_registro = R::load('roles',$id_rol);
 		if ($comprobar_registro->id==0) {
-			$roles_registrados = ['Básico','Editor','Administrador'];
+			$roles_registrados = ['basico','editor','administrador'];
 			foreach ( $roles_registrados as $registro ) {
 				$nuevo = R::dispense('roles');
 				$nuevo -> rol  = $registro;

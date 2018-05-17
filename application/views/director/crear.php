@@ -179,8 +179,13 @@ function cancelarRegistro(){
 }
 </script>
 
-
-<div class="container ">
+<div class="content-wrapper">
+	<section class="content-header">
+      <h1>
+        <i class="fas fa-user-tie"></i>&nbsp;&nbsp;Registro de directores
+      </h1>
+    </section>
+	<section class="content">
 <div id="creator">
 	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>director/crearPost" method="post" enctype="multipart/form-data">
 		<fieldset>
@@ -254,5 +259,5 @@ function cancelarRegistro(){
 	</form>
 	<br/>
 </div>
-<div id="result"></div>
+</section>
 </div>

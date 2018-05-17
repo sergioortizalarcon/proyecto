@@ -16,16 +16,11 @@ class Pais_model extends CI_Model {
 		
 		R::close ();
 	}
-	public function getTodos($filtro='') {
+	public function getTodos($filtro = '') {
 		$todos = R::find ( "paises", "nombre like ?", [ 
 				"%" . $filtro . "%" 
 		] );
 		return $todos;
-	}
-	public function filtrar($filtro = '') {
-		return R::find ( 'paises', 'nombre like ?', [ 
-				'%' . $filtro . '%' 
-		] );
 	}
 	public function getPaisPorId($id_pais) {
 		return R::load ( 'paises', $id_pais );

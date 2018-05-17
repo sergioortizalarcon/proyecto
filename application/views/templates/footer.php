@@ -1,9 +1,15 @@
 <footer class="container">
-
+<br/>
+<br/>
+<br/>
+<br/>
+<hr/>
 <?php
 	$enlace_actual = 'http://'.$_SERVER['HTTP_HOST'];
 	$refer = isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:"no refer.";
 	$resto = $_SERVER['REQUEST_URI'];
+    print $enlace_actual."/".$resto;
+    print_r(isset($_SESSION['rol'])?$_SESSION['rol']:"");
     /*
         Redirecciona a una página diferente en el mismo directorio el cual se hizo la petición
         $host  = $_SERVER['HTTP_HOST'];
@@ -13,7 +19,7 @@
         exit;
     */
 ?>
-	<hr/>
+
 revisar footer <!-- sin collapse pierde el fondo y la lista solo va en pc -->
 	<div id="footer">
         <div class="wrap">

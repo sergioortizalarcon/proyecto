@@ -2,15 +2,17 @@
 		<div class="col-md-5" id="login">
 			<h2>Iniciar sesión:</h2>
 				<form class="form-horizontal" action="#">
-				    <div class="form-group">
-				    	<label for="email">Nombre:</label><br>
+				    <div class="input-group">
+				    	<!-- <label for="email">Nombre:</label><br> -->
 				   		<input type="email" class="form-control" id="email" placeholder="nombre" name="email" data-toogle="tooltip" data-placement="left" title="Nick o correo electrónico"/>
+				   		<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+				   		<span class="input-group-addon"><i class="fas fa-user"></i></span>
 				    </div>
 					<div class="form-group">
-						<label for="pwd">contraseña:</label><br>
-					    <input type="password" class="form-control" id="pwd" placeholder="contraseña" name="pwd" data-toogle="tooltip" data-placement="left" title="contraseña">
+						<label for="pwd">contraseña:</label><br><i class="fas fa-user"></i>
+					    <input type="password" class="form-control" id="pwd" placeholder="contraseña" name="pwd" data-toogle="tooltip" data-placement="left" title="contraseña"/>
 					</div>
-					<a href="<?=base_url()?>usuario/recuperarPwd" id="edit-forgotten">¿Has olvidado tu contraseña?</a>
+					<a href="<?=base_url()?>administrador/recuperarPwd" id="edit-forgotten">¿Has olvidado tu contraseña?</a>
 					<div class="checkbox">
 						<label><input type="checkbox" name="remember"> Recordar</label>
 					</div>

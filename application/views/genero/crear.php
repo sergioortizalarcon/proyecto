@@ -1,5 +1,4 @@
-<div class="container ">
-	<script>
+<script>
 		var xhr;
 		function comprobargenero(){
 			xhr = new XMLHttpRequest();
@@ -56,9 +55,16 @@
 			}
 		}
 	</script>
+<div class="content-wrapper">
+	<section class="content-header">
+      <h1>
+        <i class="far fa-folder-open"></i>&nbsp;&nbsp;Registro de Géneros
+      </h1>
+    </section>
+	<section class="content">
 	<form id="idFormulario" method="post" action="<?=base_url()?>genero/crearPost">
 		<fieldset>
-			<legend>Añadir nuevo genero</legend>
+			<legend>Nuevo género</legend>
 			<div class="form-group">
 				<label for="idNombre">Nombre</label><span class="obligatorio">*</span>
 				<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validar();"/>
@@ -71,4 +77,5 @@
 			</div>
 		</fieldset>
 	</form>
+</section>
 </div>

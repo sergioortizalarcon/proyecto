@@ -1,12 +1,18 @@
-<div class="container">
+<div class="content-wrapper">
+	<section class="content-header">
+      <h1>
+        <i class="fas fa-film"></i>&nbsp;&nbsp;Registrar nueva película
+      </h1>
+    </section>
+	<section class="content">
 	<form id="idFormulario">
 		<fieldset>
-			<legend>Agregar nueva película</legend>
+			<legend>Datos</legend>
 			<label for="idTitulo">Titulo: </label>
-			<input class="form-control" type="text" id="idTitulo" name="titulo" />
+			<input class="form-control" type="text" id="idTitulo" name="titulo" placeholder="título de la película.." />
 				
 			<label for="idFecha">Año</label>
-			<input class="form-control" type="month" id="idFecha" name="fechaEstreno" />
+			<input class="form-control" type="text" id="idFecha" name="fecha" placeholder="pincha para elegir fecha de estreno..." />
 
 			<div class="form-group">
 				   	<label for="nUsuario">Duración:</label><br>
@@ -52,4 +58,5 @@
 			<input type="button" class="btn btn-default" onclick="comprobar()" value="Enviar"/>
 		</fieldset>
 	</form>
+	</section>
 </div>

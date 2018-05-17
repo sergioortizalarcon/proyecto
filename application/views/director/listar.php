@@ -1,12 +1,21 @@
-<div class="container">
-	<h1>Listado de directores</h1>
-	<br/>
-	<form action="<?= base_url() ?>director/listarPost" method="post">
-		<label for="idFiltro">Filtro</label>
-		<input id="idFiltro" type="text" name="filtro" value="<?= $filtro ?>">
-		<input type="submit" value="Filtrar">
-	</form>
-	<br/>
+<div class="content-wrapper">
+	<section class="content-header">
+	<h1>
+        <i class="fas fa-user-tie"></i>&nbsp;&nbsp;Listado de directores
+        <small>Add, Edit, Delete</small>
+		</h1>
+	</section>
+	<section class="content">
+		<div class="row">
+            <div class="col-xs-12 text-right">
+                <div class="form-group">
+                    <a class="btn btn-primary" href="<?=base_url()?>director/crear"><i class="fa fa-plus"></i>
+                    &nbsp;&nbsp;Agregar más...
+                	</a>
+                </div>
+            </div>
+        </div>
+		<div class="table-responsive">
 	<table id="efectoTabla" class="display table table-bordered ">
 		<thead>
 			<tr>
@@ -54,4 +63,6 @@
 			</tr>
 		</tfoot>
 	</table>
+	</div>
+</section>
 </div>

@@ -10,6 +10,7 @@
 
 	<br/>
 	<hr/>
+<div class="table-responsive">
 <table id="efectoTabla" class="display table table-bordered ">
 	<thead>
 	<tr>
@@ -69,4 +70,5 @@
         </tfoot>
 </table>
 <br/><hr/>
+</div>
 </div>

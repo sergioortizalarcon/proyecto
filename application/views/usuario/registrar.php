@@ -473,18 +473,6 @@ data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
 </fieldset>
 </form>
 </div>
-<script>
-	
-	$(document).ready(function(){
-		//$("#idFecha").datepicker("option",$.datepicker.regional["es"]);
-		$("#idFecha").datepicker({
-		changeMonth: true,
-      	changeYear: true,
-      	regional: "es",
-      	yearRange: '1918:2018'
-		});
-	});
-	</script>
 
 <script>
 

@@ -98,11 +98,12 @@ class usuario extends CI_Controller {
 		}
 	}
 
-	
-	
-	
-	/*RECUPERAR CONTRASEÑA*/
-	
+
+
+
+
+
+	/* RECUPERAR Password*/
 	public function recuperarPwd() {
 		enmarcar($this, "usuario/recuperarPwd");
 	}

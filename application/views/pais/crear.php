@@ -1,4 +1,3 @@
-<div class="container ">
 	<script>
 		var xhr;
 		function comprobarPais(){
@@ -23,8 +22,7 @@
 		}
 		
 		function validar(){
-		    var n = document.getElementById("idNombre").value;
-		    var nombre=n.trim();
+		    var nombre = document.getElementById("idNombre").value.trim();
 
 		    function validarNombre() {
 		        if(nombre!="") {
@@ -65,14 +63,21 @@
 			}
 		}
 	</script>
+<div class="content-wrapper">
+	<section class="content-header">
+      <h1>
+        <i class="fas fa-globe"></i>&nbsp;&nbsp;Registro de paises
+      </h1>
+    </section>
+	<section class="content">
 	<form id="idFormulario" method="post" action="<?=base_url()?>pais/crearPost">
 		<fieldset>
-			<legend>Añadir nuevo país</legend>
+			<legend>Nuevo país</legend>
 			<div class="form-group">
 			<label for="idNombre">Nombre</label><span class="obligatorio">*</span>
 			<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validar();"/>
 			<span class="avisos" id="aNombre">
-				Debes escribir un nombre válido(caracteres no númericos, espacios o símbolos).
+				Debes escribir un nombre válido(caracteres no númericos, espacios o símbolos) mayor de dos caracteres.
 			</span>
 			</div>
 			
@@ -82,4 +87,5 @@
 			</div>
 		</fieldset>
 	</form>
+</section>
 </div>

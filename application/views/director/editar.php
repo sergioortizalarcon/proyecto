@@ -156,8 +156,13 @@ function cancelarRegistro(){
 }
 </script>
 
-
-<div class="container ">
+<div class="content-wrapper">
+	<section class="content-header">
+      <h1>
+        <i class="fas fa-user-tie"></i>&nbsp;&nbsp;Edición de directores
+      </h1>
+    </section>
+	<section class="content">
 <div id="creator">
 	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>director/editarPost" method="post" enctype="multipart/form-data">
 		<fieldset>
@@ -223,7 +228,7 @@ function cancelarRegistro(){
 			</div>
 			
 			<div class="nav navbar-form navbar-right">
-				<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar cambio" onclick="cancelarCambio();"/>
+				<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar cambio" onclick="cancelarRegistro();"/>
 				<input type="button" class="btn btn-default" id="registrarse" name ="registrarse" value="Editar" onclick="validar();"
 				 />
 			</div>
@@ -233,4 +238,5 @@ function cancelarRegistro(){
 	<br/>
 </div>
 <div id="result"></div>
+</section>
 </div>

@@ -68,9 +68,22 @@ function validar(){
 	}
 }
 
-</script>
+function cancelarRegistro(){
+	var cancelarRegistro = confirm("¿Realmente quieres cancelar el registro?");
 
-<div class="container ">
+	if (cancelarRegistro) {
+		window.location.href = "<?=base_url()?>";
+	}
+}
+
+</script>
+<div class="content-wrapper">
+	<section class="content-header">
+      <h1>
+        <i class="fas fa-language"></i>&nbsp;&nbsp;Edición de idiomas
+      </h1>
+    </section>
+	<section class="content">
 	<form id="idFormulario" method="post"
 		action="<?=base_url()?>idioma/editarPost">
 		<fieldset>
@@ -92,10 +105,12 @@ function validar(){
 			</div>
 
 			<div class="form-group">
-				<input type="submit" class="btn btn-default" name="editar"
-					id="editar" value="Editar" disabled="disabled" />
+				<div class="nav navbar-form navbar-right">
+					<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar cambio" onclick="cancelarRegistro();"/>
+					<input type="submit" class="btn btn-default" name="editar" id="editar" value="Editar" disabled="disabled" />
+				</div>
 			</div>
 		</fieldset>
 	</form>
-
+</section>
 </div>

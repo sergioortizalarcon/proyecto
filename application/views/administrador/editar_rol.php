@@ -14,10 +14,13 @@
 		formulario.submit();
 	}
 </script>
-<div class="container">
-	<h1>Editar de usuarios</h1>
-	<br/>
-
+<div class="content-wrapper">
+	<section class="content-header">
+	<h1><i class="fa fa-users"></i>&nbsp;&nbsp;Permisos usuarios</h1>
+	</section>
+<section class="content">
+<!-- 	<div style="width: 100%; padding-left: -10px; border: 1px solid red;"> -->
+<div class="table-responsive">
 <table id="efectoTabla" class="display table table-bordered ">
 	<thead>
 	<tr>
@@ -46,7 +49,7 @@
 			<td> <?=$usuario->paises["nombre"]?> </td>
 			<form action="<?=base_url()?>administrador/editarRolPost" method="post">
 				<td>
-					<select name="idRol" id="idRol">
+					<select name="idRol" class="form-control">
 						<?php foreach ($roles as $rol_existentes): ?>
 							<?php if($rol_existentes!=null): ?>
 								<option value="<?=$rol_existentes->id?>"
@@ -60,7 +63,7 @@
 					</select>
 				</td>
 				<td>
-					<select name="idEstado" id="idEstado">
+					<select name="idEstado"  class="form-control">
 						<?php foreach ($roles as $rol_existentes): ?>
 							<?php if($rol_existentes!=null): ?>
 								<option value="<?=$rol_existentes->id?>"
@@ -97,6 +100,7 @@
             </tr>
         </tfoot>
 </table>
+</div>
 <br/><hr/>
-
+</section>
 </div>

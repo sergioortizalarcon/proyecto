@@ -2,8 +2,8 @@
 	var xhr;
 	window.onload = function(){
 		xhr = new XMLHttpRequest();
-		console.log(xhr);
 	}
+
 	function accionAJAX() {
 		if (xhr.readyState==4 && xhr.status==200) {	
 			document.getElementById("result").innerHTML = xhr.responseText;
@@ -11,19 +11,14 @@
 	}
 
 	function peticionAJAX(nombre, id_pais) {
-	//xhr = new XMLHttpRequest();
 	xhr.open("POST", "<?=base_url()?>pais/editarPost", true);
 	xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	console.log(nombre);
 	xhr.send("nombre="+nombre+"&id_pais="+id_pais);
-	console.log(xhr);
 
 	
 	xhr.onreadystatechange = function(){
-		console.log(xhr.readyState+"  "+xhr.status);
 		if (xhr.readyState==4 && xhr.status==200) {	
-			console.log(xhr.readyState+"   "+xhr.status);
 			document.getElementById("result").innerHTML = xhr.responseText;
 		}
 	}
@@ -69,11 +64,23 @@ function validar(){
 	}
 }
 
+function cancelarRegistro(){
+	var cancelarRegistro = confirm("¿Realmente quieres cancelar el registro?");
+
+	if (cancelarRegistro) {
+		window.location.href = "<?=base_url()?>";
+	}
+}
+
 </script>
-
-
-<div class="container ">
-	<form id="idFormulario" method="post" action="<?=base_url()?>pais/editarPost">
+<div class="content-wrapper">
+	<section class="content-header">
+      <h1>
+        <i class="fas fa-globe"></i>&nbsp;&nbsp;Editar país
+      </h1>
+    </section>
+	<section class="content">
+	<form id="idFormulario" method="post">
 		<fieldset>
 			<legend>Editar país</legend>
 
@@ -90,17 +97,18 @@ function validar(){
 				<input class="form-control" type="hidden" id="idID" name="id_pais"
 				<?= "value=".$body["paises"]->id?>> <span class="avisos"
 				id="aNombre"> Debes escribir un nombre válido(caracteres
-			no númericos o símbolos). </span>
+				no númericos o símbolos) mayor de dos caracteres.</span>
+			</div>
 
-		</div>
-
-		<div class="form-group">
-			<input type="submit"  id="editar" name="editar" class="btn btn-default"
-			value="Editar" disabled="disabled" />
-		</div>
-	</fieldset>
+			<div class="form-group">
+				<div class="nav navbar-form navbar-right">
+					<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar cambio" onclick="cancelarRegistro();"/>
+					<input type="submit"  id="editar" name="editar" class="btn btn-default"
+					value="Editar" disabled="disabled" />
+				</div>
+			</div>
+		</fieldset>
 </form>
-
 <div id="result"></div>
-
+</section>
 </div>

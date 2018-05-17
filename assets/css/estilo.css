@@ -1,3 +1,7 @@
+body {
+	height: 100%;
+    margin: 0;
+}
 
 a{
 	text-decoration: none;
@@ -101,13 +105,31 @@ a.icono-tw{
 	background-size: contain;
 }
 
-#cabecera {
-		background-image: url("../img/crud.png");
-		/*height: 150px;*/
-		padding: 0px;
-		opacity:0.9;
-		background-size: 100% 100%;
-		border: 1px solid black;
-	}
-
 /* FOOTER */
+
+#idFecha {
+	cursor: pointer;
+}
+
+
+
+/*CAMBIO DE ESTILO PARA LOS SELECTS DEL DATATABLE(AFECTA A EDICION DE USUARIO)*/
+
+.table-responsive > select.form-control {
+    display: block;
+    width: initial;
+	width:initial!important;
+}
+
+
+
+
+
+/*VISTA DATOS PERFIL USUARIO  */
+.datos_user{
+    font-size: x-large;
+    font-weight: 600;
+    font-style: italic;
+    text-decoration: underline;
+    text-decoration-color: darkcyan;
+}

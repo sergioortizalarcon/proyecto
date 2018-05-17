@@ -71,20 +71,28 @@ function validarPass() {
 			<span class="avisos" id="loginFailed">
 				Usuario o contraseña incorrecto 
 			</span>
+
+<!-- 			<div class="input-group input-group-sm mb-3">
+				  <div class="input-group-prepend">
+				    <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+				  </div>
+				  <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+				</div> 
+-->
 				<form id="idFormulario" name="idFormulario" class="form-horizontal" action="<?=base_url()?>login/loginPost" method="post">
 				    <div class="form-group">
-				    	<label for="nUsuario">Nombre:</label><br>
-				   		<input type="text" class="form-control" id="nUsuario" placeholder="nombre" name="nUsuario" data-toogle="tooltip" data-placement="left" title="Nick o correo electrónico" <?= $valor["usuario"] ?> />
+				    <label for="nUsuario">Nombre:</label><br>
+				   		<input type="text" class="form-control" id="nUsuario" placeholder="nombre" name="nUsuario" data-toogle="tooltip" data-placement="left" title="Nick o correo electrónico"/>
 				    </div>
 					<div class="form-group">
 						<label for="pwd">contraseña:</label><br>
-					    <input type="password" class="form-control" id="pwd" placeholder="contraseña" data-toogle="tooltip" data-placement="left" title="contraseña" <?= $valor["pwd"] ?>/>
-					    <input type="text" class="form-control" name="hash_passwrd"/>
+					    <input type="password" class="form-control" id="pwd" placeholder="contraseña" data-toogle="tooltip" data-placement="left" title="contraseña"/>
+					    <input type="hidden" class="form-control" name="hash_passwrd"/>
 					</div>
 					<a href="<?=base_url()?>usuario/recuperarPwd" id="edit-forgotten">¿Has olvidado tu contraseña?</a>
 					<div class="form-check">
-						<input class="form-check-input" type="checkbox" id="idR" name="recordar" value="recordar" checked="checked" />
 						<label class="form-check-label" for="idR">Recordar:</label>
+						<input class="form-check-input" type="checkbox" id="idR" name="recordar" value="recordar" <?=$recordar?> />
 					</div>
 					    <br/>
 					<div class="nav navbar-form navbar-right">
@@ -93,7 +101,7 @@ function validarPass() {
 		  		</form>
 		</div>
 <script>
-	//document.getElementById("pwd").value="23aA$@$!%*?&";
+	document.getElementById("pwd").value="23aA$@$!%*?&";
 	</script>
 	<div class="col-md-5" id="crear">
 		<div class="form-group">

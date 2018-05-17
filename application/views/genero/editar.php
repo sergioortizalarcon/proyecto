@@ -69,10 +69,24 @@ function validar(){
 	}
 }
 
+function cancelarRegistro(){
+	var cancelarRegistro = confirm("¿Realmente quieres cancelar el registro?");
+
+	if (cancelarRegistro) {
+		window.location.href = "<?=base_url()?>";
+	}
+}
+
 </script>
 
 
-<div class="container ">
+<div class="content-wrapper">
+	<section class="content-header">
+      <h1>
+        <i class="far fa-folder-open"></i>&nbsp;&nbsp;Editar género
+      </h1>
+    </section>
+	<section class="content">
 	<form id="idFormulario" method="post" action="<?=base_url()?>genero/editarPost">
 		<fieldset>
 			<legend>Editar genero</legend>
@@ -88,19 +102,19 @@ function validar(){
 				<label for="idNombre">Nuevo nombre</label><span class="obligatorio">*</span>
 				<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validar();">
 				<input class="form-control" type="hidden" id="idID" name="id_genero"
-				<?= "value=".$body["generos"]->id?>> <span class="avisos"
-				id="aNombre"> Debes escribir un nombre válido(caracteres
-			no númericos o símbolos). </span>
+				<?= "value=".$body["generos"]->id?>>
+				<span class="avisos" id="aNombre"> Debes escribir un nombre válido(caracteres no númericos o símbolos). </span>
 
 		</div>
 
 		<div class="form-group">
-			<input type="submit"  id="editar" name="editar" class="btn btn-default"
-			value="Editar" disabled="disabled" />
+			<div class="nav navbar-form navbar-right">
+				<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar cambio" onclick="cancelarRegistro();"/>
+			<input type="submit"  id="editar" name="editar" class="btn btn-default" value="Editar" disabled="disabled" />
+			</div>
 		</div>
 	</fieldset>
-</form>
-
-<div id="result"></div>
-
+	</form>
+	<div id="result"></div>
+</section>
 </div>

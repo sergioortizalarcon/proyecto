@@ -3,7 +3,8 @@
 class Administrador_model extends CI_Model {
 
 	public function getAll($filtro='') {
-		return R::find("usuarios","email like ?", ["%".$filtro."%"]);
+		// return R::find("usuarios","email like ?", [$filtro]);
+		return R::findAll('usuarios','order by id asc');
 	}
 
 	public function getUsuario($filtro='') {
@@ -24,10 +25,21 @@ class Administrador_model extends CI_Model {
 	public function obtener_rol_user($id_rol){
 		$rol = R::findOne("roles","id=?",[$id_rol]);
 		if ($rol != null) {
-			return $rol;
+			return $rol['rol'];
 		} else {
 			R::close();
 			throw new Exception("Se ha producido algún error");
+		}
+	}
+
+
+	//Cambiar cuando se cree la tabla admins
+	public function comprobar_emailAdm($email){
+		$emailD = R::findOne("usuarios","email=?",[$email]);
+		if ($emailD == null) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 	

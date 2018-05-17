@@ -1,5 +1,4 @@
-<div class="container ">
-	<script>
+<script>
 		var xhr;
 		function comprobarIdioma(){
 			xhr = new XMLHttpRequest();
@@ -64,9 +63,16 @@
 	}
 }
 	</script>
+<div class="content-wrapper">
+	<section class="content-header">
+      <h1>
+        <i class="fas fa-language"></i>&nbsp;&nbsp;Registro de idiomas
+      </h1>
+    </section>
+	<section class="content">
 	<form id="idFormulario" method="post" action="<?=base_url()?>idioma/crearPost">
 		<fieldset>
-			<legend>Registrar  nuevo idioma</legend>
+			<legend>Nuevo idioma</legend>
 			<div class="form-group">
 			<label for="idNombre">Nombre</label><span class="obligatorio">*</span>
 			<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validar();"/>
@@ -80,4 +86,5 @@
 			</div>
 		</fieldset>
 	</form>
+</section>
 </div>

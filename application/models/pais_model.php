@@ -13,10 +13,9 @@ class Pais_model extends CI_Model {
 		} else {
 			throw new Exception ( "Error al crear el país" );
 		}
-		
 		R::close ();
 	}
-	public function getTodos($filtro='') {
+	public function getTodos($filtro = '') {
 		$todos = R::find ( "paises", "nombre like ?", [ 
 				"%" . $filtro . "%" 
 		] );

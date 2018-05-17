@@ -1,3 +1,5 @@
+
+
 <div class="container">
 	<h1>Listado de actores</h1>
 	<br/>
@@ -21,7 +23,7 @@
 		</thead>
 		<tbody>
 			<?php foreach ($body['actores'] as $actor): ?>
-				<tr>
+				<tr id="<?= $actor->id ?>"onclick="mostrarFicha(this.id);" >
 					<td><img src="<?=base_url()?><?= $actor->rutaFoto ?>" height="60" width="50"></td>
 					<td><?= $actor->nombre ?></td>
 					<td><?= $actor->apellido1 ?></td>
@@ -55,3 +57,9 @@
 		</tfoot>
 	</table>
 </div>
+
+<script type="text/javascript">
+	function mostrarFicha(id) {
+		window.location="<?= base_url() ?>actor/abrirFicha?id_actor="+id;
+	}
+</script>

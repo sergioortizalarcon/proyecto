@@ -31,6 +31,16 @@ function mayuscula(palabra) {
 
 function validarNombre() {
 	nombre = idFormulario.idNombre.value.trim();
+	if (nombre == "") {
+		idFormulario.nombre.style.borderColor="red";
+		document.getElementById("aNombre").style.display="initial";
+		if (correcto == true) {
+			document.getElementById('aNombre').focus();
+			correcto=false;
+		}
+		apellido1Correcto = false;
+	}
+	
 	if (nombre != "") {
 		nombreMayus = mayuscula(nombre);
 		idFormulario.nombre.value = nombreMayus.trim();
@@ -55,6 +65,15 @@ function validarNombre() {
 
 function validarApellido1() {
 	apellido1 = idFormulario.idApellido1.value.trim();
+	if (apellido1 == "") {
+		idFormulario.idApellido1.style.borderColor="red";
+		document.getElementById("aApellido1").style.display="initial";
+		if (correcto == true) {
+			document.getElementById('idApellido1').focus();
+			correcto=false;
+		}
+		apellido1Correcto = false;
+	}
 	if (apellido1 != "") {
 		apellidoMayus = mayuscula(apellido);
 		idFormulario.idApellido1.value = apellidoMayus.trim();

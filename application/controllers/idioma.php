@@ -18,6 +18,7 @@ class idioma extends CI_Controller {
 	}
 	
 	
+	
 			/* REGISTRO DE IDIOMAS */
 	
 	

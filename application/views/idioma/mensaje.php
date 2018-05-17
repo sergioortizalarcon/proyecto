@@ -8,7 +8,6 @@
 <?= $mensaje['texto'] ?>
 </div>
 
-
 <?php if ( isset($mensaje['link']) ) :?>
 <!-- si existe el array link entra a un foreach q crea un boton para ir a listar o crear, la clave es la accion y el valor el bean -->
 	<?php foreach ($mensaje['link'] as $key => $value): ?>

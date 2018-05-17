@@ -29,7 +29,7 @@ class pais extends CI_Controller {
 	}
 	public function crearOk() {
 		$nombre = isset ( $_GET ['nombre'] ) ? $_GET ['nombre'] : null;
-		$datos ['mensaje'] ['texto'] = 'El país ' . $nombre . 'se ha añadido correctamente';
+		$datos ['mensaje'] ['texto'] = 'El país ' . $nombre . ' se ha añadido correctamente';
 		$datos ['mensaje'] ['nivel'] = 'ok';
 		
 		$datos ['mensaje'] ['link'] ['listar'] = "pais";
@@ -58,6 +58,7 @@ class pais extends CI_Controller {
 			enmarcar ( $this, 'pais/mensaje', $datos );
 		}
 	}
+	
 	public function editarPost() {
 		$this->load->model ( 'pais_model' );
 		$id_pais = isset ( $_POST ['id_pais'] ) ? $_POST ['id_pais'] : null;

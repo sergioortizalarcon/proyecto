@@ -22,7 +22,7 @@ $(document).ready( function () {
         }
     },
 	});
-    $('#efectoTabla input').addClass('yourclass');
+    $('#efectoTabla select').addClass('yourclass');
 });
 
 

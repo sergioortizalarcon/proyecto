@@ -33,10 +33,13 @@ span.avisos{
 }
 
 /* ajusta los botones de edicion de usuario */
-form.listado{
-	display: grid;
+td,th{text-align: center;}
+form.listado > button {
+    width: 100px;
 }
-
+form.listado {
+    display: inline-block;
+}
 /*agrega fondo al body*/
 body.custom-background {
 	/*fondo de color por si falla la imagen*/
@@ -115,9 +118,7 @@ a.icono-tw{
 
 /*CAMBIO DE ESTILO PARA LOS SELECTS DEL DATATABLE(AFECTA A EDICION DE USUARIO)*/
 
-.table-responsive > select.form-control {
-    display: block;
-    width: initial;
+select.form-control {
 	width:initial!important;
 }
 

@@ -1,9 +1,3 @@
-<script>
-	$(function(){
-		$("#tabs").tabs();
-	});
-</script>
-
 <div class="container">
 	<div class="tabs">
 		<ul>

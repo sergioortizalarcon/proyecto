@@ -47,8 +47,12 @@
         showAnim: 'clip'
     });
   });
-  </script>
-
+</script>
+<script>
+  $(document).ready(function(){
+    $("#tabs").tabs();
+  });
+</script>
 <style>
 	button.button2:hover {
     border-color: #3072b3;

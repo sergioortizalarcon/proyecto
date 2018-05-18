@@ -9,26 +9,19 @@ class Administrador extends CI_Controller {
 			return false;
 		}
 	}
+
 	public function editarGet(){
 		$this->load->model('administrador_model');
 		$this->load->model('usuario_model');
 		$idUser = isset($_POST['idUser'])?$_POST['idUser']:null;
 		if ($idUser) {
-			if ($idUser == $_SESSION['id']) {
-				$datos['datos'] = $this->administrador_model->getByID($idUser);
-				$this->load->view("administrador/perfilAdmin",$datos);
-			} else {
-				header("location:".base_url());
-			}
-
-		} else {
-			$datos['mensaje']['texto'] = "Se ha producido algún error. Vuelve a intentarlo.";
-			$datos['mensaje']['nivel'] = 'error';
-			enmarcar($this,"administrador/mensaje",$datos);
+			$datos['roles'] = $this->usuario_model->listar_roles();
+			$datos['usuario'] = $this->administrador_model->getByID($idUser);
+			enmarcar($this,"administrador/editar_rol",$datos);
 		}
 	}
 
-	//Por ID
+	//Por ID para visita perfil
 	public function datos_user(){
 		$idUser = isset($_POST['idUser'])?$_POST['idUser']:null;
 		$this->load->model('administrador_model');
@@ -115,8 +108,6 @@ class Administrador extends CI_Controller {
 
 
 	public function perfilUsuario(){
-		$this -> load ->model('administrador_model');
-
 		enmarcar($this,"administrador/perfilAdmin");
 	}
 	

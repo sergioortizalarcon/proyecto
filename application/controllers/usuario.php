@@ -89,16 +89,6 @@ class usuario extends CI_Controller {
 			/*		UPDATE 		*/
 
 
-	public function editarGet(){
-		$this->load->model('usuario_model');
-		$idUser = isset($_POST['idUser'])?$_POST['idUser']:null;
-		if ($idUser) {
-			$datos['usuario'] = $this->usuario_model->getByID($idUser);
-			enmarcar($this,"usuario/editar_usuario",$datos);
-		}
-	}
-
-
 
 
 

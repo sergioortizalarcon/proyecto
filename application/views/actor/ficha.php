@@ -1,8 +1,3 @@
-<script>
-	$(document).ready(function(){
-		$("#tabs").tabs();
-	});
-</script>
 <div class="content-wrapper">
 	<section class="content">
 		<div id="tabs">

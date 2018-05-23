@@ -18,6 +18,7 @@
 				<th>Email usuario</th>
 				<th>País</th>
 				<th>Rol</th>
+				<th>Estado cuenta</th>
 				<th>Fecha de nacimiento del usuario</th>
 				<th>Acciones</th>
 
@@ -34,6 +35,13 @@
 					<td> <?=$key->email?> </td>
 					<td> <?=$key->paises["nombre"]?> </td>
 					<td> <?=$key->roles["rol"]?> </td>
+					<td>
+						<?php if($key->estado == 1): ?>
+							Activa
+						<?php else:?>
+							Baneado
+						<?php endif;?>
+					</td>
 					<td> <?=$key->fecha_nacimiento?></td>
 
 					<td>
@@ -55,6 +63,7 @@
 				<th>Email usuario</th>
 				<th>País</th>
 				<th>Rol</th>
+				<th>Estado cuenta</th>
 				<th>Fecha de nacimiento del usuario</th>
 				<th>Acciones</th>
 		            </tr>

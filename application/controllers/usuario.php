@@ -75,9 +75,10 @@ class usuario extends CI_Controller {
 	}
 
 	public function crearOk() {
-		$datos['mensaje']['texto'] = "Usuario creado correctamente";
+		$datos['mensaje']['texto'] = "Usuario creado correctamente.Rediriendo al login...";
 		$datos['mensaje']['nivel'] = 'ok';
 		enmarcar($this, 'usuario/mensaje', $datos);
+		header("Refresh:3;url=".base_url().'login/loginGet');
 	}
 	
 	public function crearError() {

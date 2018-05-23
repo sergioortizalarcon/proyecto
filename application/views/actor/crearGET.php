@@ -254,8 +254,6 @@ function cancelarRegistro(){
 				</div>
 			</div>	
 			
-
-			
 			<div class="nav navbar-form navbar-right">
 				<input type="button" class="btn btn-default" id="idCancelar" name="cancelar" value="Cancelar registro" onclick="cancelarRegistro();" />
 				<input type="button" class="btn btn-default" id="idRegistro" name="registrarse" disabled="true" value="Registrarse" onclick="validar();" />
@@ -269,28 +267,28 @@ function cancelarRegistro(){
 </section>
 </div>
 <script>
-              function archivo(evt) {
-                  var files = evt.target.files; // FileList object
+	function archivo(evt) {
+      	var files = evt.target.files; // FileList object
+                 
+      	// Obtenemos la imagen del campo "file".
+    	for (var i = 0, f; f = files[i]; i++) {
+    	//Solo admitimos imágenes.
+        	if (!f.type.match('image.*')) {
+            	continue;
+            }
+                     
+            var reader = new FileReader();
+                     
+            reader.onload = (function(theFile) {
+                return function(e) {
+                  	// Insertamos la imagen
+                 	document.getElementById("list").innerHTML = ['<img class="thumb" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
+                };
+        	})(f);
+                     
+            reader.readAsDataURL(f);
+      	}
+  	}
              
-                  // Obtenemos la imagen del campo "file".
-                  for (var i = 0, f; f = files[i]; i++) {
-                    //Solo admitimos imágenes.
-                    if (!f.type.match('image.*')) {
-                        continue;
-                    }
-             
-                    var reader = new FileReader();
-             
-                    reader.onload = (function(theFile) {
-                        return function(e) {
-                          // Insertamos la imagen
-                         document.getElementById("list").innerHTML = ['<img class="thumb" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
-                        };
-                    })(f);
-             
-                    reader.readAsDataURL(f);
-                  }
-              }
-             
-              document.getElementById('idFoto').addEventListener('change', archivo, false);
-      </script>
+  	document.getElementById('idFoto').addEventListener('change', archivo, false);
+</script>

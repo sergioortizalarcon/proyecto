@@ -38,8 +38,8 @@ class Actor_model extends CI_Model {
 		}
 	}
 
-	public function getAll($filtro='') {
-		$mostrar = R::find("actor","nombre like ? or apellido1 like ? or apellido2 like? order by apellido1,apellido2,nombre", ["%".$filtro."%","%".$filtro."%","%".$filtro."%"]);
+	public function getAll() {
+		$mostrar = R::find("actor","order by apellido1,apellido2,nombre");
 		return $mostrar;
 	}
 	

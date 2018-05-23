@@ -3,7 +3,8 @@
 class Administrador extends CI_Controller {
 
 	public function comprobarRol(){
-		if($_SESSION['rol']=='administrador'){
+		session_start();
+		if (isset ( $_SESSION ['rol'] ) && ($_SESSION['rol'] == 'administrador')) {
 			return true;
 		} else {
 			return false;

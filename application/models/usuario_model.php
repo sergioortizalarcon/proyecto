@@ -68,6 +68,9 @@ class usuario_model extends CI_Model {
 	public function create_usuario($nombre, $ape1, $ape2, $alias, $email, $pwd, $fecha,$idPais) {
 		//id del rol basico q se crea arriba
 		$rol_basico = 1;
+
+		//Indica si una cuenta esta baneada o no: 0->Ban | 1->activa
+		$estado = 1;
 		//obtiene el valor devuelto por function
 		$rol = $this -> registro_roles($rol_basico);
 
@@ -81,12 +84,11 @@ class usuario_model extends CI_Model {
 			$usuario -> alias = $alias;
 			$usuario -> email = $email;
 			$usuario -> password = $pwd;
+			$usuario -> estado = $estado;
 			//esto guarda el valor
-			//$usuario -> rol = $rol->rol;
 			$rol -> xownUsuarioList[] = $usuario;
 			$pais = R::load("paises",$idPais);
 			$pais -> xownUsuarioList[] =$usuario;
-
 			$usuario -> fecha_nacimiento = $fecha;
 			R::store($rol);
 			R::store($pais);

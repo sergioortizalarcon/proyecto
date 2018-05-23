@@ -37,6 +37,8 @@ class Director extends CI_Controller {
     	            $foto = "assets/img/fotoDirector/Director_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
     	        }
     	    }
+    	} else {
+    	    $foto = "assets/img/fotoDirector/prueba.png";
     	}
         
         try {
@@ -62,11 +64,9 @@ class Director extends CI_Controller {
     	$this->listarPost();
     }
     
-    public function listarPost($f='') {
-    	$filtro = isset($_POST['filtro'])?$_POST['filtro']:$f;
+    public function listarPost() {
     	$this->load->model('director_model');
-    	$datos['body']['directores'] = $this->director_model->getAll($filtro);
-    	$datos['filtro'] = $filtro;
+    	$datos['body']['directores'] = $this->director_model->getAll();
     	enmarcar($this, 'director/listar',$datos);
     }
     
@@ -143,6 +143,13 @@ class Director extends CI_Controller {
     	$this->director_model->borrar ( $id_director );
     	
     	$this->listarPost();
+    }
+    
+    public function abrirFicha() {
+        $this->load->model ( 'director_model' );
+        $id_director = $_GET ['id_director'];
+        $datos ['body']['directores'] = $this->director_model->getdirectorPorId ( $id_director );
+        enmarcar($this, "director/ficha",$datos);
     }
 }
 ?>

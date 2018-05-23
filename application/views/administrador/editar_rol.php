@@ -32,7 +32,7 @@
 		<th>Email usuario</th>
 		<th>País</th>
 		<th>Rol</th>
-		<th>Estado</th>
+		<th>Estado cuenta</th>
 		<th>Fecha de nacimiento del usuario</th>
 		<th>Acciones</th>
 
@@ -63,17 +63,13 @@
 					</select>
 				</td>
 				<td>
-					<select name="idEstado"  class="form-control">
-						<?php foreach ($roles as $rol_existentes): ?>
-							<?php if($rol_existentes!=null): ?>
-								<option value="<?=$rol_existentes->id?>"
-									<?php echo ($usuario->roles["id"]==$rol_existentes->id)?'selected="selected"':"g";?> >
-									<?=$rol_existentes['rol']?>
-								</option>
-							<?php else: ?>
-								<td>solo debug--> <?=$usuario->rol_existentes?> </td>
-							<?php endif;?>
-						<?php endforeach; ?>
+					<select name="idEstado"  class="form-control" onchange="editar_rol()">
+						<option value="<?=$usuario->estado?>" <?=($usuario->estado=='0')?'selected="selected"':" ";?> >
+								Baneado
+						</option>
+						<option value="<?=$usuario->estado?>" <?=($usuario->estado=='1')?'selected="selected"':" ";?> >
+								Activa
+						</option>
 					</select>
 				</td>
 				<td> <?=$usuario->fecha_nacimiento?></td>
@@ -94,7 +90,7 @@
 		<th>Email usuario</th>
 		<th>País</th>
 		<th>Rol</th>
-		<th>Estado</th>
+		<th>Estado cuenta</th>
 		<th>Fecha de nacimiento del usuario</th>
 		<th>Acciones</th>
             </tr>

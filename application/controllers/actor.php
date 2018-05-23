@@ -36,6 +36,8 @@ class actor extends CI_Controller {
     		        $foto = "assets/img/fotoActor/Actor_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
     		    }
 		    }
+		} else {
+		    $foto = "assets/img/fotoActor/prueba.png";
 		}
 		
 		try {
@@ -64,11 +66,9 @@ class actor extends CI_Controller {
 		$this->listarPost();
 	}
 	
-	public function listarPost($f='') {
-		$filtro = isset($_POST['filtro'])?$_POST['filtro']:$f;
+	public function listarPost() {
 		$this->load->model('actor_model');
-		$datos['body']['actores'] = $this->actor_model->getAll($filtro);
-		$datos['filtro'] = $filtro;
+		$datos['body']['actores'] = $this->actor_model->getAll();
 		enmarcar($this, 'actor/listar',$datos);
 	}
 	
@@ -84,13 +84,17 @@ class actor extends CI_Controller {
 	public function editarPost() {
 		$this->load->model ( 'actor_model' );
 		
-		$nombre = isset($_POST['nombre'])?$_POST['nombre']:null;
+		//$nombre = isset($_POST['nombre'])?$_POST['nombre']:null;
+		$nombre = $_POST['nombre'];
 		$apellido1 = isset($_POST['apellido1'])?$_POST['apellido1']:null;
 		$apellido2 = isset($_POST['apellido2'])?$_POST['apellido2']:null;
 		$fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
 		$id_pais = isset($_POST['pais'])?$_POST['pais']:null;
 		$biografia = isset($_POST['biografia'])?$_POST['biografia']:null;
 		$id_actor = $_POST ['id_actor'];
+		echo "nombre: ".$nombre;
+		echo $apellido1;
+		echo $apellido2;
 		
 		if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
 		    # verificamos el formato de la imagen
@@ -112,7 +116,6 @@ class actor extends CI_Controller {
 		            copy($_FILES["foto"]['tmp_name'], "assets/img/fotoActor/Actor_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension);
 		            $foto = "assets/img/fotoActor/Actor_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
 		        }
-		        echo $foto;
 		    }
 		}
 	

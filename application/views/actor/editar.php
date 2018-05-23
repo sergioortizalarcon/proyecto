@@ -3,10 +3,10 @@ function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];
 </script>
 <script type="text/javascript">
 var correcto = true;
-var nombreCorrecto = true;
-var apellido1Correcto = true;
+var nombreCorrecto = false;
+var apellido1Correcto = false;
 var apellido2Correcto = true;
-var fechaCorrecto = true;
+var fechaCorrecto = false;
 
 var nombre="";
 var apellido1="";
@@ -76,7 +76,7 @@ function validarApellido1() {
 	}
 
 	if (apellido1 != "") {
-		apellidoMayus = mayuscula(apellido);
+		apellidoMayus = mayuscula(apellido1);
 		idFormulario.idApellido1.value = apellidoMayus.trim();
 		
 		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
@@ -176,6 +176,7 @@ function cancelarRegistro(){
 }
 </script>
 
+<<<<<<< HEAD
 <div class="content-wrapper">
 	<section class="content-header">
       <h1>
@@ -263,3 +264,111 @@ function cancelarRegistro(){
 		<div id="result"></div>
 	</section>
 </div>
+=======
+
+<div class="container ">
+<div id="creator">
+	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>actor/editarPost" method="post" enctype="multipart/form-data">
+		<fieldset>
+			<legend>Editar actor: <?= $body['actores']->nombre ?> <?= $body['actores']->apellido1 ?> <?= $body['actores']->apellido2 ?></legend>
+			
+			<div class="form-group">
+				<label for="idNombre">Nombre</label>
+				<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validarNombre();"
+				value="<?= $body['actores']->nombre ?>" data-toogle="tooltip" data-placement="left" title="Escribe un nombre" />
+				<span class="avisos" id="aNombre">
+					Debes escribir un nombre válido(3 a 20 caracteres no númericos o simbolos).
+				</span>
+			</div>
+			
+			<div class="form-group">
+				<label for="idApellido1">Primer apellido</label>
+				<input class="form-control" type="text" id="idApellido1" name="apellido1" onkeyup="validarApellido1();" 
+				value="<?= $body['actores']->apellido1 ?>" data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
+				<span class="avisos" id="aApellido1">
+					Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
+				</span>
+			</div>
+			
+			<div class="form-group">
+				<label for="idApellido2">Segundo apellido</label>
+				<input class="form-control" type="text" id="idApellido2" name="apellido2" onkeyup="validarApellido2();" 
+				value="<?= $body['actores']->apellido2 ?>" data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
+				<span class="avisos" id="aApellido2">
+					Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
+				</span>
+			</div>
+			
+			<input type="hidden" name="id_actor" value="<?= $body['actores']->id ?>" />
+			
+			<div class="form-group">
+				<label for="idFecha">Fecha de nacimiento</label>
+				<input class="form-control" type="date" id="idFecha" value="<?= $body['actores']->fechaNacimiento ?>" name="fechaNacimiento" onchange="validarFecha();" />
+				<span class="avisos" id="aFecha">
+					Debes introducir una fecha válida(Anterior al día actual).
+				</span>
+			</div>
+			
+			<div class="form-group">
+				<label for="idPais">Pais de nacimiento</label><span class="obligatorio">*</span>
+				<select class="form-control" id="idPais" name="pais">
+					<?php foreach($body['paises'] as $pais):?>
+						<option value="<?=$pais -> id?>" <?=($pais -> nombre == "España")?"selected='selected'":" "?>"><?= $pais->nombre?></option>
+					<?php endforeach; ?>
+				</select>
+			</div>
+			
+			<div class="form-group">
+				<label for="idBiografia">Biografía:</label>
+				<textarea class="form-control" name="biografia" id="idBiografia" placeholder="Biografía"></textarea>
+			</div>
+				
+			<div class="form-group">
+				<label for="idFoto">Foto:</label>
+				<input type="file" class="form-control" id="idFoto" name="foto" />
+				<span class="avisos" id="idFoto">
+					Debes introducir una foto con formato y tamaño correcto.
+				</span><br/>
+				<div id="list">
+					
+				</div>
+			</div>
+			
+			<div class="nav navbar-form navbar-right">
+				<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar cambio" onclick="cancelarCambio();"/>
+				<input type="button" class="btn btn-default" id="idRegistro" name ="registrarse" value="Editar" onclick="validar();"
+				 />
+			</div>
+			
+		</fieldset>
+	</form>
+	<br/>
+</div>
+<div id="result"></div>
+</div>
+<script>
+	function archivo(evt) {
+      	var files = evt.target.files; // FileList object
+                 
+      	// Obtenemos la imagen del campo "file".
+    	for (var i = 0, f; f = files[i]; i++) {
+    	//Solo admitimos imágenes.
+        	if (!f.type.match('image.*')) {
+            	continue;
+            }
+                     
+            var reader = new FileReader();
+                     
+            reader.onload = (function(theFile) {
+                return function(e) {
+                  	// Insertamos la imagen
+                 	document.getElementById("list").innerHTML = ['<img class="thumb" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
+                };
+        	})(f);
+                     
+            reader.readAsDataURL(f);
+      	}
+  	}
+             
+  	document.getElementById('idFoto').addEventListener('change', archivo, false);
+</script>

@@ -3,12 +3,16 @@
 class Administrador extends CI_Controller {
 
 	public function comprobarRol(){
-		session_start();
+		if (session_status () == PHP_SESSION_NONE) {session_start ();}
 		if (isset ( $_SESSION ['rol'] ) && ($_SESSION['rol'] == 'administrador')) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	public function acceso_denegado(){
+		$this->load -> view('templates_admin/access');
 	}
 
 	public function editarGet(){
@@ -18,7 +22,7 @@ class Administrador extends CI_Controller {
 		if ($idUser) {
 			$datos['roles'] = $this->usuario_model->listar_roles();
 			$datos['usuario'] = $this->administrador_model->getByID($idUser);
-			enmarcar($this,"administrador/editar_rol",$datos);
+			enmarcar($this,"administrador/acciones_usuarios",$datos);
 		}
 	}
 
@@ -48,23 +52,78 @@ class Administrador extends CI_Controller {
 	}
 
 
-	public function editarRolPost() {
-		if ($this->comprobarRol()) {
-			$this->load->model('administrador_model');
-			$id_user = isset($_POST['idUser'])?$_POST['idUser']:null;
-			$id_rol = isset($_POST['idRol'])?$_POST['idRol']:null;
-			if ($id_user && $id_rol) {
-				try {
-					$this -> administrador_model -> editar_rol_usuario($id_user,$id_rol);
-				} catch (Exception $e) {
-				
-				}
-			}
-		} else{
+	// public function aviso_mensaje($texto,$nivel,$link=[]){
+	// 	$datos['mensaje']['texto'] = $texto;
+	// 	$datos['mensaje']['nivel'] = $nivel;
+	// foreach($link as $key => $value){
+	// $datos ['mensaje'] ['link'] [$key] = $value;
+		
+	// }
+	// 	$this ->load ->view('templates_admin/mensaje', $datos);
+	// }
 
+
+		/*			ACCIONES CONTRA CUENTA DE USUARIO 			*/
+
+	public function aplicarAccion() {
+		if ($this -> comprobarRol()) {
+			$idUser = isset($_POST['idUser'])?$_POST['idUser']:null;
+			$idRol = isset($_POST['idRol'])?$_POST['idRol']:null;
+			$idEstado = isset($_POST['idEstado'])?$_POST['idEstado']:null;
+			if ($idUser) {
+				if ($idRol) {
+					$this->editarRolPost($idUser,$idRol);
+				} else {
+					echo "algo va mal";
+				}
+				// else if($idEstado) {
+				// 	$this->cambiar_estado();
+				// }
+			} else {
+				$datos['mensaje']['texto'] = "Se ha producido un error al cargar el usuario. Inténtalo de nuevo.";
+				$datos['mensaje']['nivel'] = 'error';
+				$datos ['mensaje'] ['link'] ['listar'] = "administrador";
+				$this ->load ->view('templates_admin/mensaje', $datos);
+			}
+		} else {
+			$this->acceso_denegado();
 		}
 		
 	}
+
+
+	public function editarRolPost($idUser,$idRol) {
+		if ($this->comprobarRol()) {
+			$this->load->model('administrador_model');
+			$id_user = $idUser;
+			$id_rol = $idRol;
+			if ($id_user && $id_rol) {
+				try {
+					$accion = $this -> administrador_model -> editar_rol_usuario($id_user,$id_rol);
+					$datos['mensaje']['texto'] = "El rol del usuario se ha cambiado a corectamente.";
+					$datos['mensaje']['nivel'] = 'ok';
+					$datos ['mensaje'] ['link'] ['listar'] = "administrador";
+					enmarcar($this,'templates_admin/mensaje', $datos);
+					// header('location: '.base_url().'administrador/listar');
+				} catch (Exception $e) {
+					$datos['mensaje']['texto'] = "Se ha producido un error al ejecutar la acción. Inténtalo de nuevo.";
+					$datos['mensaje']['nivel'] = 'error';
+					$datos ['mensaje'] ['link'] ['listar'] = "administrador";
+					enmarcar($this,'templates_admin/mensaje', $datos);
+				}
+			} else {
+				$datos['mensaje']['texto'] = "No existe el usuario o el rol. Inténtalo de nuevo.";
+				$datos['mensaje']['nivel'] = 'error';
+				nmarcar($this,'templates_admin/mensaje', $datos);
+			}
+		} else {
+			$this->acceso_denegado();
+		}
+	}
+
+	/*			ACCIONES CONTRA CUENTA DE USUARIO 			*/
+
+
 
 	public function listar($f='') {
 		$this->load->model('administrador_model');

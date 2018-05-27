@@ -22,7 +22,6 @@ $(document).ready( function () {
         }
     },
 	});
-    $('#efectoTabla select').addClass('yourclass');
 });
 
 

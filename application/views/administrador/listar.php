@@ -7,7 +7,7 @@
     </section>
 <section class="content">
 	<div class="table-responsive">
-		<table id="efectoTabla" class="display table table-bordered">
+		<table id="efectoTabla" class="display compact">
 			<thead>
 			<tr>
 				<th>Id usuario</th>

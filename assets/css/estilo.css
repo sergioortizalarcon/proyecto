@@ -115,17 +115,6 @@ a.icono-tw{
 }
 
 
-
-/*CAMBIO DE ESTILO PARA LOS SELECTS DEL DATATABLE(AFECTA A EDICION DE USUARIO)*/
-
-select.form-control {
-	width:initial!important;
-}
-
-
-
-
-
 /*VISTA DATOS PERFIL USUARIO  */
 .datos_user{
     font-size: x-large;

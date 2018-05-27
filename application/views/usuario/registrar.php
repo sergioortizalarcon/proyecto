@@ -453,11 +453,10 @@ data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
 <?php endforeach;?>
 </select>
 </div>
-
-
-<div class="form-group">
-<label for="idFecha">Fecha de nacimiento</label><span class="obligatorio">*</span>
-<input class="form-control" type="text" id="idFecha" name="fecha" onfocusout="calcularEdad();" />
+<br/>
+<div class="input-group">
+<label for="idFecha">Fecha de nacimiento</label><span class="obligatorio">*</span>&nbsp;&nbsp;
+<input  type="text" id="idFecha" name="fecha" onfocusout="calcularEdad();" />
 <span class="avisos" id="aFecha">
 	Debes ser mayor de 13 años.
 </span>

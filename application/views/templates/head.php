@@ -36,7 +36,7 @@
 	  	$('[data-toggle="tooltip"]').tooltip();
 	  });
   </script>
-<script>
+<!-- <script>
   $(document).ready(function(){
     //$("#idFecha").datepicker("option",$.datepicker.regional["es"]);
     $("#idFecha").datepicker({
@@ -44,10 +44,14 @@
         changeYear: true,
         regional: "es",
         yearRange: '1918:2018',
-        showAnim: 'clip'
+        showAnim: 'clip',
+        showOn: "button",
+        buttonImage: "<?=base_url()?>assets/img/images/calendar.gif",
+        buttonImageOnly: true,
+        buttonText: "Selecciona una fecha válida"
     });
   });
-</script>
+</script> -->
 <script>
   $(document).ready(function(){
     $("#tabs").tabs();

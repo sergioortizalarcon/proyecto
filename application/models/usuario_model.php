@@ -72,7 +72,7 @@ class usuario_model extends CI_Model {
 		//Indica si una cuenta esta baneada o no: 0->Ban | 1->activa
 		$estado = 1;
 		//obtiene el valor devuelto por function
-		$rol = $this -> registro_roles($rol_basico);
+		$id_rol = $this -> registro_roles($rol_basico);
 
 		$comprobNombre = R::findOne("usuarios","alias=?",[$alias]);
 		$comprobNEmail = R::findOne("usuarios","email=?",[$email]);
@@ -85,8 +85,9 @@ class usuario_model extends CI_Model {
 			$usuario -> email = $email;
 			$usuario -> password = $pwd;
 			$usuario -> estado = $estado;
-			//esto guarda el valor
+			$rol = R::load("roles",$id_rol);
 			$rol -> xownUsuarioList[] = $usuario;
+			//esto guarda el valor
 			$pais = R::load("paises",$idPais);
 			$pais -> xownUsuarioList[] =$usuario;
 			$usuario -> fecha_nacimiento = $fecha;

@@ -35,3 +35,18 @@ datepicker.setDefaults( datepicker.regional.es );
 return datepicker.regional.es;
 
 } ) );
+
+//Si da problema se borra
+  $(document).ready(function(){
+    $("#idFecha").datepicker({
+    changeMonth: true,
+        changeYear: true,
+        regional: "es",
+        yearRange: '1918:2018',
+        showAnim: 'clip',
+        showOn: "button",
+        buttonImage: "../assets/img/images/calendar.gif",
+        buttonImageOnly: true,
+        buttonText: "Selecciona una fecha válida"
+    });
+  });

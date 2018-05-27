@@ -18,8 +18,12 @@ class Administrador_model extends CI_Model {
 	public function editar_rol_usuario($id_user,$id_rol) {
 		$usuario = $this->getByID($id_user);
 		if ($usuario -> id != 0) {
-			//editar rol
+			$usuario ->roles = R::load('roles',$id_rol);
+			R::store($usuario);
+		} else {
+			throw new Exception("Se ha producido un error al cargar el usuario por su Id");
 		}
+			R::close();
 	}
 
 	public function obtener_rol_user($id_rol){

@@ -73,6 +73,7 @@ class usuario_model extends CI_Model {
 		$estado = 1;
 		//obtiene el valor devuelto por function
 		$id_rol = $this -> registro_roles($rol_basico);
+		
 
 		$comprobNombre = R::findOne("usuarios","alias=?",[$alias]);
 		$comprobNEmail = R::findOne("usuarios","email=?",[$email]);

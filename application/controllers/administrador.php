@@ -65,30 +65,67 @@ class Administrador extends CI_Controller {
 
 		/*			ACCIONES CONTRA CUENTA DE USUARIO 			*/
 
-	public function aplicarAccion() {
+	public function update_estado($idUser,$idRol) {
 		if ($this -> comprobarRol()) {
-			$idUser = isset($_POST['idUser'])?$_POST['idUser']:null;
-			$idRol = isset($_POST['idRol'])?$_POST['idRol']:null;
-			$idEstado = isset($_POST['idEstado'])?$_POST['idEstado']:null;
-			if ($idUser) {
-				if ($idRol) {
-					$this->editarRolPost($idUser,$idRol);
-				} else {
-					echo "algo va mal";
+			$this->load->model('administrador_model');
+			$id_user = $idUser;
+			$id_estado = $idEstado;
+			try {
+				$accion = $this -> administrador_model -> editar_estado($id_user,$id_estado);
+				if (!empty($accion)) {
+					header('location: '.base_url().'administrador/editarEstOk');
 				}
-				// else if($idEstado) {
-				// 	$this->cambiar_estado();
-				// }
-			} else {
-				$datos['mensaje']['texto'] = "Se ha producido un error al cargar el usuario. Inténtalo de nuevo.";
-				$datos['mensaje']['nivel'] = 'error';
-				$datos ['mensaje'] ['link'] ['listar'] = "administrador";
-				$this ->load ->view('templates_admin/mensaje', $datos);
+			} catch (Exception $e) {
+				header('location: '.base_url().'administrador/editarEstError');
 			}
 		} else {
 			$this->acceso_denegado();
 		}
 		
+	}
+
+	public function editarEstOk() {
+		$datos['mensaje']['texto'] = "El estado de la cuenta se ha actualizado correctamente.";
+		$datos['mensaje']['nivel'] = 'ok';
+		$datos ['mensaje'] ['link'] ['listar'] = "administrador";
+		enmarcar($this,'templates_admin/mensaje', $datos);
+		header("Refresh:3;url=".base_url()."administrador/listar");
+	}
+	
+	public function editarEstError() {
+		$datos['mensaje']['texto'] = "Se ha producido un error al ejecutar la acción. Inténtalo de nuevo.";
+		$datos['mensaje']['nivel'] = 'error';
+		enmarcar($this,'templates_admin/mensaje', $datos);
+		header("Refresh:3;url=".base_url()."administrador/listar");
+	}
+
+	public function aplicarAccion() {
+		if ($this -> comprobarRol()) {
+			$idUser = isset($_POST['idUser'])?$_POST['idUser']:null;
+			$idRol = isset($_POST['idRol'])?$_POST['idRol']:null;
+			$idEstado = isset($_POST['idEstado'])?$_POST['idEstado']:null;
+			$this ->load -> model('administrador_model');
+			$estado_cuenta = $this-> administrador_model -> getByID($idUser);
+			if ($estado_cuenta['id'] != '0') {
+				if ($estado_cuenta['estado'] != $idEstado) {
+					update_estado($idUser,$idEstado);
+				} else if ($idRol != $estado_cuenta['roles']['id']) {
+					$this->editarRolPost($idUser,$idRol);
+				} else {
+					$datos['mensaje']['texto'] = "No has hecho ningún cambio. Inténtalo de nuevo.";
+					$datos['mensaje']['nivel'] = 'error';
+					$datos ['mensaje'] ['link'] ['listar'] = "administrador";
+					enmarcar($this,'templates_admin/mensaje', $datos);
+				}
+			} else {
+				$datos['mensaje']['texto'] = "Se ha producido un error al cargar el usuario. Inténtalo de nuevo.";
+				$datos['mensaje']['nivel'] = 'error';
+				$datos ['mensaje'] ['link'] ['listar'] = "administrador";
+				enmarcar($this,'templates_admin/mensaje', $datos);
+			}
+		} else {
+			$this->acceso_denegado();
+		}
 	}
 
 
@@ -97,27 +134,44 @@ class Administrador extends CI_Controller {
 			$this->load->model('administrador_model');
 			$id_user = $idUser;
 			$id_rol = $idRol;
-			if ($id_user && $id_rol) {
+			if ($id_user!='' && $id_rol != '') {
 				try {
 					$accion = $this -> administrador_model -> editar_rol_usuario($id_user,$id_rol);
-					$datos['mensaje']['texto'] = "El rol del usuario se ha cambiado a corectamente.";
-					$datos['mensaje']['nivel'] = 'ok';
-					$datos ['mensaje'] ['link'] ['listar'] = "administrador";
-					enmarcar($this,'templates_admin/mensaje', $datos);
-					// header('location: '.base_url().'administrador/listar');
+					if (!empty($accion)) {
+						header('location: '.base_url().'administrador/editarRolOk');
+					}
 				} catch (Exception $e) {
-					$datos['mensaje']['texto'] = "Se ha producido un error al ejecutar la acción. Inténtalo de nuevo.";
-					$datos['mensaje']['nivel'] = 'error';
-					$datos ['mensaje'] ['link'] ['listar'] = "administrador";
-					enmarcar($this,'templates_admin/mensaje', $datos);
+					header('location: '.base_url().'administrador/editarRolError');
 				}
 			} else {
-				$datos['mensaje']['texto'] = "No existe el usuario o el rol. Inténtalo de nuevo.";
-				$datos['mensaje']['nivel'] = 'error';
-				nmarcar($this,'templates_admin/mensaje', $datos);
+				header('location: '.base_url().'administrador/editarRolError?error=exist');
+				
 			}
 		} else {
 			$this->acceso_denegado();
+		}
+	}
+
+	public function editarRolOk() {
+			$datos['mensaje']['texto'] = "El rol se ha actualizado correctamente.";
+			$datos['mensaje']['nivel'] = 'ok';
+			$datos ['mensaje'] ['link'] ['listar'] = "administrador";
+			enmarcar($this,'templates_admin/mensaje', $datos);
+			header("Refresh:3;url=".base_url()."administrador/listar");
+	}
+	
+	public function editarRolError() {
+		if ( (isset($_GET['error'])) && ($_GET['error']=="exist") ) {
+			$datos['mensaje']['texto'] = "Se ha producido un error al ejecutar la acción. Inténtalo de nuevo.";
+			$datos['mensaje']['nivel'] = 'error';
+			enmarcar($this,'templates_admin/mensaje', $datos);
+			header("Refresh:3;url=".base_url()."administrador/listar");
+		} else {
+			$datos['mensaje']['texto'] = "No existe el usuario o el rol. Inténtalo de nuevo.";
+			$datos['mensaje']['nivel'] = 'error';
+			$datos ['mensaje'] ['link'] ['listar'] = "administrador";
+			enmarcar($this,'templates_admin/mensaje', $datos);
+			header("Refresh:3;url=".base_url()."administrador/listar");
 		}
 	}
 
@@ -126,15 +180,19 @@ class Administrador extends CI_Controller {
 
 
 	public function listar($f='') {
-		$this->load->model('administrador_model');
-		$this->load->model('usuario_model');
-		$filtro = isset($_POST['filtro'])?$_POST['filtro']:$f;
+		if ($this->comprobarRol()) {
+			$this->load->model('administrador_model');
+			$this->load->model('usuario_model');
+			$filtro = isset($_POST['filtro'])?$_POST['filtro']:$f;
 
-		$datos['roles'] = $this->usuario_model->listar_roles();
+			$datos['roles'] = $this->usuario_model->listar_roles();
 
-		$datos['usuarios'] = $this->administrador_model->getAll($filtro);
-		$datos['filtro'] = $filtro;
-		enmarcar($this, 'administrador/listar',$datos);
+			$datos['usuarios'] = $this->administrador_model->getAll($filtro);
+			$datos['filtro'] = $filtro;
+			enmarcar($this,'administrador/listar',$datos);
+		} else {
+			$this->acceso_denegado();
+		}
 	}
 
 	public function forgetPwdAd(){
@@ -149,20 +207,24 @@ class Administrador extends CI_Controller {
 	}
 	
 	public function resetPasswordUser() {
-		$this-> load -> model("administrador_model");
-		$correo = isset($_POST['correo'])?$_POST['correo']:null;
-		$tokenAdm = isset($_POST["tken"])?1:null;
-		$existe = false;
-		if ($tokenAdm != null) {
-			$existe = $this -> administrador_model ->comprobar_emailAdm($correo);
-		}
+		if ($this->comprobarRol()) {
+			$this-> load -> model("administrador_model");
+			$correo = isset($_POST['correo'])?$_POST['correo']:null;
+			$tokenAdm = isset($_POST["tken"])?1:null;
+			$existe = false;
+			if ($tokenAdm != null) {
+				$existe = $this -> administrador_model ->comprobar_emailAdm($correo);
+			}
 
-		if (!$existe) {
-			$this -> enviarCorreoAUsuario($correo);
+			if (!$existe) {
+				$this -> enviarCorreoAUsuario($correo);
+			} else {
+				$datos['mensaje']['texto'] = "El correo no es correcto o no existe en nuestros registros. Inténtalo de nuevo.";
+				$datos['mensaje']['nivel'] = 'error';
+				enmarcar($this,'templates_admin/forgotPassword', $datos);
+			}
 		} else {
-			$datos['mensaje']['texto'] = "El correo no es correcto o no existe en nuestros registros. Inténtalo de nuevo.";
-			$datos['mensaje']['nivel'] = 'error';
-			$this ->load ->view('templates_admin/forgotPassword', $datos);
+			$this->acceso_denegado();
 		}
 	}
 
@@ -170,10 +232,6 @@ class Administrador extends CI_Controller {
 	public function perfilUsuario(){
 		enmarcar($this,"administrador/perfilAdmin");
 	}
-	
-
-
-
 
 
 //Para usar esto hay q instalar phpmailer ( con composer en la raiz del proyecto)
@@ -234,7 +292,7 @@ class Administrador extends CI_Controller {
 		} catch (Exception $e) {
 		$datos['mensaje']['texto'] = "Ocurrió un error inesperado con él envió del correo electrónico, inténtelo de nuevo más tarde, disculpa las molestias. $e";
 		$datos['mensaje']['nivel'] = 'error';
-		$this ->load ->view ('templates_admin/forgotPassword', $datos);
+		enmarcar($this,'templates_admin/forgotPassword', $datos);
 		}
 	
 	}

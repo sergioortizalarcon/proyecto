@@ -81,7 +81,11 @@
 	</tr>
 	</thead>
     <tbody>
-		<tr>
+		<?php if(isset($usuario->estado["id"]) || $usuario->estado=='0'):?>
+			<tr style="background-color:gray">
+		<?php else:?>
+			<tr>
+		<?php endif;?>
 			<td> <?=$usuario->id?> </td>
 			<td> <?=$usuario->nombre?> </td>
 			<td> <?=$usuario->apellido_uno?> </td>
@@ -91,7 +95,8 @@
 			<td> <?=$usuario->paises["nombre"]?> </td>
 			<form action="<?=base_url()?>administrador/aplicarAccion" method="post">
 				<td>
-					<select name="idRol" id="idRol" class="form-control">
+					<select name="idRol" id="idRol" class="form-control" 
+					 <?=($usuario->estado=='0')?'disabled="disabled"':' '?> >
 						<?php foreach ($roles as $rol_existentes): ?>
 							<?php if($rol_existentes!=null): ?>
 								<option value="<?=$rol_existentes->id?>" <?=($usuario->roles["id"]==$rol_existentes->id)?'selected="selected"':" "?>>
@@ -103,7 +108,7 @@
 						<?php endforeach; ?>
 					</select>
 				</td>
-				<td>
+				<td  >
 					<select name="idEstado" id="idEstado"  class="form-control">
 						<option value="0" <?=($usuario->estado=='0')?'selected="selected"':" ";?> >
 								Baneado
@@ -116,7 +121,7 @@
 				<td> <?=$usuario->fecha_nacimiento?></td>
 				<td>
 					<input type="hidden" name="idUser" value="<?=$usuario->id?>" />
-					<button  class="btn btn-default" type="submit"><i class="glyphicon glyphicon-floppy-save"></i>  Cambiar rol</button>
+					<button  class="btn btn-default" type="submit"><i class="glyphicon glyphicon-floppy-save"></i>  Aplicar cambios</button>
 				</td>
 			</form>
 		</tr>

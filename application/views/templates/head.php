@@ -46,7 +46,7 @@
         yearRange: '1918:2018',
         showAnim: 'clip',
         showOn: "button",
-        buttonImage: "<?=base_url()?>assets/img/images/calendar.gif",
+        buttonImage: "<=base_url()?>assets/img/images/calendar.gif",
         buttonImageOnly: true,
         buttonText: "Selecciona una fecha válida"
     });

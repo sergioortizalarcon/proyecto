@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href="<?=base_url()?>assets/css/datatables.css">
+<link rel="stylesheet" href="<?=base_url()?>assets/css/dataTables.min.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/css/jquery-ui.css">
 
 <link rel="stylesheet" href="<?=base_url()?>assets/css/fontawesome-all.css">
@@ -24,7 +24,7 @@
 
 <!--Necesarios para el sorteo de la lista-->
 <script type="text/javascript" src="<?=base_url()?>assets/js/datatables.js"></script>
-
+<script type="text/javascript" src="<?=base_url()?>assets/js/dataTables.jqueryui.js"></script>
 <!--Iconos sociales...-->
 
 <!--Esto es opcional:

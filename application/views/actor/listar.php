@@ -39,13 +39,12 @@
 							<td><?= $actor->paises['nombre'] ?></td>
 							<td>
 								<form class="listado" id="idFormEdit<?= $actor->id ?>" action="<?=base_url()?>actor/editar" method="post">
-									<input type="hidden" name="id_actor" value="<?= $actor -> id?>"/>
+									<input type="hidden" name="id_actor" value="<?= $actor -> id?>">
 									<button onclick="function f() {document.getElementById('Borrar<?= $actor->id ?>').submit();}"><span class="glyphicon glyphicon-pencil"></span></button>
 								</form>
-								<form class="listado" id="Editar<?= $actor->id ?>" action="<?=base_url()?>actor/verInfo" method="post">
 								<form class="listado" id="idFormRemove<?= $actor->id ?>" action="<?=base_url()?>actor/borrarPost" method="post">
-									<input type="hidden" name="id_actor" value="<?= $actor -> id?>"/>
-									<input type="hidden" name="v" value="listarTodos"/>
+									<input type="hidden" name="id_actor" value="<?= $actor -> id?>">
+									<input type="hidden" name="v" value="listarTodos">
 									<button onclick="function f() {document.getElementById('Editar<?= $actor->id ?>').submit();}"><span class="glyphicon glyphicon-remove"></span></button>
 								</form>
 							</td>

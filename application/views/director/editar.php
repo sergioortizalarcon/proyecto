@@ -9,7 +9,7 @@ var nombre="";
 var apellido1="";
 var apellido2="";
 
-function mayuscula(palabra) {
+function mayuscula(palabra, id) {
 	var palabrasSeparadas = palabra.split(" ");
 	var palabraNueva="";
 	if (palabrasSeparadas.length>1) {
@@ -23,15 +23,18 @@ function mayuscula(palabra) {
 		palabra = palabrasSeparadas[0].slice(1);
 		palabraNueva = primeraLetra.toUpperCase() + palabra + " ";
 	}
-	return palabraNueva;
+	if (id == "idNombre") {
+		idFormulario.idNombre.value=palabraNueva;
+	} else if(id == "idApellido1") {
+		idFormulario.idApellido1.value=palabraNueva;
+	}else { 
+		idFormulario.idApellido2.value=palabraNueva;
+	}
 }
 
 function validarNombre() {
 	nombre = idFormulario.idNombre.value.trim();
 	if (nombre != "") {
-		nombreMayus = mayuscula(nombre);
-		idFormulario.nombre.value = nombreMayus.trim();
-
 		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
 		if (expReg.test(nombre)){
 			nombreCorrecto = true;
@@ -53,9 +56,6 @@ function validarNombre() {
 function validarApellido1() {
 	apellido1 = idFormulario.idApellido1.value.trim();
 	if (apellido1 != "") {
-		apellidoMayus = mayuscula(apellido1);
-		idFormulario.idApellido1.value = apellidoMayus.trim();
-		
 		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
 		if (expReg.test(apellido1)){
 			apellido1Correcto = true;
@@ -77,9 +77,6 @@ function validarApellido1() {
 function validarApellido2() {
 	apellido2 = idFormulario.idApellido2.value.trim();
 	if (apellido2 != "") {
-		apellidoMayus = mayuscula(apellido2);
-		idFormulario.idApellido2.value = apellidoMayus.trim();
-		
 		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
 		if (expReg.test(apellido2)){
 			apellido2Correcto = true;
@@ -129,12 +126,12 @@ function permitirEnvio() {
 
 function validar() {
 	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
-		nombre = nombre.trim();
+		nombre = idFormulario.idNombre.value.trim();
 		idFormulario.idNombre.value = nombre;
 		apellido1 = apellido1.trim();
-		idFormulario.idApellido1.value = apellido1;
+		apellido1 = idFormulario.idApellido1.value.trim();
 		apellido2 = apellido2.trim();
-		idFormulario.idApellido2.value = apellido2;
+		apellido2 = idFormulario.idApellido2.value.trim();
 		idFormulario.submit();
 	} else {
 		validarNombre();
@@ -167,7 +164,7 @@ function cancelarRegistro(){
 			
 			<div class="form-group">
 				<label for="idNombre">Nombre</label>
-				<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validarNombre();"
+				<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validarNombre();" onchange="mayuscula(this.value, this.id);"
 				value="<?= $body['directores']->nombre ?>" data-toogle="tooltip" data-placement="left" title="Escribe un nombre" />
 				<span class="avisos" id="aNombre">
 					Debes escribir un nombre válido(3 a 20 caracteres no númericos o simbolos).
@@ -176,7 +173,7 @@ function cancelarRegistro(){
 			
 			<div class="form-group">
 				<label for="idApellido1">Primer apellido</label>
-				<input class="form-control" type="text" id="idApellido1" name="apellido1" onkeyup="validarApellido1();" 
+				<input class="form-control" type="text" id="idApellido1" name="apellido1" onkeyup="validarApellido1();" onchange="mayuscula(this.value, this.id);"
 				value="<?= $body['directores']->apellido1 ?>" data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
 				<span class="avisos" id="aApellido1">
 					Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
@@ -185,7 +182,7 @@ function cancelarRegistro(){
 			
 			<div class="form-group">
 				<label for="idApellido2">Segundo apellido</label>
-				<input class="form-control" type="text" id="idApellido2" name="apellido2" onkeyup="validarApellido2();" 
+				<input class="form-control" type="text" id="idApellido2" name="apellido2" onkeyup="validarApellido2();" onchange="mayuscula(this.value, this.id);"
 				value="<?= $body['directores']->apellido2 ?>" data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
 				<span class="avisos" id="aApellido2">
 					Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).

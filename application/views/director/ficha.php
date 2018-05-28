@@ -1,18 +1,66 @@
-<div class="container">
-	<div class="row">
-		<div class="col-md-3">
-			<img src="<?= base_url() ?><?= $body['directores']->rutaFoto ?>">
+<div class="content-wrapper">
+	<section class="content">
+		<div id="tabs" style="height:500px;">
+			<ul>
+				<li><a href="#perfil"><i class="far fa-id-card"></i></a></li>
+				<li><a href="#bio"> <i class="fas fa-book"></i> Biografía </a></li>
+				<li><a href="#filmog"> <i class="fas fa-film"></i> Filmografía </a></li>
+				<li><a href="#noticias"> <i class="far fa-newspaper"></i> Noticia </a></li>
+			</ul>
+		
+			<div id="perfil">
+				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
+					<div class="col-md-12" style="border:1px solid black; float: ">
+						<img src="<?= base_url() ?><?= $body['directores']->rutaFoto ?>">
+					</div>
+					<div class="col-md-12" style="border:1px solid blue;">
+						<h4><?= $body['directores']->nombre ?> <?= $body['directores']->apellido1 ?> <?= $body['directores']->apellido2 ?></h4>
+					</div>
+				</div>
+				<?php if($body['directores']->ambos == 'on'): ?>
+					<h5>Actor / Director</h5>
+				<?php else: ?>
+			    	<h5>Actor</h5>
+				<?php endif; ?>
+				<h5>Fecha de nacimiento: <?=$body['directores']->fechaNacimiento ?></h5>
+			</div>
+			
+			<div id="bio">
+				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
+					<div class="col-md-12" style="border:1px solid black; float: ">
+						<img src="<?= base_url() ?><?= $body['directores']->rutaFoto ?>">
+					</div>
+					<div class="col-md-12" style="border:1px solid blue;">
+						<h4><?= $body['directores']->nombre ?> <?= $body['directores']->apellido1 ?> <?= $body['directores']->apellido2 ?></h4>
+					</div>
+				</div>
+				<?= $body['directores']->biografia ?>
+			</div>
+			
+			<div id="filmog">
+				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
+					<div class="col-md-12" style="border:1px solid black; float: ">
+						<img src="<?= base_url() ?><?= $body['directores']->rutaFoto ?>">
+					</div>
+					<div class="col-md-12" style="border:1px solid blue;">
+						<h4><?= $body['directores']->nombre ?> <?= $body['directores']->apellido1 ?> <?= $body['directores']->apellido2 ?></h4>
+					</div>
+				</div>
+				Lorem ipsum dolor sit amet.Lorem ipsum dolor.
+			</div>
+			
+			<div id="noticias">
+				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
+					<div class="col-md-12" style="border:1px solid black; float: ">
+						<img src="<?= base_url() ?><?= $body['directores']->rutaFoto ?>">
+					</div>
+					<div class="col-md-12" style="border:1px solid blue;">
+						<h4><?= $body['directores']->nombre ?> <?= $body['directores']->apellido1 ?> <?= $body['directores']->apellido2 ?></h4>
+					</div>
+				</div>
+				Lorem ipsum.
+			</div>
+
 		</div>
-		<div class="col-md-9">
-			<h2 style="margin-top:-6px;"><?= $body['directores']->nombre ?> <?= $body['directores']->apellido1 ?> <?= $body['directores']->apellido2 ?></h2>
-			<u><strong>Biografía:</strong></u><br/>
-			<textarea cols="100" rows="12" readonly style="border:0; background-color:transparent; resize:none;"><?= $body['directores']->biografia ?></textarea>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<h2>PELÍCULAS EN LAS QUE ACTÚA / DIRIGE</h2>
-			<!-- TODO -->
-		</div>
-	</div>
+	</section>
 </div>

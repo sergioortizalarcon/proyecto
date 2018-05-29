@@ -16,34 +16,43 @@ class Administrador_model extends CI_Model {
 	}
 
 	public function editar_estado($id_user,$id_estado) {
+		$status=-1;
 		$usuario = $this->getByID($id_user);
 		if ($usuario ->id!=0) {
-			$comprobar_estado=R::load('estado',$id_estado);
+			$comprobar_estado=R::load('estados',$id_estado);
 			if($comprobar_estado ->id!= 0){
-				$usuario ->estado = R::load('estado',$id_estado);
+				$status=2;
+				$usuario ->estados = R::load('estados',$id_estado);
 				R::store($usuario);
+			} else {
+				$status=-1;
 			}
-			R::close();
 		} else {
+			$status=-1;
 			throw new Exception("Error en la edición del estado de la cuenta al cargar el usuario por Id");
 		}
 			R::close();
+			return $status;
 	}
 
 
 	public function editar_rol_usuario($id_user,$id_rol) {
+		$status=0;
 		$usuario = $this->getByID($id_user);
 		if ($usuario ->id!=0) {
 			$comprobar_rol =R::load('roles',$id_rol);
 			if($comprobar_rol ->id!= 0){
 				$usuario ->roles = R::load('roles',$id_rol);
 				R::store($usuario);
+			} else {
+				$status=-1;
 			}
-			R::close();
 		} else {
+			$status=-1;
 			throw new Exception("Error en la edición del rol al cargar el usuario por Id");
 		}
 			R::close();
+			return $status;
 	}
 
 

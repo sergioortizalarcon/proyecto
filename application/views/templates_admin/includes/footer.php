@@ -3,6 +3,8 @@
           <b>CodeInsect</b> Admin System | Version 1.0
         </div>
         <strong>Copyright &copy; 2014-2015 <a href="<?php echo base_url(); ?>">CodeInsect</a>.</strong> All rights reserved.
+         <!-- dateTimePicker1.Format = DateTimePickerFormat.Custom;
+   dateTimePicker1.CustomFormat = "MM/yyyy"; -->
     </footer>
     <script type="text/javascript">
         var windowURL = window.location.href;

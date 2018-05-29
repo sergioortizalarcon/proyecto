@@ -62,13 +62,14 @@ class usuario extends CI_Controller {
 			$comprobacion = $this -> usuario_model -> comprobar_usuario($alias, $email);
 			if ($comprobacion) {
 				$this -> usuario_model -> create_usuario($nombre, $ape1, $ape2, $alias, $email, $pwd, $fecha,$idPais);
+				$v = $this -> usuario_model ->registro_roles(1);
+				print_r('<code><pre>'.$v.'</pre></code>');
 				header('Location:'.base_url().'usuario/crearOk');
 			} else {
 				header('Location:'.base_url().'usuario/crearError');
 			}
-		}
-		catch (Exception $e) {
-			$datos['mensaje']['texto'] = "Error al crear nuevo usuario.";
+		} catch (Exception $e) {
+			$datos['mensaje']['texto'] = "Error al crear nuevo usuario.<pre><code>".$e.'</code></pre>';
 			$datos['mensaje']['nivel'] = 'error';
 			$this->load->view("usuario/mensaje",$datos);
 		}

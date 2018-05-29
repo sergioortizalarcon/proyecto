@@ -65,18 +65,24 @@ class Administrador extends CI_Controller {
 
 		/*			ACCIONES CONTRA CUENTA DE USUARIO 			*/
 
-	public function update_estado($idUser,$idRol) {
+	public function update_estado($idUser,$idEstado) {
 		if ($this -> comprobarRol()) {
 			$this->load->model('administrador_model');
 			$id_user = $idUser;
 			$id_estado = $idEstado;
-			try {
-				$accion = $this -> administrador_model -> editar_estado($id_user,$id_estado);
-				if (!empty($accion)) {
-					header('location: '.base_url().'administrador/editarEstOk');
+			if ($id_user!='' && $id_estado != '') {
+				try {
+					$accion = $this -> administrador_model -> editar_estado($id_user,$id_estado);
+					if ($accion>= 0 ) {
+						header('location: '.base_url().'administrador/editarEstOk');
+					} else {
+						header('location: '.base_url().'administrador/editarEstError');
+					}
+				} catch (Exception $e) {
+					header('location: '.base_url().'administrador/editarEstError');
 				}
-			} catch (Exception $e) {
-				header('location: '.base_url().'administrador/editarEstError');
+			} else {
+				header('location: '.base_url().'administrador/editarEstError?error=exist');
 			}
 		} else {
 			$this->acceso_denegado();
@@ -93,10 +99,18 @@ class Administrador extends CI_Controller {
 	}
 	
 	public function editarEstError() {
-		$datos['mensaje']['texto'] = "Se ha producido un error al ejecutar la acción. Inténtalo de nuevo.";
-		$datos['mensaje']['nivel'] = 'error';
-		enmarcar($this,'templates_admin/mensaje', $datos);
-		header("Refresh:3;url=".base_url()."administrador/listar");
+		if ( (isset($_GET['error'])) && ($_GET['error']=="exist") ) {
+			$datos['mensaje']['texto'] = "Se ha producido un error al ejecutar la acción. Inténtalo de nuevo.";
+			$datos['mensaje']['nivel'] = 'error';
+			enmarcar($this,'templates_admin/mensaje', $datos);
+			header("Refresh:3;url=".base_url()."administrador/listar");
+		} else {
+			$datos['mensaje']['texto'] = "No existe el usuario al intentar actualizar el estado. Inténtalo de nuevo.";
+			$datos['mensaje']['nivel'] = 'error';
+			$datos ['mensaje'] ['link'] ['listar'] = "administrador";
+			enmarcar($this,'templates_admin/mensaje', $datos);
+			header("Refresh:3;url=".base_url()."administrador/listar");
+		}
 	}
 
 	public function aplicarAccion() {
@@ -108,7 +122,7 @@ class Administrador extends CI_Controller {
 			$estado_cuenta = $this-> administrador_model -> getByID($idUser);
 			if ($estado_cuenta['id'] != '0') {
 				if ($estado_cuenta['estado'] != $idEstado) {
-					update_estado($idUser,$idEstado);
+					$this->update_estado($idUser,$idEstado);
 				} else if ($idRol != $estado_cuenta['roles']['id']) {
 					$this->editarRolPost($idUser,$idRol);
 				} else {
@@ -137,15 +151,17 @@ class Administrador extends CI_Controller {
 			if ($id_user!='' && $id_rol != '') {
 				try {
 					$accion = $this -> administrador_model -> editar_rol_usuario($id_user,$id_rol);
-					if (!empty($accion)) {
+
+					if ($accion>= 0 ) {
 						header('location: '.base_url().'administrador/editarRolOk');
+					} else {
+						header('location: '.base_url().'administrador/editarRolError');
 					}
 				} catch (Exception $e) {
 					header('location: '.base_url().'administrador/editarRolError');
 				}
 			} else {
 				header('location: '.base_url().'administrador/editarRolError?error=exist');
-				
 			}
 		} else {
 			$this->acceso_denegado();

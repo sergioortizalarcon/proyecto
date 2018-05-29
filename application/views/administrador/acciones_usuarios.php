@@ -63,7 +63,12 @@
 	</div>
 <!-- 	<div style="width: 100%; padding-left: -10px; border: 1px solid red;"> -->
 <div class="table-responsive">
-<table id="efectoTabla" class="display table table-bordered ">
+<!-- 	<code><pre>?=$usuario?></pre></code>
+	<code><pre>?=$usuario['estado']?></pre></code>
+	<code><pre>?=$usuario->estados?></pre></code>
+	<code><pre>?=$usuario->estados['estado']?></pre></code> -->
+	<?=$usuario->estados['id']?>
+<table id="efectoTabla">
 	<thead>
 	<tr>
 		<th>Id usuario</th>
@@ -81,11 +86,7 @@
 	</tr>
 	</thead>
     <tbody>
-		<?php if(isset($usuario->estado["id"]) || $usuario->estado=='0'):?>
-			<tr style="background-color:gray">
-		<?php else:?>
-			<tr>
-		<?php endif;?>
+		<tr>
 			<td> <?=$usuario->id?> </td>
 			<td> <?=$usuario->nombre?> </td>
 			<td> <?=$usuario->apellido_uno?> </td>
@@ -96,25 +97,21 @@
 			<form action="<?=base_url()?>administrador/aplicarAccion" method="post">
 				<td>
 					<select name="idRol" id="idRol" class="form-control" 
-					 <?=($usuario->estado=='0')?'disabled="disabled"':' '?> >
+					 <?=($usuario->estados['id']=='2')?'disabled="disabled"':' '?> >
 						<?php foreach ($roles as $rol_existentes): ?>
-							<?php if($rol_existentes!=null): ?>
-								<option value="<?=$rol_existentes->id?>" <?=($usuario->roles["id"]==$rol_existentes->id)?'selected="selected"':" "?>>
+							<option value="<?=$rol_existentes->id?>" <?=($usuario->roles["id"]==$rol_existentes->id)?'selected="selected"':" "?>>
 									<?=$rol_existentes['rol']?>
-								</option>
-							<?php else: ?>
-								<td>solo debug--> <?=$usuario->rol_existentes?> </td>
-							<?php endif;?>
+							</option>
 						<?php endforeach; ?>
 					</select>
 				</td>
 				<td  >
 					<select name="idEstado" id="idEstado"  class="form-control">
-						<option value="0" <?=($usuario->estado=='0')?'selected="selected"':" ";?> >
-								Baneado
-						</option>
-						<option value="1" <?=($usuario->estado=='1')?'selected="selected"':" ";?> >
+						<option value="1" <?=($usuario['estado']=='1')?'selected="selected"':" ";?> >
 								Activa
+						</option>
+						<option value="2" <?=($usuario->estado=='2')?'selected="selected"':" ";?> >
+								Baneado
 						</option>
 					</select>
 				</td>

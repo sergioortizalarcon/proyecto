@@ -171,10 +171,6 @@ function cancelarRegistro(){
 		window.location.href = "<?=base_url()?>";
 	}
 }
-
-function creaDirector() {
-	idFormulario.submit();
-}
 </script>
 
 <div class="content-wrapper">
@@ -257,12 +253,16 @@ function creaDirector() {
 					<div class="nav navbar-form navbar-right">
 						<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar cambio" onclick="cancelarCambio();"/>
 						<input type="button" class="btn btn-default" id="registrarse" name ="registrarse" value="Editar" onclick="validar();"/>
-						<input type="button" class="btn btn-default" id="creaDirector" name="creaDirector" value="Crear director" onclick="creaDirector();" />
 					</div>
 					
 				</fieldset>
 			</form>
 			<br/>
+			<form name="formDirector" id="formDirector" action="<?= base_url() ?>actor/crearDirector" method="post" >
+				<input type="hidden" name="id_actor" value="<?= $body['actores']->id ?>" />
+				<!-- <input type="hidden" name="id_pais" value="<?= $body['paises']->id ?>" /> -->
+				<input type="submit" class="btn btn-default" id="creaDirector" name="creaDirector" value="Crear director" />
+			</form>
 		</div>
 		<div id="result"></div>
 	</section>

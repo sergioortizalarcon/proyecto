@@ -99,9 +99,8 @@ class actor extends CI_Controller {
 		$fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
 		$id_pais = isset($_POST['pais'])?$_POST['pais']:null;
 		$biografia = isset($_POST['biografia'])?$_POST['biografia']:null;
-		$director = isset($_POST['director'])?$_POST['director']:'off';
+		$ambos = isset($_POST['director'])?$_POST['director']:'off';
 		$id_actor = $_POST ['id_actor'];
-		$id_director = $this->director_model->getDirectorPorDatos($nombre, $apellido1, $apellido2, $fechaNacimiento);
 
 		if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
 			# verificamos el formato de la imagen
@@ -132,7 +131,7 @@ class actor extends CI_Controller {
 				//TODO
 				//Comprueba que ya exista un director mediante la id, si es así lo modifica, si no, lo crea nuevo
 				//if (id_director != null) {
-				$this->director_model->editar ( $id_director, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto);
+				//$this->director_model->editar ( $id_director, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto);
 				//}
 			} else {
 				$this->actor_model->editar ( $id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto);
@@ -176,9 +175,14 @@ class actor extends CI_Controller {
 	}
 	
 	public function crearDirector() {
-		$this->load->model('actor_model');
-		$this->load->model('director_model');
-		try {
+	    $this->load->model('actor_model');
+	    $this->load->model('pais_model');
+	    $id_actor = $_POST ['id_actor'];
+	    $id_pais = $_POST ['id_pais'];
+	    $datos = $this->actor_model->getActorPorId ( $id_actor );
+	    //$datos = $this->pais_model->getPaisPorId( $id_pais );
+		$this->prueba($datos);
+		/*try {
 			$datos = $this->actor_model->getActorPorId($id_actor);
 			$this->director_model->createDirector($datos);
 			header ("location:".base_url ()."actor/editarOk");
@@ -187,7 +191,36 @@ class actor extends CI_Controller {
 			$datos['mensaje']['nivel'] = 'error';
 			$datos['mensaje']['link'] = "actor/crear";
 			enmarcar($this,"actor/mensaje",$datos);
-		}
+		}*/
+	}
+	
+	public function prueba($datos) {
+	    $nombre = $datos->nombre;
+	    $apellido1 = $datos->apellido1;
+	    $apellido2 = $datos->apellido2;
+	    $fechaNacimiento = $datos->fechaNacimiento;
+	    $biografia = $datos->biografia;
+	    $foto = $datos->foto;
+	    try {
+	        $this->director_model->createDirector ( $nombre, $apellido1, $apellido2, $fechaNacimiento/*, $id_pais*/, $biografia, $ambos, $foto);
+	        header ("location:".base_url ()."actor/editarDirectorOK");
+	    } catch (Exception $e) {
+	        $datos['mensaje']['texto'] = "Director ya existente";
+	        $datos['mensaje']['nivel'] = 'error';
+	        $datos['mensaje']['link'] = "director/crear";
+	        enmarcar($this,"director/mensaje",$datos);
+	    }
+	}
+	
+	public function editarDirectorOK() {
+	    $datos['mensaje']['texto'] = "Director creado correctamente";
+	    $datos['mensaje']['nivel'] = 'ok';
+	    $datos['mensaje'] ['link'] = "director/listar";
+	    enmarcar($this, "director/mensaje",$datos);
+	}
+	
+	public function crearDirectorPost() {
+	    
 	}
 }
 ?>

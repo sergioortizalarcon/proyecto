@@ -1,30 +1,68 @@
 <script type="text/javascript">
 	function banearUsuario() {
-
 		var accion = confirm("¿Estas seguro de que quieres banear a este usuario?");
 		if (accion) {
-			alert("terminar accion");
-			//realizarAccion();
-		} else {
+			if(comprobarCampos()){
+				realizarAccion();
+			}
+		}
+	}
+
+	function comprobarCampos() {
+		fecha = idForm.motivoB.value;
+		observacion = idForm.messagetext.value;
+		//convierto los valores del datepicker en fecha y obtengo los milisegundos desde Enero 1 1970
+		fechaBan = new Date(fecha);
+		fechaBanseg = fechaBan.getTime();
+
+		//fecha actual en milisegundos
+		today = new Date();
+		todayseg = today.getTime();
+		//resto los segundos para saber si la fecha es anterior a la actual
+		resto = fechaBanseg-todayseg;
+		console.log(resto);
+
+		if (resto < 0 ) {
+			alert("La fecha debe ser superior a la actual.");
+			idForm.motivoB.onfocus=idForm.motivoB.style.borderColor = 'red';
 			return false;
+		} else {
+			idForm.motivoB.style.borderColor = '#ccc';
+
+			if (idForm.messagetext.value.length< 10) {
+				alert("Debes elegir una fecha válida e indicar una razón para el bloqueo de esta cuenta.");
+				idForm.messagetext.onfocus=idForm.messagetext.style.borderColor = "red";
+				return false;
+			} else {
+				idForm.messagetext.style.borderColor = "#ccc";
+				return true;
+			}
 		}
 	}
 	
 	function realizarAccion() {
-		formulario.submit();
+		idForm.submit();
 	}
 </script>
 <script>
   $(document).ready(function(){
     $("#idEstado").change(function(){
         $sel = $("#idEstado").val();
-        console.log($sel);
-        if ($sel =='0') {
+        if ($sel =='2') {
           $("#avisoCambio").modal('show');
         } else{
           $("#avisoCambio").modal('hide');
         }
       });
+
+    $("#motivoB").datepicker({
+    	changeMonth: true,
+    	changeYear: true,
+    	regional: "es",
+        showAnim: 'clip',
+        yearRange:new Date().getFullYear() +":2100",
+        dateFormat:'mm/dd/yy',
+    }); 
   });
 </script>
 <div class="content-wrapper">
@@ -49,25 +87,23 @@
 	            <input type="text" class="form-control" id="motivoB" name="motivoB">
 	          </div>
 	          <div class="form-group">
-	            <label for="message-text " class="col-form-label">Motivo la suspensión:</label>
-	            <textarea class="form-control" id="message-text" name="message-text"></textarea>
+	            <label for="messagetext " class="col-form-label">Motivo la suspensión:</label>
+	            <textarea class="form-control" id="messagetext" name="messagetext"></textarea>
 	          </div>
 	        </form>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Cancelar</button>
-	        <button type="button" class="btn btn-primary" id="open" onclick="infoban();">Confirmar</button>
+	        <button type="button" class="btn btn-primary" id="open" onclick="banearUsuario();">Confirmar</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
 <!-- 	<div style="width: 100%; padding-left: -10px; border: 1px solid red;"> -->
 <div class="table-responsive">
-<!-- 	<code><pre>?=$usuario?></pre></code>
-	<code><pre>?=$usuario['estado']?></pre></code>
-	<code><pre>?=$usuario->estados?></pre></code>
-	<code><pre>?=$usuario->estados['estado']?></pre></code> -->
-	<?=$usuario->estados['id']?>
+
+	<code><pre><?=$usuario['estados']['id']?></pre></code>
+
 <table id="efectoTabla">
 	<thead>
 	<tr>
@@ -94,11 +130,12 @@
 			<td> <?=$usuario->alias?> </td>
 			<td> <?=$usuario->email?> </td>
 			<td> <?=$usuario->paises["nombre"]?> </td>
-			<form action="<?=base_url()?>administrador/aplicarAccion" method="post">
+			<form id="miForm" action="<?=base_url()?>administrador/aplicarAccion" method="post">
 				<td>
 					<select name="idRol" id="idRol" class="form-control" 
 					 <?=($usuario->estados['id']=='2')?'disabled="disabled"':' '?> >
 						<?php foreach ($roles as $rol_existentes): ?>
+							<?php print_r($rol_existentes)?>
 							<option value="<?=$rol_existentes->id?>" <?=($usuario->roles["id"]==$rol_existentes->id)?'selected="selected"':" "?>>
 									<?=$rol_existentes['rol']?>
 							</option>
@@ -106,13 +143,12 @@
 					</select>
 				</td>
 				<td  >
-					<select name="idEstado" id="idEstado"  class="form-control">
-						<option value="1" <?=($usuario['estado']=='1')?'selected="selected"':" ";?> >
-								Activa
-						</option>
-						<option value="2" <?=($usuario->estado=='2')?'selected="selected"':" ";?> >
-								Baneado
-						</option>
+					<select name="idEstado" id="idEstado" class="form-control"">
+						<?php foreach ($estados_usuarios as $estados_existentes): ?>
+							<option value="<?=$estados_existentes->id?>" <?=($usuario->estados["id"]==$estados_existentes->id)?'selected="selected"':" "?>>
+									<?=$estados_existentes['estado']?>
+							</option>
+						<?php endforeach; ?>
 					</select>
 				</td>
 				<td> <?=$usuario->fecha_nacimiento?></td>

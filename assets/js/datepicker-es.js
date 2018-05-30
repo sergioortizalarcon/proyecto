@@ -38,7 +38,7 @@ return datepicker.regional.es;
 
 //Si da problema se borra
   $(document).ready(function(){
-    $("#idFecha").datepicker({
+    $("#idFecha,#motivoB").datepicker({
     changeMonth: true,
         changeYear: true,
         regional: "es",

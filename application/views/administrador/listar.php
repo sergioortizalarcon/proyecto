@@ -1,22 +1,20 @@
 <style>
 	.info-gen {
-	border: 1px solid black;
     border-radius: 75%;
     width: 28px;
     height: 28px;
-    
+	background-size: cover;
     margin: 0 0 0 30%;
 }
 	.moreinfoW{
 		background-image:url('../assets/img/images/alert-img.jpg');
-		background-size: contain;
 	}
 
 	.moreinfoB{
 		background-image:url('../assets/img/images/correct-img.jpg');
-		background-size: contain;
 	}
 </style>
+
 <div class="content-wrapper">
 	<section class="content-header">
       <h1>
@@ -47,13 +45,17 @@
 		    <tbody>
 			<?php foreach ($usuarios as $key): ?>
 			<?php if($key->estados['id']=='2'):?>
-				<tr style="background-color:#bb6c7b">
+				<tr style="background-color:#f9d9b8">
 			<?php else:?>
 				<tr>
 			<?php endif;?>
 					<td> <?=$key->id?> </td>
-					<td> <div class="info-gen <?=($key->estados['id']=='2')?"moreinfoW":"moreinfoB"?>"></div>
-
+					<td> 
+						<?php if ($key->estados['id']=='2'):?>
+						<div class="info-gen moreinfoW" title="<?=$key['observacion']?>"></div>
+						<?php else: ?>
+							<div class="info-gen moreinfoB" title="Todo correcto"></div>
+						<?php endif;?>
 					 </td>
 					<td> <?=$key->nombre?> </td>
 					<td> <?=$key->apellido_uno?> </td>
@@ -95,3 +97,8 @@
 <br/><hr/>
 </section>
 </div>
+<script>
+	$(document).ready(function(){
+		$( '.info-gen' ).tooltip();
+	});
+  </script>

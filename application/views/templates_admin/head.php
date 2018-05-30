@@ -34,7 +34,8 @@
     
     <!--estilo y demas del sortTable-->
     <script type="text/javascript" src="<?=base_url()?>assets/js/sortTablesJquery.js"></script>
-
+    
+    <script type="text/javascript" src="<?=base_url()?>assets/js/datepicker-es.js"></script>
     <!--Necesarios para el sorteo de la lista-->
     <script type="text/javascript" src="<?=base_url()?>assets/js/datatables.js"></script>
     <script type="text/javascript" src="<?=base_url()?>assets/js/dataTables.jqueryui.js"></script>

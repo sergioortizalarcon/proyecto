@@ -21,6 +21,7 @@ class Administrador extends CI_Controller {
 		$idUser = isset($_POST['idUser'])?$_POST['idUser']:null;
 		if ($idUser) {
 			$datos['roles'] = $this->usuario_model->listar_roles();
+			$datos['estados_usuarios'] = $this ->usuario_model->listar_estados();
 			$datos['usuario'] = $this->administrador_model->getByID($idUser);
 			enmarcar($this,"administrador/acciones_usuarios",$datos);
 		}
@@ -119,9 +120,9 @@ class Administrador extends CI_Controller {
 			$idRol = isset($_POST['idRol'])?$_POST['idRol']:null;
 			$idEstado = isset($_POST['idEstado'])?$_POST['idEstado']:null;
 			$this ->load -> model('administrador_model');
-			$estado_cuenta = $this-> administrador_model -> getByID($idUser);
+			$estado_cuenta = $this-> administrador_model -> getByID($idUser);//datos de usuario
 			if ($estado_cuenta['id'] != '0') {
-				if ($estado_cuenta['estado'] != $idEstado) {
+				if ($estado_cuenta['estados']['id'] != $idEstado) {
 					$this->update_estado($idUser,$idEstado);
 				} else if ($idRol != $estado_cuenta['roles']['id']) {
 					$this->editarRolPost($idUser,$idRol);
@@ -202,7 +203,6 @@ class Administrador extends CI_Controller {
 			$filtro = isset($_POST['filtro'])?$_POST['filtro']:$f;
 
 			$datos['roles'] = $this->usuario_model->listar_roles();
-
 			$datos['usuarios'] = $this->administrador_model->getAll($filtro);
 			$datos['filtro'] = $filtro;
 			enmarcar($this,'administrador/listar',$datos);

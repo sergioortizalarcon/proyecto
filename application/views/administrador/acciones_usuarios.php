@@ -9,7 +9,7 @@
 	}
 
 	function comprobarCampos() {
-		fecha = idForm.motivoB.value;
+		fecha = idForm.fechaBan.value;
 		observacion = idForm.messagetext.value;
 		//convierto los valores del datepicker en fecha y obtengo los milisegundos desde Enero 1 1970
 		fechaBan = new Date(fecha);
@@ -20,21 +20,20 @@
 		todayseg = today.getTime();
 		//resto los segundos para saber si la fecha es anterior a la actual
 		resto = fechaBanseg-todayseg;
-		console.log(resto);
 
 		if (resto < 0 ) {
 			alert("La fecha debe ser superior a la actual.");
-			idForm.motivoB.onfocus=idForm.motivoB.style.borderColor = 'red';
+			idForm.fechaBan.onfocus=idForm.fechaBan.style.borderColor = 'red';
 			return false;
 		} else {
-			idForm.motivoB.style.borderColor = '#ccc';
-
+			idForm.fechaBan.style.borderColor = '#ccc';
 			if (idForm.messagetext.value.length< 10) {
 				alert("Debes elegir una fecha válida e indicar una razón para el bloqueo de esta cuenta.");
 				idForm.messagetext.onfocus=idForm.messagetext.style.borderColor = "red";
 				return false;
 			} else {
 				idForm.messagetext.style.borderColor = "#ccc";
+				
 				return true;
 			}
 		}
@@ -48,6 +47,7 @@
   $(document).ready(function(){
     $("#idEstado").change(function(){
         $sel = $("#idEstado").val();
+        $estado = $('#estado').val($sel);
         if ($sel =='2') {
           $("#avisoCambio").modal('show');
         } else{
@@ -55,7 +55,7 @@
         }
       });
 
-    $("#motivoB").datepicker({
+    $("#fechaBan").datepicker({
     	changeMonth: true,
     	changeYear: true,
     	regional: "es",
@@ -81,20 +81,25 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        <form id="idForm" action="<?=base_url()?>admin/estadoCuentas" method="post">
+	        <form id="idForm" action="<?=base_url()?>administrador/aplicarAccion" method="post">
 	          <div class="form-group">
-	            <label for="motivoB" class="col-form-label">Tiempo de Baneo:</label>
-	            <input type="text" class="form-control" id="motivoB" name="motivoB">
+	            <label for="fechaBan" class="col-form-label">Tiempo de Baneo:</label>
+	            <input type="text" class="form-control" id="fechaBan" name="fechaBan">
+	            <input type="hidden" name="idUser" value="<?=$usuario->id?>" />
+	            <input type="hidden" name="idEstado" id="estado">
+
+
 	          </div>
 	          <div class="form-group">
-	            <label for="messagetext " class="col-form-label">Motivo la suspensión:</label>
-	            <textarea class="form-control" id="messagetext" name="messagetext"></textarea>
+	            <label for="messagetext " class="col-form-label">Motivo de la suspensión de la cuenta:</label>
+	            <textarea class="form-control" id="messagetext" name="messagetext" data-toogle="tooltip" data-placement="bottom-left" title="mínimo 10 caracteres...."></textarea>
+	            <small>mínimo 10 caracteres....</small>
 	          </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Cancelar</button>
+		        <button type="button" class="btn btn-primary" id="open" onclick="banearUsuario();">Confirmar</button>
+		      </div>
 	        </form>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Cancelar</button>
-	        <button type="button" class="btn btn-primary" id="open" onclick="banearUsuario();">Confirmar</button>
 	      </div>
 	    </div>
 	  </div>
@@ -102,7 +107,7 @@
 <!-- 	<div style="width: 100%; padding-left: -10px; border: 1px solid red;"> -->
 <div class="table-responsive">
 
-	<code><pre><?=$usuario['estados']['id']?></pre></code>
+	<code><pre><?=$usuario['estados']['id']?>nnnnnnnnn  <?=$usuario->estados["id"]?></pre></code>
 
 <table id="efectoTabla">
 	<thead>

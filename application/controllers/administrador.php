@@ -66,24 +66,22 @@ class Administrador extends CI_Controller {
 
 		/*			ACCIONES CONTRA CUENTA DE USUARIO 			*/
 
-	public function update_estado($idUser,$idEstado) {
+	public function update_estado($idUser,$idEstado,$fechaBan,$messagetext) {
 		if ($this -> comprobarRol()) {
 			$this->load->model('administrador_model');
-			$id_user = $idUser;
-			$id_estado = $idEstado;
-			if ($id_user!='' && $id_estado != '') {
+			if ($idUser!='' && $idEstado != '') {
 				try {
-					$accion = $this -> administrador_model -> editar_estado($id_user,$id_estado);
-					if ($accion>= 0 ) {
+					$accion = $this -> administrador_model -> editar_estado($idUser,$idEstado,$fechaBan,$messagetext);
+					if ($accion > 0 ) {
 						header('location: '.base_url().'administrador/editarEstOk');
 					} else {
 						header('location: '.base_url().'administrador/editarEstError');
 					}
 				} catch (Exception $e) {
-					header('location: '.base_url().'administrador/editarEstError');
+					header('location: '.base_url().'administrador/editarEstError?error='.$e);
 				}
 			} else {
-				header('location: '.base_url().'administrador/editarEstError?error=exist');
+				header('location: '.base_url().'administrador/editarEstError?error=exist'.$accion);
 			}
 		} else {
 			$this->acceso_denegado();
@@ -104,26 +102,30 @@ class Administrador extends CI_Controller {
 			$datos['mensaje']['texto'] = "Se ha producido un error al ejecutar la acción. Inténtalo de nuevo.";
 			$datos['mensaje']['nivel'] = 'error';
 			enmarcar($this,'templates_admin/mensaje', $datos);
-			header("Refresh:3;url=".base_url()."administrador/listar");
+			// header("Refresh:3;url=".base_url()."administrador/listar");
 		} else {
 			$datos['mensaje']['texto'] = "No existe el usuario al intentar actualizar el estado. Inténtalo de nuevo.";
 			$datos['mensaje']['nivel'] = 'error';
 			$datos ['mensaje'] ['link'] ['listar'] = "administrador";
 			enmarcar($this,'templates_admin/mensaje', $datos);
-			header("Refresh:3;url=".base_url()."administrador/listar");
+			// header("Refresh:3;url=".base_url()."administrador/listar");
 		}
 	}
 
 	public function aplicarAccion() {
 		if ($this -> comprobarRol()) {
+			$this ->load -> model('administrador_model');
 			$idUser = isset($_POST['idUser'])?$_POST['idUser']:null;
 			$idRol = isset($_POST['idRol'])?$_POST['idRol']:null;
 			$idEstado = isset($_POST['idEstado'])?$_POST['idEstado']:null;
-			$this ->load -> model('administrador_model');
-			$estado_cuenta = $this-> administrador_model -> getByID($idUser);//datos de usuario
-			if ($estado_cuenta['id'] != '0') {
+			$estado_cuenta = $this-> administrador_model -> getByID($idUser);//obtengo los datos del usuario
+			$fechaBan = isset($_POST['fechaBan'])?$_POST['fechaBan']:null;
+			$messagetext = isset($_POST['messagetext'])?$_POST['messagetext']:null;
+
+			if ($estado_cuenta['id'] != '0') {//Devolvería cero en caso de no existir el usuario
+				echo ('<pre><code>'.$estado_cuenta['estados']['id'].', '.$idEstado.'</pre></code>');
 				if ($estado_cuenta['estados']['id'] != $idEstado) {
-					$this->update_estado($idUser,$idEstado);
+					$this->update_estado($idUser,$idEstado,$fechaBan,$messagetext);
 				} else if ($idRol != $estado_cuenta['roles']['id']) {
 					$this->editarRolPost($idUser,$idRol);
 				} else {

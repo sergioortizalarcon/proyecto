@@ -15,14 +15,27 @@ class Administrador_model extends CI_Model {
 		return R::load ( 'usuarios', $id );
 	}
 
-	public function editar_estado($id_user,$id_estado) {
+	public function editar_estado($id_user,$id_estado,$fechaBan,$messagetext) {
 		$status=-1;
 		$usuario = $this->getByID($id_user);
 		if ($usuario ->id!=0) {
 			$comprobar_estado=R::load('estados',$id_estado);
 			if($comprobar_estado ->id!= 0){
 				$status=2;
+				//$usuario -> estados = null;
+				//$caja -> ownUsuarioList [] = $comprobar_estado
 				$usuario ->estados = R::load('estados',$id_estado);
+				if ($id_estado == 1) {
+					$usuario ->fecha_ban = 0;
+				} else {
+					$usuario ->fecha_ban = $fechaBan;
+				}
+				if ($messagetext==null) {
+					$usuario ->observacion = ' ';
+				}else {
+					$usuario ->observacion = $messagetext;
+				}
+				
 				R::store($usuario);
 			} else {
 				$status=-1;

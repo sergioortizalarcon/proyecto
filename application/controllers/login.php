@@ -14,40 +14,43 @@ class Login extends CI_Controller{
 
 	public function loginPost(){
 		$this -> load ->model("usuario_model");
+		$today = isset($_POST["cntrl"])?$_POST["cntrl"]:null;
 		$usuario = isset($_POST["nUsuario"])?$_POST["nUsuario"]:null;
 		$pwd = isset($_POST["hash_passwrd"])?$_POST["hash_passwrd"]:null;
 		$recordar = isset($_POST["recordar"])?$_POST["recordar"]:"";
+		//fecha para controlar si la cuenta esta baneada
+		$fechaControl = isset($_POST["cntrl"])?$_POST["cntrl"]:"";
 		$tokenAdm = isset($_POST["tken"])?$_POST["tken"]:null;
 		//Comparacion de String -> Devuelve < 0 si str1 es menor que str2; > 0 si str1 es mayor que str2 y 0 si son iguales.
-		if(strcmp($usuario, null) !== 0) {
+		if($usuario !=null && $today!=null) {
 			try {
 				$identificarse = $this -> usuario_model -> comprobar_login($usuario,$pwd);
 				if ($identificarse) {
-					$aliasLogeado  = $identificarse["alias"];
-					setcookie("usuario", $aliasLogeado,0,"/");
-					session_start();
-					$this -> load ->model("administrador_model");
-					$_SESSION['rol'] = $this -> administrador_model -> obtener_rol_user($identificarse["roles_id"]);
-					$_SESSION['idUser'] = $identificarse["id"];
-					if (strcmp($recordar,"recordar") === 0) {
-						$_SESSION['recordar'] = $aliasLogeado;
-						if(!isset($_COOKIE['recordar'])){
-							setcookie('recordar','ok',0,"/");
-						}
+					if ($usuario['fecha_ban'] != 0) {
+						$this->usuario_baneado($usuario['fecha_ban'],$today);
 					} else {
-						if(isset($_COOKIE['recordar'])){
-							setcookie('recordar','',time() - 3600,"/");
-						}
-					}
-					if ($tokenAdm != null ) {
-						if ( strcmp($_SESSION['rol'],"administrador") === 0 ) {
-							header("location:".base_url()."login/loginOk");
+						$aliasLogeado  = $identificarse["alias"];
+						setcookie("usuario", $aliasLogeado,0,"/");
+						session_start();
+						$this -> load ->model("administrador_model");
+						$_SESSION['rol'] = $this -> administrador_model -> obtener_rol_user($identificarse["roles_id"]);
+						$_SESSION['idUser'] = $identificarse["id"];
+						if (strcmp($recordar,"recordar") === 0) {
+							$_SESSION['recordar'] = $aliasLogeado;
+							if(!isset($_COOKIE['recordar'])){
+								setcookie('recordar','ok',0,"/");
+							}
 						} else {
-							header("location:".base_url()."genero/listar");
-							//Denegar acceso si intenta acceder desde el menu de admin y no lo es.
+							if(isset($_COOKIE['recordar'])){
+								setcookie('recordar','',time() - 3600,"/");
+							}
 						}
-					} else {
-						header("location:".base_url()."login/loginOk?nombre=".$aliasLogeado);
+						
+						if ( strcmp($_SESSION['rol'],"administrador") === 0 ) {
+							header("location:".base_url()."login/loginOk?token=".$tokenAdm);
+						}  else {
+							header("location:".base_url()."login/loginOk?nombre=".$aliasLogeado);
+						}
 					}
 				} else {
 					if ($tokenAdm != null ) {
@@ -66,7 +69,13 @@ class Login extends CI_Controller{
 	}
 
 	public function loginOk() {
-		if (isset($_GET['nombre']) ) {
+		if (isset(($_GET['token']))) {
+			$datos["mensaje"]["texto"]="Bienvenido Administrador.Estas siendo redirigido al inicio.";
+			$datos["mensaje"]['nivel']="ok";
+			$datos["mensaje"]["token"]=true;
+			enmarcar($this, 'login/mensaje',$datos);
+			header("Refresh:3;url=".base_url());
+		} else if (isset($_GET['nombre'])) {
 			$datos["mensaje"]["texto"]="Logeado con éxito ".$_GET['nombre'].". Redirigiendo al inicio...";
 			$datos["mensaje"]['nivel']="ok";
 			enmarcar($this, 'login/mensaje',$datos);
@@ -111,6 +120,16 @@ class Login extends CI_Controller{
 			enmarcar($this, 'login/mensaje',$datos);
 		}
 		
+	}
+
+	public function usuario_baneado($fecha_baneo,$today) {
+		$resto = $today-$fecha_baneo;
+		if ($resto < 0) {
+			
+			$datos["mensaje"]["texto"]="Esta cuenta ha sido bloqueada durante".$tiempoban.". Para más información contacte pongase en contacto con un administrador.";
+			$datos["mensaje"]['nivel']="error";
+			enmarcar($this, 'login/mensaje',$datos);
+		}
 	}
 
 	public function vista_login_administrador(){

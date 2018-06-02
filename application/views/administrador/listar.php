@@ -24,7 +24,7 @@
     </section>
 <section class="content">
 	<div class="table-responsive">
-		<table id="efectoTabla" class="table display">
+		<table id="efectoTabla" class="display">
 			<thead>
 			<tr>
 				<th>Id usuario</th>
@@ -67,10 +67,10 @@
 					<td> <?=$key->estados['estado']?></td>
 					<td> <?=$key->fecha_nacimiento?></td>
 
-					<td>
+					<td class="botones">
 						<form action="<?=base_url()?>administrador/editarGet" method="post" class="listado">
 							<input type="hidden" name="idUser" value="<?=$key->id?>"/>
-							<button class="glyphicon glyphicon-pencil" type="submit"></button>
+							<button class="btn btn-info btn-lg btn-block"  type="submit"><i class="fas fa-edit"></i></button>
 						</form>
 					</td>
 				</tr>

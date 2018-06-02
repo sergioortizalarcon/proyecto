@@ -58,6 +58,10 @@ function validarPass() {
 
 		function enviar(){
 			pwd = document.getElementById("pwd").value;
+			//envio fecha en milisegundos para comprobar, si la cuenta esta baneada, hasta cuando.
+			n = new Date();
+			mili = n.getTime();
+			fecha = idFormulario.cntrl.value= mili;
 			pcripto = sha256(pwd);
 			idFormulario.hash_passwrd.value=pcripto;
 			idFormulario.submit();
@@ -70,14 +74,6 @@ function validarPass() {
 			<span class="avisos" id="loginFailed">
 				Usuario o contraseña incorrecto 
 			</span>
-
-<!-- 			<div class="input-group input-group-sm mb-3">
-				  <div class="input-group-prepend">
-				    <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
-				  </div>
-				  <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-				</div> 
--->
 				<form id="idFormulario" name="idFormulario" class="form-horizontal" action="<?=base_url()?>login/loginPost" method="post">
 				    <div class="form-group">
 				    <label for="nUsuario">Nombre:</label><br>
@@ -96,6 +92,7 @@ function validarPass() {
 					    <br/>
 					<div class="nav navbar-form navbar-right">
 					   	<input type="button" class="btn btn-default" value="Iniciar sesión" onclick="logearse()"/>
+					   	<input type="hidden" name="cntrl" id="cntrl">
 					</div>
 		  		</form>
 		</div>

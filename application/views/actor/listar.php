@@ -40,12 +40,16 @@
 							<td>
 								<form class="listado" id="idFormEdit<?= $actor->id ?>" action="<?=base_url()?>actor/editar" method="post">
 									<input type="hidden" name="id_actor" value="<?= $actor -> id?>">
-									<button onclick="function f() {document.getElementById('Borrar<?= $actor->id ?>').submit();}"><span class="glyphicon glyphicon-pencil"></span></button>
+									<button onclick="function f() {document.getElementById('Borrar<?= $actor->id ?>').submit();}">
+										<i class="fas fa-edit"></i>
+									</button>
 								</form>
 								<form class="listado" id="idFormRemove<?= $actor->id ?>" action="<?=base_url()?>actor/borrarPost" method="post">
 									<input type="hidden" name="id_actor" value="<?= $actor -> id?>">
 									<input type="hidden" name="v" value="listarTodos">
-									<button onclick="function f() {document.getElementById('Editar<?= $actor->id ?>').submit();}"><span class="glyphicon glyphicon-remove"></span></button>
+									<button onclick="function f() {document.getElementById('Editar<?= $actor->id ?>').submit();}">
+										<i class="fas fa-trash"></i>
+									</button>
 								</form>
 							</td>
 						</tr>

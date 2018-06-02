@@ -28,16 +28,20 @@
 				<?php foreach ($body['paises'] as $pais): ?>
 					<tr>
 						<td><?= $pais->id ?></td>
-						<td><?= $pais->nombre ?></td>
-						<td>
+						<td valign="center"><?= $pais->nombre ?></td>
+						<td class="botones">
 							<form class="listado" id="idFormedit" action="<?=base_url()?>pais/editar" method="post">
 								<input type="hidden" name="id_pais" value="<?= $pais -> id?>">
-								<button onclick="function f() {document.getElementById('idFormEdit').submit();}"><span class="glyphicon glyphicon-pencil"></span></button>
+								<button class="btn btn-info btn-lg btn-block"onclick="function f() {document.getElementById('idFormEdit').submit();}">
+									<i class="fas fa-edit"></i>
+								</button>
 							</form>
 							<form class="listado" id="idFormRemove" action="<?=base_url()?>pais/borrarPost" method="post">
 								<input type="hidden" name="id_pais" value="<?= $pais -> id?>">
 								<input type="hidden" name="v" value="listarTodos">
-								<button onclick="function f() {document.getElementById('idFormRemove').submit();}"><span class="glyphicon glyphicon-remove"></span></button>
+								<button  class="btn btn-danger btn-lg btn-block" onclick="function f() {document.getElementById('idFormRemove').submit();}">
+									<i class="fas fa-trash"></i>
+								</button>
 							</form>
 							
 						</td>

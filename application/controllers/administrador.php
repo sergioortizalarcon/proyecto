@@ -108,7 +108,7 @@ class Administrador extends CI_Controller {
 			$datos['mensaje']['nivel'] = 'error';
 			$datos ['mensaje'] ['link'] ['listar'] = "administrador";
 			enmarcar($this,'templates_admin/mensaje', $datos);
-			// header("Refresh:3;url=".base_url()."administrador/listar");
+			header("Refresh:3;url=".base_url()."administrador/listar");
 		}
 	}
 
@@ -119,7 +119,7 @@ class Administrador extends CI_Controller {
 			$idRol = isset($_POST['idRol'])?$_POST['idRol']:null;
 			$idEstado = isset($_POST['idEstado'])?$_POST['idEstado']:null;
 			$estado_cuenta = $this-> administrador_model -> getByID($idUser);//obtengo los datos del usuario
-			$fechaBan = isset($_POST['fechaBan'])?$_POST['fechaBan']:null;
+			$fechaBan = isset($_POST['cntrl'])?$_POST['cntrl']:null;
 			$messagetext = isset($_POST['messagetext'])?$_POST['messagetext']:null;
 
 			if ($estado_cuenta['id'] != '0') {//Devolvería cero en caso de no existir el usuario

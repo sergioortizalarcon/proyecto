@@ -34,11 +34,8 @@ span.avisos{
 
 /* ajusta los botones de edicion de usuario */
 td,th{text-align: center;}
-form.listado > button {
-    width: 100px;
-}
 form.listado {
-    display: inline-block;
+	padding:1%
 }
 /*agrega fondo al body*/
 body.custom-background {

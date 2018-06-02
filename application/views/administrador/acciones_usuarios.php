@@ -13,13 +13,13 @@
 		observacion = idForm.messagetext.value;
 		//convierto los valores del datepicker en fecha y obtengo los milisegundos desde Enero 1 1970
 		fechaBan = new Date(fecha);
-		fechaBanseg = fechaBan.getTime();
+		fechaBanmili = fechaBan.getTime();
 
 		//fecha actual en milisegundos
 		today = new Date();
 		todayseg = today.getTime();
 		//resto los segundos para saber si la fecha es anterior a la actual
-		resto = fechaBanseg-todayseg;
+		resto = fechaBanmili-todayseg;
 
 		if (resto < 0 ) {
 			alert("La fecha debe ser superior a la actual.");
@@ -27,13 +27,14 @@
 			return false;
 		} else {
 			idForm.fechaBan.style.borderColor = '#ccc';
+
 			if (idForm.messagetext.value.length< 10) {
 				alert("Debes elegir una fecha válida e indicar una razón para el bloqueo de esta cuenta.");
 				idForm.messagetext.onfocus=idForm.messagetext.style.borderColor = "red";
 				return false;
 			} else {
 				idForm.messagetext.style.borderColor = "#ccc";
-				
+				idForm.cntrl.value=fechaBanmili;
 				return true;
 			}
 		}
@@ -84,7 +85,9 @@
 	        <form id="idForm" action="<?=base_url()?>administrador/aplicarAccion" method="post">
 	          <div class="form-group">
 	            <label for="fechaBan" class="col-form-label">Tiempo de Baneo:</label>
-	            <input type="text" class="form-control" id="fechaBan" name="fechaBan">
+	            <input type="text" class="form-control" id="fechaBan">
+	            <input type="hidden" name="cntrl" id="cntrl">
+
 	            <input type="hidden" name="idUser" value="<?=$usuario->id?>" />
 	            <input type="hidden" name="idEstado" id="estado">
 
@@ -107,8 +110,7 @@
 <!-- 	<div style="width: 100%; padding-left: -10px; border: 1px solid red;"> -->
 <div class="table-responsive">
 
-	<code><pre><?=$usuario['estados']['id']?>nnnnnnnnn  <?=$usuario->estados["id"]?></pre></code>
-
+	<code><pre><?php print_r($usuario->fecha_ban)?></pre></code>
 <table id="efectoTabla">
 	<thead>
 	<tr>

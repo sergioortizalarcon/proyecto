@@ -5,13 +5,6 @@
 </style>
 <script>
   $(document).ready(function(){
-    	// $(document).ajaxStart(function(){
-    	// 	$('#cargando').css('display:initial');
-    	// });
-    	// $(document).ajaxComplete(function(){
-    	// 	$('cargando').slideUp(1000);
-    	// });
-
       var request = $.ajax({
         type: "POST",
         url: '<?=base_url()?>administrador/datos_user',

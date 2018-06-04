@@ -34,14 +34,18 @@
               <td>
                 <form id="idFormedit" action="<?=base_url()?>director/editar" method="post">
                   <input type="hidden" name="id_pais" value="<?= $director -> id?>">
-                  <button onclick="function f() {document.getElementById('idFormEdit').submit();}"><span class="glyphicon glyphicon-pencil"></span></button>
+                  <button class="btn btn-info btn-sm" onclick="function f() {document.getElementById('idFormEdit').submit();}">
+                    <i class="fas fa-edit"></i>
+                  </button>
                 </form>
               </td>
               <td>
                 <form id="idFormRemove" action="<?=base_url()?>director/borrarPost" method="post">
                   <input type="hidden" name="id_director" value="<?= $director -> id?>">
                   <input type="hidden" name="v" value="listarTodos">
-                  <button onclick="function f() {document.getElementById('idFormRemove').submit();}"><span class="glyphicon glyphicon-remove"></span></button>
+                  <button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('idFormRemove').submit();}">
+                    <i class="fas fa-trash"></i>
+                  </button>
                 </form>
               </td>
             </tr>

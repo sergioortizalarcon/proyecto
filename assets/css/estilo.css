@@ -120,3 +120,11 @@ a.icono-tw{
     text-decoration: underline;
     text-decoration-color: darkcyan;
 }
+
+
+
+/*estilo botones*/
+
+.btn-sm {
+	width: 90%!important;
+}

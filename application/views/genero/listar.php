@@ -1,29 +1,4 @@
-<style>
-	#ayuda{		
-		position:fixed;
-		visibility:hidden;
-		text-align:center;
-		font-weight: bold;
-		line-height:30px;
-		}
-</style>
-<script>
-	$(document).ready(function(){
-		$("button").hover(function(){
-				$("#ayuda").css("visibility", "visible");								
-				$("#ayuda").text('hola');
-			},
-			function(){			
-				$("#ayuda").css("visibility", "hidden");
-				$("#ayuda").removeClass(this.className);
-			});
-		$("div").not("#total, #posicion, #ayuda, #clickeado").on("mousemove", function(evento){
-				$('#ayuda').css("top", evento.pageY+15);
-				$('#ayuda').css("left", evento.pageX+10);
-			});
-	});
-</script>
-<div class="container content-wrapper">
+<div class="content-wrapper">
 <section class="content-header">
 	 <h1>
         <i class="far fa-folder-open"></i>&nbsp;&nbsp;Listado de Géneros
@@ -56,12 +31,16 @@
 				<td>
 					<form class="listado" id="idFormedit" action="<?=base_url()?>genero/editar" method="post">
 						<input type="hidden" name="id_genero" value="<?= $genero -> id?>">
-						<button class="botones" onclick="function f() {document.getElementById('idFormEdit').submit();}"><span class="glyphicon glyphicon-pencil"></span></button>
+						<button class="btn btn-info btn-sm" class="botones" onclick="function f() {document.getElementById('idFormEdit').submit();}">
+							<i class="fas fa-edit"></i>
+						</button>
 					</form>
 					<form class="listado" id="idFormRemove" action="<?=base_url()?>genero/borrarPost" method="post">
 						<input type="hidden" name="id_genero" value="<?= $genero -> id?>">
 						<input type="hidden" name="v" value="listarTodos">
-						<button class="botones" onclick="function f() {document.getElementById('idFormRemove').submit();}"><span class="glyphicon glyphicon-remove"></span></button>
+						<button class="btn btn-warning btn-sm" class="botones" onclick="function f() {document.getElementById('idFormRemove').submit();}">
+							<i class="fas fa-trash"></i>
+						</button>
 					</form>
 					
 				</td>
@@ -77,6 +56,5 @@
 	</tfoot>
 	</table>
 	</div>
-	<div id="ayuda" style="border:1px solid black;height: 5%;width: 4%;"></div>
 </section>
 </div>

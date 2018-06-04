@@ -70,7 +70,7 @@
 					<td class="botones">
 						<form action="<?=base_url()?>administrador/editarGet" method="post" class="listado">
 							<input type="hidden" name="idUser" value="<?=$key->id?>"/>
-							<button class="btn btn-info btn-lg btn-block"  type="submit"><i class="fas fa-edit"></i></button>
+							<button class="btn btn-info btn-sm" type="submit"><i class="fas fa-edit"></i></button>
 						</form>
 					</td>
 				</tr>

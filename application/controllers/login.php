@@ -26,7 +26,19 @@ class Login extends CI_Controller{
 				if ($identificarse) {
 					$f_ban = $identificarse['fecha_ban'];
 					if ($f_ban > 0) {
-						$this->usuario_baneado($f_ban,$today);
+						//Faltaría meter áños, si los hay. o dejarlo solo en días.
+						$actual = strtotime(date("d-m-Y H:i:00",($today/1000)));
+						$fecha_baneo = strtotime(date("d-m-Y H:i:00",($f_ban/1000)));
+						//Si la fecha de hoy es menor q la del baneo
+						$resto = ($actual - $fecha_baneo);
+
+						if ($actual < $fecha_baneo) {
+							if ($resto < 0) { //comprueba lo mismo q el anterior if... redundante...
+								//paso a positivo el resto
+								$resto = $resto*(-1);
+							}
+						}
+						header("location:".base_url()."login/usuario_baneado?time=".$resto);
 					} else {
 						$aliasLogeado  = $identificarse["alias"];
 						setcookie("usuario", $aliasLogeado,0,"/");
@@ -120,41 +132,32 @@ class Login extends CI_Controller{
 		
 	}
 
-	public function usuario_baneado($ban,$today) {
-
-		//Faltaría meter áños, si los hay. o dejarlo solo en días.
-		$actual = strtotime(date("d-m-Y H:i:00",($today/1000)));
-		$fecha_baneo = strtotime(date("d-m-Y H:i:00",($ban/1000)));
-		//Si la fecha de hoy es menor q la del baneo
-		if ($actual < $fecha_baneo) {
-			$total_ban_fecha = "";
-			$resto = ($actual - $fecha_baneo);
-			if ($resto < 0) {
-				//paso a positivo el resto
-				$resto = $resto*(-1);
-			}
+	public function usuario_baneado() {
+		if (isset($_GET['time'])) {
+			$resto = $_GET['time'];
 			//Paso el valor(dado en milisegundos) a días
 			$c = $resto / (60*60*24);
-			//Redondeo a dos decimales
-			$c = round($c, 2);
-			//Si hay punto esq hay dos decimales q se convertirán en horas.
-			$cortar_dia = explode(".", $c);
-			if (count($cortar_dia) > 1) {
-				$dia = $cortar_dia[0];
-			}
-			$hora = $cortar_dia[1];
-			while ($hora > 24) {
-				$dia +=1;
-				$hora = $hora-24;
-			}
-
-				$total_ban_fecha.= $dia." días y ".$hora." horas";
-			} else {
-				$total_ban_fecha.=$c." días";
-			}
+			
+			$total_ban_fecha = "";
+				//Redondeo a dos decimales
+				$c = round($c, 2);
+				//Si hay punto esq hay dos decimales q se convertirán en horas.
+				$cortar_dia = explode(".", $c);
+				if (count($cortar_dia) > 1) {
+					$dia = $cortar_dia[0];
+					$hora = $cortar_dia[1];
+					while ($hora > 24) {
+						$dia +=1;
+						$hora = $hora-24;
+					}
+					$total_ban_fecha.= $dia." días y ".$hora." horas";
+				} else {
+					$total_ban_fecha.= $dia." días";
+				}
 			$datos["mensaje"]["texto"]="Esta cuenta ha sido bloqueada durante ".$total_ban_fecha.". Para más información contacte pongase en contacto con un administrador.";
 			$datos["mensaje"]['nivel']="error";
 			enmarcar($this, 'login/mensaje',$datos);
+		}
 	}
 
 

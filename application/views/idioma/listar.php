@@ -1,4 +1,4 @@
-<div class="container content-wrapper">
+<div class="content-wrapper">
 	<section class="content-header">
 		<h1>
         	<i class="fas fa-language"></i>&nbsp;&nbsp;Listado de idiomas
@@ -32,11 +32,15 @@
 						<td>
 							<form class="listado" action="<?=base_url()?>idioma/editarGet" method="post">
 								<input type="hidden" name="idIdioma" value="<?= $idioma -> id?>"/>
-								<button class="glyphicon glyphicon-pencil" type="submit"></button>
+								<button class="btn btn-info btn-sm" type="submit">
+									<i class="fas fa-edit"></i>
+								</button>
 							</form>
 							<form class="listado" action="<?=base_url()?>idioma/borrarPost" method="post">
 								<input type="hidden" name="idIdioma" value="<?= $idioma -> id?>" />
-								<button class="glyphicon glyphicon-remove" type="submit"></button>
+								<button class="btn btn-warning btn-sm" type="submit">
+									<i class="fas fa-trash"></i>
+								</button>
 							</form>
 
 						</td>

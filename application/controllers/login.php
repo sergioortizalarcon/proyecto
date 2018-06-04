@@ -18,16 +18,15 @@ class Login extends CI_Controller{
 		$usuario = isset($_POST["nUsuario"])?$_POST["nUsuario"]:null;
 		$pwd = isset($_POST["hash_passwrd"])?$_POST["hash_passwrd"]:null;
 		$recordar = isset($_POST["recordar"])?$_POST["recordar"]:"";
-		//fecha para controlar si la cuenta esta baneada
-		$fechaControl = isset($_POST["cntrl"])?$_POST["cntrl"]:"";
 		$tokenAdm = isset($_POST["tken"])?$_POST["tken"]:null;
 		//Comparacion de String -> Devuelve < 0 si str1 es menor que str2; > 0 si str1 es mayor que str2 y 0 si son iguales.
 		if($usuario !=null && $today!=null) {
 			try {
 				$identificarse = $this -> usuario_model -> comprobar_login($usuario,$pwd);
 				if ($identificarse) {
-					if ($usuario['fecha_ban'] != 0) {
-						$this->usuario_baneado($usuario['fecha_ban'],$today);
+					$f_ban = $identificarse['fecha_ban'];
+					if ($f_ban > 0) {
+						$this->usuario_baneado($f_ban,$today);
 					} else {
 						$aliasLogeado  = $identificarse["alias"];
 						setcookie("usuario", $aliasLogeado,0,"/");
@@ -59,7 +58,6 @@ class Login extends CI_Controller{
 						header("location:".base_url()."login/loginError");
 					}
 				}
-
 			} catch(Exception $e) {
 				$datos["mensaje"]["texto"]="Error en la BD. \n $e";
 				$datos["mensaje"]['nivel']="error";
@@ -69,7 +67,7 @@ class Login extends CI_Controller{
 	}
 
 	public function loginOk() {
-		if (isset(($_GET['token']))) {
+		if (isset($_GET['token'])) {
 			$datos["mensaje"]["texto"]="Bienvenido Administrador.Estas siendo redirigido al inicio.";
 			$datos["mensaje"]['nivel']="ok";
 			$datos["mensaje"]["token"]=true;
@@ -122,15 +120,44 @@ class Login extends CI_Controller{
 		
 	}
 
-	public function usuario_baneado($fecha_baneo,$today) {
-		$resto = $today-$fecha_baneo;
-		if ($resto < 0) {
-			
-			$datos["mensaje"]["texto"]="Esta cuenta ha sido bloqueada durante".$tiempoban.". Para más información contacte pongase en contacto con un administrador.";
+	public function usuario_baneado($ban,$today) {
+
+		//Faltaría meter áños, si los hay. o dejarlo solo en días.
+		$actual = strtotime(date("d-m-Y H:i:00",($today/1000)));
+		$fecha_baneo = strtotime(date("d-m-Y H:i:00",($ban/1000)));
+		//Si la fecha de hoy es menor q la del baneo
+		if ($actual < $fecha_baneo) {
+			$total_ban_fecha = "";
+			$resto = ($actual - $fecha_baneo);
+			if ($resto < 0) {
+				//paso a positivo el resto
+				$resto = $resto*(-1);
+			}
+			//Paso el valor(dado en milisegundos) a días
+			$c = $resto / (60*60*24);
+			//Redondeo a dos decimales
+			$c = round($c, 2);
+			//Si hay punto esq hay dos decimales q se convertirán en horas.
+			$cortar_dia = explode(".", $c);
+			if (count($cortar_dia) > 1) {
+				$dia = $cortar_dia[0];
+			}
+			$hora = $cortar_dia[1];
+			while ($hora > 24) {
+				$dia +=1;
+				$hora = $hora-24;
+			}
+
+				$total_ban_fecha.= $dia." días y ".$hora." horas";
+			} else {
+				$total_ban_fecha.=$c." días";
+			}
+			$datos["mensaje"]["texto"]="Esta cuenta ha sido bloqueada durante ".$total_ban_fecha.". Para más información contacte pongase en contacto con un administrador.";
 			$datos["mensaje"]['nivel']="error";
 			enmarcar($this, 'login/mensaje',$datos);
-		}
 	}
+
+
 
 	public function vista_login_administrador(){
 		$this-> load -> view('templates_admin/loginAdmin');

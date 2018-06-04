@@ -110,7 +110,7 @@
 <!-- 	<div style="width: 100%; padding-left: -10px; border: 1px solid red;"> -->
 <div class="table-responsive">
 
-	<code><pre><?php print_r($usuario->fecha_ban)?></pre></code>
+	<code><pre><?php print_r($usuario["fecha_ban"])?></pre></code>
 <table id="efectoTabla">
 	<thead>
 	<tr>

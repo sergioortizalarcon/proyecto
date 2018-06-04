@@ -50,8 +50,8 @@ class Director_model extends CI_Model {
 	//TODO
 	//Devuelve la id de un director sabiendo sus datos
 	public function getDirectorPorDatos($nombre, $apellido1, $apellido2, $fechaNacimiento) {
-		$datos = R::load('director', 'nombre like ? and apellido1 like ? and apellido2 like ? and fechaNacimiento like ?', [$nombre,$apellido1,$apellido2,$fechaNacimiento]);
-		return $datos;
+		$director =  R::find('director', 'nombre like ? and apellido1 like ? and apellido2 like ? and fechaNacimiento like ?', [$nombre,$apellido1,$apellido2,$fechaNacimiento]);
+		return $director;
 	}
 
 	//Devuelve un director mediante su id

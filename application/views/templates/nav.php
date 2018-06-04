@@ -15,7 +15,7 @@
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Peliculas<span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					<li class="dropdown-header">Peliculas</li>
-					<li><a href="<?=base_url()?>pelicula/crearGet">Nueva</a></li>
+					<li><a href="<?=base_url()?>pelicula/crear">Nueva</a></li>
 					<li><a href="<?=base_url()?>pelicula/listar">Listar</a></li>
 				</ul>
 			</li>

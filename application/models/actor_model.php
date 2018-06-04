@@ -47,12 +47,11 @@ class Actor_model extends CI_Model {
 		return $mostrar;
 	}
 
-	//TODO
 	//Devuelve la id de un actor sabiendo sus datos
-	/*public function getActorPorDatos($nombre, $apellido1, $apellido2, $fechaNacimiento) {
-		$datos = R::load('actor', 'nombre like ? and apellido1 like ? and apellido2 like ? and fechaNacimiento like ?', [$nombre,$apellido1,$apellido2,$fechaNacimiento]);
-		return $datos;
-		}*/
+	public function getDirectorPorDatos($nombre, $apellido1, $apellido2, $fechaNacimiento) {
+	    return R::find('director', 'nombre like ? and apellido1 like ? and apellido2 like ? and fechaNacimiento like ?', [$nombre,$apellido1,$apellido2,$fechaNacimiento]);
+	    //return $datos;
+	}
 
 	//Devuelve un actor mediante su id
 	public function getActorPorId($id_actor) {

@@ -214,6 +214,8 @@ function cancelarRegistro(){
 					</div>
 					
 					<input type="hidden" name="id_actor" value="<?= $body['actores']->id ?>" />
+					<input type="hidden" name="ambos" value="<?= $body['actores']->ambos ?>" />
+					<input type="hidden" name="fotoFija" value="<?= $body['actores']->foto ?>" />
 					
 					<div class="form-group">
 						<label for="idFecha">Fecha de nacimiento</label>

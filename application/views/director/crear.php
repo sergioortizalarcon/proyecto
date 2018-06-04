@@ -218,7 +218,7 @@ function cancelarRegistro(){
 			
 			<div class="form-group">
 				<label for="idFecha">Fecha de nacimiento</label><span class="obligatorio">*</span>
-				<input class="form-control" type="date" id="idFecha" name="fechaNacimiento" onchange="validarFecha();" />
+				<input class="form-control" placeholder="Fecha de nacimiento..." type="text" id="idFecha" name="fechaNacimiento" onchange="validarFecha();" />
 				<span class="avisos" id="aFecha">
 					Debes introducir una fecha válida(Anterior al día actual).
 				</span>
@@ -235,7 +235,7 @@ function cancelarRegistro(){
 			
 			<div class="form-group">
 				<label for="idBiografia">Biografía:</label>
-				<textarea class="form-control" name="biografia" id="idBiografia" placeholder="Biografía"></textarea>
+				<textarea class="form-control" name="biografia" id="idBiografia" placeholder="Biografía..."></textarea>
 			</div>
 				
 			<div class="form-group">

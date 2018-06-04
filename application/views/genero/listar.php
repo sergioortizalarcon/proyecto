@@ -23,7 +23,7 @@
 			});
 	});
 </script>
-<div class="content-wrapper">
+<div class="container content-wrapper">
 <section class="content-header">
 	 <h1>
         <i class="far fa-folder-open"></i>&nbsp;&nbsp;Listado de Géneros

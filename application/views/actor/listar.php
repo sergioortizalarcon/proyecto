@@ -1,4 +1,4 @@
-<div class="content-wrapper">
+<div class="container content-wrapper">
 	<section class="content-header">
 		<h1>
         	<i class="fas fa-address-card"></i>&nbsp;&nbsp;Listado de Actores

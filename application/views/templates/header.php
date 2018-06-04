@@ -3,7 +3,7 @@
   <h1>Scrollspy & Affix Example</h1>
   <p>The navbar is attached to the top of the page after you have scrolled a specified amount of pixels, and the links in the navbar are automatically updated based on scroll position.</p>
 </div>
-</header> -->
+</header> 
 <header>
 	<a href="<?= base_url() ?>">
 		<img class="center-block" alt="logo" height="200px" width="100%" src="<?=base_url()?>assets/img/crud.png">
@@ -21,4 +21,5 @@
 		       			</div>
 		    		</div>
 	    		</form>
-</div>
+</div>-->
+<header></header>

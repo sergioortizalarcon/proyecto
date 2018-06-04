@@ -150,7 +150,7 @@ function cancelarRegistro(){
 }
 </script>
 
-<div class="content-wrapper">
+<div class="container content-wrapper">
 	<section class="content-header">
       <h1>
         <i class="fas fa-user-tie"></i>&nbsp;&nbsp;Edición de directores

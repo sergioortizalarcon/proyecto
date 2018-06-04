@@ -1,4 +1,4 @@
-<div class="content-wrapper">
+<div class="container content-wrapper">
 	<section class="content">
 		<div id="tabs" style="height:500px;">
 			<ul>

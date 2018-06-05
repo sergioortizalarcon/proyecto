@@ -119,25 +119,28 @@ function validarApellido2() {
 }
 
 function validarFecha() {
+	var patron=new RegExp("^(19|20)+([0-9]{2})([/])([0-9]{1,2})([/])([0-9]{1,2})$");
 	var fecha = idFormulario.idFecha.value;
-	
-	if (fecha!= "") {
-		var fechaSis = new Date();
-		var anio = fechaSis.getFullYear();
-		var mes = fechaSis.getMonth()+1;
-		var dia = fechaSis.getDate();
-		mes = "0"+mes;
-		fechaSistema = anio + "-" + mes + "-" + dia
+	var fechaSeparada = fecha.split("/");
 
-		if (fechaSistema <= fecha) {
-			idFormulario.idFecha.style.borderColor="red";
-			document.getElementById("aFecha").style.display="initial";
-			fechaCorrecto = false;
-		} else {
-			fechaCorrecto = true;
-	        idFormulario.idFecha.style.borderColor="blue";
-			document.getElementById("aFecha").style.display="none";
-		}
+	var anio = fechaSeparada[0];
+	var mes = fechaSeparada[1];
+	var dia = fechaSeparada[2];
+
+	var fechaSis = new Date();
+	var anioHoy = fechaSis.getFullYear();
+	var mesHoy = fechaSis.getMonth()+1;
+	var diaHoy = fechaSis.getDate();
+	mesHoy = "0"+mesHoy;
+	
+	if (anio >= anioHoy && mes >= mesHoy && dia > diaHoy) {
+		idFormulario.idFecha.style.borderColor="red";
+		document.getElementById("aFecha").style.display="initial";
+		fechaCorrecto = false;
+	} else {
+		fechaCorrecto = true;
+        idFormulario.idFecha.style.borderColor="blue";
+		document.getElementById("aFecha").style.display="none";
 	}
 }
 
@@ -214,12 +217,13 @@ function cancelarRegistro(){
 					</div>
 					
 					<input type="hidden" name="id_actor" value="<?= $body['actores']->id ?>" />
+			        <!-- Si se deja el campo profesiones quitar esto -->
 					<input type="hidden" name="ambos" value="<?= $body['actores']->ambos ?>" />
 					<input type="hidden" name="fotoFija" value="<?= $body['actores']->foto ?>" />
 					
 					<div class="form-group">
-						<label for="idFecha">Fecha de nacimiento</label>
-						<input class="form-control" type="date" id="idFecha" value="<?= $body['actores']->fechaNacimiento ?>" name="fechaNacimiento" onchange="validarFecha();" />
+						<label for="idFecha">Fecha de nacimiento</label><span class="obligatorio">*</span>
+						<input class="form-control" value="<?= $body['actores']->fechaNacimiento ?>" type="text" id="idFecha" name="fechaNacimiento" onchange="validarFecha();" />
 						<span class="avisos" id="aFecha">
 							Debes introducir una fecha válida(Anterior al día actual).
 						</span>
@@ -234,6 +238,16 @@ function cancelarRegistro(){
 								</option>
 							<?php endforeach; ?>
 						</select>
+					</div>
+					
+					<!-- TEMPORAL, aqui se crean todas las profesiones directamente desde la misma vista -->
+					<div class="form-group">
+    					<label for="idProfesion">Profesiones:</label>
+    					<select class="form-control" id="idProfesion" name="profesion[]" multiple size="3">
+    						<option value="Actor">Actor</option>
+    						<option value="Director">Director</option>
+    						<option value="Guionista">Guionista</option>
+    					</select>
 					</div>
 					
 					<div class="form-group">

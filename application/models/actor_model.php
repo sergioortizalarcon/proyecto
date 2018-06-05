@@ -1,7 +1,7 @@
 <?php
 class Actor_model extends CI_Model {
 	//Se guarda en la tabla los datos del actor, comprueba que ya exista uno creado con los mismos datos
-	public function createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto) {
+	public function createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $cadProfesiones, $foto) {
 		if ($apellido2 == "") {
 			$actor = R::find('actor', 'nombre like ? and apellido1 like ? and fechaNacimiento like ?', [$nombre,$apellido1,$fechaNacimiento]);
 			if ($actor == null) {
@@ -12,6 +12,8 @@ class Actor_model extends CI_Model {
 				$actor -> fechaNacimiento = $fechaNacimiento;
 				$actor -> biografia = $biografia;
 				$actor -> ambos = $ambos;
+				//TEMPORAL (añade las profesiones a la BBDD) Si se quita, quitarlo de los parámetros de la función
+				$actor -> cadProfesiones = $cadProfesiones;
 				$actor -> rutaFoto = $foto;
 				$pais = R::load("paises", $id_pais);
 				$pais -> xownActorList[] = $actor;
@@ -30,6 +32,8 @@ class Actor_model extends CI_Model {
 				$actor -> fechaNacimiento = $fechaNacimiento;
 				$actor -> biografia = $biografia;
 				$actor -> ambos = $ambos;
+				//TEMPORAL (añade las profesiones a la BBDD) Si se quita, quitarlo de los parámetros de la función
+				$actor -> cadProfesiones = $cadProfesiones;
 				$actor -> rutaFoto = $foto;
 				$pais = R::load("paises", $id_pais);
 				$pais -> xownActorList[] = $actor;
@@ -59,7 +63,7 @@ class Actor_model extends CI_Model {
 	}
 
 	//Permite editar los datos del actor, no puede repetir datos ni meterlos vacios
-	public function editar($id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto) {
+	public function editar($id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $cadProfesiones, $foto) {
 		$actor = R::load ( 'actor', $id_actor );
 		$actoresTodos = R::find("actor",'nombre like ? and apellido1 like ? and apellido2 like ? and fechaNacimiento like ?', [$nombre,$apellido1,$apellido2,$fechaNacimiento]);
 		$pais = R::load("paises", $id_pais);
@@ -89,6 +93,11 @@ class Actor_model extends CI_Model {
 			if ($ambos != $actor->ambos) {
 				$actor->ambos = $ambos;
 				$cambio = true;
+			}
+			//TEMPORAL (añade las profesiones a la BBDD) Si se quita, quitarlo de los parámetros de la función
+			if ($cadProfesiones != $actor->cadProfesiones && $cadProfesiones != "") {
+			    $actor->cadProfesiones = $cadProfesiones;
+			    $cambio = true;
 			}
 			if($foto != "") {
 				$actor->rutaFoto = $foto;

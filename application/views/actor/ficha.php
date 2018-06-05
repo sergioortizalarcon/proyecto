@@ -17,12 +17,14 @@
 						<h4><?= $body['actores']->nombre ?> <?= $body['actores']->apellido1 ?> <?= $body['actores']->apellido2 ?></h4>
 					</div>
 				</div>
+				<h5><?= $body['actores']->cadProfesiones ?></h5>
 				<?php if($body['actores']->ambos == 'on'): ?>
 					<h5>Actor / Director</h5>
 				<?php else: ?>
 			    	<h5>Actor</h5>
 				<?php endif; ?>
 				<h5>Fecha de nacimiento: <?=$body['actores']->fechaNacimiento ?></h5>
+				<h5>País de nacimiento: <?= $body['actores']->paises['nombre'] ?></h5>
 			</div>
 			
 			<div id="bio">

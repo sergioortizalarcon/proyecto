@@ -121,29 +121,28 @@ function validarApellido2() {
 }
 
 function validarFecha() {
+    var patron=new RegExp("^(19|20)+([0-9]{2})([/])([0-9]{1,2})([/])([0-9]{1,2})$");
 	var fecha = idFormulario.idFecha.value;
-	idFormulario.idFecha.style.borderColor="red";
+	var fechaSeparada = fecha.split("/");
+
+	var anio = fechaSeparada[0];
+	var mes = fechaSeparada[1];
+	var dia = fechaSeparada[2];
+
+	var fechaSis = new Date();
+	var anioHoy = fechaSis.getFullYear();
+	var mesHoy = fechaSis.getMonth()+1;
+	var diaHoy = fechaSis.getDate();
+	mesHoy = "0"+mesHoy;
 	
-	if (fecha == "") {
+	if (anio >= anioHoy && mes >= mesHoy && dia > diaHoy) {
+		idFormulario.idFecha.style.borderColor="red";
 		document.getElementById("aFecha").style.display="initial";
 		fechaCorrecto = false;
 	} else {
-		var fechaSis = new Date();
-		var anio = fechaSis.getFullYear();
-		var mes = fechaSis.getMonth()+1;
-		var dia = fechaSis.getDate();
-		mes = "0"+mes;
-		fechaSistema = anio + "-" + mes + "-" + dia
-
-		if (fechaSistema <= fecha) {
-			idFormulario.idFecha.style.borderColor="red";
-			document.getElementById("aFecha").style.display="initial";
-			fechaCorrecto = false;
-		} else {
-			fechaCorrecto = true;
-	        idFormulario.idFecha.style.borderColor="blue";
-			document.getElementById("aFecha").style.display="none";
-		}
+		fechaCorrecto = true;
+        idFormulario.idFecha.style.borderColor="blue";
+		document.getElementById("aFecha").style.display="none";
 	}
 }
 
@@ -192,7 +191,7 @@ function cancelarRegistro(){
 	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>actor/crearPost" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Crear nuevo actor</legend>
-			
+			<!-- Si se deja el campo profesiones quitar esto -->
 			<div class="form-group">
 				<label for="ambos">¿Es también director?</label>
 				<input type="checkbox" name="ambos" id="ambos">
@@ -241,6 +240,16 @@ function cancelarRegistro(){
 					<?php foreach($body['paises'] as $pais):?>
 						<option value="<?=$pais -> id?>" <?=($pais -> nombre == "España")?"selected='selected'":" "?>"><?= $pais->nombre?></option>
 					<?php endforeach; ?>
+				</select>
+			</div>
+			
+			<!-- TEMPORAL, aqui se crean todas las profesiones directamente desde la misma vista -->
+			<div class="form-group">
+				<label for="idProfesion">Profesiones:</label>
+				<select class="form-control" id="idProfesion" name="profesion[]" multiple size="3">
+					<option value="Actor">Actor</option>
+					<option value="Director">Director</option>
+					<option value="Guionista">Guionista</option>
 				</select>
 			</div>
 			

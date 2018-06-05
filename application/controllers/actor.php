@@ -17,6 +17,18 @@ class actor extends CI_Controller {
 		$id_pais = isset($_POST['pais'])?$_POST['pais']:null;
 		$biografia = isset($_POST['biografia'])?$_POST['biografia']:null;
 		$ambos = isset($_POST['ambos'])?$_POST['ambos']:'off';
+		$profesiones = isset($_POST['profesion'])?$_POST['profesion']:null;
+		
+		//TEMPORAL (coge todas las profesiones y las junta en un string separado por comas)
+		$cadProfesiones ="";
+		for ($i=0;$i<count($profesiones);$i++) {
+		    echo "$profesiones[$i] <br/>";
+		    $cadProfesiones = $profesiones[$i].",".$cadProfesiones;
+		}
+		echo "<br/>$cadProfesiones";
+		$cadProfesiones = substr($cadProfesiones, 0, -1);
+		//Hasta aqui crea la cadena con todas las profesiones que se elijan separadas por una coma
+		//Si se quita, quitar el parámetro de la llamada al modelo
 
 		if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
 			# verificamos el formato de la imagen
@@ -48,7 +60,7 @@ class actor extends CI_Controller {
 				$debug = $this -> actor_model -> createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto);
 				$debug = $this -> director_model -> createDirector($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto);
 			} else {
-				$debug = $this -> actor_model -> createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto);
+				$debug = $this -> actor_model -> createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $cadProfesiones, $foto);
 			}
 			header ("location:".base_url ()."actor/crearOk");
 		}
@@ -101,6 +113,18 @@ class actor extends CI_Controller {
 		$biografia = isset($_POST['biografia'])?$_POST['biografia']:null;
 		$ambos = isset($_POST['ambos'])?$_POST['ambos']:'off';
 		$id_actor = $_POST ['id_actor'];
+		$profesiones = isset($_POST['profesion'])?$_POST['profesion']:null;
+		
+		//TEMPORAL (coge todas las profesiones y las junta en un string separado por comas)
+		$cadProfesiones ="";
+		for ($i=0;$i<count($profesiones);$i++) {
+		    echo "$profesiones[$i] <br/>";
+		    $cadProfesiones = $profesiones[$i].",".$cadProfesiones;
+		}
+		$cadProfesiones = substr($cadProfesiones, 0, -1);
+		echo $cadProfesiones;
+		//Hasta aqui crea la cadena con todas las profesiones que se elijan separadas por una coma
+		//Si se quita, quitar el parámetro de la llamada al modelo
 
 		if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
 			# verificamos el formato de la imagen
@@ -128,30 +152,28 @@ class actor extends CI_Controller {
 		}
 
 		try {
-		    echo $ambos;
 		    if ($ambos == 'on') {
-		        //$this->actor_model->editar ( $id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto);
+		        $this->actor_model->editar ( $id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto);
 		        //TODO
 		        //Comprueba que ya exista un director mediante la id, si es así lo modifica, si no, lo crea nuevo
 		        
 		        
-		        $director = $this->director_model->getDirectorPorDatos($nombre, $apellido1, $apellido2, $fechaNacimiento);
+		        //$director = $this->director_model->getDirectorPorDatos($nombre, $apellido1, $apellido2, $fechaNacimiento);
 		        //echo $director[];
 		        //echo $director->nombre;
-		        echo "ID DIRECTOR $director->nombre";
 		        //if (id_director != null) {
-		        //$this->director_model->editar ( $id_director, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto);
+		        $this->director_model->editar ( $id_director, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto);
 		        //}
 		    } else {
-				$this->actor_model->editar ( $id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto);
+				$this->actor_model->editar ( $id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $cadProfesiones, $foto);
 			}
-			//header ("location:".base_url ()."actor/editarOk");
+			header ("location:".base_url ()."actor/editarOk");
 		}
 		catch (Exception $e) {
-			/*$datos['mensaje']['texto'] = "Actor ya existente";
+			$datos['mensaje']['texto'] = "Actor ya existente";
 			$datos['mensaje']['nivel'] = 'error';
 			$datos['mensaje']['link'] = "actor/crear";
-			enmarcar($this,"actor/mensaje",$datos);*/
+			enmarcar($this,"actor/mensaje",$datos);
 		}
 	}
 
@@ -177,7 +199,7 @@ class actor extends CI_Controller {
 	}
 
 	public function abrirFicha() {
-		$this->load->model ( 'actor_model' );
+	    $this->load->model ( 'actor_model' );
 		$id_actor = $_GET ['id_actor'];
 		$datos ['body']['actores'] = $this->actor_model->getActorPorId ( $id_actor );
 		enmarcar($this, "actor/ficha",$datos);

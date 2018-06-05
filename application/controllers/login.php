@@ -14,6 +14,7 @@ class Login extends CI_Controller{
 
 	public function loginPost(){
 		$this -> load ->model("usuario_model");
+		$this -> load ->model("administrador_model");
 		$today = isset($_POST["cntrl"])?$_POST["cntrl"]:null;
 		$usuario = isset($_POST["nUsuario"])?$_POST["nUsuario"]:null;
 		$pwd = isset($_POST["hash_passwrd"])?$_POST["hash_passwrd"]:null;
@@ -40,14 +41,13 @@ class Login extends CI_Controller{
 						header("location:".base_url()."login/usuario_baneado?time=".$resto);
 						} else {
 							$idUser = $identificarse['id'];
-							 $this -> usuario_model -> update_estado($idUser,1,0,' ');
+							 $this -> administrador_model -> editar_estado($idUser,1,0,' ');
 							 header("location:".base_url()."login/desbaneo");
 						}
 					} else {
 						$aliasLogeado  = $identificarse["alias"];
 						setcookie("usuario", $aliasLogeado,0,"/");
 						session_start();
-						$this -> load ->model("administrador_model");
 						$_SESSION['rol'] = $this -> administrador_model -> obtener_rol_user($identificarse["roles_id"]);
 						$_SESSION['idUser'] = $identificarse["id"];
 						if (strcmp($recordar,"recordar") === 0) {
@@ -121,7 +121,7 @@ class Login extends CI_Controller{
 		$datos["mensaje"]["texto"]="Su cuenta ha sido desbloqueada. Redirigiendo al login...";
 		$datos["mensaje"]['nivel']="ok";
 		enmarcar($this, 'login/mensaje',$datos);
-		header("Refresh:3;url=".base_url()."login/loginForm");
+		header("Refresh:3;url=".base_url()."login/loginGet");
 	}
 
 

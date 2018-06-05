@@ -33,12 +33,16 @@ class Login extends CI_Controller{
 						$resto = ($actual - $fecha_baneo);
 
 						if ($actual < $fecha_baneo) {
-							if ($resto < 0) { //comprueba lo mismo q el anterior if... redundante...
+							if ($resto < 0) {
 								//paso a positivo el resto
 								$resto = $resto*(-1);
 							}
-						}
 						header("location:".base_url()."login/usuario_baneado?time=".$resto);
+						} else {
+							$idUser = $identificarse['id'];
+							 $this -> usuario_model -> update_estado($idUser,1,0,' ');
+							 header("location:".base_url()."login/desbaneo");
+						}
 					} else {
 						$aliasLogeado  = $identificarse["alias"];
 						setcookie("usuario", $aliasLogeado,0,"/");
@@ -108,9 +112,17 @@ class Login extends CI_Controller{
 			enmarcar($this, 'login/mensaje',$datos);
 			header("Refresh:3;url=".base_url()."login/loginGet");
 		}
-		
 	}
 
+
+	/*REVISAR ____ TEMPORAL  */
+
+	public function desbaneo() {
+		$datos["mensaje"]["texto"]="Su cuenta ha sido desbloqueada. Redirigiendo al login...";
+		$datos["mensaje"]['nivel']="ok";
+		enmarcar($this, 'login/mensaje',$datos);
+		header("Refresh:3;url=".base_url()."login/loginForm");
+	}
 
 
 	public function loginOut(){

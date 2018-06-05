@@ -217,8 +217,6 @@ function cancelarRegistro(){
 					</div>
 					
 					<input type="hidden" name="id_actor" value="<?= $body['actores']->id ?>" />
-			        <!-- Si se deja el campo profesiones quitar esto -->
-					<input type="hidden" name="ambos" value="<?= $body['actores']->ambos ?>" />
 					<input type="hidden" name="fotoFija" value="<?= $body['actores']->foto ?>" />
 					
 					<div class="form-group">
@@ -240,7 +238,6 @@ function cancelarRegistro(){
 						</select>
 					</div>
 					
-					<!-- TEMPORAL, aqui se crean todas las profesiones directamente desde la misma vista -->
 					<div class="form-group">
     					<label for="idProfesion">Profesiones:</label>
     					<select class="form-control" id="idProfesion" name="profesion[]" multiple size="3">

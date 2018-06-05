@@ -19,14 +19,17 @@ class actor extends CI_Controller {
 		$ambos = isset($_POST['ambos'])?$_POST['ambos']:'off';
 		$profesiones = isset($_POST['profesion'])?$_POST['profesion']:null;
 		
+		$fechaCambio = str_replace("/", "-", $fechaNacimiento);
+		
 		//TEMPORAL (coge todas las profesiones y las junta en un string separado por comas)
-		$cadProfesiones ="";
-		for ($i=0;$i<count($profesiones);$i++) {
-		    echo "$profesiones[$i] <br/>";
-		    $cadProfesiones = $profesiones[$i].",".$cadProfesiones;
+		if ($profesiones != null) {
+			$cadProfesiones ="";
+			for ($i=0;$i<count($profesiones);$i++) {
+			    echo "$profesiones[$i] <br/>";
+			    $cadProfesiones = $profesiones[$i].",".$cadProfesiones;
+			}
+			$cadProfesiones = substr($cadProfesiones, 0, -1);
 		}
-		echo "<br/>$cadProfesiones";
-		$cadProfesiones = substr($cadProfesiones, 0, -1);
 		//Hasta aqui crea la cadena con todas las profesiones que se elijan separadas por una coma
 		//Si se quita, quitar el parámetro de la llamada al modelo
 
@@ -46,8 +49,8 @@ class actor extends CI_Controller {
 
 				if ($_FILES["foto"]["size"] < 25000000) {
 					//Tamaño y extensión correctos, guardar imagen en carpeta
-					copy($_FILES["foto"]['tmp_name'], "assets/img/foto/".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension);
-					$foto = "assets/img/foto/".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
+					copy($_FILES["foto"]['tmp_name'], "assets/img/foto/".$nombre."_".$apellido1."_".$fechaCambio.".".$extension);
+					$foto = "assets/img/foto/".$nombre."_".$apellido1."_".$fechaCambio.".".$extension;
 				}
 			}
 		} else {
@@ -111,7 +114,6 @@ class actor extends CI_Controller {
 		$fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
 		$id_pais = isset($_POST['pais'])?$_POST['pais']:null;
 		$biografia = isset($_POST['biografia'])?$_POST['biografia']:null;
-		$ambos = isset($_POST['ambos'])?$_POST['ambos']:'off';
 		$id_actor = $_POST ['id_actor'];
 		$profesiones = isset($_POST['profesion'])?$_POST['profesion']:null;
 		
@@ -153,7 +155,7 @@ class actor extends CI_Controller {
 
 		try {
 		    if ($ambos == 'on') {
-		        $this->actor_model->editar ( $id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto);
+		        $this->actor_model->editar ( $id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $foto);
 		        //TODO
 		        //Comprueba que ya exista un director mediante la id, si es así lo modifica, si no, lo crea nuevo
 		        
@@ -162,10 +164,10 @@ class actor extends CI_Controller {
 		        //echo $director[];
 		        //echo $director->nombre;
 		        //if (id_director != null) {
-		        $this->director_model->editar ( $id_director, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto);
+		        $this->director_model->editar ( $id_director, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $foto);
 		        //}
 		    } else {
-				$this->actor_model->editar ( $id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $cadProfesiones, $foto);
+				$this->actor_model->editar ( $id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto);
 			}
 			header ("location:".base_url ()."actor/editarOk");
 		}

@@ -190,12 +190,6 @@ function cancelarRegistro(){
 <div id="creator">
 	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>actor/crearPost" method="post" enctype="multipart/form-data">
 		<fieldset>
-			<legend>Crear nuevo actor</legend>
-			<!-- Si se deja el campo profesiones quitar esto -->
-			<div class="form-group">
-				<label for="ambos">¿Es también director?</label>
-				<input type="checkbox" name="ambos" id="ambos">
-			</div>
 			
 			<small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>
 			
@@ -243,7 +237,6 @@ function cancelarRegistro(){
 				</select>
 			</div>
 			
-			<!-- TEMPORAL, aqui se crean todas las profesiones directamente desde la misma vista -->
 			<div class="form-group">
 				<label for="idProfesion">Profesiones:</label>
 				<select class="form-control" id="idProfesion" name="profesion[]" multiple size="3">

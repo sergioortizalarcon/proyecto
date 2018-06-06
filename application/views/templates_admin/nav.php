@@ -54,8 +54,8 @@
               </a>
             </li>
             <li class="treeview">
-              <a href="#" >&nbsp;&nbsp;&nbsp;<i class="far fa-newspaper"></i>&nbsp;
-                <span>Artículos</span>
+              <a href="#" >&nbsp;&nbsp;&nbsp;<i class="fas fa-door-open"></i>&nbsp;
+                <span>Vista usuario</span>
               </a>
             </li>
           </ul>

@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="<?= base_url(); ?>assets/img/images/favicon.ico">
 
 <link rel="stylesheet" href="<?=base_url()?>assets/css/dataTables.min.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/css/jquery-ui.css">

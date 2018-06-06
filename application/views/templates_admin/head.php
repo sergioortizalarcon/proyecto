@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Panel administrador</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/img/images/favicon.ico">
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css" />    
     <link href="<?php echo base_url(); ?>assets/css/fontawesome-all.css" rel="stylesheet" type="text/css" />
 

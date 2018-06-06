@@ -1,4 +1,8 @@
-<div class="content-wrapper">
+<?php if ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")):?>
+	<div class="content-wrapper">
+<?php else: ?>
+	<div class="container content-wrapper">
+<?php endif;?>
 	<section class="content-header">
 		<h1>
         	<i class="fas fa-language"></i>&nbsp;&nbsp;Listado de idiomas

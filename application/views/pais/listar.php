@@ -1,8 +1,8 @@
-<?php if ($_SESSION['rol'] == "administrador"):?>
-		<div class="content-wrapper">
-	<?php else: ?>
-		<div class="container content-wrapper">
-	<?php endif;?>
+<?php if ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")):?>
+	<div class="content-wrapper">
+<?php else: ?>
+	<div class="container content-wrapper">
+<?php endif;?>
 	<section class="content-header">
       <h1>
         <i class="fas fa-globe"></i>&nbsp;&nbsp;Listado de paises

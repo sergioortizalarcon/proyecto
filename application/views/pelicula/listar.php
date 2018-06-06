@@ -1,5 +1,8 @@
-<div class="container content-wrapper">
-    <!-- Content Header (Page header) -->
+<?php if ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")):?>
+  <div class="content-wrapper">
+<?php else: ?>
+  <div class="container content-wrapper">
+<?php endif;?>
     <section class="content-header">
       <h1>
         <i class="fas fa-film"></i> Gestión de Películas

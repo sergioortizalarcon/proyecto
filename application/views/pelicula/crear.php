@@ -45,10 +45,10 @@ function validarTitulo() {
 	if (titulo != "") {
 
 		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ/d]{2,30}$/;
-		if (expReg.test(nombre)){
-			nombreCorrecto = true;
+		if (expReg.test(titulo)){
+			tituloCorrecto = true;
 			correcto=true;
-			idFormulario.idNombre.style.borderColor="blue";
+			idFormulario.idTitulo.style.borderColor="blue";
 			document.getElementById("aNombre").style.display="none";
 		} else {
 			idFormulario.idNombre.style.borderColor="red";
@@ -92,6 +92,9 @@ function validarTitulo() {
 			<div class="form-group">
 				<label for="idTitulo">Titulo: </label><span class="obligatorio">*</span>
 				<input class="form-control" type="text" id="idTitulo" name="titulo" placeholder="Título de la película.." />
+				<span class="avisos" id="atitulo">
+					Debes escribir un nombre válido(3 a 20 caracteres no númericos o simbolos).
+				</span>
 			</div>	
 				
 			<div class="form-group">

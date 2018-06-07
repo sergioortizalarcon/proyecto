@@ -39,7 +39,7 @@ function validarNombre() {
 	nombre = idFormulario.idNombre.value.trim();
 	if (nombre != "") {
 
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,20}$/;
 		if (expReg.test(nombre)){
 			nombreCorrecto = true;
 			correcto=true;
@@ -69,7 +69,7 @@ function validarApellido1() {
 	apellido1 = idFormulario.idApellido1.value.trim();
 	if (apellido1 != "") {
 		
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,20}$/;
 		if (expReg.test(apellido1)){
 			apellido1Correcto = true;
 			correcto=true;
@@ -99,7 +99,7 @@ function validarApellido2() {
 	apellido2 = idFormulario.idApellido2.value.trim();
 	if (apellido2 != "") {
 		
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,20}$/;
 		if (expReg.test(apellido2)){
 			apellido2Correcto = true;
 			correcto=true;
@@ -121,7 +121,6 @@ function validarApellido2() {
 }
 
 function validarFecha() {
-    var patron=new RegExp("^(19|20)+([0-9]{2})([/])([0-9]{1,2})([/])([0-9]{1,2})$");
 	var fecha = idFormulario.idFecha.value;
 	var fechaSeparada = fecha.split("/");
 
@@ -139,10 +138,15 @@ function validarFecha() {
 		idFormulario.idFecha.style.borderColor="red";
 		document.getElementById("aFecha").style.display="initial";
 		fechaCorrecto = false;
+		if (correcto == true) {
+			document.getElementById('aFecha').focus();
+			correcto=false;
+		}
 	} else {
 		fechaCorrecto = true;
         idFormulario.idFecha.style.borderColor="blue";
 		document.getElementById("aFecha").style.display="none";
+		correcto = true;
 	}
 }
 
@@ -198,7 +202,7 @@ function cancelarRegistro(){
 				<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validarNombre();" onchange="mayuscula(this.value, this.id);"
 				placeholder="Nombre..." data-toogle="tooltip" data-placement="left" title="Escribe un nombre" />
 				<span class="avisos" id="aNombre">
-					Debes escribir un nombre válido(3 a 20 caracteres no númericos o simbolos).
+					Debes escribir un nombre válido(2 a 20 caracteres no númericos o simbolos).
 				</span>
 			</div>
 			
@@ -207,7 +211,7 @@ function cancelarRegistro(){
 				<input class="form-control" type="text" id="idApellido1" name="apellido1" onkeyup="validarApellido1();"  onchange="mayuscula(this.value, this.id);"
 				placeholder="Apellido..." data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
 				<span class="avisos" id="aApellido1">
-					Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
+					Debes escribir un apellido válido(2 a 20 caracteres no númericos o simbolos).
 				</span>
 			</div>
 			
@@ -216,7 +220,7 @@ function cancelarRegistro(){
 				<input class="form-control" type="text" id="idApellido2" name="apellido2" onkeyup="validarApellido2();"  onchange="mayuscula(this.value, this.id);"
 				placeholder="Apellido..." data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
 				<span class="avisos" id="aApellido2">
-					Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
+					Debes escribir un apellido válido(2 a 20 caracteres no númericos o simbolos).
 				</span>
 			</div>
 			
@@ -264,7 +268,7 @@ function cancelarRegistro(){
 			
 			<div class="nav navbar-form navbar-right">
 				<input type="button" class="btn btn-default" id="idCancelar" name="cancelar" value="Cancelar registro" onclick="cancelarRegistro();" />
-				<input type="button" class="btn btn-default" id="idRegistro" name="registrarse" disabled="true" value="Registrars Persona" onclick="validar();" />
+				<input type="button" class="btn btn-default" id="idRegistro" name="registrarse" disabled="true" value="Registrar Persona" onclick="validar();" />
 			</div>
 			
 		</fieldset>

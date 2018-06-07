@@ -22,14 +22,16 @@
 			
 
 			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Actores<span class="caret"></span></a>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Reparto<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li class="dropdown-header">Actores</li>
-					<li><a href="<?=base_url()?>actor/crear">Nueva</a></li>
-					<li><a href="<?=base_url()?>actor/listar">Listar</a></li>
+					<li class="dropdown-header">Reparto</li>
+					<li><a href="<?=base_url()?>reparto/crear">Nueva</a></li>
+					<li><a href="<?=base_url()?>reparto/listar">Listar</a></li>
 				</ul>
 			</li>
 			
+			<!--
+			Por si se quiere diferenciar en el futuro
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Directores<span class="caret"></span></a>
 				<ul class="dropdown-menu">
@@ -38,6 +40,7 @@
 					<li><a href="<?=base_url()?>director/listar">Listar</a></li>
 				</ul>
 			</li>
+			-->
 			
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Noticias<span class="caret"></span></a>

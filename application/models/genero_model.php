@@ -17,7 +17,7 @@ class genero_model extends CI_Model {
 		R::close ();
 	}
 	public function getTodos($filtro='') {
-		$todos = R::find ( "generos", "nombre like ?", [
+		$todos = R::find ( "generos", "nombre like ? order by nombre ASC", [
 				"%" . $filtro . "%"
 		] );
 		return $todos;

@@ -8,7 +8,6 @@ class reparto extends CI_Controller {
 
 	public function crearPost() {
 		$this->load->model('reparto_model');
-		$this->load->model('director_model');
 
 		$nombre = isset($_POST['nombre'])?$_POST['nombre']:null;
 		$apellido1 = isset($_POST['apellido1'])?$_POST['apellido1']:null;
@@ -111,16 +110,12 @@ class reparto extends CI_Controller {
 		$id_reparto = $_POST ['id_reparto'];
 		$profesiones = isset($_POST['profesion'])?$_POST['profesion']:null;
 		
-		//TEMPORAL (coge todas las profesiones y las junta en un string separado por comas)
 		$cadProfesiones ="";
 		for ($i=0;$i<count($profesiones);$i++) {
 		    echo "$profesiones[$i] <br/>";
 		    $cadProfesiones = $profesiones[$i].",".$cadProfesiones;
 		}
 		$cadProfesiones = substr($cadProfesiones, 0, -1);
-		echo $cadProfesiones;
-		//Hasta aqui crea la cadena con todas las profesiones que se elijan separadas por una coma
-		//Si se quita, quitar el parámetro de la llamada al modelo
 
 		if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
 			# verificamos el formato de la imagen

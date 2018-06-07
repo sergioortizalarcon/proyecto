@@ -21,7 +21,6 @@ class actor extends CI_Controller {
 		
 		$fechaCambio = str_replace("/", "-", $fechaNacimiento);
 		
-		//TEMPORAL (coge todas las profesiones y las junta en un string separado por comas)
 		if ($profesiones != null) {
 			$cadProfesiones ="";
 			for ($i=0;$i<count($profesiones);$i++) {
@@ -30,8 +29,6 @@ class actor extends CI_Controller {
 			}
 			$cadProfesiones = substr($cadProfesiones, 0, -1);
 		}
-		//Hasta aqui crea la cadena con todas las profesiones que se elijan separadas por una coma
-		//Si se quita, quitar el parámetro de la llamada al modelo
 
 		if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
 			# verificamos el formato de la imagen
@@ -58,19 +55,15 @@ class actor extends CI_Controller {
 		}
 
 		try {
-			//Si la persona es a la vez actor y director se guarda en las dos tablas, si no, solo en la de actor
-			if ($ambos == 'on') {
-				$debug = $this -> actor_model -> createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto);
-				$debug = $this -> director_model -> createDirector($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $foto);
-			} else {
-				$debug = $this -> actor_model -> createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $ambos, $cadProfesiones, $foto);
-			}
+			$debug = $this -> actor_model -> createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto);
+			
 			header ("location:".base_url ()."actor/crearOk");
 		}
 		catch (Exception $e) {
 			$datos['mensaje']['texto'] = "Actor ya existente";
 			$datos['mensaje']['nivel'] = 'error';
-			$datos['mensaje']['link'] = "actor/crear";
+			$datos['mensaje']['link']['listar'] = "actor";
+			$datos['mensaje']['link']['crear'] = "actor";
 			enmarcar($this,"actor/mensaje",$datos);
 		}
 	}
@@ -78,7 +71,8 @@ class actor extends CI_Controller {
 	public function crearOK() {
 		$datos['mensaje']['texto'] = "Actor creado correctamente";
 		$datos['mensaje']['nivel'] = 'ok';
-		$datos['mensaje'] ['link'] = "actor/listar";
+		$datos['mensaje']['link']['listar'] = "actor";
+		$datos['mensaje']['link']['crear'] = "actor";
 		enmarcar($this, "actor/mensaje",$datos);
 	}
 
@@ -154,27 +148,14 @@ class actor extends CI_Controller {
 		}
 
 		try {
-		    if ($ambos == 'on') {
-		        $this->actor_model->editar ( $id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $foto);
-		        //TODO
-		        //Comprueba que ya exista un director mediante la id, si es así lo modifica, si no, lo crea nuevo
-		        
-		        
-		        //$director = $this->director_model->getDirectorPorDatos($nombre, $apellido1, $apellido2, $fechaNacimiento);
-		        //echo $director[];
-		        //echo $director->nombre;
-		        //if (id_director != null) {
-		        $this->director_model->editar ( $id_director, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $foto);
-		        //}
-		    } else {
-				$this->actor_model->editar ( $id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto);
-			}
+		    $this->actor_model->editar ( $id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto);
 			header ("location:".base_url ()."actor/editarOk");
 		}
 		catch (Exception $e) {
 			$datos['mensaje']['texto'] = "Actor ya existente";
 			$datos['mensaje']['nivel'] = 'error';
-			$datos['mensaje']['link'] = "actor/crear";
+			$datos['mensaje']['link']['listar'] = "actor";
+			$datos['mensaje']['link']['crear'] = "actor";
 			enmarcar($this,"actor/mensaje",$datos);
 		}
 	}
@@ -182,7 +163,8 @@ class actor extends CI_Controller {
 	public function editarOK() {
 		$datos['mensaje']['texto'] = "Actor creado correctamente";
 		$datos['mensaje']['nivel'] = 'ok';
-		$datos['mensaje'] ['link'] = "actor/listar";
+		$datos['mensaje']['link']['listar'] = "actor";
+		$datos['mensaje']['link']['crear'] = "actor";
 		enmarcar($this, "actor/mensaje",$datos);
 	}
 
@@ -205,25 +187,6 @@ class actor extends CI_Controller {
 		$id_actor = $_GET ['id_actor'];
 		$datos ['body']['actores'] = $this->actor_model->getActorPorId ( $id_actor );
 		enmarcar($this, "actor/ficha",$datos);
-	}
-	
-	//Crea un director copiando los mismos datos del actor
-	public function crearDirector() {
-	    $this->load->model('actor_model');
-	    $this->load->model('director_model');
-	    $id_actor = $_POST ['id_actor'];
-	    
-	    try {
-	        $datos = $this->actor_model->getActorPorId($id_actor);
-	        $datos->ambos = 'on';
-	        $this->director_model->createDirector($datos->nombre, $datos->apellido1, $datos->apellido2, $datos->fechaNacimiento, $datos->paisesId, $datos->biografia, $datos->ambos, $datos->rutaFoto);
-	        header ("location:".base_url ()."director/editarOk");
-	    } catch (Exception $e) {
-	        $datos['mensaje']['texto'] = "Director ya existente";
-	        $datos['mensaje']['nivel'] = 'error';
-	        $datos['mensaje']['link'] = "director/crear";
-	        enmarcar($this,"actor/mensaje",$datos);
-	    }
 	}
 }
 ?>

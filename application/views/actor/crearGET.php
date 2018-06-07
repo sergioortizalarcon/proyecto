@@ -183,7 +183,7 @@ function cancelarRegistro(){
 	<section class="content-header">
       <h1>
         <i class="fas fa-address-card"></i>
-        &nbsp;&nbsp;Crear nueva ficha para Actor/Actriz
+        &nbsp;&nbsp;Crear nueva ficha
       </h1>
     </section>
 	<section class="content">
@@ -264,7 +264,7 @@ function cancelarRegistro(){
 			
 			<div class="nav navbar-form navbar-right">
 				<input type="button" class="btn btn-default" id="idCancelar" name="cancelar" value="Cancelar registro" onclick="cancelarRegistro();" />
-				<input type="button" class="btn btn-default" id="idRegistro" name="registrarse" disabled="true" value="Registrarse" onclick="validar();" />
+				<input type="button" class="btn btn-default" id="idRegistro" name="registrarse" disabled="true" value="Registrars Persona" onclick="validar();" />
 			</div>
 			
 		</fieldset>

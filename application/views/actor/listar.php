@@ -5,7 +5,7 @@
 <?php endif;?>
 	<section class="content-header">
 		<h1>
-        	<i class="fas fa-address-card"></i>&nbsp;&nbsp;Listado de Actores
+        	<i class="fas fa-address-card"></i>&nbsp;&nbsp;Listado de Reparto
         	<small>Add, Edit, Delete</small>
 		</h1>
 	</section>
@@ -24,7 +24,7 @@
 				<thead>
 					<tr>
 						<th>Foto</th>
-						<th>Nombre actor</th>
+						<th>Nombre</th>
 						<th>Primer apellido</th>
 						<th>Segundo apellido</th>
 						<th>Fecha de nacimiento</th>

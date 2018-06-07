@@ -173,7 +173,7 @@ function cancelarRegistro(){
 	var cancelarRegistro = confirm("¿Realmente quieres cancelar el registro?");
 
 	if (cancelarRegistro) {
-		window.location.href = "<?=base_url()?>actor/listar";
+		window.location.href = "<?=base_url()?>reparto/listar";
 	}
 }
 </script>
@@ -188,7 +188,7 @@ function cancelarRegistro(){
     </section>
 	<section class="content">
 <div id="creator">
-	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>actor/crearPost" method="post" enctype="multipart/form-data">
+	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>reparto/crearPost" method="post" enctype="multipart/form-data">
 		<fieldset>
 			
 			<small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>

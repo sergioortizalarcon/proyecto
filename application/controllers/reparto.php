@@ -1,13 +1,13 @@
 <?php
-class actor extends CI_Controller {
+class reparto extends CI_Controller {
 	public function crear() {
 		$this->load->model('pais_model');
 		$datos['body']['paises'] = $this->pais_model->getTodos();
-		enmarcar($this, "actor/crearGET", $datos);
+		enmarcar($this, "reparto/crear", $datos);
 	}
 
 	public function crearPost() {
-		$this->load->model('actor_model');
+		$this->load->model('reparto_model');
 		$this->load->model('director_model');
 
 		$nombre = isset($_POST['nombre'])?$_POST['nombre']:null;
@@ -55,25 +55,25 @@ class actor extends CI_Controller {
 		}
 
 		try {
-			$debug = $this -> actor_model -> createActor($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto);
+			$debug = $this -> reparto_model -> createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto);
 			
-			header ("location:".base_url ()."actor/crearOk");
+			header ("location:".base_url ()."reparto/crearOk");
 		}
 		catch (Exception $e) {
-			$datos['mensaje']['texto'] = "Actor ya existente";
+			$datos['mensaje']['texto'] = "Persona ya existente";
 			$datos['mensaje']['nivel'] = 'error';
-			$datos['mensaje']['link']['listar'] = "actor";
-			$datos['mensaje']['link']['crear'] = "actor";
-			enmarcar($this,"actor/mensaje",$datos);
+			$datos['mensaje']['link']['listar'] = "reparto";
+			$datos['mensaje']['link']['crear'] = "reparto";
+			enmarcar($this,"reparto/mensaje",$datos);
 		}
 	}
 
 	public function crearOK() {
-		$datos['mensaje']['texto'] = "Actor creado correctamente";
+		$datos['mensaje']['texto'] = "Persona creado correctamente";
 		$datos['mensaje']['nivel'] = 'ok';
-		$datos['mensaje']['link']['listar'] = "actor";
-		$datos['mensaje']['link']['crear'] = "actor";
-		enmarcar($this, "actor/mensaje",$datos);
+		$datos['mensaje']['link']['listar'] = "reparto";
+		$datos['mensaje']['link']['crear'] = "reparto";
+		enmarcar($this, "reparto/mensaje",$datos);
 	}
 
 	public function listar() {
@@ -81,25 +81,25 @@ class actor extends CI_Controller {
 	}
 
 	public function listarPost() {
-		$this->load->model('actor_model');
-		$datos['body']['actores'] = $this->actor_model->getAll();
-		enmarcar($this, 'actor/listar',$datos);
+		$this->load->model('reparto_model');
+		$datos['body']['repartos'] = $this->reparto_model->getAll();
+		enmarcar($this, 'reparto/listar',$datos);
 	}
 
 	public function editar() {
 		//TODO
 		//Hay que conseguir el id del director para pasarselo al modelo y que se modifique en las dos tablas
 
-		$this->load->model ( 'actor_model' );
+		$this->load->model ( 'reparto_model' );
 		$this->load->model('pais_model');
-		$id_actor = $_POST ['id_actor'];
-		$datos ['body']['actores'] = $this->actor_model->getActorPorId ( $id_actor );
+		$id_reparto = $_POST ['id_reparto'];
+		$datos ['body']['repartos'] = $this->reparto_model->getRepartoPorId ( $id_reparto );
 		$datos['body']['paises'] = $this->pais_model->getTodos();
-		enmarcar ( $this, 'actor/editar', $datos);
+		enmarcar ( $this, 'reparto/editar', $datos);
 	}
 
 	public function editarPost() {
-		$this->load->model ( 'actor_model' );
+		$this->load->model ( 'reparto_model' );
 		$this->load->model ( 'director_model' );
 		$nombre = isset($_POST['nombre'])?$_POST['nombre']:null;
 		//$nombre = $_POST['nombre'];
@@ -108,7 +108,7 @@ class actor extends CI_Controller {
 		$fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:null;
 		$id_pais = isset($_POST['pais'])?$_POST['pais']:null;
 		$biografia = isset($_POST['biografia'])?$_POST['biografia']:null;
-		$id_actor = $_POST ['id_actor'];
+		$id_reparto = $_POST ['id_reparto'];
 		$profesiones = isset($_POST['profesion'])?$_POST['profesion']:null;
 		
 		//TEMPORAL (coge todas las profesiones y las junta en un string separado por comas)
@@ -138,7 +138,7 @@ class actor extends CI_Controller {
 
 				if ($_FILES["foto"]["size"] < 25000000) {
 					//Tamaño y extensión correctos, guardar imagen en carpeta
-					//echo "<br />assets/img/fotoActor/Actor_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
+					//echo "<br />assets/img/fotoReparto/Reparto_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
 					copy($_FILES["foto"]['tmp_name'], "assets/img/foto/".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension);
 					$foto = "assets/img/foto/".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
 				}
@@ -148,24 +148,24 @@ class actor extends CI_Controller {
 		}
 
 		try {
-		    $this->actor_model->editar ( $id_actor, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto);
-			header ("location:".base_url ()."actor/editarOk");
+		    $this->reparto_model->editar ( $id_reparto, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto);
+			header ("location:".base_url ()."reparto/editarOk");
 		}
 		catch (Exception $e) {
-			$datos['mensaje']['texto'] = "Actor ya existente";
+			$datos['mensaje']['texto'] = "Persona ya existente";
 			$datos['mensaje']['nivel'] = 'error';
-			$datos['mensaje']['link']['listar'] = "actor";
-			$datos['mensaje']['link']['crear'] = "actor";
-			enmarcar($this,"actor/mensaje",$datos);
+			$datos['mensaje']['link']['listar'] = "reparto";
+			$datos['mensaje']['link']['crear'] = "reparto";
+			enmarcar($this,"reparto/mensaje",$datos);
 		}
 	}
 
 	public function editarOK() {
-		$datos['mensaje']['texto'] = "Actor creado correctamente";
+		$datos['mensaje']['texto'] = "Persona creada correctamente";
 		$datos['mensaje']['nivel'] = 'ok';
-		$datos['mensaje']['link']['listar'] = "actor";
-		$datos['mensaje']['link']['crear'] = "actor";
-		enmarcar($this, "actor/mensaje",$datos);
+		$datos['mensaje']['link']['listar'] = "reparto";
+		$datos['mensaje']['link']['crear'] = "reparto";
+		enmarcar($this, "reparto/mensaje",$datos);
 	}
 
 	public function borrar() {
@@ -175,18 +175,18 @@ class actor extends CI_Controller {
 	}
 
 	public function borrarPost() {
-		$this->load->model ( 'actor_model' );
-		$id_actor = $_POST ['id_actor'];
-		$this->actor_model->borrar ( $id_actor );
+		$this->load->model ( 'reparto_model' );
+		$id_reparto = $_POST ['id_reparto'];
+		$this->reparto_model->borrar ( $id_reparto );
 
 		$this->listarPost();
 	}
 
 	public function abrirFicha() {
-	    $this->load->model ( 'actor_model' );
-		$id_actor = $_GET ['id_actor'];
-		$datos ['body']['actores'] = $this->actor_model->getActorPorId ( $id_actor );
-		enmarcar($this, "actor/ficha",$datos);
+	    $this->load->model ( 'reparto_model' );
+		$id_reparto = $_GET ['id_reparto'];
+		$datos ['body']['repartos'] = $this->reparto_model->getRepartoPorId ( $id_reparto );
+		enmarcar($this, "reparto/ficha",$datos);
 	}
 }
 ?>

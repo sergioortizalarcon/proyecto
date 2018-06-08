@@ -255,6 +255,8 @@ function cancelarRegistro(){
 				<textarea class="form-control" name="biografia" id="idBiografia" placeholder="Biografía"></textarea>
 			</div>
 			
+			<input type="hidden" value="true" name="activo"/>
+			
 			<div class="form-group">
 				<label for="idFoto">Foto:</label>
 				<input type="file" class="form-control" id="idFoto" name="foto"/>

@@ -231,7 +231,7 @@ function cancelarRegistro(){
 						<label for="idPais">Pais de nacimiento</label><span class="obligatorio">*</span>
 						<select class="form-control" id="idPais" name="pais">
 							<?php foreach($body['paises'] as $pais):?>
-								<option value="<?=$pais -> id?>" <?= ($pais -> nombre == "España")?"selected='selected'":" "?>>
+								<option value="<?=$pais -> id?>" <?= ($pais -> nombre == $body['repartos']->paises['nombre'] )?"selected='selected'":" "?>>
 									<?= $pais->nombre ?>
 								</option>
 							<?php endforeach; ?>

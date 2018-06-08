@@ -17,6 +17,7 @@ class reparto extends CI_Controller {
 		$biografia = isset($_POST['biografia'])?$_POST['biografia']:null;
 		$ambos = isset($_POST['ambos'])?$_POST['ambos']:'off';
 		$profesiones = isset($_POST['profesion'])?$_POST['profesion']:null;
+		$activo = isset($_POST['activo'])?$_POST['activo']:false;
 		
 		$fechaCambio = str_replace("/", "-", $fechaNacimiento);
 		
@@ -54,7 +55,7 @@ class reparto extends CI_Controller {
 		}
 
 		try {
-			$debug = $this -> reparto_model -> createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto);
+		    $debug = $this -> reparto_model -> createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto, $activo);
 			
 			header ("location:".base_url ()."reparto/crearOk");
 		}
@@ -86,9 +87,6 @@ class reparto extends CI_Controller {
 	}
 
 	public function editar() {
-		//TODO
-		//Hay que conseguir el id del director para pasarselo al modelo y que se modifique en las dos tablas
-
 		$this->load->model ( 'reparto_model' );
 		$this->load->model('pais_model');
 		$id_reparto = $_POST ['id_reparto'];
@@ -175,6 +173,14 @@ class reparto extends CI_Controller {
 		$this->reparto_model->borrar ( $id_reparto );
 
 		$this->listarPost();
+	}
+	
+	public function activarPost() {
+	    $this->load->model ( 'reparto_model' );
+	    $id_reparto = $_POST ['id_reparto'];
+	    $this->reparto_model->activar ( $id_reparto );
+	    
+	    $this->listarPost();
 	}
 
 	public function abrirFicha() {

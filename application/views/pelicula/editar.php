@@ -1,34 +1,3 @@
-<script>
-	function carga() {
-		var xhr;
-		var keyPi = 'api_key=d6c1959156d6a00119e929d60865c6d3';
-		idioma = 'language=es';
-			var ver = document.getElementById('idInfo').value;
-			//cambiar 
-			var u2 = 'https://api.themoviedb.org/3/search/person';
-			var u1 = 'https://api.themoviedb.org/3/search/movie';
-			//&query=deadpool  <--Para buscar películas
-				var data = "{}";
-				var xhr = new XMLHttpRequest();
-				xhr.open("GET",u2+'?'+keyPi+'&query='+ver+"&"+idioma);
-				xhr.send(data);
-				xhr.addEventListener("readystatechange", function () {
-					if (this.readyState === this.DONE) {
-						    valores = JSON.parse(this.responseText);
-							mostrarInfo.innerHTML="<xmp><pre><code>"+this.responseText+"</code></pre><br/></xmp>";
-							console.log(valores);
-							mostrarInfo.innerHTML+=valores['page']+"<br>";
-							mostrarInfo.innerHTML+= valores.results[0].popularity+"<br>";
-							mostrarInfo.innerHTML+= valores.results[0].known_for[0].vote_average+"<br>";
-							mostrarInfo.innerHTML+= valores.results[0].known_for[0].title+"<br>";
-							console.log(valores.results);
-					}
-				});
-
-				document.getElementById("mostrarInfo").innerHTML=xhr.responseText;
-			}
-</script>
-
 <script type="text/javascript">
 function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];for(i=form.elements.length-1;i>=0;i=i-1){if(form.elements[i].name===""){continue}switch(form.elements[i].nodeName){case"INPUT":switch(form.elements[i].type){case"text":case"hidden":case"password":case"button":case"reset":case"submit":case"color":case"date":case"datetime-local":case"email":case"month":case"number":case"range":case"search":case"tel":case"time":case"url":case"week":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break;case"checkbox":case"radio":if(form.elements[i].checked){q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value))}break;case"file":break}break;case"TEXTAREA":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break;case"SELECT":switch(form.elements[i].type){case"select-one":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break;case"select-multiple":for(j=form.elements[i].options.length-1;j>=0;j=j-1){if(form.elements[i].options[j].selected){q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].options[j].value))}}break}break;case"BUTTON":switch(form.elements[i].type){case"reset":case"submit":case"button":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break}break}}return q.join("&")};
 </script>
@@ -216,29 +185,28 @@ function cancelarRegistro(){
 	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>pelicula/crearPost" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Datos</legend>
-			<small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>
 			
 			<div class="form-group">
-				<label for="idTitulo">Titulo: </label><span class="obligatorio">*</span>
-				<input class="form-control" type="text" id="idTitulo" name="titulo" placeholder="Título de la película.."
-				 onkeyup="validarTitulo();"  data-toogle="tooltip" data-placement="left" title="Escribe un título""/>
+				<label for="idTitulo">Titulo: </label>
+				<input class="form-control" type="text" id="idTitulo" name="titulo" value="<?= $body['peliculas']->titulo ?>"
+				 onkeyup="validarTitulo();"  data-toogle="tooltip" data-placement="left" title="Escribe un título"/>
 				<span class="avisos" id="aTitulo">
 					Debes escribir un nombre válido(3 a 40 caracteres).
 				</span>
 			</div>	
 				
 			<div class="form-group">
-				<label for="idAnio">Año del estreno:</label><span class="obligatorio">*</span>
+				<label for="idAnio">Año del estreno:</label>
 				<input class="form-control" type="number" id="idAnio" name="anioEstreno"
-				onchange="validarAnio();" placeholder="Pincha para elegir año de estreno..." />
+				onchange="validarAnio();" value="<?= $body['peliculas']->anioEstreno ?>" />
 				<span class="avisos" id="aAnio">
 					Debes introducir una año entre 1888 y el actual.
 				</span>
 			</div>
 
 			<div class="form-group">
-				<label for="idDuracion">Duración (en minutos):</label><span class="obligatorio">*</span>
-				<input type="text" class="form-control" id="idDuracion" placeholder="Duración..."
+				<label for="idDuracion">Duración (en minutos):</label>
+				<input type="text" class="form-control" id="idDuracion" value="<?= $body['peliculas']->duracion ?>"
 				onKeyUp="validarDuracion();" name="duracion" data-toogle="tooltip" data-placement="left" title="Nick o correo electrónico"/>
 				<span class="avisos" id="aDuracion">
 					Debes introducir una duración válida en minutos.
@@ -246,22 +214,25 @@ function cancelarRegistro(){
 			</div>
 
 			<div class="form-group">
-				<label for="idPais">Selecciona país</label><span class="obligatorio">*</span>
+				<label for="idPais">Selecciona país</label>
 				<select class="form-control" name="pais" id="idPais"
 				data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
-				<?php foreach ($paises as $pais): ?>
-					<option value="<?=$pais->id?>" <?=($pais->nombre == "España") ? "selected='selected'" : " "?> >
-						<?=$pais->nombre?></option>
-				<?php endforeach;?>
+    				<?php foreach ($paises as $pais): ?>
+    					<option value="<?=$pais -> id?>" <?= ($pais -> nombre == $body['peliculas']->paises['nombre'] )?"selected='selected'":" "?>>
+							<?= $pais->nombre ?>
+						</option>
+    				<?php endforeach;?>
 				</select>
 			</div>
 
 			<div class="form-group">
-				<label for="idReparto">Reparto:</label><span class="obligatorio">*</span>
+				<label for="idReparto">Reparto:</label>
 				<select multiple class="form-control" id="idReparto" name="reparto[]"
 				data-toogle="tooltip" data-placement="left" title="Selecciona la persona" size="5">
 					<?php foreach($repartos as $reparto):?>
-						<option value="<?=$reparto -> id?>"><?= $reparto->nombre ?> <?= $reparto->apellido1?></option>
+						<option value="<?=$reparto -> id?>" <?= ($reparto -> id == $body['peliculas']->reparto['id'] )?"selected='selected'":" "?>>
+							<?= $reparto->nombre ?> <?= $reparto->apellido1?>
+						</option>
 					<?php endforeach; ?>
 				</select>
 			</div>
@@ -269,29 +240,33 @@ function cancelarRegistro(){
 			<input type="hidden" value="true" name="activo" />
 
 			<div class="form-group">
-				<label for="idProductora">Productora:</label><span class="obligatorio">*</span>
-				<input type="text" class="form-control" id="idProductora" placeholder="Productora..."
-				onKeyUp="validarProductora();" name="productora" data-toogle="tooltip" data-placement="left" title="#"/>
+				<label for="idProductora">Productora:</label>
+				<input type="text" class="form-control" id="idProductora" value="<?= $body['peliculas']->productora ?>"
+				onKeyUp="validarProductora();" name="productora" data-toogle="tooltip" data-placement="left" />
 				<span class="avisos" id="aProductora">
 					Debes escribir un nombre válido(3 a 20 caracteres).
 				</span>
 			</div>
 
 			<div class="form-group">
-				<label for="idGenero">Género</label><span class="obligatorio">*</span>
+				<label for="idGenero">Género</label>
 				<select multiple class="form-control" id="idGenero" name="genero[]"
 				data-toogle="tooltip" data-placement="left" title="Selecciona el género" size="5">
 					<?php foreach($generos as $genero):?>
-						<option value="<?=$genero -> id?>"><?= $genero->nombre?></option>
+						<option value="<?=$genero -> id?>" <?= ($genero -> id == $body['peliculas']->genero['id'] )?"selected='selected'":" "?>>
+							<?= $genero->nombre ?>
+						</option>
 					<?php endforeach; ?>
 				</select>
 			</div>
 
 			<div class="form-group">
 				<label for="idSinopsis">Sinopsis:</label>
-				<textarea class="form-control" name="sinopsis" id="idSinopsis" placeholder="Sinopsis..."></textarea>
+				<textarea class="form-control" name="sinopsis" id="idSinopsis" value="<?= $body['peliculas']->sinopsis ?>"></textarea>
 			</div>
 
+			<input type="hidden" name="fotoFija" value="<?= $body['peliculas']->foto ?>" />
+			
 			<div class="form-group">
 				<label for="idFotoPoster">Cartel:</label>
 				<input type="file" class="form-control" id="idFotoPoster" name="fotoPoster" data-toogle="tooltip" />

@@ -12,14 +12,17 @@ class profesion extends CI_Controller {
 			$this->load->view ( "idioma/mensaje", $datos );
 		}
 	}
+	
 	public function crear() {
 		enmarcar ( $this, "profesion/crear" );
 	}
+	
 	public function crearPost() {
 		$this->load->model ( "profesion_model" );
 		$nombre = isset ( $_POST ["nombre"] ) ? $_POST ["nombre"] : null;
+		$activo = isset($_POST['activo'])?$_POST['activo']:false;
 		try {
-			$registro = $this->profesion_model->crear_profesion ( $nombre );
+		    $registro = $this->profesion_model->crear_profesion ( $nombre,$activo );
 			header ( "location: " . base_url () . "profesion/crearOk?nombre=" . $nombre );
 		} catch ( Exception $e ) {
 			$datos ['mensaje'] ['texto'] = "El género ya existe";
@@ -27,6 +30,7 @@ class profesion extends CI_Controller {
 			$this->load->view ( "profesion/mensaje", $datos );
 		}
 	}
+	
 	public function crearOk() {
 		$nombre = isset ( $_GET ['nombre'] ) ? $_GET ['nombre'] : null;
 		$datos ['mensaje'] ['texto'] = 'El género ' . $nombre . ' se ha añadido correctamente';
@@ -36,16 +40,17 @@ class profesion extends CI_Controller {
 		$datos ['mensaje'] ['link'] ['crear'] = "profesion";
 		enmarcar ( $this, "profesion/mensaje", $datos );
 	}
+	
 	public function listar() {
 		$this->listarPost ();
 	}
-	public function listarPost($fil = '') {
+	
+	public function listarPost() {
 		$this->load->model ( 'profesion_model' );
-		$filtro = isset ( $_POST ['filtro'] ) ? $_POST ['filtro'] : $fil;
-		$datos ['body'] ['profesiones'] = $this->profesion_model->getTodos ( $filtro );
-		$datos ['filtro'] = $filtro;
+		$datos ['body'] ['profesiones'] = $this->profesion_model->getAll();
 		enmarcar ( $this, 'profesion/listar', $datos );
 	}
+	
 	public function editar() {
 		$this->load->model ( 'profesion_model' );
 		$id_profesion = isset ( $_POST ['id_profesion'] ) ? $_POST ['id_profesion'] : null;
@@ -58,6 +63,7 @@ class profesion extends CI_Controller {
 			enmarcar ( $this, 'profesion/mensaje', $datos );
 		}
 	}
+	
 	public function editarPost() {
 		$this->load->model ( 'profesion_model' );
 		$id_profesion = isset ( $_POST ['id_profesion'] ) ? $_POST ['id_profesion'] : null;
@@ -75,17 +81,27 @@ class profesion extends CI_Controller {
 			$this->load->view ( "profesion/mensaje", $datos );
 		}
 	}
+	
 	public function borrar() {
 		$datos ['body'] ['accion'] = 'borrar';
 		$datos ['body'] ['filtro'] = '';
 		$this->filtrar ( $datos );
 	}
+	
 	public function borrarPost() {
 		$this->load->model ( 'profesion_model' );
 		$id_profesion = isset ( $_POST ['id_profesion'] ) ? $_POST ['id_profesion'] : null;
 		$this->profesion_model->borrar ( $id_profesion );
 		header ( "location: " . base_url () . "profesion/listar" );
 		$this->listar ();
+	}
+	
+	public function activarPost() {
+	    $this->load->model ( 'profesion_model' );
+	    $id_profesion = $_POST ['id_profesion'];
+	    $this->profesion_model->activar ( $id_profesion );
+	    
+	    $this->listarPost();
 	}
 }
 

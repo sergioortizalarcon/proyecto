@@ -244,9 +244,9 @@ function cancelarRegistro(){
 			<div class="form-group">
 				<label for="idProfesion">Profesiones:</label>
 				<select class="form-control" id="idProfesion" name="profesion[]" multiple size="3">
-					<option value="Actor">Actor</option>
-					<option value="Director">Director</option>
-					<option value="Guionista">Guionista</option>
+					<?php foreach($body['profesiones'] as $profesion): ?>
+						<option value="<?= $profesion->id ?>"><?= $profesion->nombre ?></option>
+					<?php endforeach; ?>
 				</select>
 			</div>
 			

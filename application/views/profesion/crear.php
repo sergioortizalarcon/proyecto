@@ -22,13 +22,12 @@
 		}
 		
 		function validar(){
-			var n = document.getElementById("idNombre").value;
-			var nombre=n.trim();
+			var nombre = document.getElementById("idNombre").value.trim();
 
 			function validarNombre() {
 				if(nombre!="") {
-					expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,10}([\s][a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,10}){0,1}$/;
-					if (expresion.test(nombre)) {
+					var expReg = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ ]{3,30}$/;
+					if (expReg.test(nombre)) {
 						var m = nombre.charAt(0);
 						nombre= m.toUpperCase()+nombre.substring(1,nombre.length);
 						
@@ -44,12 +43,14 @@
 					document.getElementById("aNombre").style.display="initial";
 					return false;
 				}
+				
 			}
 			
 			validarNombre();
 			
 			if ( validarNombre()) {
 				comprobarprofesion(nombre);
+				document.getElementById("idNombre").value = nombre;
 			} else {
 				document.getElementById("enviar").disabled=true;
 			}
@@ -58,20 +59,21 @@
 <div class="container content-wrapper">
 	<section class="content-header">
       <h1>
-        <i class="far fa-folder-open"></i>&nbsp;&nbsp;Registro de Géneros
+        <i class="far fa-folder-open"></i>&nbsp;&nbsp;Registro de Profesiones
       </h1>
     </section>
 	<section class="content">
 	<form id="idFormulario" method="post" action="<?=base_url()?>profesion/crearPost">
 		<fieldset>
-			<legend>Nuevo género</legend>
+			<legend>Nueva profesión</legend>
 			<div class="form-group">
 				<label for="idNombre">Nombre</label><span class="obligatorio">*</span>
 				<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validar();"/>
 				<span class="avisos" id="aNombre">
-					Debes escribir una profesión válida(caracteres no númericos, espacios o símbolos).
+					Debes escribir una profesión válida(Caracteres no númericos, o símbolos).
 				</span>
 			</div>
+			<input type="hidden" value="true" name="activo" />
 			<div class="form-group">
 				<input type="submit" class="btn btn-default" name="enviar" id="enviar" value="Enviar" disabled="disabled"/>
 			</div>

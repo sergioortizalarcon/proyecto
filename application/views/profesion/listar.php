@@ -29,26 +29,42 @@
 	</thead>
 	<tbody>
 			<?php foreach ($body['profesiones'] as $profesion): ?>
-				<tr>
-				<td><?= $profesion->id ?></td>
-				<td><?= $profesion->nombre ?></td>
-				<td>
-					<form class="listado" id="idFormedit" action="<?=base_url()?>profesion/editar" method="post">
-						<input type="hidden" name="id_profesion" value="<?= $profesion -> id?>">
-						<button class="btn btn-info btn-sm" class="botones" onclick="function f() {document.getElementById('idFormEdit').submit();}">
-							<i class="fas fa-edit"></i>
-						</button>
-					</form>
-					<form class="listado" id="idFormRemove" action="<?=base_url()?>profesion/borrarPost" method="post">
-						<input type="hidden" name="id_profesion" value="<?= $profesion -> id?>">
-						<input type="hidden" name="v" value="listarTodos">
-						<button class="btn btn-warning btn-sm" class="botones" onclick="function f() {document.getElementById('idFormRemove').submit();}">
-							<i class="fas fa-trash"></i>
-						</button>
-					</form>
-					
-				</td>
-			</tr>
+				<?php if($profesion -> activo != 'false'):?>
+    				<tr>
+        				<td><?= $profesion->id ?></td>
+        				<td><?= $profesion->nombre ?></td>
+        				<td>
+        					<form class="listado" id="idFormedit" action="<?=base_url()?>profesion/editar" method="post">
+        						<input type="hidden" name="id_profesion" value="<?= $profesion -> id?>">
+        						<button class="btn btn-info btn-sm" class="botones" onclick="function f() {document.getElementById('idFormEdit').submit();}">
+        							<i class="fas fa-edit"></i>
+        						</button>
+        					</form>
+        					<form class="listado" id="idFormRemove" action="<?=base_url()?>profesion/borrarPost" method="post">
+        						<input type="hidden" name="id_profesion" value="<?= $profesion -> id?>">
+        						<input type="hidden" name="v" value="listarTodos">
+        						<button class="btn btn-warning btn-sm" class="botones" onclick="function f() {document.getElementById('idFormRemove').submit();}">
+        							<i class="fas fa-trash"></i>
+        						</button>
+        					</form>
+        				</td>
+    				</tr>
+    			<?php else: ?>
+    				<tr>
+        				<td><?= $profesion->id ?></td>
+        				<td><?= $profesion->nombre ?></td>
+        				<td>
+        					Inactivo
+        					<form class="listado" id="idFormActive<?= $profesion->id ?>" action="<?=base_url()?>profesiona/activarPost" method="post">
+        						<input type="hidden" name="id_profesion" value="<?= $profesion -> id?>">
+        						<input type="hidden" name="v" value="listarTodos">
+        						<button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Activar<?= $profesion->id ?>').submit();}">
+        							<i class="fas fa-plus-circle"></i>
+        						</button>
+        					</form>
+        				</td>
+    				</tr>
+        		<?php endif;?>
 			<?php endforeach;?>
 	</tbody>
 	<tfoot>

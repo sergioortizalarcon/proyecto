@@ -84,15 +84,6 @@
 					<li><a href="<?=base_url()?>profesion/listar">Listar</a></li>
 				</ul>
 			</li>
-			
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Reparto<span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li class="dropdown-header">Reparto</li>
-					<li><a href="<?=base_url()?>reparto/crear">Nueva</a></li>
-					<li><a href="<?=base_url()?>reparto/listar">Listar</a></li>
-				</ul>
-			</li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<?php if ( !isset($_COOKIE["usuario"]) ): ?>

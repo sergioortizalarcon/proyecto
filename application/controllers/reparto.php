@@ -19,7 +19,7 @@ class reparto extends CI_Controller {
 		$biografia = isset($_POST['biografia'])?$_POST['biografia']:null;
 		$ambos = isset($_POST['ambos'])?$_POST['ambos']:'off';
 		$profesiones = isset($_POST['profesion'])?$_POST['profesion']:null;
-		$activo = isset($_POST['activo'])?$_POST['activo']:false;
+		$activo = isset($_POST['activo'])?$_POST['activo']:'Inactivo';
 		
 		$fechaCambio = str_replace("/", "-", $fechaNacimiento);
 		

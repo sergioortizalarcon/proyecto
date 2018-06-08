@@ -82,17 +82,10 @@ class profesion extends CI_Controller {
 		}
 	}
 	
-	public function borrar() {
-		$datos ['body'] ['accion'] = 'borrar';
-		$datos ['body'] ['filtro'] = '';
-		$this->filtrar ( $datos );
-	}
-	
 	public function borrarPost() {
 		$this->load->model ( 'profesion_model' );
-		$id_profesion = isset ( $_POST ['id_profesion'] ) ? $_POST ['id_profesion'] : null;
+		$id_profesion = $_POST ['id_profesion'];
 		$this->profesion_model->borrar ( $id_profesion );
-		header ( "location: " . base_url () . "profesion/listar" );
 		$this->listar ();
 	}
 	

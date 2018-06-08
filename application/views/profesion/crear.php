@@ -73,7 +73,7 @@
 					Debes escribir una profesión válida(Caracteres no númericos, o símbolos).
 				</span>
 			</div>
-			<input type="hidden" value="true" name="activo" />
+			<input type="hidden" value="Activo" name="activo" />
 			<div class="form-group">
 				<input type="submit" class="btn btn-default" name="enviar" id="enviar" value="Enviar" disabled="disabled"/>
 			</div>

@@ -21,7 +21,7 @@
             </div>
         </div>
         <?php if($body['repartos'] != null):?>
-        	<?php if ($_SESSION['rol'] == "administrador"): ?>
+        	<?php if  ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")): ?>
         		<div class="table-responsive">
         			<table id="efectoTabla" class="display table table-bordered ">
         				<thead>
@@ -38,7 +38,7 @@
         				</thead>
         				<tbody>
         					<?php foreach ($body['repartos'] as $reparto): ?>
-            					<?php if($reparto -> activo != 'false'):?>
+            					<?php if($reparto -> activo != 'inactivo'):?>
             						<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
             							<td><img src="<?=base_url()?><?= $reparto->rutaFoto ?>" height="60" width="50"></td>
             							<td><?= $reparto->nombre ?></td>
@@ -46,6 +46,7 @@
             							<td><?= $reparto->apellido2 ?></td>
             							<td><?= $reparto->fecha_nacimiento ?></td>
             							<td><?= $reparto->paises['nombre'] ?></td>
+            							<td><?= $reparto->estado ?></td>
             							<td>
             								<form class="listado" id="idFormEdit<?= $reparto->id ?>" action="<?=base_url()?>reparto/editar" method="post">
             									<input type="hidden" name="id_reparto" value="<?= $reparto -> id?>">
@@ -70,8 +71,8 @@
             							<td><?= $reparto->apellido2 ?></td>
             							<td><?= $reparto->fecha_nacimiento ?></td>
             							<td><?= $reparto->paises['nombre'] ?></td>
+            							<td><?= $reparto->estado ?></td>
             							<td>
-            								Inactivo
             								<form class="listado" id="idFormActive<?= $reparto->id ?>" action="<?=base_url()?>reparto/activarPost" method="post">
             									<input type="hidden" name="id_reparto" value="<?= $reparto -> id?>">
             									<input type="hidden" name="v" value="listarTodos">
@@ -99,8 +100,41 @@
         			</table>
         		</div>
         	<?php else: ?>
-        	
-        	<?php endif: ?>
+        		<table id="efectoTabla" class="display table table-bordered ">
+        				<thead>
+        					<tr>
+        						<th>Foto</th>
+        						<th>Nombre</th>
+        						<th>Primer apellido</th>
+        						<th>Segundo apellido</th>
+        						<th>Fecha de nacimiento</th>
+        						<th>Pais de nacimiento</th>
+        					</tr>
+        				</thead>
+        				<tbody>
+        					<?php foreach ($body['repartos'] as $reparto): ?>
+            					<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
+            						<td><img src="<?=base_url()?><?= $reparto->rutaFoto ?>" height="60" width="50"></td>
+            						<td><?= $reparto->nombre ?></td>
+            						<td><?= $reparto->apellido1 ?></td>
+            						<td><?= $reparto->apellido2 ?></td>
+            						<td><?= $reparto->fecha_nacimiento ?></td>
+            						<td><?= $reparto->paises['nombre'] ?></td>
+            				<?php endforeach; ?>
+        				</tbody>
+        				<tfoot>
+        					<tr>
+        						<th>Foto</th>
+        						<th>Nombre</th>
+        						<th>Primer apellido</th>
+        						<th>Segundo apellido</th>
+        						<th>Fecha de nacimiento</th>
+        						<th>Pais de nacimiento</th>
+        					</tr>
+        				</tfoot>
+        			</table>
+        		</div>
+        	<?php endif; ?>
 		<?php else:?>
             <div class="container" style="width:90%;">
                 <h2 class="alert alert-info" style="font-size: x-large;">¡ATENCIÓN!</h2>

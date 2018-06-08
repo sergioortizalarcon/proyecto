@@ -22,7 +22,7 @@ class profesion_model extends CI_Model {
 	}
 	
 	public function getAllActive() {
-	    $todos = R::find ( "profesion", "activo like ? order by nombre",['true']);
+	    $todos = R::find ( "profesion", "activo like ? order by nombre",['Activo']);
 	    return $todos;
 	}
 	
@@ -54,13 +54,13 @@ class profesion_model extends CI_Model {
 	
 	public function borrar($id_profesion) {
 	    $profesion = R::load ( 'profesion', $id_profesion );
-	    $profesion->activo = 'false';
+	    $profesion->activo = 'Inactivo';
 	    R::store ( $profesion );
 	}
 	
 	public function activar($id_profesion) {
 	    $profesion = R::load ( 'profesion', $id_profesion );
-	    $profesion->activo = 'true';
+	    $profesion->activo = 'Activo';
 	    R::store ( $profesion );
 	}
 }

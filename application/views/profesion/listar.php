@@ -58,7 +58,7 @@
         							<td><?= $profesion->nombre ?></td>
         							<td><?= $profesion->activo ?></td>
         							<td>
-				        				<form class="listado" id="idFormActive<?= $profesion->id ?>" action="<?=base_url()?>profesiona/activarPost" method="post">
+				        				<form class="listado" id="idFormActive<?= $profesion->id ?>" action="<?=base_url()?>profesion/activarPost" method="post">
         									<input type="hidden" name="id_profesion" value="<?= $profesion -> id?>">
         									<input type="hidden" name="v" value="listarTodos">
         									<button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Activar<?= $profesion->id ?>').submit();}">

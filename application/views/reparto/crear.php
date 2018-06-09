@@ -270,7 +270,7 @@ function cancelarRegistro(){
 			
 			<div class="nav navbar-form navbar-right">
 				<input type="button" class="btn btn-default" id="idCancelar" name="cancelar" value="Cancelar registro" onclick="cancelarRegistro();" />
-				<input type="button" class="btn btn-default" id="idRegistro" name="registrarse" disabled="true" value="Registrar Persona" onclick="validar();" />
+				<input type="button" class="btn btn-default" id="idRegistro" name="registrarse" value="Registrar Persona" onclick="validar();" />
 			</div>
 			
 		</fieldset>

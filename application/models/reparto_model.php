@@ -1,7 +1,7 @@
 <?php
 class Reparto_model extends CI_Model {
 	//Se guarda en la tabla los datos de la persona, comprueba que ya exista uno creado con los mismos datos
-    public function createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto, $activo) {
+    public function createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $profesiones, $foto, $activo) {
 		if ($apellido2 == "") {
 			$reparto = R::find('reparto', 'nombre like ? and apellido1 like ? and fechaNacimiento like ?', [$nombre,$apellido1,$fechaNacimiento]);
 			if ($reparto == null) {
@@ -12,12 +12,17 @@ class Reparto_model extends CI_Model {
 				$reparto -> fechaNacimiento = $fechaNacimiento;
 				$reparto -> biografia = $biografia;
 				
-				$profesiones = explode(",",$cadProfesiones); 
+				/*$profesiones = explode(",",$cadProfesiones); 
 				for ($i=0;$i<count($profesiones);$i++) {
 					$profesion = R::load("profesiones",$profesiones[$i]);
 					$profesion -> xownRepartoList[] = $reparto;
-				}
+				}*/
 				//$reparto -> cadProfesiones = $cadProfesiones;
+				/*foreach( $profesiones->ownRepartoList as $profesion ) {
+					
+				}*/
+				$profesion = R::load("profesiones", $profesiones);
+				$profesion -> xownRepartoList[] = $reparto;
 				
 				$reparto -> rutaFoto = $foto;
 				$reparto -> activo = $activo;

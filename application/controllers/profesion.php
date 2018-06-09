@@ -86,7 +86,7 @@ class profesion extends CI_Controller {
 		$this->load->model ( 'profesion_model' );
 		$id_profesion = $_POST ['id_profesion'];
 		$this->profesion_model->borrar ( $id_profesion );
-		$this->listar ();
+		$this->listar();
 	}
 	
 	public function activarPost() {
@@ -94,7 +94,7 @@ class profesion extends CI_Controller {
 	    $id_profesion = $_POST ['id_profesion'];
 	    $this->profesion_model->activar ( $id_profesion );
 	    
-	    $this->listarPost();
+	    $this->listar();
 	}
 }
 

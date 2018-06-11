@@ -12,13 +12,13 @@
               </a>
             </li>
             <li class="treeview">
-              <a href="<?=base_url()?>pelicula/menuFilms">
+              <a href="<?=base_url()?>pelicula/listar">
                 &nbsp;&nbsp;&nbsp;<i class="fas fa-film"></i>&nbsp;
                 <span>Películas</span>
               </a>
             </li>
             <li class="treeview">
-              <a href="<?=base_url()?>actor/listar" >
+              <a href="<?=base_url()?>reparto/listar" >
                 &nbsp;&nbsp;&nbsp;<i class="fas fa-address-card"></i>&nbsp;
                 <span>Cast Películas</span>
               </a>
@@ -54,7 +54,7 @@
               </a>
             </li>
             <li class="treeview">
-              <a href="#" >&nbsp;&nbsp;&nbsp;<i class="fas fa-door-open"></i>&nbsp;
+              <a href="<?=base_url()?>administrador/vista_usuario" >&nbsp;&nbsp;&nbsp;<i class="fas fa-door-open"></i>&nbsp;
                 <span>Vista usuario</span>
               </a>
             </li>

@@ -339,4 +339,24 @@ class Administrador extends CI_Controller {
 		$datos['mensaje']['nivel'] = 'error';
 		$this ->load ->view ('templates_admin/forgotPassword', $datos);
 	}
+
+	public function vista_usuario(){
+		if ($this->comprobarRol()) {
+			if (session_status () == PHP_SESSION_NONE) {session_start ();}
+			$_SESSION['vista_user']="permiso";
+			header("Refresh:1;url=".base_url()."welcome/index");
+		} else {
+			$this->acceso_denegado();
+		}
+	}
+
+	public function vista_admin(){
+		if ($this->comprobarRol()) {
+			if (session_status () == PHP_SESSION_NONE) {session_start ();}
+			unset($_SESSION['vista_user']);
+			header("Refresh:1;url=".base_url()."welcome/index");
+		} else {
+			$this->acceso_denegado();
+		}
+	}
 }

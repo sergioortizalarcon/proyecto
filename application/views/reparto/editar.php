@@ -180,19 +180,19 @@ function cancelarRegistro(){
 	<section class="content-header">
       <h1>
         <i class="fas fa-address-card"></i>
-        &nbsp;&nbsp;Editar datos del Actor/Actriz
+        &nbsp;&nbsp;Editar datos del Famoso
       </h1>
     </section>
 	<section class="content">
 		<div id="creator">
-			<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>actor/editarPost" method="post" enctype="multipart/form-data">
+			<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>reparto/editarPost" method="post" enctype="multipart/form-data">
 				<fieldset>
-					<legend>Actor/Actriz: <?= $body['actores']->nombre ?> <?= $body['actores']->apellido1 ?> <?= $body['actores']->apellido2 ?></legend>
+					<legend><?= $body['repartos']->nombre ?> <?= $body['repartos']->apellido1 ?> <?= $body['repartos']->apellido2 ?></legend>
 					
 					<div class="form-group">
 						<label for="idNombre">Nombre</label>
 						<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validarNombre();" onchange="mayuscula(this.value, this.id);"
-						value="<?= $body['actores']->nombre ?>" data-toogle="tooltip" data-placement="left" title="Escribe un nombre" />
+						value="<?= $body['repartos']->nombre ?>" data-toogle="tooltip" data-placement="left" title="Escribe un nombre" />
 						<span class="avisos" id="aNombre">
 							Debes escribir un nombre válido(3 a 20 caracteres no númericos o simbolos).
 						</span>
@@ -201,7 +201,7 @@ function cancelarRegistro(){
 					<div class="form-group">
 						<label for="idApellido1">Primer apellido</label>
 						<input class="form-control" type="text" id="idApellido1" name="apellido1" onkeyup="validarApellido1();" onchange="mayuscula(this.value, this.id);"
-						value="<?= $body['actores']->apellido1 ?>" data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
+						value="<?= $body['repartos']->apellido1 ?>" data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
 						<span class="avisos" id="aApellido1">
 							Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
 						</span>
@@ -210,18 +210,18 @@ function cancelarRegistro(){
 					<div class="form-group">
 						<label for="idApellido2">Segundo apellido</label>
 						<input class="form-control" type="text" id="idApellido2" name="apellido2" onkeyup="validarApellido2();" onchange="mayuscula(this.value, this.id);" 
-						value="<?= $body['actores']->apellido2 ?>" data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
+						value="<?= $body['repartos']->apellido2 ?>" data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
 						<span class="avisos" id="aApellido2">
 							Debes escribir un apellido válido(3 a 20 caracteres no númericos o simbolos).
 						</span>
 					</div>
 					
-					<input type="hidden" name="id_actor" value="<?= $body['actores']->id ?>" />
-					<input type="hidden" name="fotoFija" value="<?= $body['actores']->foto ?>" />
+					<input type="hidden" name="id_reparto" value="<?= $body['repartos']->id ?>" />
+					<input type="hidden" name="fotoFija" value="<?= $body['repartos']->foto ?>" />
 					
 					<div class="form-group">
 						<label for="idFecha">Fecha de nacimiento</label><span class="obligatorio">*</span>
-						<input class="form-control" value="<?= $body['actores']->fechaNacimiento ?>" type="text" id="idFecha" name="fechaNacimiento" onchange="validarFecha();" />
+						<input class="form-control" value="<?= $body['repartos']->fechaNacimiento ?>" type="text" id="idFecha" name="fechaNacimiento" onchange="validarFecha();" />
 						<span class="avisos" id="aFecha">
 							Debes introducir una fecha válida(Anterior al día actual).
 						</span>
@@ -231,7 +231,7 @@ function cancelarRegistro(){
 						<label for="idPais">Pais de nacimiento</label><span class="obligatorio">*</span>
 						<select class="form-control" id="idPais" name="pais">
 							<?php foreach($body['paises'] as $pais):?>
-								<option value="<?=$pais -> id?>" <?= ($pais -> nombre == "España")?"selected='selected'":" "?>>
+								<option value="<?=$pais -> id?>" <?= ($pais -> nombre == $body['repartos']->paises['nombre'] )?"selected='selected'":" "?>>
 									<?= $pais->nombre ?>
 								</option>
 							<?php endforeach; ?>
@@ -271,8 +271,8 @@ function cancelarRegistro(){
 				</fieldset>
 			</form>
 			<br/>
-			<form name="formDirector" id="formDirector" action="<?= base_url() ?>actor/crearDirector" method="post" >
-				<input type="hidden" name="id_actor" value="<?= $body['actores']->id ?>" />
+			<form name="formDirector" id="formDirector" action="<?= base_url() ?>reparto/crearDirector" method="post" >
+				<input type="hidden" name="id_reparto" value="<?= $body['repartos']->id ?>" />
 				<!-- <input type="hidden" name="id_pais" value="<?= $body['paises']->id ?>" /> -->
 				<input type="submit" class="btn btn-default" id="creaDirector" name="creaDirector" value="Crear director" />
 			</form>

@@ -22,7 +22,8 @@ function comprobarAlias(alias) {
 	xhr.onreadystatechange = function(){
 		if (xhr.readyState==4 && xhr.status==200) {
 			document.getElementById("aliasEx").innerHTML =xhr.responseText;
-			if(!xhr.responseText){
+			if(xhr.responseText == false){
+				console.log(xht.responseText);
 				idFormulario.idAlias.style.borderColor="blue";
 				document.getElementById("aAlias").style.display="none";
 				document.getElementById("aliasEx").style.display="none";

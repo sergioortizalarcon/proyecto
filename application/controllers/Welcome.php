@@ -14,7 +14,11 @@ class Welcome extends CI_Controller {
 
 	public function index() {
 		if ($this->comprobarRol()) {
-		enmarcar($this, 'templates_admin/dashboard');
+			if(isset($_SESSION['vista_user']) && $_SESSION['vista_user']=='permiso'){
+				enmarcar($this, 'welcome_message');
+			} else {
+				enmarcar($this, 'templates_admin/dashboard');
+			}
 	} else {
 			enmarcar($this, 'welcome_message');
 		}

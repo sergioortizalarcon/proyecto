@@ -75,23 +75,23 @@
 					</td>
 				</tr>
 			<?php endforeach;?>
-		        </tbody>
-		        <tfoot>
-		        <tr>
-			        <th>info</th>
-			        <th>Id usuario</th>
-			        <th>Nombre usuario</th>
-					<th>1º Apellido usuario</th>
-					<th>2º Apellido usuario</th>
-					<th>Alias usuario</th>
-					<th>Email usuario</th>
-					<th>País</th>
-					<th>Rol</th>
-					<th>Estado cuenta</th>
-					<th>Fecha de nacimiento del usuario</th>
-					<th>Acciones</th>
-				</tr>
-		        </tfoot>
+	        </tbody>
+	        <tfoot>
+	        <tr>
+		        <th>info</th>
+		        <th>Id usuario</th>
+		        <th>Nombre usuario</th>
+				<th>1º Apellido usuario</th>
+				<th>2º Apellido usuario</th>
+				<th>Alias usuario</th>
+				<th>Email usuario</th>
+				<th>País</th>
+				<th>Rol</th>
+				<th>Estado cuenta</th>
+				<th>Fecha de nacimiento del usuario</th>
+				<th>Acciones</th>
+			</tr>
+	        </tfoot>
 		</table>
 	</div>
 <br/><hr/>

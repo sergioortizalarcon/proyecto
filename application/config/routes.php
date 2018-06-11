@@ -55,6 +55,7 @@ $route['usuario'] = 'usuario/registrar';
 $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'login/loginGet';
 $route['dashboard'] = 'dashboard';
+$route['pelicula'] = 'pelicula/crear';
 /*
 $route['logout'] = 'user/logout';
 $route['userListing'] = 'user/userListing';

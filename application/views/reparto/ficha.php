@@ -12,46 +12,40 @@
 			<div id="perfil">
 				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
 					<div class="col-md-12">
-						<img src="<?= base_url() ?><?= $body['actores']->rutaFoto ?>">
+						<img src="<?= base_url() ?><?= $body['repartos']->rutaFoto ?>">
 					</div>
 					<div class="col-md-12">
-						<h4><?= $body['actores']->nombre ?> <?= $body['actores']->apellido1 ?> <?= $body['actores']->apellido2 ?></h4>
+						<h4><?= $body['repartos']->nombre ?> <?= $body['repartos']->apellido1 ?> <?= $body['repartos']->apellido2 ?></h4>
 					</div>
 				</div>
 				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
-					<h5><?= $body['actores']->cadProfesiones ?></h5>
-    				<!-- TEMPORAL depende de lo que decidamos quitar el de arriba o el de abajo -->
-    				<?php if($body['actores']->ambos == 'on'): ?>
-    					<h5>Actor / Director</h5>
-    				<?php else: ?>
-    			    	<h5>Actor</h5>
-    				<?php endif; ?>
-    				<h5>Fecha de nacimiento: <?=$body['actores']->fechaNacimiento ?></h5>
-    				<h5>País de nacimiento: <?= $body['actores']->paises['nombre'] ?></h5>
+					<h5><?= $body['repartos']->cadProfesiones ?></h5>
+    				<h5>Fecha de nacimiento: <?=$body['repartos']->fechaNacimiento ?></h5>
+    				<h5>País de nacimiento: <?= $body['repartos']->paises['nombre'] ?></h5>
 				</div>
 			</div>
 			
 			<div id="bio">
 				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
 					<div class="col-md-12">
-						<img src="<?= base_url() ?><?= $body['actores']->rutaFoto ?>">
+						<img src="<?= base_url() ?><?= $body['repartos']->rutaFoto ?>">
 					</div>
 					<div class="col-md-12">
-						<h4><?= $body['actores']->nombre ?> <?= $body['actores']->apellido1 ?> <?= $body['actores']->apellido2 ?></h4>
+						<h4><?= $body['repartos']->nombre ?> <?= $body['repartos']->apellido1 ?> <?= $body['repartos']->apellido2 ?></h4>
 					</div>
 				</div>
 				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
-					<?= $body['actores']->biografia ?>
+					<?= $body['repartos']->biografia ?>
 				</div>
 			</div>
 			
 			<div id="filmog">
 				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
 					<div class="col-md-12">
-						<img src="<?= base_url() ?><?= $body['actores']->rutaFoto ?>">
+						<img src="<?= base_url() ?><?= $body['repartos']->rutaFoto ?>">
 					</div>
 					<div class="col-md-12">
-						<h4><?= $body['actores']->nombre ?> <?= $body['actores']->apellido1 ?> <?= $body['actores']->apellido2 ?></h4>
+						<h4><?= $body['repartos']->nombre ?> <?= $body['repartos']->apellido1 ?> <?= $body['repartos']->apellido2 ?></h4>
 					</div>
 				</div>
 				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
@@ -62,10 +56,10 @@
 			<div id="noticias">
 				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
 					<div class="col-md-12">
-						<img src="<?= base_url() ?><?= $body['actores']->rutaFoto ?>">
+						<img src="<?= base_url() ?><?= $body['repartos']->rutaFoto ?>">
 					</div>
 					<div class="col-md-12">
-						<h4><?= $body['actores']->nombre ?> <?= $body['actores']->apellido1 ?> <?= $body['actores']->apellido2 ?></h4>
+						<h4><?= $body['repartos']->nombre ?> <?= $body['repartos']->apellido1 ?> <?= $body['repartos']->apellido2 ?></h4>
 					</div>
 				</div>
 				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
@@ -77,10 +71,10 @@
 				<div class="col-md-2">
     				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;border:1px solid red;">
     					<div class="col-md-12">
-    						<img src="<?= base_url() ?><?= $body['actores']->rutaFoto ?>">
+    						<img src="<?= base_url() ?><?= $body['repartos']->rutaFoto ?>">
     					</div>
     					<div class="col-md-12">
-    						<h4><?= $body['actores']->nombre ?> <?= $body['actores']->apellido1 ?> <?= $body['actores']->apellido2 ?></h4>
+    						<h4><?= $body['repartos']->nombre ?> <?= $body['repartos']->apellido1 ?> <?= $body['repartos']->apellido2 ?></h4>
     					</div>
     					<!-- Cuando se pase el rol del usuario, si es admin, puede ver el botón, si no, solo las fotos -->
     					<?php //if($body['usuarios']->rol == 3): ?>
@@ -92,7 +86,7 @@
 				</div>
 				<!-- TEMPORAL añadir imagenes a la galería de cada persona -->
     			<div class="col-md-10">
-    				<form action="<?= base_url()?>actor/insertarImagenes" method="post" enctype="multipart/form-data">
+    				<form action="<?= base_url()?>reparto/insertarImagenes" method="post" enctype="multipart/form-data">
     					<div class="rowd" id="galeriaFotografica" style="height:100%; width:100%; border:1px solid black;"></div>
     				</form>
 				</div>

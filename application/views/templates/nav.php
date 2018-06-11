@@ -22,14 +22,16 @@
 			
 
 			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Actores<span class="caret"></span></a>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Reparto<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li class="dropdown-header">Actores</li>
-					<li><a href="<?=base_url()?>actor/crear">Nueva</a></li>
-					<li><a href="<?=base_url()?>actor/listar">Listar</a></li>
+					<li class="dropdown-header">Reparto</li>
+					<li><a href="<?=base_url()?>reparto/crear">Nueva</a></li>
+					<li><a href="<?=base_url()?>reparto/listar">Listar</a></li>
 				</ul>
 			</li>
 			
+			<!--
+			Por si se quiere diferenciar en el futuro
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Directores<span class="caret"></span></a>
 				<ul class="dropdown-menu">
@@ -38,6 +40,7 @@
 					<li><a href="<?=base_url()?>director/listar">Listar</a></li>
 				</ul>
 			</li>
+			-->
 			
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Noticias<span class="caret"></span></a>
@@ -72,12 +75,22 @@
 					<li><a href="<?=base_url()?>administrador/listar">Listar</a></li>
 				</ul>
 			</li>
+			
 			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Géneros<span class="caret"></span></a>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Profesiones<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li class="dropdown-header">Géneros</li>
-					<li><a href="<?=base_url()?>genero/crear">Nuevo</a></li>
-					<li><a href="<?=base_url()?>genero/listar">Listar</a></li>
+					<li class="dropdown-header">Profesiones</li>
+					<li><a href="<?=base_url()?>profesion/crear">Nuevo</a></li>
+					<li><a href="<?=base_url()?>profesion/listar">Listar</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Reparto<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li class="dropdown-header">Reparto</li>
+					<li><a href="<?=base_url()?>reparto/crear">Nueva</a></li>
+					<li><a href="<?=base_url()?>reparto/listar">Listar</a></li>
 				</ul>
 			</li>
 		</ul>
@@ -97,12 +110,21 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="<?=base_url()?>login/perfilUsuario"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a href="<?=base_url()?>login/perfilUsuario"><i class="fas fa-user"></i> User Profile</a>
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
+                        <?php if(isset($_SESSION['rol']) && ($_SESSION['rol'] == 'administrador')): ?>
+	                        <li>
+			              		<a href="<?=base_url()?>administrador/vista_admin" >
+			              			<i class="fas fa-door-open"></i>
+			                		<span>Panel admin</span>
+			              		</a>
+				            </li>
+				        <?php endif; ?>
                         <li class="divider"></li>
-                        <li><a href="<?=base_url()?>login/loginOut"><i class="fa fa-sign-out fa-fw"></i> Logout <?=$_COOKIE["usuario"]?></a>
+                        <li><a href="<?=base_url()?>login/loginOut">
+                        	<i class="fas fa-sign-out-alt"></i> Logout <?=$_COOKIE["usuario"]?></a>
                         </li>
                     </ul>
                </li>

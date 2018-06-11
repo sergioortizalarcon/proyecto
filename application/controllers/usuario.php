@@ -20,12 +20,9 @@ class usuario extends CI_Controller {
 		$alias = isset($_POST["alias"])?$_POST["alias"]:null;
 		$comprobacion = $this -> usuario_model -> comprobar_alias($alias);
 		if ($comprobacion) {
-			$datos['mensaje']['texto'] = "Alias disponible";
-			$datos['mensaje']['nivel'] = 'ok';
+			return true;
 			} else {
-			$datos['mensaje']['texto'] = "Alias existente";
-			$datos['mensaje']['nivel'] = 'error';
-			$this->load->view("usuario/mensaje",$datos);
+			return false;
 			}
 	}
 
@@ -38,9 +35,7 @@ class usuario extends CI_Controller {
 			$datos['mensaje']['texto'] = "Mail ok";
 			$datos['mensaje']['nivel'] = 'ok';
 			} else {
-			$datos['mensaje']['texto'] = "Mail en uso";
-			$datos['mensaje']['nivel'] = 'error';
-			$this->load->view("usuario/mensaje",$datos);
+			return false;
 			}
 	}
 
@@ -61,10 +56,9 @@ class usuario extends CI_Controller {
 		try {
 			$comprobacion = $this -> usuario_model -> comprobar_usuario($alias, $email);
 			if ($comprobacion) {
-				$this -> usuario_model -> create_usuario($nombre, $ape1, $ape2, $alias, $email, $pwd, $fecha,$idPais);
-				$v = $this -> usuario_model ->registro_roles(1);
-				print_r('<code><pre>'.$v.'</pre></code>');
-				header('Location:'.base_url().'usuario/crearOk');
+				$ver = $this -> usuario_model -> create_usuario($nombre, $ape1, $ape2, $alias, $email, $pwd, $fecha,$idPais);
+				print_r('<code><pre>'.$ver.'</pre></code>');
+				// header('Location:'.base_url().'usuario/crearOk');
 			} else {
 				header('Location:'.base_url().'usuario/crearError');
 			}

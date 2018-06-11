@@ -22,7 +22,7 @@
 		}
 		
 		function validar(){
-			var nombre = document.getElementById("idNombre").value.trim();
+			var nombre = document.getElementById("idNombre").value;
 
 			function validarNombre() {
 				if(nombre!="") {
@@ -55,6 +55,11 @@
 				document.getElementById("enviar").disabled=true;
 			}
 		}
+		function enviarFormulario() {
+			var nombre = document.getElementById("idNombre").value.trim();
+			document.getElementById("idNombre").value = nombre;
+			idFormulario.submit();
+		}
 	</script>
 <div class="container content-wrapper">
 	<section class="content-header">
@@ -75,7 +80,7 @@
 			</div>
 			<input type="hidden" value="Activo" name="activo" />
 			<div class="form-group">
-				<input type="submit" class="btn btn-default" name="enviar" id="enviar" value="Enviar" disabled="disabled"/>
+				<input type="button" class="btn btn-default" name="enviar" id="enviar" onclick="enviarFormulario();" value="Enviar" disabled="disabled"/>
 			</div>
 		</fieldset>
 	</form>

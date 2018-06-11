@@ -11,14 +11,12 @@ class Reparto_model extends CI_Model {
 				$reparto -> apellido2 = $apellido2;
 				$reparto -> fechaNacimiento = $fechaNacimiento;
 				$reparto -> biografia = $biografia;
-				
 				$profesiones = explode(",",$cadProfesiones); 
 				for ($i=0;$i<count($profesiones);$i++) {
 				    $profesion = R::load("profesiones",$profesiones[$i]);
 				    $profesion -> sharedRepartosList[] = $reparto;
 				    R::store($profesion);
 				}
-				
 				$reparto -> rutaFoto = $foto;
 				$reparto -> activo = $activo;
 				$pais = R::load("paises", $id_pais);
@@ -31,13 +29,18 @@ class Reparto_model extends CI_Model {
 		} else {
 			$reparto = R::find('repartos', 'nombre like ? and apellido1 like ? and apellido2 like ? and fechaNacimiento like ?', [$nombre,$apellido1,$apellido2,$fechaNacimiento]);
 			if ($reparto == null) {
-				$reparto = R::dispense ( 'reparto' );
+				$reparto = R::dispense ( 'repartos' );
 				$reparto -> nombre = $nombre;
 				$reparto -> apellido1 = $apellido1;
 				$reparto -> apellido2 = $apellido2;
 				$reparto -> fechaNacimiento = $fechaNacimiento;
 				$reparto -> biografia = $biografia;
-				$reparto -> cadProfesiones = $cadProfesiones;
+				$profesiones = explode(",",$cadProfesiones);
+				for ($i=0;$i<count($profesiones);$i++) {
+				    $profesion = R::load("profesiones",$profesiones[$i]);
+				    $profesion -> sharedRepartosList[] = $reparto;
+				    R::store($profesion);
+				}
 				$reparto -> rutaFoto = $foto;
 				$reparto -> activo = $activo;
 				$pais = R::load("paises", $id_pais);

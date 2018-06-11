@@ -5,7 +5,7 @@ function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];
 var correcto = true;
 var nombreCorrecto = false;
 var apellido1Correcto = false;
-var apellido2Correcto = false;
+var apellido2Correcto = true;
 var fechaCorrecto = false;
 var profesionCorrecto = false;
 
@@ -300,7 +300,7 @@ function cancelarRegistro(){
 			
 			<div class="nav navbar-form navbar-right">
 				<input type="button" class="btn btn-default" id="idCancelar" name="cancelar" value="Cancelar registro" onclick="cancelarRegistro();" />
-				<input type="button" class="btn btn-default" id="idRegistro" name="registrarse" value="Registrar Persona" onclick="validar();" />
+				<input type="button" class="btn btn-default" id="idRegistro" disabled name="registrarse" value="Registrar Persona" onclick="validar();" />
 			</div>
 			
 		</fieldset>

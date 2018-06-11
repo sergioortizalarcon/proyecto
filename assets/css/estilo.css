@@ -128,3 +128,8 @@ a.icono-tw{
 .btn-sm {
 	width: 90%!important;
 }
+
+.imgPerfilFichaIndividual {
+	 height:60px !important;
+	 width:50px !important;
+}

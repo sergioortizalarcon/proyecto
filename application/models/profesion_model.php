@@ -1,10 +1,10 @@
 <?php
 class profesion_model extends CI_Model {
     public function crear_profesion($nombre, $activo) {
-		$profesion = R::findOne ( "profesion", "nombre=?", [$nombre]);
+		$profesion = R::findOne ( "profesiones", "nombre=?", [$nombre]);
 
 		if ($profesion == null) {
-			$profesion = R::dispense ( "profesion" );
+			$profesion = R::dispense ( "profesiones" );
 			$profesion->nombre = $nombre;
 			$profesion->activo = $activo;
 				
@@ -17,12 +17,12 @@ class profesion_model extends CI_Model {
 	}
 	
 	public function getAll() {
-		$todos = R::find ( "profesion", "order by nombre");
+		$todos = R::find ( "profesiones", "order by nombre");
 		return $todos;
 	}
 	
 	public function getAllActive() {
-	    $todos = R::find ( "profesion", "activo like ? order by nombre",['Activo']);
+	    $todos = R::find ( "profesiones", "activo like ?",['Activo']);
 	    return $todos;
 	}
 	
@@ -31,7 +31,7 @@ class profesion_model extends CI_Model {
 	}
 	
 	public function getprofesionPorNombre($nombre) {
-		$profesion = R::findOne ( "profesion", "nombre=?", [
+		$profesion = R::findOne ( "profesiones", "nombre=?", [
 				$nombre
 		] );
 		if ($profesion == null) {
@@ -42,7 +42,7 @@ class profesion_model extends CI_Model {
 	}
 	
 	public function editar($id_profesion, $nuevo_nombre) {
-		$profesion = R::load ( 'profesion', $id_profesion );
+		$profesion = R::load ( 'profesiones', $id_profesion );
 		if ($profesion->id != 0) {
 			$profesion->nombre = $nuevo_nombre;
 			R::store ( $profesion );
@@ -53,13 +53,13 @@ class profesion_model extends CI_Model {
 	}
 	
 	public function borrar($id_profesion) {
-	    $profesion = R::load ( 'profesion', $id_profesion );
+	    $profesion = R::load ( 'profesiones', $id_profesion );
 	    $profesion->activo = 'Inactivo';
 	    R::store ( $profesion );
 	}
 	
 	public function activar($id_profesion) {
-	    $profesion = R::load ( 'profesion', $id_profesion );
+	    $profesion = R::load ( 'profesiones', $id_profesion );
 	    $profesion->activo = 'Activo';
 	    R::store ( $profesion );
 	}

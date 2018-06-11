@@ -29,9 +29,9 @@
         						<th>Foto</th>
         						<th>Nombre</th>
         						<th>Primer apellido</th>
-        						<th>Segundo apellido</th>
         						<th>Fecha de nacimiento</th>
         						<th>Pais de nacimiento</th>
+        						<th>Profesion</th>
         						<th>Estado</th>
         						<th>Acciones</th>
         					</tr>
@@ -43,9 +43,9 @@
             							<td><img src="<?=base_url()?><?= $reparto->rutaFoto ?>" height="60" width="50"></td>
             							<td><?= $reparto->nombre ?></td>
             							<td><?= $reparto->apellido1 ?></td>
-            							<td><?= $reparto->apellido2 ?></td>
             							<td><?= $reparto->fecha_nacimiento ?></td>
             							<td><?= $reparto->paises['nombre'] ?></td>
+            							<td><?= $reparto->profesiones['nombre'] ?></td>
             							<td><?= $reparto->estado ?></td>
             							<td>
             								<form class="listado" id="idFormEdit<?= $reparto->id ?>" action="<?=base_url()?>reparto/editar" method="post">
@@ -68,9 +68,9 @@
             							<td><img src="<?=base_url()?><?= $reparto->rutaFoto ?>" height="60" width="50"></td>
             							<td><?= $reparto->nombre ?></td>
             							<td><?= $reparto->apellido1 ?></td>
-            							<td><?= $reparto->apellido2 ?></td>
             							<td><?= $reparto->fecha_nacimiento ?></td>
             							<td><?= $reparto->paises['nombre'] ?></td>
+            							<td><?= $reparto->profesiones['nombre'] ?></td>
             							<td><?= $reparto->estado ?></td>
             							<td>
             								<form class="listado" id="idFormActive<?= $reparto->id ?>" action="<?=base_url()?>reparto/activarPost" method="post">
@@ -90,9 +90,9 @@
         						<th>Foto</th>
         						<th>Nombre</th>
         						<th>Primer apellido</th>
-        						<th>Segundo apellido</th>
         						<th>Fecha de nacimiento</th>
         						<th>Pais de nacimiento</th>
+        						<th>Profesión</th>
         						<th>Estado</th>
         						<th>Acciones</th>
         					</tr>
@@ -106,9 +106,9 @@
         						<th>Foto</th>
         						<th>Nombre</th>
         						<th>Primer apellido</th>
-        						<th>Segundo apellido</th>
         						<th>Fecha de nacimiento</th>
         						<th>Pais de nacimiento</th>
+        						<th>Profesión</th>
         					</tr>
         				</thead>
         				<tbody>
@@ -117,9 +117,9 @@
             						<td><img src="<?=base_url()?><?= $reparto->rutaFoto ?>" height="60" width="50"></td>
             						<td><?= $reparto->nombre ?></td>
             						<td><?= $reparto->apellido1 ?></td>
-            						<td><?= $reparto->apellido2 ?></td>
             						<td><?= $reparto->fecha_nacimiento ?></td>
             						<td><?= $reparto->paises['nombre'] ?></td>
+            						<td><?= $reparto->profesiones['nombre'] ?></td>
             				<?php endforeach; ?>
         				</tbody>
         				<tfoot>
@@ -127,9 +127,9 @@
         						<th>Foto</th>
         						<th>Nombre</th>
         						<th>Primer apellido</th>
-        						<th>Segundo apellido</th>
         						<th>Fecha de nacimiento</th>
         						<th>Pais de nacimiento</th>
+        						<th>Profesión</th>
         					</tr>
         				</tfoot>
         			</table>

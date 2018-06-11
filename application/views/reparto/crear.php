@@ -7,6 +7,7 @@ var nombreCorrecto = false;
 var apellido1Correcto = false;
 var apellido2Correcto = false;
 var fechaCorrecto = false;
+var profesionCorrecto = false;
 
 var nombre="";
 var apellido1="";
@@ -133,31 +134,57 @@ function validarFecha() {
 	var mesHoy = fechaSis.getMonth()+1;
 	var diaHoy = fechaSis.getDate();
 	mesHoy = "0"+mesHoy;
-	
-	if (anio >= anioHoy && mes >= mesHoy && dia > diaHoy) {
-		idFormulario.idFecha.style.borderColor="red";
+    if (fecha!="") {
+    	if (anio >= anioHoy && mes >= mesHoy && dia > diaHoy) {
+    		idFormulario.idFecha.style.borderColor="red";
+    		document.getElementById("aFecha").style.display="initial";
+    		fechaCorrecto = false;
+    		if (correcto == true) {
+    			document.getElementById('aFecha').focus();
+    			correcto=false;
+    		}
+    	} else {
+    		fechaCorrecto = true;
+            idFormulario.idFecha.style.borderColor="blue";
+    		document.getElementById("aFecha").style.display="none";
+    		correcto = true;
+    	}
+    } else {
+    	if (correcto == true) {
+			document.getElementById('idFecha').focus();
+			correcto=false;
+		}
 		document.getElementById("aFecha").style.display="initial";
-		fechaCorrecto = false;
+        idFormulario.idFecha.style.borderColor="red";
+        fechaCorrecto = false;
+    }
+}
+
+function validarProfesion() {
+	var reparto = idFormulario.idProfesion.value;
+	if (reparto == "") {
+		idFormulario.idProfesion.style.borderColor="red";
+		document.getElementById("aProfesion").style.display="initial";
+		profesionCorrecto = false;
 		if (correcto == true) {
-			document.getElementById('aFecha').focus();
+			document.getElementById('idProfesion').focus();
 			correcto=false;
 		}
 	} else {
-		fechaCorrecto = true;
-        idFormulario.idFecha.style.borderColor="blue";
-		document.getElementById("aFecha").style.display="none";
-		correcto = true;
+		idFormulario.idProfesion.style.borderColor="blue";
+		document.getElementById("idProfesion").style.display="initial";
+		profesionCorrecto = true;
 	}
 }
 
 function permitirEnvio() {
-	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
+	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto && profesionCorrecto) {
 		idFormulario.idRegistro.disabled=false;
 	}
 }
 
 function validar() {
-	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
+	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto && profesionCorrecto) {
 		nombre = idFormulario.idNombre.value.trim();
 		idFormulario.idNombre.value = nombre;
 		apellido1 = apellido1.trim();
@@ -170,6 +197,7 @@ function validar() {
 		validarApellido1();
 		validarApellido2();
 		validarFecha();
+		validarProfesion();
 	}
 }
 
@@ -242,12 +270,14 @@ function cancelarRegistro(){
 			</div>
 			
 			<div class="form-group">
-				<label for="idProfesion">Profesiones:</label>
-				<select class="form-control" id="idProfesion" name="profesion[]" multiple size="3">
+				<label for="idProfesion">Profesiones:</label><span class="obligatorio">*</span>
+				<select class="form-control" id="idProfesion" name="profesion[]" multiple size="3" >
 					<?php foreach($body['profesiones'] as $profesion): ?>
-						<option value="<?= $profesion->id ?>"><?= $profesion->nombre ?></option>
+						<option value="<?= $profesion->id ?>" onclick="validarProfesion();"><?= $profesion->nombre ?></option>
 					<?php endforeach; ?>
-				</select>
+				</select><span class="avisos" id="aProfesion">
+					Debes introducir al menos una profesión.
+				</span>
 			</div>
 			
 			<div class="form-group">

@@ -2,9 +2,9 @@
 class Pelicula_model extends CI_Model {
     //Se guarda en la tabla los datos de la película, comprueba que ya exista uno creado con los mismos datos
     public function createFilm ( $titulo, $anioEstreno, $duracion, $id_pais, $reparto, $productora, $generos, $sinopsis, $foto, $activo) {
-        $pelicula = R::find('pelicula', 'titulo like ? and anioEstreno like ? and duracion like ? and productora like ?', [$titulo,$anioEstreno,$duracion,$productora]);
+        $pelicula = R::find('peliculas', 'titulo like ? and anioEstreno like ? and duracion like ? and productora like ?', [$titulo,$anioEstreno,$duracion,$productora]);
         if ($pelicula == null) {
-            $pelicula = R::dispense ( 'pelicula' );
+            $pelicula = R::dispense ( 'peliculas' );
             $pelicula -> titulo = $titulo;
             $pelicula -> anioEstreno = $anioEstreno;
             $pelicula -> duracion = $duracion;
@@ -36,17 +36,17 @@ class Pelicula_model extends CI_Model {
 	
 	//Devuelve todos los datos de todas las películas
 	public function getAll() {
-	    $mostrar = R::find("pelicula","order by anioEstreno,titulo,productora");
+	    $mostrar = R::find("peliculas","order by anioEstreno,titulo,productora");
 	    return $mostrar;
 	}
 	
 	public function getPeliculaPorId ( $id_pelicula ) {
-	    return R::load("pelicula",$id_pelicula);
+	    return R::load("peliculas",$id_pelicula);
 	}
 	
 	public function editar($id_pelicula, $titulo, $anioEstreno, $duracion, $id_pais, $reparto, $productora, $generos, $sinopsis, $foto) {
-	    $pelicula = R::load ( 'pelicula', $id_pelicula );
-	    $peliculasTodas = R::find("pelicula",'titulo like ? and anioEstreno like ? and duracion like ? and productora like ?', [$titulo,$anioEstreno,$duracion,$productora]);
+	    $pelicula = R::load ( 'peliculas', $id_pelicula );
+	    $peliculasTodas = R::find("peliculas",'titulo like ? and anioEstreno like ? and duracion like ? and productora like ?', [$titulo,$anioEstreno,$duracion,$productora]);
 	    $pais = R::load("paises", $id_pais);
 	    //Editar generos y reparto segun los ids que vengan de la vista
 	    $cambio=false;
@@ -90,13 +90,13 @@ class Pelicula_model extends CI_Model {
 	}
 	
 	public function borrar($id_pelicula) {
-	    $pelicula = R::load ( 'pelicula', $id_pelicula );
+	    $pelicula = R::load ( 'peliculas', $id_pelicula );
 	    $pelicula->activo = 'false';
 	    R::store ( $pelicula );
 	}
 	
 	public function activar($id_pelicula) {
-	    $pelicula = R::load ( 'pelicula', $id_pelicula );
+	    $pelicula = R::load ( 'peliculas', $id_pelicula );
 	    $pelicula->activo = 'true';
 	    R::store ( $pelicula );
 	}

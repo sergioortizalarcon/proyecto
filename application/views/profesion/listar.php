@@ -5,7 +5,7 @@
 <?php endif;?>
 <section class="content-header">
 	 <h1>
-        <i class="far fa-folder-open"></i>&nbsp;&nbsp;Listado de Géneros
+        <i class="far fa-folder-open"></i>&nbsp;&nbsp;Listado de Profesiones
         <small>Add, Edit, Delete</small>
       </h1>
 </section>

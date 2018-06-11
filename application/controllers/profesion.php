@@ -5,11 +5,11 @@ class profesion extends CI_Controller {
 		$nombre = isset ( $_POST ["nombre"] ) ? $_POST ["nombre"] : null;
 		$disponible = $this->profesion_model-> getprofesionPorNombre ( $nombre );
 		if ($disponible) {
-			$datos ['mensaje'] ["texto"] = 'género disponible';
+			$datos ['mensaje'] ["texto"] = 'profesión disponible';
 		} else {
-			$datos ['mensaje'] ['texto'] = "género existente";
+			$datos ['mensaje'] ['texto'] = "profesión existente";
 			$datos ['mensaje'] ['nivel'] = 'error';
-			$this->load->view ( "idioma/mensaje", $datos );
+			$this->load->view ( "profesion/mensaje", $datos );
 		}
 	}
 	
@@ -20,12 +20,12 @@ class profesion extends CI_Controller {
 	public function crearPost() {
 		$this->load->model ( "profesion_model" );
 		$nombre = isset ( $_POST ["nombre"] ) ? $_POST ["nombre"] : null;
-		$estado = isset($_POST['estado'])?$_POST['estado']:false;
+		$activo= isset($_POST['activo'])?$_POST['activo']:false;
 		try {
 		    $registro = $this->profesion_model->crear_profesion ( $nombre,$activo );
 			header ( "location: " . base_url () . "profesion/crearOk?nombre=" . $nombre );
 		} catch ( Exception $e ) {
-			$datos ['mensaje'] ['texto'] = "El género ya existe";
+			$datos ['mensaje'] ['texto'] = "La profesión ya existe";
 			$datos ['mensaje'] ['nivel'] = 'error';
 			$this->load->view ( "profesion/mensaje", $datos );
 		}
@@ -33,7 +33,7 @@ class profesion extends CI_Controller {
 	
 	public function crearOk() {
 		$nombre = isset ( $_GET ['nombre'] ) ? $_GET ['nombre'] : null;
-		$datos ['mensaje'] ['texto'] = 'El género ' . $nombre . ' se ha añadido correctamente';
+		$datos ['mensaje'] ['texto'] = 'La profesion ' . $nombre . ' se ha añadido correctamente';
 		$datos ['mensaje'] ['nivel'] = 'ok';
 
 		$datos ['mensaje'] ['link'] ['listar'] = "profesion";
@@ -72,7 +72,7 @@ class profesion extends CI_Controller {
 		try {
 			$this->profesion_model->editar ( $id_profesion, $nombre_nuevo );
 				
-			$datos ['mensaje'] ['texto'] = "El género " . $nombre_anterior . " se ha actualizado a " . $nombre_nuevo;
+			$datos ['mensaje'] ['texto'] = "La profesión " . $nombre_anterior . " se ha actualizado a " . $nombre_nuevo;
 			$datos ['mensaje'] ['nivel'] = 'ok';
 			enmarcar ( $this, 'profesion/mensaje', $datos );
 		} catch ( Exception $e ) {

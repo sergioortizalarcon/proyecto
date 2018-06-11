@@ -1,61 +1,60 @@
 <?php
-class genero_model extends CI_Model {
-	public function crear_genero($nombre) {
-		$genero = R::findOne ( "generos", "nombre=?", [
-				$nombre
+class Genero_model extends CI_Model {
+	// Se guardan en la tabla los datos del género, comprueba que no exista uno creado con los mismos datos
+	public function crearGenero($nombre, $activo) {
+		$genero = R::find ( 'generos', 'nombre like ?', [ 
+				$nombre 
 		] );
-
 		if ($genero == null) {
-			$genero = R::dispense ( "generos" );
+			$genero = R::dispense ( 'generos' );
 			$genero->nombre = $nombre;
-				
+			$genero->activo = $activo;
 			R::store ( $genero );
 		} else {
-			throw new Exception ( "Error al crear el género" );
+			throw new Exception ( "genero duplicado" );
 		}
-
 		R::close ();
 	}
-	public function getTodos($filtro='') {
-		$todos = R::find ( "generos", "nombre like ? order by nombre ASC", [
-				"%" . $filtro . "%"
-		] );
-		return $todos;
+	
+	// Devuelve todos los datos de todos las géneros
+	public function getTodos() {
+		$mostrar = R::find ( "generos", "order by nombre" );
+		return $mostrar;
 	}
-	public function filtrar($filtro = '') {
-		return R::find ( 'generos', 'nombre like ?', [
-				'%' . $filtro . '%'
-		] );
-	}
-	public function getgeneroPorId($id_genero) {
+	
+	// Devuelve un género mediante su id
+	public function getGeneroPorId($id_genero) {
 		return R::load ( 'generos', $id_genero );
 	}
-	public function getgeneroPorNombre($nombre) {
-		$genero = R::findOne ( "generos", "nombre=?", [
-				$nombre
-		] );
-		if ($genero == null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	public function editar($id_genero, $nuevo_nombre) {
+	
+	// Permite editar los datos del género, no puede repetir datos ni meterlos vacios
+	public function editar($id_genero, $nombre) {
 		$genero = R::load ( 'generos', $id_genero );
-		if ($genero->id != 0) {
-			$genero->nombre = $nuevo_nombre;
-			R::store ( $genero );
-		} else {
-			throw new Exception ( "El género no existe" );
+		$generosTodos = R::find ( "generos", 'nombre like ?', [ 
+				$nombre 
+		] );
+		$cambio = false;
+		
+		if ($generosTodos == null) {
+			if ($nombre != $genero->nombre && $nombre != "") {
+				$genero->nombre = $nombre;
+				$cambio = true;
+			}
+			if ($cambio) {
+				R::store ( $genero );
+			}
 		}
-		R::close ();
 	}
+	// Permite desactivar un género mediante su id
 	public function borrar($id_genero) {
 		$genero = R::load ( 'generos', $id_genero );
-		if ($genero->id != 0) {
-			R::trash ( $genero );
-		}
-		R::close ();
+		$genero->activo = 'Inactivo';
+		R::store ( $genero );
+	}
+	public function activar($id_genero) {
+		$genero = R::load ( 'generos', $id_genero );
+		$genero->activo = 'Activo';
+		R::store ( $genero );
 	}
 }
 

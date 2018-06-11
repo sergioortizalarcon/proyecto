@@ -1,56 +1,61 @@
 <?php
 class Pais_model extends CI_Model {
-	public function crear_pais($nombre) {
-		$pais = R::findOne ( "paises", "nombre=?", [ 
+	// Se guardan en la tabla los datos del país, comprueba que no exista uno creado con los mismos datos
+	public function crearPais($nombre, $activo) {
+		$pais = R::find ( 'paises', 'nombre like ?', [ 
 				$nombre 
 		] );
-		
 		if ($pais == null) {
-			$pais = R::dispense ( "paises" );
+			$pais = R::dispense ( 'paises' );
 			$pais->nombre = $nombre;
-			
+			$pais->activo = $activo;
 			R::store ( $pais );
 		} else {
-			throw new Exception ( "Error al crear el país" );
+			throw new Exception ( "país duplicado" );
 		}
-		
 		R::close ();
 	}
-	public function getTodos($filtro = '') {
-		$todos = R::find ( "paises", "nombre like ?", [ 
-				"%" . $filtro . "%" 
-		] );
-		return $todos;
+	
+	// Devuelve todos los datos de todos las países
+	public function getTodos() {
+		$mostrar = R::find ( "paises", "order by nombre" );
+		return $mostrar;
 	}
+	
+	// Devuelve un país mediante su id
 	public function getPaisPorId($id_pais) {
 		return R::load ( 'paises', $id_pais );
 	}
-	public function getPaisPorNombre($nombre) {
-		$pais = R::findOne ( "paises", "nombre=?", [ 
+	
+	// Permite editar los datos del país, no puede repetir datos ni meterlos vacios
+	public function editar($id_pais, $nombre) {
+		$pais = R::load ( 'paises', $id_pais );
+		$paisessTodos = R::find ( "paises", 'nombre like ?', [ 
 				$nombre 
 		] );
-		if ($pais == null) {
-			return true;
-		} else {
-			return false;
+		$cambio = false;
+		
+		if ($paisesTodos == null) {
+			if ($nombre != $pais->nombre && $nombre != "") {
+				$pais->nombre = $nombre;
+				$cambio = true;
+			}
+			if ($cambio) {
+				R::store ( $pais );
+			}
 		}
 	}
-	public function editar($id_pais, $nuevo_nombre) {
-		$pais = R::load ( 'paises', $id_pais );
-		if ($pais->id != 0) {
-			$pais->nombre = $nuevo_nombre;
-			R::store ( $pais );
-		} else {
-			throw new Exception ( "El país no existe" );
-		}
-		R::close ();
-	}
+	
+	// Permite desactivar un país mediante su id
 	public function borrar($id_pais) {
 		$pais = R::load ( 'paises', $id_pais );
-		if ($pais->id != 0) {
-			R::trash ( $pais );
-		}
-		R::close ();
+		$pais->activo = 'Inactivo';
+		R::store ( $pais );
+	}
+	public function activar($id_pais) {
+		$pais = R::load ( 'paises', $id_pais );
+		$pais->activo = 'Inactivo';
+		R::store ( $pais );
 	}
 }
 

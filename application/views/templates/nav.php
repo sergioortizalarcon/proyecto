@@ -43,11 +43,11 @@
 			-->
 			
 			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Noticias<span class="caret"></span></a>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Géneros<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li class="dropdown-header">Noticias</li>
-					<li><a href="<?=base_url()?>editor/crear">Nueva</a></li>
-					<li><a href="<?=base_url()?>editor/listar">Ver noticias</a></li>
+					<li class="dropdown-header">Géneros</li>
+					<li><a href="<?=base_url()?>genero/crear">Nuevo</a></li>
+					<li><a href="<?=base_url()?>genero/listar">Listar</a></li>
 				</ul>
 			</li>
 			

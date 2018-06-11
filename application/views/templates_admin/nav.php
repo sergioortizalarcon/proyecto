@@ -12,7 +12,7 @@
               </a>
             </li>
             <li class="treeview">
-              <a href="<?=base_url()?>pelicula/menuFilms">
+              <a href="<?=base_url()?>pelicula/listar">
                 &nbsp;&nbsp;&nbsp;<i class="fas fa-film"></i>&nbsp;
                 <span>Películas</span>
               </a>

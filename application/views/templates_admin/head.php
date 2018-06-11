@@ -44,7 +44,27 @@
     <script src="php echo base_url(); ?>assets/a_style/js/jquery.validate.js" type="text/javascript"></script>
     <script src="php echo base_url(); ?>assets/a_style/js/validation.js" type="text/javascript"></script>
     -->
+
+    <!-- Cambia el estilo de los multiselects... mas info->select2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     
+    <script>
+    $(document).ready(function(){
+        $(".basic-multiple").select2({
+            placeholder: 'Hacer click para elegir profesiones...',
+            //maximumSelectionLength:7, <-- total elementos seleccionables
+            closeOnSelect: false,  //<-- para que no se cierre el select. Da problemas con el max lenght, quitar uno de los dos
+            allowClear: true,
+        });
+    });
+</script>
+<style>
+    select,ul.select2-selection__rendered:hover{
+        cursor: pointer;
+    }
+</style>
+
     <script>
     
     $(document).ready(function(){

@@ -21,14 +21,6 @@ class reparto extends CI_Controller {
 		$profesiones = isset($_POST['profesion'])?$_POST['profesion']:null;
 		$estado = isset($_POST['estado'])?$_POST['estado']:'Inactivo';
 		$fechaCambio = str_replace("/", "-", $fechaNacimiento);
-		
-		if ($profesiones != null) {
-			$cadProfesiones ="";
-			for ($i=0;$i<count($profesiones);$i++) {
-			    $cadProfesiones = $profesiones[$i].",".$cadProfesiones;
-			}
-			$cadProfesiones = substr($cadProfesiones, 0, -1);
-		}
 
 		if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
 			# verificamos el formato de la imagen
@@ -55,7 +47,7 @@ class reparto extends CI_Controller {
 		}
 
 		try {
-		    $debug = $this -> reparto_model -> createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto, $estado);
+		    $debug = $this -> reparto_model -> createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $profesiones, $foto, $estado);
 			
 			header ("location:".base_url ()."reparto/crearOk");
 		}

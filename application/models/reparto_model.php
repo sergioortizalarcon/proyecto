@@ -1,7 +1,7 @@
 <?php
 class Reparto_model extends CI_Model {
 	//Se guarda en la tabla los datos de la persona, comprueba que ya exista uno creado con los mismos datos
-    public function createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto, $estado) {
+    public function createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $profesiones, $foto, $estado) {
 		if ($apellido2 == "") {
 			$reparto = R::find('repartos', 'nombre like ? and apellido1 like ? and fechaNacimiento like ?', [$nombre,$apellido1,$fechaNacimiento]);
 			if ($reparto == null) {
@@ -11,14 +11,15 @@ class Reparto_model extends CI_Model {
 				$reparto -> apellido2 = $apellido2;
 				$reparto -> fechaNacimiento = $fechaNacimiento;
 				$reparto -> biografia = $biografia;
-				$profesiones = explode(",",$cadProfesiones); 
-				for ($i=0;$i<count($profesiones);$i++) {
-				    $profesion = R::load("profesiones",$profesiones[$i]);
-				    $profesion -> sharedRepartosList[] = $reparto;
-				    R::store($profesion);
-				}
 				$reparto -> rutaFoto = $foto;
 				$reparto -> estado = $estado;
+
+				foreach ($profesiones as $p) {
+					$profesion = R::load('profesiones',$p);
+					if ($profesion->id != 0) {
+						$reparto -> sharedProfesionList[] = $profesion;
+					}
+				}
 				$pais = R::load("paises", $id_pais);
 				$pais -> xownRepartosList[] = $reparto;
 				R::store($pais);

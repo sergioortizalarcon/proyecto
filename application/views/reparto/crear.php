@@ -178,13 +178,19 @@ function validarProfesion() {
 }
 
 function permitirEnvio() {
-	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto && profesionCorrecto) {
+	console.log("eing");
+	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
+		console.log("hola");
 		idFormulario.idRegistro.disabled=false;
 	}
 }
 
 function validar() {
-	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto && profesionCorrecto) {
+	validarNombre();
+	validarApellido1();
+	validarApellido2();
+	validarFecha();
+	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
 		nombre = idFormulario.idNombre.value.trim();
 		idFormulario.idNombre.value = nombre;
 		apellido1 = apellido1.trim();
@@ -197,7 +203,6 @@ function validar() {
 		validarApellido1();
 		validarApellido2();
 		validarFecha();
-		validarProfesion();
 	}
 }
 
@@ -220,7 +225,7 @@ function cancelarRegistro(){
     </section>
 	<section class="content">
 <div id="creator">
-	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>reparto/crearPost" method="post" enctype="multipart/form-data">
+	<form id="idFormulario" name="idFormulario" action="<?= base_url()?>reparto/crearPost" method="post" enctype="multipart/form-data">
 		<fieldset>
 			
 			<small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>
@@ -269,17 +274,25 @@ function cancelarRegistro(){
 				</select>
 			</div>
 			
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<label for="idProfesion">Profesiones:</label><span class="obligatorio">*</span>
 				<select class="form-control" id="idProfesion" name="profesion[]" multiple size="3" >
-					<?php foreach($body['profesiones'] as $profesion): ?>
-						<option value="<?= $profesion->id ?>" onclick="validarProfesion();" <?=($profesion -> nombre == "Actor")?"selected='selected'":" "?>"><?= $profesion->nombre ?></option>
-					<?php endforeach; ?>
+					<php foreach($body['profesiones'] as $profesion): ?>
+						<option value="<= $profesion->id ?>" onclick="validarProfesion();" <=($profesion -> nombre == "Actor")?"selected='selected'":" "?>"><= $profesion->nombre ?></option>
+					<php endforeach; ?>
 				</select><span class="avisos" id="aProfesion">
 					Debes introducir al menos una profesión.
 				</span>
+			</div> -->
+			<div class="form-group">
+				<label for="idProfesion">Profesiones:</label><span class="obligatorio">*</span>
+				<select class="form-control basic-multiple" id="idProfesion" name="profesion[]" multiple="multiple">
+					<?php foreach($body['profesiones'] as $profesion): ?>
+						<option value="<?= $profesion->id ?>"><?= $profesion->nombre ?></option>
+					<?php endforeach; ?>
+				</select>
 			</div>
-			
+
 			<div class="form-group">
 				<label for="idBiografia">Biografía:</label>
 				<textarea class="form-control" name="biografia" id="idBiografia" placeholder="Biografía"></textarea>

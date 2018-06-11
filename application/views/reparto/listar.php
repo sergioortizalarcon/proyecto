@@ -21,23 +21,23 @@
             </div>
         </div>
         <?php if($body['repartos'] != null):?>
-        	<?php if  ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")): ?>
-        		<div class="table-responsive">
-        			<table id="efectoTabla" class="display table table-bordered">
-        				<thead>
-        					<tr>
-        						<th>Foto</th>
-        						<th>Nombre</th>
-        						<th>Primer apellido</th>
-        						<th>Fecha de nacimiento</th>
-        						<th>Pais de nacimiento</th>
-        						<th>Profesion</th>
-        						<th>Estado</th>
-        						<th>Acciones</th>
-        					</tr>
-        				</thead>
-        				<tbody>
-        					<?php foreach ($body['repartos'] as $reparto): ?>
+            <?php if  ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")): ?>
+                <div class="table-responsive">
+                    <table id="efectoTabla" class="display table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Foto</th>
+                                <th>Nombre</th>
+                                <th>Primer apellido</th>
+                                <th>Fecha de nacimiento</th>
+                                <th>País de nacimiento</th>
+                                <th>Profesion/es</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($body['repartos'] as $reparto): ?>
             					<?php if($reparto -> estado != 'Inactivo'):?>
             						<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
             							<td><img src="<?=base_url()?><?= $reparto->rutaFoto ?>" style="margin:5px;" height="60" width="50"></td>
@@ -45,7 +45,11 @@
             							<td><?= $reparto->apellido1 ?></td>
             							<td><?= $reparto->fecha_nacimiento ?></td>
             							<td><?= $reparto->paises['nombre'] ?></td>
-            							<td><?= $reparto->profesiones['nombre'] ?></td>
+                                        <td>
+                                            <?php foreach ($reparto->sharedProfesionList as $prof): ?>
+                                                <?= $prof->nombre ?> 
+                                            <?php endforeach; ?>
+                                        </td>
             							<td><?= $reparto->estado ?></td>
             							<td>
             								<form class="listado" id="idFormEdit<?= $reparto->id ?>" action="<?=base_url()?>reparto/editar" method="post">
@@ -70,7 +74,11 @@
             							<td><?= $reparto->apellido1 ?></td>
             							<td><?= $reparto->fecha_nacimiento ?></td>
             							<td><?= $reparto->paises['nombre'] ?></td>
-            							<td><?= $reparto->profesiones['nombre'] ?></td>
+            							<td>
+                                            <?php foreach ($reparto->sharedProfesionesList as $prof): ?>
+                                                <?= $prof->nombre ?> ||
+                                            <?php endforeach; ?>
+                                        </td>
             							<td><?= $reparto->estado ?></td>
             							<td>
             								<form class="listado" id="idFormActive<?= $reparto->id ?>" action="<?=base_url()?>reparto/activarPost" method="post">
@@ -92,7 +100,7 @@
         						<th>Primer apellido</th>
         						<th>Fecha de nacimiento</th>
         						<th>Pais de nacimiento</th>
-        						<th>Profesión</th>
+        						<th>Profesion/es</th>
         						<th>Estado</th>
         						<th>Acciones</th>
         					</tr>

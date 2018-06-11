@@ -126,22 +126,11 @@ class Login extends CI_Controller{
 
 
 	public function loginOut(){
+		if (session_status () == PHP_SESSION_NONE) {session_start ();}
 		setcookie("usuario","", time() - 3600,'/');
-		//session_start();
-		//unset($_SESSION["usuarios"]);
-		//session_destroy();
 		session_start();
-		if ($_SESSION['rol'] == 'administrador') {
-			// enmarcar($this, 'templates_admin/loginAdmin');
-			header('location:'.base_url().'login/vista_login_administrador');
-			session_destroy();
-		} else {
-			header("location:".base_url());
-			$datos["mensaje"]["texto"]="Has cerrado sesión con éxito. Hasta la próxima.";
-			$datos["mensaje"]['nivel']="ok";
-			enmarcar($this, 'login/mensaje',$datos);
-		}
-		
+		session_destroy();
+		header("location:".base_url());
 	}
 
 	public function usuario_baneado() {

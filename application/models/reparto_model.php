@@ -36,14 +36,14 @@ class Reparto_model extends CI_Model {
 				$reparto -> apellido2 = $apellido2;
 				$reparto -> fechaNacimiento = $fechaNacimiento;
 				$reparto -> biografia = $biografia;
-				$profesiones = explode(",",$cadProfesiones);
-				for ($i=0;$i<count($profesiones);$i++) {
-				    $profesion = R::load("profesiones",$profesiones[$i]);
-				    $profesion -> sharedRepartosList[] = $reparto;
-				    R::store($profesion);
-				}
 				$reparto -> rutaFoto = $foto;
 				$reparto -> estado = $estado;
+				foreach ($profesiones as $p) {
+					$profesion = R::load('profesiones',$p);
+					if ($profesion->id != 0) {
+						$reparto -> sharedProfesionList[] = $profesion;
+					}
+				}
 				$pais = R::load("paises", $id_pais);
 				$pais -> xownRepartosList[] = $reparto;
 				R::store($pais);

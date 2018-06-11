@@ -225,7 +225,7 @@ function cancelarRegistro(){
     </section>
 	<section class="content">
 <div id="creator">
-	<form id="idFormulario" name="idFormulario" action="<?= base_url()?>reparto/crearPost" method="post" enctype="multipart/form-data">
+	<form id="idFormulario" name="idFormulario" onchange="permitirEnvio()" action="<?= base_url()?>reparto/crearPost" method="post" enctype="multipart/form-data">
 		<fieldset>
 			
 			<small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>

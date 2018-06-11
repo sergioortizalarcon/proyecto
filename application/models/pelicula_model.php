@@ -99,13 +99,13 @@ class Pelicula_model extends CI_Model {
 	
 	public function borrar($id_pelicula) {
 	    $pelicula = R::load ( 'peliculas', $id_pelicula );
-	    $pelicula->activo = 'false';
+	    $pelicula->activo = 'Inactivo';
 	    R::store ( $pelicula );
 	}
 	
 	public function activar($id_pelicula) {
 	    $pelicula = R::load ( 'peliculas', $id_pelicula );
-	    $pelicula->activo = 'true';
+	    $pelicula->activo = 'Activo';
 	    R::store ( $pelicula );
 	}
 }

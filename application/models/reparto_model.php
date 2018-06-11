@@ -121,7 +121,7 @@ class Reparto_model extends CI_Model {
 	
 	public function activar($id_reparto) {
 	    $reparto = R::load ( 'repartos', $id_reparto );
-	    $reparto->activo = 'Inactivo';
+	    $reparto->activo = 'Activo';
 	    R::store ( $reparto );
 	}
 }

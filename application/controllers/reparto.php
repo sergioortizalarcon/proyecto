@@ -4,7 +4,7 @@ class reparto extends CI_Controller {
 	    $this->load->model('pais_model');
 	    $this->load->model('profesion_model');
 		$datos['body']['paises'] = $this->pais_model->getTodos();
-		$datos['body']['profesiones'] = $this->profesion_model->getAllActive();
+		$datos['body']['profesiones'] = $this->profesion_model->getAll();
 		enmarcar($this, "reparto/crear", $datos);
 	}
 

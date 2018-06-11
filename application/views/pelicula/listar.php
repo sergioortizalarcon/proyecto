@@ -47,7 +47,7 @@
                     </thead>
                     <tbody>
                         <?php foreach ($body['peliculas'] as $pelicula): ?>
-                            <?php if($pelicula -> activo != 'false'):?>
+                            <?php if($pelicula -> activo != 'Inactivo'):?>
                                 <tr>
                                     <td><?=$pelicula->id_tmdb?></td>
                                     <?php if($pelicula->ruta_cartel != 'null'): ?>

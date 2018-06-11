@@ -128,7 +128,11 @@
             						<td><?= $reparto->apellido1 ?></td>
             						<td><?= $reparto->fecha_nacimiento ?></td>
             						<td><?= $reparto->paises['nombre'] ?></td>
-            						<td><?= $reparto->profesiones['nombre'] ?></td>
+            						<td>
+                                        <?php foreach ($reparto->sharedProfesionesList as $prof): ?>
+                                            <?= $prof->nombre ?> ||
+                                        <?php endforeach; ?>
+                                    </td>
             				<?php endforeach; ?>
         				</tbody>
         				<tfoot>

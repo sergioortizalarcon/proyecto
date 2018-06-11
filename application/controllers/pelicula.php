@@ -32,20 +32,21 @@ class Pelicula extends CI_Controller {
 		
 		$titulo = str_replace(" ","",$titulo);
 		
-		$cadGeneros ="";
-		for ($i=0;$i<count($generos);$i++) {
-			$cadGeneros = $generos[$i].",".$cadGeneros;
+		if ($generos!="") {
+    		$cadGeneros ="";
+    		for ($i=0;$i<count($generos);$i++) {
+    			$cadGeneros = $generos[$i].",".$cadGeneros;
+    		}
+    		$cadGeneros = substr($cadGeneros, 0, -1);
 		}
-		$cadGeneros = substr($cadGeneros, 0, -1);
 		
-		$cadReparto = "";
-		for ($i=0; $i<count($repartos);$i++) {
-		    $cadReparto = $repartos[$i].",".$cadReparto;
+		if ($repartos!="") {
+    		$cadRepartos = "";
+    		for ($i=0; $i<count($repartos);$i++) {
+    		    $cadRepartos = $repartos[$i].",".$cadRepartos;
+    		}
+    		$cadRepartos = substr($cadRepartos, 0, -1);
 		}
-		$cadReparto = substr($cadReparto, 0, -1);
-		
-		echo "Géneros: $cadGeneros <br/>";
-		echo "Reparto: $cadReparto";
 		
 		if (is_uploaded_file($_FILES['fotoPoster']['tmp_name'])) {
 			# verificamos el formato de la imagen
@@ -72,20 +73,16 @@ class Pelicula extends CI_Controller {
 			$foto = $_POST['fotoFija'];
 		}
 		
-		echo $titulo;
-		
-		echo $foto;
-		
 		try {
-		    $this->pelicula_model->createFilm ( $titulo, $anioEstreno, $duracion, $id_pais, $cadIdsReparto, $productora, $generos, $sinopsis, $foto, $activo);
+		    $this->pelicula_model->createFilm ( $titulo, $anioEstreno, $duracion, $id_pais, $cadRepartos, $productora, $cadGeneros, $sinopsis, $foto, $activo);
 			header ("location:".base_url ()."pelicula/crearOk");
 		}
 		catch (Exception $e) {
-			$datos['mensaje']['texto'] = "Persona ya existente";
+			$datos['mensaje']['texto'] = "película ya existente";
 			$datos['mensaje']['nivel'] = 'error';
-			$datos['mensaje']['link']['listar'] = "reparto";
-			$datos['mensaje']['link']['crear'] = "reparto";
-			enmarcar($this,"reparto/mensaje",$datos);
+			$datos['mensaje']['link']['listar'] = "pelicula";
+			$datos['mensaje']['link']['crear'] = "pelicula";
+			enmarcar($this,"pelicula/mensaje",$datos);
 		}
 	}
 	

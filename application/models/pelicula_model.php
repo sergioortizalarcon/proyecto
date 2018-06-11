@@ -1,7 +1,7 @@
 <?php
 class Pelicula_model extends CI_Model {
     //Se guarda en la tabla los datos de la película, comprueba que ya exista uno creado con los mismos datos
-    public function createFilm ( $titulo, $anioEstreno, $duracion, $id_pais, $reparto, $productora, $generos, $sinopsis, $foto, $activo) {
+    public function createFilm ( $titulo, $anioEstreno, $duracion, $id_pais, $cadRepartos, $productora, $cadGeneros, $sinopsis, $foto, $activo) {
         $pelicula = R::find('peliculas', 'titulo like ? and anioEstreno like ? and duracion like ? and productora like ?', [$titulo,$anioEstreno,$duracion,$productora]);
         if ($pelicula == null) {
             $pelicula = R::dispense ( 'peliculas' );
@@ -9,15 +9,23 @@ class Pelicula_model extends CI_Model {
             $pelicula -> anioEstreno = $anioEstreno;
             $pelicula -> duracion = $duracion;
             $pelicula -> productora = $productora;
-            $pelicula -> sinopsis = $cadProfesiones;
+            $pelicula -> sinopsis = $sinopsis;
             $pelicula -> rutaFoto = $foto;
             $pelicula -> activo = $activo;
-            /*$reparto = R::load("repartos", $id_reparto[]);
-            $reparto -> xownPeliculaList[] = $pelicula;
-            $genero = R::load("generos", $id_genero[]);
-            $genero -> xownPeliculaList[] = $pelicula;*/
+            $generos = explode(",",$cadGeneros);
+            for ($i=0;$i<count($generos);$i++) {
+                $genero = R::load("generos",$generos[$i]);
+                $genero -> sharedPeliculasList[] = $pelicula;
+                R::store($genero);
+            }
+            $repartos = explode(",",$cadRepartos);
+            for ($i=0;$i<count($repartos);$i++) {
+                $reparto = R::load("repartos",$repartos[$i]);
+                $reparto -> sharedPeliculasList[] = $pelicula;
+                R::store($reparto);
+            }
             $pais = R::load("paises", $id_pais);
-            $pais -> xownPeliculaList[] = $pelicula;
+            $pais -> xownPeliculasList[] = $pelicula;
             R::store($pais);
         } else {
             throw new Exception("Película duplicada");
@@ -36,7 +44,7 @@ class Pelicula_model extends CI_Model {
 	
 	//Devuelve todos los datos de todas las películas
 	public function getAll() {
-	    $mostrar = R::find("peliculas","order by anioEstreno,titulo,productora");
+	    $mostrar = R::find("peliculas","order by anio_estreno,titulo,productora");
 	    return $mostrar;
 	}
 	

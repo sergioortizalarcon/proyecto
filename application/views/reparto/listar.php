@@ -10,20 +10,20 @@
         	<small>Add, Edit, Delete</small>
 		</h1>
 	</section>
+	
 	<section class="content">
 		<div class="row">
             <div class="col-xs-12 text-right">
                 <div class="form-group">
-                    <a class="btn btn-primary" href="<?=base_url()?>reparto/crear"><i class="fa fa-plus"></i>
-                    &nbsp;&nbsp;Agregar más...
-                	</a>
+                    <a class="btn btn-primary" href="<?=base_url()?>reparto/crear">
+                    <i class="fa fa-plus"></i>&nbsp;&nbsp;Agregar más...</a>
                 </div>
             </div>
         </div>
         <?php if($body['repartos'] != null):?>
         	<?php if  ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")): ?>
         		<div class="table-responsive">
-        			<table id="efectoTabla" class="display table table-bordered ">
+        			<table id="efectoTabla" class="display table table-bordered">
         				<thead>
         					<tr>
         						<th>Foto</th>
@@ -100,7 +100,8 @@
         			</table>
         		</div>
         	<?php else: ?>
-        		<table id="efectoTabla" class="display table table-bordered ">
+            	<div class="table-responsive">
+        			<table id="efectoTabla" class="display table table-bordered ">
         				<thead>
         					<tr>
         						<th>Foto</th>

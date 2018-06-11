@@ -7,7 +7,7 @@ var nombreCorrecto = false;
 var apellido1Correcto = false;
 var apellido2Correcto = true;
 var fechaCorrecto = false;
-var profesionCorrecto = false;
+var profesionCorrecto = true;
 
 var nombre="";
 var apellido1="";
@@ -40,7 +40,7 @@ function validarNombre() {
 	nombre = idFormulario.idNombre.value.trim();
 	if (nombre != "") {
 
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,20}$/;
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ.-çÇ]{2,20}$/;
 		if (expReg.test(nombre)){
 			nombreCorrecto = true;
 			correcto=true;
@@ -70,7 +70,7 @@ function validarApellido1() {
 	apellido1 = idFormulario.idApellido1.value.trim();
 	if (apellido1 != "") {
 		
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,20}$/;
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ.-çÇ]{2,20}$/;
 		if (expReg.test(apellido1)){
 			apellido1Correcto = true;
 			correcto=true;
@@ -100,7 +100,7 @@ function validarApellido2() {
 	apellido2 = idFormulario.idApellido2.value.trim();
 	if (apellido2 != "") {
 		
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,20}$/;
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ.-çÇ]{2,20}$/;
 		if (expReg.test(apellido2)){
 			apellido2Correcto = true;
 			correcto=true;
@@ -273,7 +273,7 @@ function cancelarRegistro(){
 				<label for="idProfesion">Profesiones:</label><span class="obligatorio">*</span>
 				<select class="form-control" id="idProfesion" name="profesion[]" multiple size="3" >
 					<?php foreach($body['profesiones'] as $profesion): ?>
-						<option value="<?= $profesion->id ?>" onclick="validarProfesion();"><?= $profesion->nombre ?></option>
+						<option value="<?= $profesion->id ?>" onclick="validarProfesion();" <?=($profesion -> nombre == "Actor")?"selected='selected'":" "?>"><?= $profesion->nombre ?></option>
 					<?php endforeach; ?>
 				</select><span class="avisos" id="aProfesion">
 					Debes introducir al menos una profesión.

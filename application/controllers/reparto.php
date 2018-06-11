@@ -21,18 +21,13 @@ class reparto extends CI_Controller {
 		$profesiones = isset($_POST['profesion'])?$_POST['profesion']:null;
 		$activo = isset($_POST['activo'])?$_POST['activo']:'Inactivo';
 		$fechaCambio = str_replace("/", "-", $fechaNacimiento);
-		//echo $id_pais;
+		
 		if ($profesiones != null) {
 			$cadProfesiones ="";
 			for ($i=0;$i<count($profesiones);$i++) {
 			    $cadProfesiones = $profesiones[$i].",".$cadProfesiones;
 			}
 			$cadProfesiones = substr($cadProfesiones, 0, -1);
-			/*echo $cadProfesiones;
-			$prueba = explode(",",$cadProfesiones);
-			for ($i=0;$i<count($prueba);$i++) {
-			    echo "<br/> Prueba:$prueba[$i]:Fin Prueba";
-			}*/
 		}
 
 		if (is_uploaded_file($_FILES['foto']['tmp_name'])) {

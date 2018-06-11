@@ -20,7 +20,7 @@ class profesion extends CI_Controller {
 	public function crearPost() {
 		$this->load->model ( "profesion_model" );
 		$nombre = isset ( $_POST ["nombre"] ) ? $_POST ["nombre"] : null;
-		$activo = isset($_POST['activo'])?$_POST['activo']:false;
+		$estado = isset($_POST['estado'])?$_POST['estado']:false;
 		try {
 		    $registro = $this->profesion_model->crear_profesion ( $nombre,$activo );
 			header ( "location: " . base_url () . "profesion/crearOk?nombre=" . $nombre );

@@ -1,7 +1,7 @@
 <?php
 class Reparto_model extends CI_Model {
 	//Se guarda en la tabla los datos de la persona, comprueba que ya exista uno creado con los mismos datos
-    public function createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto, $activo) {
+    public function createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto, $estado) {
 		if ($apellido2 == "") {
 			$reparto = R::find('repartos', 'nombre like ? and apellido1 like ? and fechaNacimiento like ?', [$nombre,$apellido1,$fechaNacimiento]);
 			if ($reparto == null) {
@@ -18,7 +18,7 @@ class Reparto_model extends CI_Model {
 				    R::store($profesion);
 				}
 				$reparto -> rutaFoto = $foto;
-				$reparto -> activo = $activo;
+				$reparto -> estado = $estado;
 				$pais = R::load("paises", $id_pais);
 				$pais -> xownRepartosList[] = $reparto;
 				R::store($pais);
@@ -42,7 +42,7 @@ class Reparto_model extends CI_Model {
 				    R::store($profesion);
 				}
 				$reparto -> rutaFoto = $foto;
-				$reparto -> activo = $activo;
+				$reparto -> estado = $estado;
 				$pais = R::load("paises", $id_pais);
 				$pais -> xownRepartosList[] = $reparto;
 				R::store($pais);
@@ -115,13 +115,13 @@ class Reparto_model extends CI_Model {
 	//Permite desactivar una persona mediante su id
 	public function borrar($id_reparto) {
 		$reparto = R::load ( 'repartos', $id_reparto );
-		$reparto->activo = 'Inactivo';
+		$reparto->estado = 'Inactivo';
 		R::store ( $reparto );
 	}
 	
 	public function activar($id_reparto) {
 	    $reparto = R::load ( 'repartos', $id_reparto );
-	    $reparto->activo = 'Activo';
+	    $reparto->estado = 'Activo';
 	    R::store ( $reparto );
 	}
 }

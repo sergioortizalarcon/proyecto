@@ -1,7 +1,7 @@
 <?php
 class Pelicula_model extends CI_Model {
     //Se guarda en la tabla los datos de la película, comprueba que ya exista uno creado con los mismos datos
-    public function createFilm ( $titulo, $anioEstreno, $duracion, $id_pais, $cadRepartos, $productora, $cadGeneros, $sinopsis, $foto, $activo) {
+    public function createFilm ( $titulo, $anioEstreno, $duracion, $id_pais, $cadRepartos, $productora, $cadGeneros, $sinopsis, $foto, $estado) {
         $pelicula = R::find('peliculas', 'titulo like ? and anioEstreno like ? and duracion like ? and productora like ?', [$titulo,$anioEstreno,$duracion,$productora]);
         if ($pelicula == null) {
             $pelicula = R::dispense ( 'peliculas' );
@@ -11,7 +11,7 @@ class Pelicula_model extends CI_Model {
             $pelicula -> productora = $productora;
             $pelicula -> sinopsis = $sinopsis;
             $pelicula -> rutaFoto = $foto;
-            $pelicula -> activo = $activo;
+            $pelicula -> estado = $estado;
             $generos = explode(",",$cadGeneros);
             for ($i=0;$i<count($generos);$i++) {
                 $genero = R::load("generos",$generos[$i]);
@@ -99,13 +99,13 @@ class Pelicula_model extends CI_Model {
 	
 	public function borrar($id_pelicula) {
 	    $pelicula = R::load ( 'peliculas', $id_pelicula );
-	    $pelicula->activo = 'Inactivo';
+	    $pelicula->estado = 'Inactivo';
 	    R::store ( $pelicula );
 	}
 	
 	public function activar($id_pelicula) {
 	    $pelicula = R::load ( 'peliculas', $id_pelicula );
-	    $pelicula->activo = 'Activo';
+	    $pelicula->estado = 'Activo';
 	    R::store ( $pelicula );
 	}
 }

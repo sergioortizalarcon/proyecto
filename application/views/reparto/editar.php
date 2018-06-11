@@ -174,6 +174,11 @@ function cancelarRegistro(){
 		window.location.href = "<?=base_url()?>";
 	}
 }
+
+function prueba(id,nombre) {
+	alert(id);
+	alert(nombre);
+}
 </script>
 
 <div class="container content-wrapper">
@@ -238,18 +243,32 @@ function cancelarRegistro(){
 						</select>
 					</div>
 					
-					<div class="form-group">
-    					<label for="idProfesion">Profesiones:</label>
-    					<select class="form-control" id="idProfesion" name="profesion[]" multiple size="3">
-    						<option value="Actor">Actor</option>
-    						<option value="Director">Director</option>
-    						<option value="Guionista">Guionista</option>
-    					</select>
+					<div clas="row">
+    					<div class="form-group col-md-6">
+        					<label for="idProfesion">Profesiones:</label><span class="obligatorio">*</span>
+        					<select class="form-control" id="idProfesion" name="profesion[]" multiple size="3">
+        						<?php foreach($body['profesiones'] as $profesion): ?>
+    								<option onclick="prueba(this.value, this.id);" id="<?= $profesion->nombre ?>" value="<?= $profesion->id ?>" >
+    									<?= $profesion->nombre ?>
+    								</option>
+    							<?php endforeach; ?>
+        					</select>
+    					</div>
+    					<div class="form-group col-md-6">
+        					<label for="idProfesion">Profesiones:</label><span class="obligatorio">*</span>
+        					<select class="form-control" id="idProfesion" name="profesion[]" multiple size="3">
+        						<?php foreach($body['profesiones'] as $profesion): ?>
+    								<option onclick="prueba(this.value, this.id);" id="<?= $profesion->nombre ?>" value="<?= $profesion->id ?>" >
+    									<?= $profesion->nombre ?>
+    								</option>
+    							<?php endforeach; ?>
+        					</select>
+    					</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="idBiografia">Biografía:</label>
-						<textarea class="form-control" name="biografia" id="idBiografia" placeholder="Biografía"></textarea>
+						<textarea class="form-control" name="biografia" id="idBiografia"><?= $body['repartos']->biografia ?></textarea>
 					</div>
 						
 					<div class="form-group">
@@ -259,7 +278,7 @@ function cancelarRegistro(){
 							Debes introducir una foto con formato y tamaño correcto.
 						</span><br/>
 						<div id="list">
-					
+							<img class="thumb" src="<?= base_url().$body["repartos"]->rutaFoto ?>" style="width:210px; height:320px;"/>
 						</div>
 					</div>	
 					
@@ -271,11 +290,6 @@ function cancelarRegistro(){
 				</fieldset>
 			</form>
 			<br/>
-			<form name="formDirector" id="formDirector" action="<?= base_url() ?>reparto/crearDirector" method="post" >
-				<input type="hidden" name="id_reparto" value="<?= $body['repartos']->id ?>" />
-				<!-- <input type="hidden" name="id_pais" value="<?= $body['paises']->id ?>" /> -->
-				<input type="submit" class="btn btn-default" id="creaDirector" name="creaDirector" value="Crear director" />
-			</form>
 		</div>
 		<div id="result"></div>
 	</section>

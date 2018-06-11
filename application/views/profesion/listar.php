@@ -31,7 +31,7 @@
 					</thead>
 					<tbody>
 						<?php foreach ($body['profesiones'] as $profesion): ?>
-							<?php if($profesion->activo != 'Inactivo'):?>
+							<?php if($profesion->estado != 'Inactivo'):?>
     							<tr>
         							<td><?= $profesion->id ?></td>
         							<td><?= $profesion->nombre ?></td>
@@ -56,7 +56,7 @@
     							<tr>
         							<td><?= $profesion->id ?></td>
         							<td><?= $profesion->nombre ?></td>
-        							<td><?= $profesion->activo ?></td>
+        							<td><?= $profesion->estado ?></td>
         							<td>
 				        				<form class="listado" id="idFormActive<?= $profesion->id ?>" action="<?=base_url()?>profesion/activarPost" method="post">
         									<input type="hidden" name="id_profesion" value="<?= $profesion -> id?>">

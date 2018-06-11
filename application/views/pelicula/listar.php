@@ -37,7 +37,7 @@
                         </thead>
                         <tbody>
                             <?php foreach ($body['peliculas'] as $pelicula): ?>
-                            	<?php if($pelicula -> activo != 'false'):?>
+                            	<?php if($pelicula -> estado != 'Inactivo'):?>
                                     <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);">
                                         <td><img src="<?=base_url()?><?= $pelicula->rutaFoto ?>" height="60" width="50"></td>
                                         <td><?= $pelicula->titulo ?></td>
@@ -62,14 +62,14 @@
                                         </td>
                                     </tr>
                                 <?php else: ?>
-                                	<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
+                                	<tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
             							 <td><img src="<?=base_url()?><?= $pelicula->rutaFoto ?>" height="60" width="50"></td>
                                         <td><?= $pelicula->titulo ?></td>
                                         <td><?= $pelicula->anioEstreno ?></td>
                                         <td><?= $pelicula->pais ?></td>
                                         <td><?= $pelicula->productora ?></td>
+                                        <th><?= $pelicula->estado ?></th>
                                         <td>
-            								Inactivo
             								<form class="listado" id="idFormActive<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/activarPost" method="post">
             									<input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>">
             									<input type="hidden" name="v" value="listarTodos">

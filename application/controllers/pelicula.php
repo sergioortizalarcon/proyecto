@@ -28,7 +28,7 @@ class Pelicula extends CI_Controller {
 		$productora = isset($_POST['productora'])?$_POST['productora']:null;
 		$generos = isset($_POST['genero'])?$_POST['genero']:null;
 		$sinopsis = isset($_POST['sinopsis'])?$_POST['sinopsis']:null;
-		$activo = isset($_POST['activo'])?$_POST['activo']:false;
+		$estado = isset($_POST['estado'])?$_POST['estado']:'Inactivo';
 		
 		$titulo = str_replace(" ","",$titulo);
 		
@@ -74,7 +74,7 @@ class Pelicula extends CI_Controller {
 		}
 		
 		try {
-		    $this->pelicula_model->createFilm ( $titulo, $anioEstreno, $duracion, $id_pais, $cadRepartos, $productora, $cadGeneros, $sinopsis, $foto, $activo);
+		    $this->pelicula_model->createFilm ( $titulo, $anioEstreno, $duracion, $id_pais, $cadRepartos, $productora, $cadGeneros, $sinopsis, $foto, $estado);
 			header ("location:".base_url ()."pelicula/crearOk");
 		}
 		catch (Exception $e) {
@@ -130,7 +130,6 @@ class Pelicula extends CI_Controller {
         $productora = isset($_POST['productora'])?$_POST['productora']:null;
         $generos = isset($_POST['genero'])?$_POST['genero']:null;
         $sinopsis = isset($_POST['sinopsis'])?$_POST['sinopsis']:null;
-        $activo = isset($_POST['activo'])?$_POST['activo']:false;
         
         $titulo = str_replace(" ","",$titulo);
         
@@ -197,6 +196,21 @@ class Pelicula extends CI_Controller {
 
 	public function infoAct(){
 		enmarcar($this,'peliculas/vista_info_actor');
+	}
+	
+	public function borrarPost() {
+	    $this->load->model ( 'pelicula_model' );
+	    $id_pelicula = $_POST ['id_pelicula'];
+	    $this->pelicula_model->borrar ( $id_pelicula );
+	    $this->listar();
+	}
+	
+	public function activarPost() {
+	    $this->load->model ( 'pelicula_model' );
+	    $id_pelicula = $_POST ['id_pelicula'];
+	    $this->pelicula_model->activar ( $id_pelicula );
+	    
+	    $this->listar();
 	}
 }
 ?>

@@ -266,7 +266,7 @@ function cancelarRegistro(){
 				</select>
 			</div>
 			
-			<input type="hidden" value="Acivo" name="activo" />
+			<input type="hidden" value="Activo" name="estado" />
 
 			<div class="form-group">
 				<label for="idProductora">Productora:</label><span class="obligatorio">*</span>

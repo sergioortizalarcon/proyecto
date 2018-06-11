@@ -1,28 +1,6 @@
 <?php
 class Pelicula_model extends CI_Model {
-	/*
-	Se guarda en la tabla los datos de la película, comprueba que ya exista uno creado con los mismos datos
-	public function createFilm ( $titulo, $anioEstreno, $duracion, $id_pais, $reparto, $productora, $generos, $sinopsis, $foto, $activo) {
-		$pelicula = R::find('pelicula', 'titulo like ? and anioEstreno like ? and duracion like ? and productora like ?', [$titulo,$anioEstreno,$duracion,$productora]);
-		if ($pelicula == null) {
-			$pelicula = R::dispense ( 'pelicula' );
-			$pelicula -> titulo = $titulo;
-			$pelicula -> anioEstreno = $anioEstreno;
-			$pelicula -> duracion = $duracion;
-			$pelicula -> productora = $productora;
-			$pelicula -> sinopsis = $cadProfesiones;
-			$pelicula -> rutaFoto = $foto;
-			$pelicula -> activo = $activo;
-			$pais = R::load("paises", $id_pais);
-			$pais -> xownPeliculaList[] = $pelicula;
-			R::store($pais);
-		} else {
-			throw new Exception("Película duplicada");
-		}
-		R::close();
-	}
-	*/
-    //Se guarda en la tabla los datos de la película, comprueba que ya exista uno creado con los mismos datos
+
     public function createFilm ( $titulo, $anioEstreno, $duracion, $id_pais, $cadRepartos, $productora, $cadGeneros, $sinopsis, $foto, $estado) {
         $pelicula = R::find('peliculas', 'titulo like ? and anioEstreno like ? and duracion like ? and productora like ?', [$titulo,$anioEstreno,$duracion,$productora]);
         if ($pelicula == null) {
@@ -54,7 +32,6 @@ class Pelicula_model extends CI_Model {
         }
         R::close();
     }
-
 	public function getPeliculaPorTitulo($nombre,$tmdb){
 		$pelicula = R::findOne("peliculas","titulo=? and id_tmdb=?",[$nombre,$tmdb]);
 		if ($pelicula == null) {
@@ -72,9 +49,8 @@ class Pelicula_model extends CI_Model {
 	    return R::load("peliculas",$id_pelicula);
 	}
 	
-	 public function insertPelicula($id,$title,$original_title,$poster_path,$popularity,$release_date,$adult,$overview,$genre_ids) {
-		$pelicula = R::findOne('peliculas','id like ? and titulo_original like ?',[$id,$original_title]);
-
+	 public function insertPelicula($id,$title,$original_title,$poster_path,$popularity,$release_date,$adult,$original_language,$overview,$genre_ids) {
+		$pelicula = R::findOne('peliculas','id_tmdb = ? and titulo_original = ? and titulo = ?',[$id,$original_title,$title]);
 		if ($pelicula == null) {
 		$nueva_pelicula = R::dispense('peliculas');
 		$nueva_pelicula -> titulo = $title;
@@ -83,19 +59,17 @@ class Pelicula_model extends CI_Model {
 		$nueva_pelicula ->popularidad = $popularity;
 		$nueva_pelicula -> fecha_lanzamiento= $release_date;
 		$nueva_pelicula -> adulto= $adult;
+		$nueva_pelicula -> original_language= $original_language;
 		$nueva_pelicula -> sinopsis= $overview;
-		foreach ($genre_ids as $id_g) {
-		$nueva_pelicula->sharedGenerosList[] = R::load('generos',$id_g);
-		}
 		$nueva_pelicula -> id_tmdb = $id;
-		R::store($nueva_pelicula);
-		R::close();
-		return true;
-		} else {
-		R::close();
-		throw new Exception("Error Processing Request", 1);
-		return false;
+		foreach ($genre_ids as $id_g) {
+			$nueva_pelicula->sharedGenerosList[] = R::load('generos',$id_g);
 		}
+		R::store($nueva_pelicula);
+		} else {
+		throw new Exception("Error Processing Request", 1);
+		}
+		R::close();
 		}
 
 		

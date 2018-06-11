@@ -108,19 +108,13 @@ class Pelicula extends CI_Controller {
 		$popularity = isset ( $sol ["popularity"] ) ? $sol ["popularity"] : null;
 		$release_date = isset ( $sol ["release_date"] ) ? $sol ["release_date"] : null;
 		$adult = isset ( $sol ["adult"] ) ? $sol ["adult"] : null;
+		$original_language = isset ( $sol ["original_language"] ) ? $sol ["original_language"] : null;
 		$overview = isset ( $sol ["overview"] ) ? $sol ["overview"] : null;
 		$genre_ids = isset ($_POST["genre"] ) ?$_POST["genre"] : [];
-		// try {
-		if ($adult == 'false') {
-			$adult = "No";
-		} else {
-			$adult = "Sí";
-		}
-		// 	$ver = 
 		$titulo = $this->pelicula_model->getPeliculaPorTitulo($title,$id);
 		print_r($titulo);
 		if($titulo){
-			$this-> pelicula_model -> insertPelicula($id,$title,$original_title,$poster_path,$popularity,$release_date,$adult,$overview,$genre_ids);
+			$this-> pelicula_model -> insertPelicula($id,$title,$original_title,$poster_path,$popularity,$release_date,$adult,$original_language,$overview,$genre_ids);
 		}
 	}
 

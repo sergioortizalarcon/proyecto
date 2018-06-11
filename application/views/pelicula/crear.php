@@ -5,7 +5,7 @@ function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];
 
 		var xhr;
 		var keyPi = 'api_key=d6c1959156d6a00119e929d60865c6d3';
-		idioma = 'language=es';
+		idioma = 'language=es&include_adult=true';
 
 		Element.prototype.remove = function() {
     this.parentElement.removeChild(this);
@@ -32,7 +32,7 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
 					mostrar = document.getElementById("mostrarInfo");
 					vendetta = valores.results;
 					console.log(valores.results);
-					var claves = ['id','title','original_title','poster_path','popularity','release_date','adult','overview','genre_ids'];
+					var claves = ['id','title','original_title','poster_path','popularity','release_date','adult','original_language','overview','genre_ids'];
 					for (var i = 0; i < vendetta.length; i++) {
 						v = vendetta[i];
 						var nombre="idFormi"+i;
@@ -68,9 +68,9 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
 								} else {
 									var valor = v[key];
 									if (key == 'adult') {
-										if (valor == 'false') {
+										if (valor == false) {
 											valor = "No";
-										} else {
+										} else if(valor == true) {
 											valor = "Sí";
 										}
 									}

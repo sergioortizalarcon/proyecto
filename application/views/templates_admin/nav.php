@@ -18,15 +18,15 @@
               </a>
             </li>
             <li class="treeview">
-              <a href="<?=base_url()?>actor/listar" >
+              <a href="<?=base_url()?>reparto/listar" >
                 &nbsp;&nbsp;&nbsp;<i class="fas fa-address-card"></i>&nbsp;
-                <span>Cast Películas</span>
+                <span>Reparto</span>
               </a>
             </li>
             <li class="treeview">
-              <a href="<?=base_url()?>director/listar">
-                &nbsp;&nbsp;&nbsp;<i class="fas fa-user-tie"></i>&nbsp;
-                <span>Directores</span>
+              <a href="<?=base_url()?>profesion/listar" >
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-folder-open"></i>&nbsp;
+                <span>Profesiones</span>
               </a>
             </li>
             <li class="treeview">

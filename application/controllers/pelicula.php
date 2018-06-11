@@ -24,24 +24,25 @@ class Pelicula extends CI_Controller {
 		$productora = isset($_POST['productora'])?$_POST['productora']:null;
 		$generos = isset($_POST['genero'])?$_POST['genero']:null;
 		$sinopsis = isset($_POST['sinopsis'])?$_POST['sinopsis']:null;
-		$activo = isset($_POST['activo'])?$_POST['activo']:false;
+		$estado = isset($_POST['estado'])?$_POST['estado']:'Inactivo';
 		
 		$titulo = str_replace(" ","",$titulo);
 		
-		$cadGeneros ="";
-		for ($i=0;$i<count($generos);$i++) {
-			$cadGeneros = $generos[$i].",".$cadGeneros;
+		if ($generos!="") {
+    		$cadGeneros ="";
+    		for ($i=0;$i<count($generos);$i++) {
+    			$cadGeneros = $generos[$i].",".$cadGeneros;
+    		}
+    		$cadGeneros = substr($cadGeneros, 0, -1);
 		}
-		$cadGeneros = substr($cadGeneros, 0, -1);
 		
-		$cadReparto = "";
-		for ($i=0; $i<count($repartos);$i++) {
-		    $cadReparto = $repartos[$i].",".$cadReparto;
+		if ($repartos!="") {
+    		$cadRepartos = "";
+    		for ($i=0; $i<count($repartos);$i++) {
+    		    $cadRepartos = $repartos[$i].",".$cadRepartos;
+    		}
+    		$cadRepartos = substr($cadRepartos, 0, -1);
 		}
-		$cadReparto = substr($cadReparto, 0, -1);
-		
-		echo "Géneros: $cadGeneros <br/>";
-		echo "Reparto: $cadReparto";
 		
 		if (is_uploaded_file($_FILES['fotoPoster']['tmp_name'])) {
 			# verificamos el formato de la imagen
@@ -67,21 +68,19 @@ class Pelicula extends CI_Controller {
 		}else {
 			$foto = $_POST['fotoFija'];
 		}
-		
-		echo $titulo;
-		
-		echo $foto;
-		
 		try {
 		    $this->pelicula_model->createFilm ( $titulo, $anioEstreno, $duracion, $id_pais, $cadIdsReparto, $productora, $generos, $sinopsis, $foto, $activo);
 			header ("location:".base_url ()."pelicula/creadaOk");
+
+		    $this->pelicula_model->createFilm ( $titulo, $anioEstreno, $duracion, $id_pais, $cadRepartos, $productora, $cadGeneros, $sinopsis, $foto, $estado);
+			header ("location:".base_url ()."pelicula/crearOk");
 		}
 		catch (Exception $e) {
-			$datos['mensaje']['texto'] = "Persona ya existente";
+			$datos['mensaje']['texto'] = "película ya existente";
 			$datos['mensaje']['nivel'] = 'error';
-			$datos['mensaje']['link']['listar'] = "reparto";
-			$datos['mensaje']['link']['crear'] = "reparto";
-			enmarcar($this,"reparto/mensaje",$datos);
+			$datos['mensaje']['link']['listar'] = "pelicula";
+			$datos['mensaje']['link']['crear'] = "pelicula";
+			enmarcar($this,"pelicula/mensaje",$datos);
 		}
 	}
 	
@@ -118,19 +117,11 @@ class Pelicula extends CI_Controller {
 			$adult = "Sí";
 		}
 		// 	$ver = 
-		$titulo = $this->pelicula_model ->getPeliculaPorTitulo($title,$id);
+		$titulo = $this->pelicula_model->getPeliculaPorTitulo($title,$id);
 		print_r($titulo);
 		if($titulo){
 			$this-> pelicula_model -> insertPelicula($id,$title,$original_title,$poster_path,$popularity,$release_date,$adult,$overview,$genre_ids);
 		}
-		// 	// if ($ver) {
-		// 	// header('Location:'.base_url().'pelicula/creadaOk?pelicula='.$title);
-		// 	// } else {
-		// 	// 	header('Location:'.base_url().'pelicula/crearError');
-		// 	// }
-		// } catch(Exception $e){
-		// 	print_r($e);
-		// }
 	}
 
 	public function listar() {
@@ -169,7 +160,6 @@ class Pelicula extends CI_Controller {
         $productora = isset($_POST['productora'])?$_POST['productora']:null;
         $generos = isset($_POST['genero'])?$_POST['genero']:null;
         $sinopsis = isset($_POST['sinopsis'])?$_POST['sinopsis']:null;
-        $activo = isset($_POST['activo'])?$_POST['activo']:false;
         
         $titulo = str_replace(" ","",$titulo);
         
@@ -249,6 +239,21 @@ class Pelicula extends CI_Controller {
 
 	public function infoAct(){
 		enmarcar($this,'peliculas/vista_info_actor');
+	}
+	
+	public function borrarPost() {
+	    $this->load->model ( 'pelicula_model' );
+	    $id_pelicula = $_POST ['id_pelicula'];
+	    $this->pelicula_model->borrar ( $id_pelicula );
+	    $this->listar();
+	}
+	
+	public function activarPost() {
+	    $this->load->model ( 'pelicula_model' );
+	    $id_pelicula = $_POST ['id_pelicula'];
+	    $this->pelicula_model->activar ( $id_pelicula );
+	    
+	    $this->listar();
 	}
 }
 ?>

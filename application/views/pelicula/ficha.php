@@ -10,70 +10,86 @@
 			</ul>
 		
 			<div id="principal">
-				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
-					<div class="col-md-12">
-						<img src="<?= base_url() ?><?= $body['peliculas']->rutaFoto ?>">
-					</div>
-					<div class="col-md-12">
-						<h4><?= $body['peliculas']->titulo ?></h4>
-					</div>
+				<div class="col-md-3">
+    				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
+    					<div class="col-md-12">
+    						<img src="<?= base_url() ?><?= $body['peliculas']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
+    					</div>
+    					<div class="col-md-12">
+    						<h4><?= $body['peliculas']->titulo ?></h4>
+    					</div>
+    				</div>
 				</div>
-				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
-    				<h5>Fecha de estreno: <?=$body['peliculas']->anioEstreno ?></h5>
-    				<h5>País de creación: <?= $body['peliculas']->paises['nombre'] ?></h5>
+				<div class="col-md-9">
+    				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
+        				<h5>Fecha de estreno: <?=$body['peliculas']->anioEstreno ?></h5>
+        				<h5>País de creación: <?= $body['peliculas']->paises['nombre'] ?></h5>
+    				</div>
 				</div>
 			</div>
 			
 			<div id="reparto">
 			    <!-- TODO 
-				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
-					Meter todas las personas que han trabajado en la pelicula
-					<div class="col-md-12">
-						<img src="<?= base_url() ?><?= $body['peliculas']->rutaFoto ?>">
-					</div>
-					<div class="col-md-12">
-						<h4><?= $body['peliculas']->titulo ?></h4>
-					</div>
+				<div class="col-md-3">
+    				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
+    					Meter todas las personas que han trabajado en la pelicula
+    					<div class="col-md-12">
+    						<img src="<?= base_url() ?><?= $body['peliculas']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
+    					</div>
+    					<div class="col-md-12">
+    						<h4><?= $body['peliculas']->titulo ?></h4>
+    					</div>
+    				</div>
 				</div>
-				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
-					<?= $body['repartos']->biografia ?>
+				<div class="col-md-9">
+    				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
+    					<?= $body['repartos']->biografia ?>
+    				</div>
 				</div>
 				-->
 			</div>
 			
 			<div id="sinopsis">
-				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
-					<div class="col-md-12">
-						<img src="<?= base_url() ?><?= $body['peliculas']->rutaFoto ?>">
-					</div>
-					<div class="col-md-12">
-						<h4><?= $body['peliculas']->titulo ?></h4>
-					</div>
+				<div class="col-md-3">
+    				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
+    					<div class="col-md-12">
+    						<img src="<?= base_url() ?><?= $body['peliculas']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
+    					</div>
+    					<div class="col-md-12">
+    						<h4><?= $body['peliculas']->titulo ?></h4>
+    					</div>
+    				</div>
 				</div>
-				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
-					<?= $body['peliculas']->sinopsis ?>
+				<div class="col-md-9">
+    				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
+    					<?= $body['peliculas']->sinopsis ?>
+    				</div>
 				</div>
 			</div>
 			
 			<div id="noticias">
-				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
-					<div class="col-md-12">
-						<img src="<?= base_url() ?><?= $body['peliculas']->rutaFoto ?>">
-					</div>
-					<div class="col-md-12">
-						<h4><?= $body['peliculas']->titulo ?></h4>
-					</div>
+				<div class="col-md-3">
+    				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
+    					<div class="col-md-12">
+    						<img src="<?= base_url() ?><?= $body['peliculas']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
+    					</div>
+    					<div class="col-md-12">
+    						<h4><?= $body['peliculas']->titulo ?></h4>
+    					</div>
+    				</div>
 				</div>
-				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
-					Lorem ipsum.
+				<div class="col-md-9">
+    				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
+    					Lorem ipsum.
+    				</div>
 				</div>
 			</div>
 			
 			<div id="galeria">
-				<div class="col-md-2">
-    				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;border:1px solid red;">
+				<div class="col-md-3">
+    				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
     					<div class="col-md-12">
-    						<img src="<?= base_url() ?><?= $body['repartos']->rutaFoto ?>">
+    						<img src="<?= base_url() ?><?= $body['repartos']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
     					</div>
     					<div class="col-md-12">
     						<h4><?= $body['peliculas']->titulo ?></h4>
@@ -87,9 +103,11 @@
     				</div>
 				</div>
 				<!-- TEMPORAL añadir imagenes a la galería de cada persona -->
-    			<div class="col-md-10">
+    			<div class="col-md-9">
     				<form action="<?= base_url()?>reparto/insertarImagenes" method="post" enctype="multipart/form-data">
-    					<div class="rowd" id="galeriaFotografica" style="height:100%; width:100%; border:1px solid black;"></div>
+    					<div class="rowd" id="galeriaFotografica">
+    					
+    					</div>
     				</form>
 				</div>
 			</div>

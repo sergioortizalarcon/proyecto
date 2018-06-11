@@ -273,12 +273,14 @@ function cancelarRegistro(){
     			<span class="avisos" id="aFotoPoster">
     				Debes introducir una foto con formato y tamaño correcto.
     			</span><br/>
-    			<div id="list"></div>
+    			<div id="list">
+    				<img class="thumb" src="<?= base_url().$body["peliculas"]->rutaFoto ?>" style="width:250px; height:300px;"/>
+    			</div>
 			</div>
 
 			<div class="nav navbar-form navbar-right">
 				<input type="button" class="btn btn-default" id="idCancelar" name="cancelar" value="Cancelar registro" onclick="cancelarRegistro();" />
-				<input type="button" class="btn btn-default" id="idRegistro" name="registrarPelicula" disabled="true" value="Registrar película" onclick="validar();" />
+				<input type="button" class="btn btn-default" id="idRegistro" name="registrarPelicula" disabled value="Registrar película" onclick="validar();" />
 			</div>
 		</fieldset>
 	</form>

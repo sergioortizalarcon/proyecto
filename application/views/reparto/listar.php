@@ -10,42 +10,43 @@
         	<small>Add, Edit, Delete</small>
 		</h1>
 	</section>
+	
 	<section class="content">
 		<div class="row">
             <div class="col-xs-12 text-right">
                 <div class="form-group">
-                    <a class="btn btn-primary" href="<?=base_url()?>reparto/crear"><i class="fa fa-plus"></i>
-                    &nbsp;&nbsp;Agregar más...
-                	</a>
+                    <a class="btn btn-primary" href="<?=base_url()?>reparto/crear">
+                    <i class="fa fa-plus"></i>&nbsp;&nbsp;Agregar más...</a>
                 </div>
             </div>
         </div>
         <?php if($body['repartos'] != null):?>
-        	<?php if ($_SESSION['rol'] == "administrador"): ?>
+        	<?php if  ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")): ?>
         		<div class="table-responsive">
-        			<table id="efectoTabla" class="display table table-bordered ">
+        			<table id="efectoTabla" class="display table table-bordered">
         				<thead>
         					<tr>
         						<th>Foto</th>
         						<th>Nombre</th>
         						<th>Primer apellido</th>
-        						<th>Segundo apellido</th>
         						<th>Fecha de nacimiento</th>
         						<th>Pais de nacimiento</th>
+        						<th>Profesion</th>
         						<th>Estado</th>
         						<th>Acciones</th>
         					</tr>
         				</thead>
         				<tbody>
         					<?php foreach ($body['repartos'] as $reparto): ?>
-            					<?php if($reparto -> activo != 'false'):?>
+            					<?php if($reparto -> estado != 'Inactivo'):?>
             						<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
-            							<td><img src="<?=base_url()?><?= $reparto->rutaFoto ?>" height="60" width="50"></td>
+            							<td><img src="<?=base_url()?><?= $reparto->rutaFoto ?>" style="margin:5px;" height="60" width="50"></td>
             							<td><?= $reparto->nombre ?></td>
             							<td><?= $reparto->apellido1 ?></td>
-            							<td><?= $reparto->apellido2 ?></td>
             							<td><?= $reparto->fecha_nacimiento ?></td>
             							<td><?= $reparto->paises['nombre'] ?></td>
+            							<td><?= $reparto->profesiones['nombre'] ?></td>
+            							<td><?= $reparto->estado ?></td>
             							<td>
             								<form class="listado" id="idFormEdit<?= $reparto->id ?>" action="<?=base_url()?>reparto/editar" method="post">
             									<input type="hidden" name="id_reparto" value="<?= $reparto -> id?>">
@@ -64,14 +65,14 @@
             						</tr>
             					<?php else: ?>
             						<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
-            							<td><img src="<?=base_url()?><?= $reparto->rutaFoto ?>" height="60" width="50"></td>
+            							<td><img src="<?=base_url()?><?= $reparto->rutaFoto ?>" style="margin:5px;" height="60" width="50"></td>
             							<td><?= $reparto->nombre ?></td>
             							<td><?= $reparto->apellido1 ?></td>
-            							<td><?= $reparto->apellido2 ?></td>
             							<td><?= $reparto->fecha_nacimiento ?></td>
             							<td><?= $reparto->paises['nombre'] ?></td>
+            							<td><?= $reparto->profesiones['nombre'] ?></td>
+            							<td><?= $reparto->estado ?></td>
             							<td>
-            								Inactivo
             								<form class="listado" id="idFormActive<?= $reparto->id ?>" action="<?=base_url()?>reparto/activarPost" method="post">
             									<input type="hidden" name="id_reparto" value="<?= $reparto -> id?>">
             									<input type="hidden" name="v" value="listarTodos">
@@ -89,11 +90,47 @@
         						<th>Foto</th>
         						<th>Nombre</th>
         						<th>Primer apellido</th>
-        						<th>Segundo apellido</th>
         						<th>Fecha de nacimiento</th>
         						<th>Pais de nacimiento</th>
+        						<th>Profesión</th>
         						<th>Estado</th>
         						<th>Acciones</th>
+        					</tr>
+        				</tfoot>
+        			</table>
+        		</div>
+        	<?php else: ?>
+            	<div class="table-responsive">
+        			<table id="efectoTabla" class="display table table-bordered ">
+        				<thead>
+        					<tr>
+        						<th>Foto</th>
+        						<th>Nombre</th>
+        						<th>Primer apellido</th>
+        						<th>Fecha de nacimiento</th>
+        						<th>Pais de nacimiento</th>
+        						<th>Profesión</th>
+        					</tr>
+        				</thead>
+        				<tbody>
+        					<?php foreach ($body['repartos'] as $reparto): ?>
+            					<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
+            						<td><img src="<?=base_url()?><?= $reparto->rutaFoto ?>" style="margin:5px;" height="60" width="50"></td>
+            						<td><?= $reparto->nombre ?></td>
+            						<td><?= $reparto->apellido1 ?></td>
+            						<td><?= $reparto->fecha_nacimiento ?></td>
+            						<td><?= $reparto->paises['nombre'] ?></td>
+            						<td><?= $reparto->profesiones['nombre'] ?></td>
+            				<?php endforeach; ?>
+        				</tbody>
+        				<tfoot>
+        					<tr>
+        						<th>Foto</th>
+        						<th>Nombre</th>
+        						<th>Primer apellido</th>
+        						<th>Fecha de nacimiento</th>
+        						<th>Pais de nacimiento</th>
+        						<th>Profesión</th>
         					</tr>
         				</tfoot>
         			</table>

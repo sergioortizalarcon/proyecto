@@ -20,7 +20,7 @@ class profesion extends CI_Controller {
 	public function crearPost() {
 		$this->load->model ( "profesion_model" );
 		$nombre = isset ( $_POST ["nombre"] ) ? $_POST ["nombre"] : null;
-		$activo = isset($_POST['activo'])?$_POST['activo']:false;
+		$estado = isset($_POST['estado'])?$_POST['estado']:false;
 		try {
 		    $registro = $this->profesion_model->crear_profesion ( $nombre,$activo );
 			header ( "location: " . base_url () . "profesion/crearOk?nombre=" . $nombre );
@@ -82,18 +82,11 @@ class profesion extends CI_Controller {
 		}
 	}
 	
-	public function borrar() {
-		$datos ['body'] ['accion'] = 'borrar';
-		$datos ['body'] ['filtro'] = '';
-		$this->filtrar ( $datos );
-	}
-	
 	public function borrarPost() {
 		$this->load->model ( 'profesion_model' );
-		$id_profesion = isset ( $_POST ['id_profesion'] ) ? $_POST ['id_profesion'] : null;
+		$id_profesion = $_POST ['id_profesion'];
 		$this->profesion_model->borrar ( $id_profesion );
-		header ( "location: " . base_url () . "profesion/listar" );
-		$this->listar ();
+		$this->listar();
 	}
 	
 	public function activarPost() {
@@ -101,7 +94,7 @@ class profesion extends CI_Controller {
 	    $id_profesion = $_POST ['id_profesion'];
 	    $this->profesion_model->activar ( $id_profesion );
 	    
-	    $this->listarPost();
+	    $this->listar();
 	}
 }
 

@@ -1,64 +1,61 @@
 <?php
 class Idioma_model extends CI_Model {
-	
-	public function crear_idioma($nombre) {
-		$idioma = R::findOne ( "idiomas", "nombre=?", [ 
+	// Se guardan en la tabla los datos del idioma, comprueba que no exista uno creado con los mismos datos
+	public function crearIdioma($nombre, $activo) {
+		$idioma = R::find ( 'idiomas', 'nombre like ?', [ 
 				$nombre 
 		] );
-		
 		if ($idioma == null) {
-			$idioma = R::dispense ( "idiomas" );
-			$idioma -> nombre = $nombre;
-			
+			$idioma = R::dispense ( 'idiomas' );
+			$idioma->nombre = $nombre;
+			$idioma->activo = $activo;
 			R::store ( $idioma );
 		} else {
-			throw new Exception ( "Error al crear el idioma");
+			throw new Exception ( "idioma duplicado" );
 		}
 		R::close ();
 	}
-
-	public function getIdiomaPorNombre($nombre){
-		$idioma = R::findOne("idiomas","nombre=?",[$nombre]);
-		if ($idioma == null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public function getIdiomaPorId ( $id_idioma ) {
-		return R::load("idiomas",$id_idioma);
-	}
 	
-	public function getTodos($filtro='') {
-		$mostrar = R::find("idiomas","nombre like ?", ["%".$filtro."%"]);
+	// Devuelve todos los datos de todos las idiomas
+	public function getTodos() {
+		$mostrar = R::find ( "idiomas", "order by nombre" );
 		return $mostrar;
 	}
-
-
-	/*			EDITADO Y BORRADO		*/
-
 	
-	public function editar_idioma($idId,$nuevo_nombre) {
-		$idioma = R::load("idiomas",$idId);
-		if ($idioma->id!=0){
-			$idioma -> nombre = $nuevo_nombre;
-			R::store($idioma);
-		} else {
-			 throw new Exception("Idioma inexistente.");
-		}
-		R::close();
+	// Devuelve un idioma mediante su id
+	public function getIdiomaPorId($id_idioma) {
+		return R::load ( 'idiomas', $id_idioma );
 	}
-
-	public function borrar_idioma($id_idioma) {
+	
+	// Permite editar los datos del idioma, no puede repetir datos ni meterlos vacios
+	public function editar($id_idioma, $nombre) {
 		$idioma = R::load ( 'idiomas', $id_idioma );
-		if ($idioma->id != 0) {
-			R::trash ( $idioma );
+		$idiomasTodos = R::find ( "idiomas", 'nombre like ?', [ 
+				$nombre 
+		] );
+		$cambio = false;
+		
+		if ($idiomasTodos == null) {
+			if ($nombre != $idioma->nombre && $nombre != "") {
+				$idioma->nombre = $nombre;
+				$cambio = true;
+			}
+			if ($cambio) {
+				R::store ( $idioma );
+			}
 		}
-		R::close ();
 	}
-
-
+	// Permite desactivar un idioma mediante su id
+	public function borrar($id_idioma) {
+		$idioma = R::load ( 'idiomas', $id_idioma );
+		$idioma->activo = 'Inactivo';
+		R::store ( $idioma );
+	}
+	public function activar($id_idioma) {
+		$idioma = R::load ( 'idiomas', $id_idioma );
+		$idioma->activo = 'Activo';
+		R::store ( $idioma );
+	}
 }
 
 ?>

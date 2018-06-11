@@ -1,71 +1,73 @@
 <script type="text/javascript">
-	var xhr;
-	window.onload = function(){
-		xhr = new XMLHttpRequest();
-		console.log(xhr);
-	}
-	function accionAJAX() {
-		if (xhr.readyState==4 && xhr.status==200) {	
-			document.getElementById("result").innerHTML = xhr.responseText;
-		}
-	}
+var correcto = true;
+var nombreCorrecto = false;
+var nombre="";
 
-	function peticionAJAX(nombre, id_genero) {
-	//xhr = new XMLHttpRequest();
-	xhr.open("POST", "<?=base_url()?>genero/editarPost", true);
-	xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	console.log(nombre);
-	xhr.send("nombre="+nombre+"&id_genero="+id_genero);
-	console.log(xhr);
-
-	
-	xhr.onreadystatechange = function(){
-		console.log(xhr.readyState+"  "+xhr.status);
-		if (xhr.readyState==4 && xhr.status==200) {	
-			console.log(xhr.readyState+"   "+xhr.status);
-			document.getElementById("result").innerHTML = xhr.responseText;
+function mayuscula(palabra, id) {
+	var palabrasSeparadas = palabra.split(" ");
+	var palabraNueva="";
+	if (palabrasSeparadas.length>1) {
+		for (i=0;i<palabrasSeparadas.length; i++) {
+			var primeraLetra = palabrasSeparadas[i].substr(0,1);
+			palabra = palabrasSeparadas[i].slice(1);
+			palabraNueva += primeraLetra.toUpperCase() + palabra + " ";
 		}
+	} else {
+		var primeraLetra = palabrasSeparadas[0].substr(0,1);
+		palabra = palabrasSeparadas[0].slice(1);
+		palabraNueva = primeraLetra.toUpperCase() + palabra + " ";
+	}
+	if (id == "idNombre") {
+		idFormulario.idNombre.value=palabraNueva;
+	}else { 
+		idFormulario.idApellido2.value=palabraNueva;
 	}
 }
 
 function validarNombre() {
-	var n = document.getElementById("idNombre").value;
-	var nombre = n.trim();
-	var nombreAnterior = document.getElementById("idNombreAnterior").value;
-
-	var distintos = true;
-
-	if (nombre.toLowerCase()==nombreAnterior.toLowerCase()) {
-		distintos=false;
+	nombre = idFormulario.idNombre.value.trim();
+	if (nombre == "") {
+		idFormulario.nombre.style.borderColor="red";
+		document.getElementById("aNombre").style.display="initial";
+		if (correcto == true) {
+			document.getElementById('aNombre').focus();
+			correcto=false;
+		}
 	}
-	
-	if(nombre!="" && distintos ) {
-		expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,20}$/;
-		if (expresion.test(nombre)) {
-			var m = nombre.charAt(0);
-			nombre= m.toUpperCase()+nombre.substring(1,nombre.length);
 
+	if (nombre != "") {
+		var expReg = /^[a-zA-Zá-úÁ-ÚñÑ ]{2,20}$/;
+		if (expReg.test(nombre)){
+			nombreCorrecto = true;
+			correcto=true;
 			idFormulario.idNombre.style.borderColor="blue";
 			document.getElementById("aNombre").style.display="none";
-			return true;
 		} else {
 			idFormulario.idNombre.style.borderColor="red";
 			document.getElementById("aNombre").style.display="initial";
-			return false;
+			if (correcto == true) {
+				document.getElementById('idNombre').focus();
+				correcto=false;
+			}
+			nombreCorrecto = false;
 		}
-	} else {
-		document.getElementById("aNombre").style.display="initial";
-		idFormulario.idNombre.style.borderColor="red";
-		return false;
 	}
 }
 
-function validar(){
-	if (validarNombre()) {
-		document.getElementById('editar').disabled=false;
-	}else{
-		document.getElementById('editar').disabled=true;
+
+function permitirEnvio() {
+	if (nombreCorrecto) {
+		idFormulario.idRegistro.disabled=false;
+	}
+}
+
+function validar() {
+	if (nombreCorrecto) {
+		nombre = idFormulario.idNombre.value.trim();
+		idFormulario.idNombre.value = nombre;
+		idFormulario.submit();
+	} else {
+		validarNombre();
 	}
 }
 
@@ -76,45 +78,42 @@ function cancelarRegistro(){
 		window.location.href = "<?=base_url()?>";
 	}
 }
-
 </script>
-
 
 <div class="container content-wrapper">
 	<section class="content-header">
       <h1>
-        <i class="far fa-folder-open"></i>&nbsp;&nbsp;Editar género
+        <i class="fas fa-folder-open"></i>&nbsp;&nbsp;Editar país
       </h1>
     </section>
 	<section class="content">
-	<form id="idFormulario" method="post" action="<?=base_url()?>genero/editarPost">
-		<fieldset>
-			<legend>Editar genero</legend>
-
-			<div class="form-group">
-				<label for="idNombreAnterior">Nombre anterior</label> <input
-				class="form-control" type="text" id="idNombreAnterior"
-				name="nombreAnterior" disabled="disabled"
-				<?= ($body["generos"]->nombre)?"value=".$body["generos"]->nombre:"" ?>>
-
-			</div>
-			<div class="form-group">
-				<label for="idNombre">Nuevo nombre</label><span class="obligatorio">*</span>
-				<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validar();">
-				<input class="form-control" type="hidden" id="idID" name="id_genero"
-				<?= "value=".$body["generos"]->id?>>
-				<span class="avisos" id="aNombre"> Debes escribir un nombre válido(caracteres no númericos o símbolos). </span>
-
+		<div id="creator">
+			<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>genero/editarPost" method="post">
+				<fieldset>
+					<legend><?= $body['generos']->nombre ?></legend>
+					
+					<div class="form-group">
+						<label for="idNombre">Nombre</label>
+						<input class="form-control" type="text" id="idNombre" name="nombre" onkeyup="validarNombre();" onchange="mayuscula(this.value, this.id);"
+						value="<?= $body['generos']->nombre ?>" data-toogle="tooltip" data-placement="left" title="Escribe un nombre" />
+						<span class="avisos" id="aNombre">
+							Debes escribir un nombre válido(3 a 20 caracteres no numéricos ni símbolos).
+						</span>
+					</div>
+					
+					
+					
+					<input type="hidden" name="id_genero" value="<?= $body['generos']->id ?>" />
+					
+					<div class="nav navbar-form navbar-right">
+						<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar cambio" onclick="cancelarCambio();"/>
+						<input type="button" class="btn btn-default" id="registrarse" name ="registrarse" value="Editar" onclick="validar();"/>
+					</div>
+					
+				</fieldset>
+			</form>
+			<br/>
 		</div>
-
-		<div class="form-group">
-			<div class="nav navbar-form navbar-right">
-				<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar cambio" onclick="cancelarRegistro();"/>
-			<input type="submit"  id="editar" name="editar" class="btn btn-default" value="Editar" disabled="disabled" />
-			</div>
-		</div>
-	</fieldset>
-	</form>
-	<div id="result"></div>
-</section>
+		<div id="result"></div>
+	</section>
 </div>

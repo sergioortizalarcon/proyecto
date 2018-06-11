@@ -19,14 +19,12 @@ class reparto extends CI_Controller {
 		$biografia = isset($_POST['biografia'])?$_POST['biografia']:null;
 		$ambos = isset($_POST['ambos'])?$_POST['ambos']:'off';
 		$profesiones = isset($_POST['profesion'])?$_POST['profesion']:null;
-		$activo = isset($_POST['activo'])?$_POST['activo']:false;
-		
+		$estado = isset($_POST['estado'])?$_POST['estado']:'Inactivo';
 		$fechaCambio = str_replace("/", "-", $fechaNacimiento);
 		
 		if ($profesiones != null) {
 			$cadProfesiones ="";
 			for ($i=0;$i<count($profesiones);$i++) {
-			    echo "$profesiones[$i] <br/>";
 			    $cadProfesiones = $profesiones[$i].",".$cadProfesiones;
 			}
 			$cadProfesiones = substr($cadProfesiones, 0, -1);
@@ -57,7 +55,7 @@ class reparto extends CI_Controller {
 		}
 
 		try {
-		    $debug = $this -> reparto_model -> createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto, $activo);
+		    $debug = $this -> reparto_model -> createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto, $estado);
 			
 			header ("location:".base_url ()."reparto/crearOk");
 		}
@@ -91,9 +89,11 @@ class reparto extends CI_Controller {
 	public function editar() {
 		$this->load->model ( 'reparto_model' );
 		$this->load->model('pais_model');
+		$this->load->model('profesion_model');
 		$id_reparto = $_POST ['id_reparto'];
 		$datos ['body']['repartos'] = $this->reparto_model->getRepartoPorId ( $id_reparto );
 		$datos['body']['paises'] = $this->pais_model->getTodos();
+		$datos['body']['profesiones'] = $this->profesion_model->getAllActive();
 		enmarcar ( $this, 'reparto/editar', $datos);
 	}
 
@@ -174,7 +174,7 @@ class reparto extends CI_Controller {
 		$id_reparto = $_POST ['id_reparto'];
 		$this->reparto_model->borrar ( $id_reparto );
 
-		$this->listarPost();
+		$this->listar();
 	}
 	
 	public function activarPost() {
@@ -182,7 +182,7 @@ class reparto extends CI_Controller {
 	    $id_reparto = $_POST ['id_reparto'];
 	    $this->reparto_model->activar ( $id_reparto );
 	    
-	    $this->listarPost();
+	    $this->listar();
 	}
 
 	public function abrirFicha() {

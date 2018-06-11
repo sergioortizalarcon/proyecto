@@ -333,12 +333,12 @@ function cancelarRegistro(){
 				<select multiple class="form-control" id="idReparto" name="reparto[]"
 				data-toogle="tooltip" data-placement="left" title="Selecciona la persona" size="5">
 					<?php foreach($repartos as $reparto):?>
-						<option value="<?=$reparto -> id?>"><?= $reparto->nombre ?> <?= $reparto->apellido1?></option>
+						<option value="<?=$reparto -> id?>" <?=($reparto -> id == "1")?"selected='selected'":" "?>"><?= $reparto->nombre ?> <?= $reparto->apellido1?></option>
 					<?php endforeach; ?>
 				</select>
 			</div>
 			
-			<input type="hidden" value="true" name="activo" />
+			<input type="hidden" value="Activo" name="estado" />
 
 			<div class="form-group">
 				<label for="idProductora">Productora:</label><span class="obligatorio">*</span>
@@ -354,7 +354,7 @@ function cancelarRegistro(){
 				<select multiple class="form-control" id="idGenero" name="genero[]"
 				data-toogle="tooltip" data-placement="left" title="Selecciona el género" size="5">
 					<?php foreach($generos as $genero):?>
-						<option value="<?=$genero -> id?>"><?= $genero->nombre?></option>
+						<option value="<?=$genero -> id?>" <?=($genero -> id == "1")?"selected='selected'":" "?>"><?= $genero->nombre?></option>
 					<?php endforeach; ?>
 				</select>
 			</div>

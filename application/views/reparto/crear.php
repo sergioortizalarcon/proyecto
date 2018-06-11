@@ -5,8 +5,9 @@ function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];
 var correcto = true;
 var nombreCorrecto = false;
 var apellido1Correcto = false;
-var apellido2Correcto = false;
+var apellido2Correcto = true;
 var fechaCorrecto = false;
+var profesionCorrecto = true;
 
 var nombre="";
 var apellido1="";
@@ -39,7 +40,7 @@ function validarNombre() {
 	nombre = idFormulario.idNombre.value.trim();
 	if (nombre != "") {
 
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,20}$/;
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ.-çÇ]{2,20}$/;
 		if (expReg.test(nombre)){
 			nombreCorrecto = true;
 			correcto=true;
@@ -69,7 +70,7 @@ function validarApellido1() {
 	apellido1 = idFormulario.idApellido1.value.trim();
 	if (apellido1 != "") {
 		
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,20}$/;
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ.-çÇ]{2,20}$/;
 		if (expReg.test(apellido1)){
 			apellido1Correcto = true;
 			correcto=true;
@@ -99,7 +100,7 @@ function validarApellido2() {
 	apellido2 = idFormulario.idApellido2.value.trim();
 	if (apellido2 != "") {
 		
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,20}$/;
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ.-çÇ]{2,20}$/;
 		if (expReg.test(apellido2)){
 			apellido2Correcto = true;
 			correcto=true;
@@ -133,31 +134,57 @@ function validarFecha() {
 	var mesHoy = fechaSis.getMonth()+1;
 	var diaHoy = fechaSis.getDate();
 	mesHoy = "0"+mesHoy;
-	
-	if (anio >= anioHoy && mes >= mesHoy && dia > diaHoy) {
-		idFormulario.idFecha.style.borderColor="red";
+    if (fecha!="") {
+    	if (anio >= anioHoy && mes >= mesHoy && dia > diaHoy) {
+    		idFormulario.idFecha.style.borderColor="red";
+    		document.getElementById("aFecha").style.display="initial";
+    		fechaCorrecto = false;
+    		if (correcto == true) {
+    			document.getElementById('aFecha').focus();
+    			correcto=false;
+    		}
+    	} else {
+    		fechaCorrecto = true;
+            idFormulario.idFecha.style.borderColor="blue";
+    		document.getElementById("aFecha").style.display="none";
+    		correcto = true;
+    	}
+    } else {
+    	if (correcto == true) {
+			document.getElementById('idFecha').focus();
+			correcto=false;
+		}
 		document.getElementById("aFecha").style.display="initial";
-		fechaCorrecto = false;
+        idFormulario.idFecha.style.borderColor="red";
+        fechaCorrecto = false;
+    }
+}
+
+function validarProfesion() {
+	var reparto = idFormulario.idProfesion.value;
+	if (reparto == "") {
+		idFormulario.idProfesion.style.borderColor="red";
+		document.getElementById("aProfesion").style.display="initial";
+		profesionCorrecto = false;
 		if (correcto == true) {
-			document.getElementById('aFecha').focus();
+			document.getElementById('idProfesion').focus();
 			correcto=false;
 		}
 	} else {
-		fechaCorrecto = true;
-        idFormulario.idFecha.style.borderColor="blue";
-		document.getElementById("aFecha").style.display="none";
-		correcto = true;
+		idFormulario.idProfesion.style.borderColor="blue";
+		document.getElementById("idProfesion").style.display="initial";
+		profesionCorrecto = true;
 	}
 }
 
 function permitirEnvio() {
-	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
+	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto && profesionCorrecto) {
 		idFormulario.idRegistro.disabled=false;
 	}
 }
 
 function validar() {
-	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
+	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto && profesionCorrecto) {
 		nombre = idFormulario.idNombre.value.trim();
 		idFormulario.idNombre.value = nombre;
 		apellido1 = apellido1.trim();
@@ -170,6 +197,7 @@ function validar() {
 		validarApellido1();
 		validarApellido2();
 		validarFecha();
+		validarProfesion();
 	}
 }
 
@@ -242,12 +270,14 @@ function cancelarRegistro(){
 			</div>
 			
 			<div class="form-group">
-				<label for="idProfesion">Profesiones:</label>
-				<select class="form-control" id="idProfesion" name="profesion[]" multiple size="3">
+				<label for="idProfesion">Profesiones:</label><span class="obligatorio">*</span>
+				<select class="form-control" id="idProfesion" name="profesion[]" multiple size="3" >
 					<?php foreach($body['profesiones'] as $profesion): ?>
-						<option value="<?= $profesion->id ?>"><?= $profesion->nombre ?></option>
+						<option value="<?= $profesion->id ?>" onclick="validarProfesion();" <?=($profesion -> nombre == "Actor")?"selected='selected'":" "?>"><?= $profesion->nombre ?></option>
 					<?php endforeach; ?>
-				</select>
+				</select><span class="avisos" id="aProfesion">
+					Debes introducir al menos una profesión.
+				</span>
 			</div>
 			
 			<div class="form-group">
@@ -255,7 +285,7 @@ function cancelarRegistro(){
 				<textarea class="form-control" name="biografia" id="idBiografia" placeholder="Biografía"></textarea>
 			</div>
 			
-			<input type="hidden" value="true" name="activo"/>
+			<input type="hidden" value="Activo" name="activo"/>
 			
 			<div class="form-group">
 				<label for="idFoto">Foto:</label>
@@ -270,7 +300,7 @@ function cancelarRegistro(){
 			
 			<div class="nav navbar-form navbar-right">
 				<input type="button" class="btn btn-default" id="idCancelar" name="cancelar" value="Cancelar registro" onclick="cancelarRegistro();" />
-				<input type="button" class="btn btn-default" id="idRegistro" name="registrarse" disabled="true" value="Registrar Persona" onclick="validar();" />
+				<input type="button" class="btn btn-default" id="idRegistro" disabled="true" name="registrarse" value="Registrar Persona" onclick="validar();" />
 			</div>
 			
 		</fieldset>

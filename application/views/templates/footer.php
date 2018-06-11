@@ -1,29 +1,4 @@
 <footer class="container">
-<br/>
-<br/>
-<br/>
-<br/>
-<hr/>
-<?php
-	$enlace_actual = 'http://'.$_SERVER['HTTP_HOST'];
-	$refer = isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:"no refer.";
-	$resto = $_SERVER['REQUEST_URI'];
-    print $enlace_actual."/".$resto;
-    print_r(isset($_SESSION['rol'])?'<pre><code>'.$_SESSION['rol'].'</code></pre>':"");
-    /*
-        Redirecciona a una página diferente en el mismo directorio el cual se hizo la petición
-        $host  = $_SERVER['HTTP_HOST'];
-        $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra = 'mypage.php';
-        header("Location: http://$host$uri/$extra");
-        exit;
-    */
-        $ipAddress = $_SERVER['REMOTE_ADDR'];
-if (array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)) {
-    $ipAddress = array_pop(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']));
-}
-echo $ipAddress;
-?>
 	<div id="footer">
         <div class="wrap">
 				<ul>

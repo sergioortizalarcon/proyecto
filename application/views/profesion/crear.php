@@ -78,7 +78,7 @@
 					Debes escribir una profesión válida(Caracteres no númericos, o símbolos).
 				</span>
 			</div>
-			<input type="hidden" value="Activo" name="activo" />
+			<input type="hidden" value="Activo" name="estado" />
 			<div class="form-group">
 				<input type="button" class="btn btn-default" name="enviar" id="enviar" onclick="enviarFormulario();" value="Enviar" disabled="disabled"/>
 			</div>

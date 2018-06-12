@@ -1,12 +1,12 @@
 <?php
 class profesion_model extends CI_Model {
-    public function crear_profesion($nombre, $activo) {
+    public function crear_profesion($nombre, $estado) {
 		$profesion = R::findOne ( "profesiones", "nombre=?", [$nombre]);
 
 		if ($profesion == null) {
 			$profesion = R::dispense ( "profesiones" );
 			$profesion->nombre = $nombre;
-			$profesion->activo = $activo;
+			$profesion->estado = $estado;
 				
 			R::store ( $profesion );
 		} else {
@@ -22,7 +22,7 @@ class profesion_model extends CI_Model {
 	}
 	
 	public function getAllActive() {
-	    $todos = R::find ( "profesiones", "activo like ?",['Activo']);
+	    $todos = R::find ( "profesiones", "estado like ?",['Activo']);
 	    return $todos;
 	}
 	
@@ -54,13 +54,13 @@ class profesion_model extends CI_Model {
 	
 	public function borrar($id_profesion) {
 	    $profesion = R::load ( 'profesiones', $id_profesion );
-	    $profesion->activo = 'Inactivo';
+	    $profesion->estado = 'Inactivo';
 	    R::store ( $profesion );
 	}
 	
 	public function activar($id_profesion) {
 	    $profesion = R::load ( 'profesiones', $id_profesion );
-	    $profesion->activo = 'Activo';
+	    $profesion->estado = 'Activo';
 	    R::store ( $profesion );
 	}
 }

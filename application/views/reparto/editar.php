@@ -37,18 +37,9 @@ function mayuscula(palabra, id) {
 
 function validarNombre() {
 	nombre = idFormulario.idNombre.value.trim();
-	if (nombre == "") {
-		idFormulario.nombre.style.borderColor="red";
-		document.getElementById("aNombre").style.display="initial";
-		if (correcto == true) {
-			document.getElementById('aNombre').focus();
-			correcto=false;
-		}
-		apellido1Correcto = false;
-	}
 
 	if (nombre != "") {
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ.-çÇ0-9]{2,30}$/;
 		if (expReg.test(nombre)){
 			nombreCorrecto = true;
 			correcto=true;
@@ -68,18 +59,9 @@ function validarNombre() {
 
 function validarApellido1() {
 	apellido1 = idFormulario.idApellido1.value.trim();
-	if (apellido1 == "") {
-		idFormulario.idApellido1.style.borderColor="red";
-		document.getElementById("aApellido1").style.display="initial";
-		if (correcto == true) {
-			document.getElementById('idApellido1').focus();
-			correcto=false;
-		}
-		apellido1Correcto = false;
-	}
-
+	
 	if (apellido1 != "") {
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ.-çÇ0-9]{2,30}$/;
 		if (expReg.test(apellido1)){
 			apellido1Correcto = true;
 			correcto=true;
@@ -94,13 +76,21 @@ function validarApellido1() {
 			}
 			apellido1Correcto = false;
 		}
+	} else {
+		idFormulario.idApellido1.style.borderColor="red";
+		document.getElementById("aApellido1").style.display="initial";
+		if (correcto == true) {
+			document.getElementById('idApellido1').focus();
+			correcto=false;
+		}
+		apellido1Correcto = false;
 	}
 }
 
 function validarApellido2() {
 	apellido2 = idFormulario.idApellido2.value.trim();
 	if (apellido2 != "") {
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ]{2,30}$/;
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ.-çÇ0-9]{2,30}$/;
 		if (expReg.test(apellido2)){
 			apellido2Correcto = true;
 			correcto=true;
@@ -146,7 +136,9 @@ function validarFecha() {
 
 function permitirEnvio() {
 	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
-		idFormulario.idRegistro.disabled=false;
+		idFormulario.idEditar.disabled=false;
+	} else {
+		idFormulario.idEditar.disabled=false;
 	}
 }
 
@@ -229,7 +221,8 @@ function borrarRegistro(value,id) {
 					</div>
 					
 					<input type="hidden" name="id_reparto" value="<?= $body['repartos']->id ?>" />
-					<input type="hidden" name="fotoFija" value="<?= $body['repartos']->foto ?>" />
+					<input type="hidden" name="fotoFija" value="<?= $body['repartos']->ruta_foto ?>" />
+					<input type="hidden" name="estado" value="<?= $body['repartos']->estado ?>" />
 					
 					<div class="form-group">
 						<label for="idFecha">Fecha de nacimiento</label><span class="obligatorio">*</span>
@@ -285,13 +278,13 @@ function borrarRegistro(value,id) {
 							Debes introducir una foto con formato y tamaño correcto.
 						</span><br/>
 						<div id="list">
-							<img class="thumb" src="<?= base_url().$body["repartos"]->rutaFoto ?>" style="width:210px; height:320px;"/>
+							<img class="thumb" src="<?= $body["repartos"]->rutaFoto ?>" style="width:210px; height:320px;"/>
 						</div>
 					</div>	
 					
 					<div class="nav navbar-form navbar-right">
 						<input type="button" class="btn btn-default" id="idCancelar" name ="cancelar" value="Cancelar cambio" onclick="cancelarCambio();"/>
-						<input type="button" class="btn btn-default" id="registrarse" name ="registrarse" value="Editar" onclick="validar();"/>
+						<input type="button" class="btn btn-default" id="idEditar" name ="editar" value="Editar" onclick="validar();"/>
 					</div>
 					
 				</fieldset>

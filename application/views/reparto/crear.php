@@ -40,7 +40,7 @@ function validarNombre() {
 	nombre = idFormulario.idNombre.value.trim();
 	if (nombre != "") {
 
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ.-çÇ]{2,20}$/;
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ.-çÇ0-9]{2,20}$/;
 		if (expReg.test(nombre)){
 			nombreCorrecto = true;
 			correcto=true;

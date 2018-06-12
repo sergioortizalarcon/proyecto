@@ -1,7 +1,7 @@
 <?php
 class Reparto_model extends CI_Model {
 	//Se guarda en la tabla los datos de la persona, comprueba que ya exista uno creado con los mismos datos
-    public function createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $profesiones, $foto, $estado) {
+    public function createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto, $estado) {
 		if ($apellido2 == "") {
 			$reparto = R::find('repartos', 'nombre like ? and apellido1 like ? and fechaNacimiento like ?', [$nombre,$apellido1,$fechaNacimiento]);
 			if ($reparto == null) {
@@ -11,14 +11,13 @@ class Reparto_model extends CI_Model {
 				$reparto -> apellido2 = $apellido2;
 				$reparto -> fechaNacimiento = $fechaNacimiento;
 				$reparto -> biografia = $biografia;
-				$reparto -> rutaFoto = $foto;
+				$reparto -> rutaFoto = base_url().$foto;
 				$reparto -> estado = $estado;
-
-				foreach ($profesiones as $p) {
-					$profesion = R::load('profesiones',$p);
-					if ($profesion->id != 0) {
-						$reparto -> sharedProfesionList[] = $profesion;
-					}
+				$profesiones = explode(",",$cadProfesiones);
+				for ($i=0;$i<count($profesiones);$i++) {
+					$profesion = R::load("profesiones",$profesiones[$i]);
+					$profesion -> sharedGenerosList[] = $reparto;
+					R::store($profesion);
 				}
 				$pais = R::load("paises", $id_pais);
 				$pais -> xownRepartosList[] = $reparto;
@@ -36,7 +35,7 @@ class Reparto_model extends CI_Model {
 				$reparto -> apellido2 = $apellido2;
 				$reparto -> fechaNacimiento = $fechaNacimiento;
 				$reparto -> biografia = $biografia;
-				$reparto -> rutaFoto = $foto;
+				$reparto -> rutaFoto = base_url().$foto;
 				$reparto -> estado = $estado;
 				foreach ($profesiones as $p) {
 					$profesion = R::load('profesiones',$p);
@@ -71,72 +70,29 @@ class Reparto_model extends CI_Model {
 	}
 
 	//Permite editar los datos de la persona, no puede repetir datos ni meterlos vacios
-	public function editar($id_reparto, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $profesiones, $foto) {
+	public function editar($id_reparto, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto, $estado) {
 		$reparto = R::load ( 'repartos', $id_reparto );
-		$repartosTodos = R::find("repartos",'nombre like ? and apellido1 like ? and apellido2 like ? and fechaNacimiento like ?', [$nombre,$apellido1,$apellido2,$fechaNacimiento]);
-		$pais = R::load("paises", $id_pais);
-		$cambio=false;
+		R::trash($reparto);
 
-		if ($repartosTodos == null) {
-			if($nombre != $reparto->nombre && $nombre != "") {
-				$reparto->nombre = $nombre;
-				$cambio=true;
-			}
-			if($apellido1 != $reparto->apellido1 && $apellido1 != "") {
-				$reparto->apellido1 = $apellido1;
-				$cambio=true;
-			}
-			if($apellido2 != $reparto->apellido2 && $apellido2 != ""){
-				$reparto->apellido2 = $apellido2;
-				$cambio=true;
-			}
-			if($fechaNacimiento != $reparto->fechaNacimiento && $fechaNacimiento != "") {
-				$reparto->fechaNacimiento = $fechaNacimiento;
-				$cambio=true;
-			}
-			if($biografia != $reparto->biografia && $biografia != "") {
-				$reparto->biografia = $biografia;
-				$cambio=true;
-			}
-			
-			/*foreach($reparto as $r) {
-			    foreach($r -> sharedProfesionList as $profesion) {
-			        $profesion -> ownProfesionList = [ ];
-			    }
-			}
-			R::store($reparto);
-			
-			foreach ($profesiones as $p) {
-			    $profesion = R::load('profesiones',$p);
-			    $profesion->ownProfesionesList=[];
-			    R::store($profesion);
-			    if ($profesion->id != 0) {
-			        $reparto -> sharedProfesionList[] = $profesion;
-			    }
-			    R::store($profesion);
-			}*/
-			
-			foreach ($profesiones as $p) {
-			    $profesion = R::load('profesiones',$p);
-			    if ($profesion->id != 0) {
-			        $reparto -> sharedProfesionList[] = $profesion;
-			    }
-			}
-			
-			if($foto != "") {
-				$reparto->rutaFoto = $foto;
-				$cambio=true;
-			}
-			if($pais != $pais->id) {
-				$pais -> xownRepartoList[] = $reparto;
-				R::store($pais);
-				$cambio=true;
-			}
-
-			if ($cambio) {
-				R::store ( $reparto );
-			}
+		$reparto = R::dispense ( 'repartos' );
+		$reparto -> nombre = $nombre;
+		$reparto -> apellido1 = $apellido1;
+		$reparto -> apellido2 = $apellido2;
+		$reparto -> fechaNacimiento = $fechaNacimiento;
+		$reparto -> biografia = $biografia;
+		$reparto -> rutaFoto = base_url().$foto;
+		$reparto -> estado = $estado;
+		$profesiones = explode(",",$cadProfesiones);
+		for ($i=0;$i<count($profesiones);$i++) {
+			$profesion = R::load("profesiones",$profesiones[$i]);
+			$profesion -> sharedGenerosList[] = $reparto;
+			R::store($profesion);
 		}
+		$pais = R::load("paises", $id_pais);
+		$pais -> xownRepartosList[] = $reparto;
+		R::store($pais);
+		
+		R::close();
 	}
 
 	//Permite desactivar una persona mediante su id

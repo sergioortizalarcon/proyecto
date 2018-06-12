@@ -11,7 +11,6 @@ class Pelicula extends CI_Controller {
 		enmarcar($this, "pelicula/crear",$datos);
 	}
 	
-	
 	public function crearPost() {
 		$this->load->model("pelicula_model");
 		
@@ -159,7 +158,7 @@ class Pelicula extends CI_Controller {
         $generos = isset($_POST['genero'])?$_POST['genero']:null;
         $sinopsis = isset($_POST['sinopsis'])?$_POST['sinopsis']:null;
         $id_pelicula = $_POST ['id_pelicula'];
-        
+        $estado = $_POST['estado'];
         $fechaLanzamiento = str_replace("/","-",$fechaLanzamiento);
         
         $tituloSinEspacios = str_replace(" ","",$titulo);
@@ -180,33 +179,33 @@ class Pelicula extends CI_Controller {
             }
             $cadRepartos = substr($cadRepartos, 0, -1);
         }
-        
+       
         if (is_uploaded_file($_FILES['fotoPoster']['tmp_name'])) {
-            # verificamos el formato de la imagen
-            if ($_FILES["fotoPoster"]["type"]=="image/jpeg" || $_FILES["fotoPoster"]["type"]=="image/pjpeg" || $_FILES["fotoPoster"]["type"]=="image/png"){
-                
-                # Cogemos la anchura y altura de la imagen
-                $info=getimagesize($_FILES["fotoPoster"]["tmp_name"]);
-                
-                $extension = 0;
-                if ($info[2] == 2) {
-                    $extension = "jpg";
-                } else if ($info[2] == 3) {
-                    $extension = "png";
-                }
-                $urlBase = base_url();
-                if ($_FILES["fotoPoster"]["size"] < 25000000) {
-                    copy($_FILES["fotoPoster"]['tmp_name'], $urlBase."assets/img/poster/".$tituloSinEspacios."_".$fechaLanzamiento."_".$lenguage."_".$extension);
-                    $foto = $urlBase."assets/img/poster/".$tituloSinEspacios."_".$fechaLanzamiento."_".$lenguage."_".$extension;
-                }
-            }
+        	# verificamos el formato de la imagen
+        	if ($_FILES["fotoPoster"]["type"]=="image/jpeg" || $_FILES["fotoPoster"]["type"]=="image/pjpeg" || $_FILES["fotoPoster"]["type"]=="image/png"){
+        		
+        		# Cogemos la anchura y altura de la imagen
+        		$info=getimagesize($_FILES["fotoPoster"]["tmp_name"]);
+        		
+        		$extension = 0;
+        		if ($info[2] == 2) {
+        			$extension = "jpg";
+        		} else if ($info[2] == 3) {
+        			$extension = "png";
+        		}
+        		if ($_FILES["fotoPoster"]["size"] < 25000000) {
+        			copy($_FILES["fotoPoster"]['tmp_name'], "assets/img/poster/".$tituloSinEspacios."_".$fechaLanzamiento."_".$lenguage.".".$extension);
+        			$foto = "assets/img/poster/".$tituloSinEspacios."_".$fechaLanzamiento."_".$lenguage.".".$extension;
+        		}
+        	}
         }else {
             $foto = $_POST['fotoFija'];
+            $foto = str_replace("http://localhost/proyecto/","",$foto);
         }
         
         try {
-            $this->pelicula_model->createPelicula ( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartos, $cadGeneros, $sinopsis, $foto, $id_pelicula);
-            header ("location:".base_url()."pelicula/crearOk");
+        	$this->pelicula_model->editarPelicula ( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartos, $cadGeneros, $sinopsis, $foto, $id_pelicula, $estado);
+            header ("location:".base_url()."pelicula/editarOk");
         }
         catch (Exception $e) {
             $datos['mensaje']['texto'] = "Película ya existente";

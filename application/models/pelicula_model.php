@@ -72,96 +72,34 @@ class Pelicula_model extends CI_Model {
         R::close();
     }
 		
-    public function editar( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartos, $cadGeneros, $sinopsis, $foto, $id_pelicula) {
+    public function editarPelicula( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartos, $cadGeneros, $sinopsis, $foto, $id_pelicula, $estado) {
 		$pelicula = R::load ( 'peliculas', $id_pelicula );
-		$peliculasTodas = R::find("peliculas",'titulo like ? and tituloOriginal like ? and fechaLanzamiento like ?', [$titulo,$tituloOriginal,$fechaLanzamiento]);
-		$pais = R::load("paises", $id_pais);
-		//Editar generos y reparto segun los ids que vengan de la vista
-		$cambio=false;
+		R::trash($pelicula);
 	  
-		if ($peliculasTodas == null) {
-			if($titulo != $pelicula->titulo && $titulo != "") {
-				$pelicula->titulo = $titulo;
-				$cambio=true;
-			}
-			if($tituloOriginal != $pelicula->titulo_original && $tituloOriginal != "") {
-			    $pelicula->titulo_original = $tituloOriginal;
-				$cambio=true;
-			}
-			if($adulto != $pelicula->adulto && $adulto != ""){
-			    $pelicula->adulto = $adulto;
-				$cambio=true;
-			}
-			if($fechaLanzamiento != $pelicula->fecha_lanzamiento && $fechaLanzamiento != "") {
-			    $pelicula->fecha_lanzamiento = $fechaLanzamiento;
-				$cambio=true;
-			}
-			if($popularity != $pelicula->popularidad && $popularity != "") {
-			    $pelicula->popularidad = $popularity;
-				$cambio=true;
-			}
-			if($sinopsis != $pelicula->sinopsis && $sinopsis != "") {
-			    $pelicula->sinopsis = $sinopsis;
-			    $cambio=true;
-			}
-			if($foto != "") {
-			    $pelicula->rutaFoto = $foto;
-			    $cambio=true;
-			}
-			if($lenguage != $pelicula->original_language && $lenguage != "") {
-			    $pelicula->original_language = $lenguage;
-			    $cambio=true;
-			}
-			//TODO
-			//Editar género y reparto
-			 
-			if ($cambio) {
-				R::store ( $pelicula );
-			}
+		$pelicula = R::dispense ( 'peliculas' );
+		$pelicula -> titulo = $titulo;
+		$pelicula -> titulo_original = $tituloOriginal;
+		$pelicula -> adulto = $adulto;
+		$pelicula -> fecha_lanzamiento = $fechaLanzamiento;
+		$pelicula -> popularidad = $popularity;
+		$pelicula -> sinopsis = $sinopsis;
+		$pelicula -> ruta_cartel = base_url().$foto;
+		$pelicula -> estado = $estado;
+		$pelicula -> original_language = $lenguage;
+		$generos = explode(",",$cadGeneros);
+		for ($i=0;$i<count($generos);$i++) {
+			$genero = R::load("generos",$generos[$i]);
+			$genero -> sharedPeliculasList[] = $pelicula;
+			R::store($genero);
+		}
+		$repartos = explode(",",$cadRepartos);
+		for ($i=0;$i<count($repartos);$i++) {
+			$reparto = R::load("repartos",$repartos[$i]);
+			$reparto -> sharedPeliculasList[] = $pelicula;
+			R::store($reparto);
 		}
 		
-	    $pelicula = R::load ( 'peliculas', $id_pelicula );
-	    $peliculasTodas = R::find("peliculas",'titulo like ? and anioEstreno like ? and duracion like ? and productora like ?', [$titulo,$anioEstreno,$duracion,$productora]);
-	    $pais = R::load("paises", $id_pais);
-	    //Editar generos y reparto segun los ids que vengan de la vista
-	    $cambio=false;
-	    
-	    if ($peliculasTodas == null) {
-	        if($titulo != $pelicula->titulo && $titulo != "") {
-	            $pelicula->titulo = $titulo;
-	            $cambio=true;
-	        }
-	        if($anioEstreno != $pelicula->anioEstreno && $anioEstreno != "") {
-	            $pelicula->anioEstreno = $anioEstreno;
-	            $cambio=true;
-	        }
-	        if($duracion != $pelicula->duracion && $duracion != ""){
-	            $pelicula->duracion = $duracion;
-	            $cambio=true;
-	        }
-	        if($productora != $pelicula->productora && $productora != "") {
-	            $pelicula->productora = $productora;
-	            $cambio=true;
-	        }
-	        if($sinopsis != $pelicula->sinopsis && $sinopsis != "") {
-	            $pelicula->sinopsis = $sinopsis;
-	            $cambio=true;
-	        }
-	        if($foto != "") {
-	            $pelicula->rutaFoto = $foto;
-	            $cambio=true;
-	        }
-	        if($pais != $pais->id) {
-	            $pais -> xownPeliculaList[] = $pelicula;
-	            R::store($pais);
-	            $cambio=true;
-	        }
-	        //Me faltan generos y reparto(Tengo que ver como cambiar si vienen varios ids)
-	        
-	        if ($cambio) {
-	            R::store ( $pelicula );
-	        }
-	    }
+	    R::close();
 	}
 
 	public function borrar($id_pelicula) {

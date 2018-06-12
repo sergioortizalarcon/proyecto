@@ -36,7 +36,7 @@
 							<tr>
 							<td><?= $profesion->id ?></td>
 							<td><?= $profesion->nombre ?></td>
-							<td><?= $profesion->activo ?></td>
+							<td><?= $profesion->estado ?></td>
 							<td>
 								<form class="listado" id="idFormedit"
 									action="<?=base_url()?>profesion/editar" method="post">

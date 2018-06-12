@@ -219,7 +219,7 @@ function borrarReparto(value,id) {
     </section>
 	<section class="content">
 
-	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>pelicula/crearPost" method="post" enctype="multipart/form-data">
+	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>pelicula/editarPost" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Datos</legend>
 			<small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>
@@ -333,7 +333,8 @@ function borrarReparto(value,id) {
 			</div>
 			
 			<input type="hidden" name="id_pelicula" value="<?= $body['peliculas']->id ?>" />
-			<input type="hidden" name="fotoFija" value="<?= $body['peliculas']->foto_poster ?>" />
+			<input type="hidden" name="fotoFija" value="<?= $body['peliculas']->ruta_cartel ?>" />
+			<input type="hidden" name="estado" value="<?= $body['peliculas']->estado ?>" />
 
 			<div class="nav navbar-form navbar-right">
 				<input type="button" class="btn btn-default" id="idCancelar" name="cancelar" value="Cancelar registro" onclick="cancelarRegistro();" />

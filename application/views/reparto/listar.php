@@ -40,7 +40,7 @@
                             <?php foreach ($body['repartos'] as $reparto): ?>
             					<?php if($reparto -> estado != 'Inactivo'):?>
             						<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
-            							<td><img src="<?=base_url()?><?= $reparto->rutaFoto ?>" style="margin:5px;" height="60" width="50"></td>
+            							<td><img src="<?= $reparto->ruta_foto ?>" style="margin:5px;" height="60" width="50"></td>
             							<td><?= $reparto->nombre ?></td>
             							<td><?= $reparto->apellido1 ?></td>
             							<td><?= $reparto->fecha_nacimiento ?></td>
@@ -69,7 +69,7 @@
             						</tr>
             					<?php else: ?>
             						<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
-            							<td><img src="<?=base_url()?><?= $reparto->rutaFoto ?>" style="margin:5px;" height="60" width="50"></td>
+            							<td><img src="<?= $reparto->ruta_foto ?>" style="margin:5px;" height="60" width="50"></td>
             							<td><?= $reparto->nombre ?></td>
             							<td><?= $reparto->apellido1 ?></td>
             							<td><?= $reparto->fecha_nacimiento ?></td>
@@ -123,7 +123,7 @@
         				<tbody>
         					<?php foreach ($body['repartos'] as $reparto): ?>
             					<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
-            						<td><img src="<?=base_url()?><?= $reparto->rutaFoto ?>" style="margin:5px;" height="60" width="50"></td>
+            						<td><img src="<?= $reparto->ruta_foto ?>" style="margin:5px;" height="60" width="50"></td>
             						<td><?= $reparto->nombre ?></td>
             						<td><?= $reparto->apellido1 ?></td>
             						<td><?= $reparto->fecha_nacimiento ?></td>

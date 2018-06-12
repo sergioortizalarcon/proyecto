@@ -352,6 +352,11 @@ function cancelarRegistro(){
 				<label for="idReparto">Reparto:</label><span class="obligatorio">*</span>
 				<select multiple class="form-control" id="idReparto" name="reparto[]"
 				data-toogle="tooltip" data-placement="left" title="Selecciona la persona" size="5">
+					<!--<?php foreach ($repartos->sharedProfesionesList as $prof): ?>
+						<?php if($prof->nombre == 'Actor'):?>
+							<option value="<?=$reparto -> id?>" <?=($reparto -> id == "1")?"selected='selected'":" "?>"><?= $reparto->nombre ?> <?= $reparto->apellido1?></option>
+						<?php endif; ?>
+					<?php endforeach; ?>-->
 					<?php foreach($repartos as $reparto):?>
 						<option value="<?=$reparto -> id?>" <?=($reparto -> id == "1")?"selected='selected'":" "?>"><?= $reparto->nombre ?> <?= $reparto->apellido1?></option>
 					<?php endforeach; ?>

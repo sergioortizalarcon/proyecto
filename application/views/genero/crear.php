@@ -101,7 +101,7 @@ function cancelarRegistro(){
 				</span>
 			</div>
 
-			<input type="hidden" value="Activo" name="activo"/>
+			<input type="hidden" value="Activo" name="estado"/>
 			
 			
 			<div class="nav navbar-form navbar-right">

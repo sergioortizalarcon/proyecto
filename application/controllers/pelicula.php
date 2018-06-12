@@ -6,8 +6,8 @@ class Pelicula extends CI_Controller {
 	    $this -> load -> model("genero_model");
 	    $this -> load -> model("reparto_model");
 	    $datos["paises"] = $this -> pais_model -> getTodos();
-	    $datos["generos"] = $this -> genero_model -> getTodos();
-	    $datos["repartos"] = $this -> reparto_model ->getAll();
+	    $datos["generos"] = $this -> genero_model -> getAllActive();
+	    $datos["repartos"] = $this -> reparto_model ->getAllActive();
 		enmarcar($this, "pelicula/crear",$datos);
 	}
 	
@@ -28,9 +28,9 @@ class Pelicula extends CI_Controller {
 		$estado = isset($_POST['estado'])?$_POST['estado']:'Inactivo';
 		
 		$fechaLanzamiento = str_replace("/","-",$fechaLanzamiento);
-		echo $fechaLanzamiento;
 		
 		$tituloSinEspacios = str_replace(" ","",$titulo);
+		$tituloOriginalSinEspacios = str_replace(" ","",$tituloOriginal);
 		
 		if ($generos!="") {
     		$cadGeneros ="";
@@ -61,17 +61,18 @@ class Pelicula extends CI_Controller {
 				} else if ($info[2] == 3) {
 					$extension = "png";
 				}
+				$urlBase = base_url();
 				if ($_FILES["fotoPoster"]["size"] < 25000000) {
-					copy($_FILES["fotoPoster"]['tmp_name'], "assets/img/poster/".$tituloSinEspacios."_".$fechaLanzamiento."_".$lenguage."_".$extension);
-					$foto = "assets/img/poster/".$tituloSinEspacios."_".$fechaLanzamiento."_".$lenguage."_".$extension;
+					copy($_FILES["fotoPoster"]['tmp_name'], "assets/img/poster/".$tituloSinEspacios."_".$fechaLanzamiento."_".$lenguage.".".$extension);
+					$foto = "assets/img/poster/".$tituloSinEspacios."_".$fechaLanzamiento."_".$lenguage.".".$extension;
 				}
 			}
 		}else {
 		    $foto = "assets/img/poster/default.png";
 		}
 		try {
-		    $this->pelicula_model->createFilm ( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartos, $cadGeneros, $sinopsis, $foto, $estado);
-			header ("location:".base_url ()."pelicula/crearOk");
+		    $this->pelicula_model->createPelicula ( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartos, $cadGeneros, $sinopsis, $foto, $estado);
+			header ("location:".base_url()."pelicula/crearOk");
 		}
 		catch (Exception $e) {
 			$datos['mensaje']['texto'] = "película ya existente";
@@ -111,7 +112,10 @@ class Pelicula extends CI_Controller {
 		$genre_ids = isset ($_POST["genre"] ) ?$_POST["genre"] : [];
 		$titulo = $this->pelicula_model->getPeliculaPorTitulo($title,$id);
 		$estado = 'Activo';
-		print_r($titulo);
+		
+		$rutaPoster = "http://image.tmdb.org/t/p/w185";
+		$poster_path = $rutaPoster.$poster_path;
+		
 		if($titulo){
 			$this-> pelicula_model -> insertPelicula($id,$title,$original_title,$poster_path,$popularity,$release_date,$adult,$original_language,$overview,$genre_ids,$estado);
 		}
@@ -135,7 +139,8 @@ class Pelicula extends CI_Controller {
         $id_pelicula = $_POST ['id_pelicula'];
         $datos['body']['peliculas'] = $this->pelicula_model->getPeliculaPorId ( $id_pelicula );
         $datos['body']['paises'] = $this->pais_model->getTodos();
-        //Coger Reparto y Generos que vienen por su id de la vista
+        $datos['body']['repartos'] = $this->reparto_model->getAllActive();
+        $datos['body']['generos'] = $this->genero_model->getAllActive();
         enmarcar ( $this, 'pelicula/editar', $datos);
     }
     
@@ -145,35 +150,43 @@ class Pelicula extends CI_Controller {
         $this->load->model('reparto_model');
         $this->load->model('genero_model');
         $titulo = isset($_POST['titulo'])?$_POST['titulo']:null;
-        $anioEstreno = isset($_POST['anioEstreno'])?$_POST['anioEstreno']:null;
-        $duracion = isset($_POST['duracion'])?$_POST['duracion']:null;
-        $id_pais = isset($_POST['pais'])?$_POST['pais']:null;
-        //Reparto(Array con nombres)
+        $tituloOriginal = isset($_POST['tituloOriginal'])?$_POST['tituloOriginal']:null;
+        $fechaLanzamiento = isset($_POST['fechaLanzamiento'])?$_POST['fechaLanzamiento']:null;
+        $lenguage = isset($_POST['lenguage'])?$_POST['lenguage']:null;
+        $popularity = isset($_POST['popularity'])?$_POST['popularity']:null;
+        $adulto = isset($_POST['adulto'])?$_POST['adulto']:"No";
         $repartos = isset($_POST['reparto'])?$_POST['reparto']:null;
-        $productora = isset($_POST['productora'])?$_POST['productora']:null;
         $generos = isset($_POST['genero'])?$_POST['genero']:null;
         $sinopsis = isset($_POST['sinopsis'])?$_POST['sinopsis']:null;
+        $id_pelicula = $_POST ['id_pelicula'];
         
-        $titulo = str_replace(" ","",$titulo);
+        $fechaLanzamiento = str_replace("/","-",$fechaLanzamiento);
         
-        $cadGeneros ="";
-        for ($i=0;$i<count($generos);$i++) {
-            $cadGeneros = $generos[$i].",".$cadGeneros;
+        $tituloSinEspacios = str_replace(" ","",$titulo);
+        $tituloOriginalSinEspacios = str_replace(" ","",$tituloOriginal);
+        
+        if ($generos!="") {
+            $cadGeneros ="";
+            for ($i=0;$i<count($generos);$i++) {
+                $cadGeneros = $generos[$i].",".$cadGeneros;
+            }
+            $cadGeneros = substr($cadGeneros, 0, -1);
         }
-        $cadGeneros = substr($cadGeneros, 0, -1);
         
-        $cadReparto = "";
-        for ($i=0; $i<count($repartos);$i++) {
-            $cadReparto = $repartos[$i].",".$cadReparto;
+        if ($repartos!="") {
+            $cadRepartos = "";
+            for ($i=0; $i<count($repartos);$i++) {
+                $cadRepartos = $repartos[$i].",".$cadRepartos;
+            }
+            $cadRepartos = substr($cadRepartos, 0, -1);
         }
-        $cadReparto = substr($cadReparto, 0, -1);
         
-        if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
+        if (is_uploaded_file($_FILES['fotoPoster']['tmp_name'])) {
             # verificamos el formato de la imagen
-            if ($_FILES["foto"]["type"]=="image/jpeg" || $_FILES["foto"]["type"]=="image/pjpeg" || $_FILES["foto"]["type"]=="image/png"){
+            if ($_FILES["fotoPoster"]["type"]=="image/jpeg" || $_FILES["fotoPoster"]["type"]=="image/pjpeg" || $_FILES["fotoPoster"]["type"]=="image/png"){
                 
                 # Cogemos la anchura y altura de la imagen
-                $info=getimagesize($_FILES["foto"]["tmp_name"]);
+                $info=getimagesize($_FILES["fotoPoster"]["tmp_name"]);
                 
                 $extension = 0;
                 if ($info[2] == 2) {
@@ -181,12 +194,10 @@ class Pelicula extends CI_Controller {
                 } else if ($info[2] == 3) {
                     $extension = "png";
                 }
-                
-                if ($_FILES["foto"]["size"] < 25000000) {
-                    //Tamaño y extensión correctos, guardar imagen en carpeta
-                    //echo "<br />assets/img/fotoReparto/Reparto_".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
-                    copy($_FILES["foto"]['tmp_name'], "assets/img/foto/".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension);
-                    $foto = "assets/img/foto/".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
+                $urlBase = base_url();
+                if ($_FILES["fotoPoster"]["size"] < 25000000) {
+                    copy($_FILES["fotoPoster"]['tmp_name'], $urlBase."assets/img/poster/".$tituloSinEspacios."_".$fechaLanzamiento."_".$lenguage."_".$extension);
+                    $foto = $urlBase."assets/img/poster/".$tituloSinEspacios."_".$fechaLanzamiento."_".$lenguage."_".$extension;
                 }
             }
         }else {
@@ -194,8 +205,8 @@ class Pelicula extends CI_Controller {
         }
         
         try {
-            $this->pelicula_model->editar ($titulo, $anioEstreno, $duracion, $id_pais, $cadIdsReparto, $productora, $generos, $sinopsis, $foto, $activo);
-            header ("location:".base_url ()."pelicula/editarOk");
+            $this->pelicula_model->createPelicula ( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartos, $cadGeneros, $sinopsis, $foto, $id_pelicula);
+            header ("location:".base_url()."pelicula/crearOk");
         }
         catch (Exception $e) {
             $datos['mensaje']['texto'] = "Película ya existente";

@@ -121,43 +121,48 @@ function validarApellido2() {
 	}
 }
 
-function validarFecha() {
-	var fecha = idFormulario.idFecha.value;
+function validarFecha(){
+    var patron=new RegExp("^(19|20)+([0-9]{2})([/])([0-9]{1,2})([/])([0-9]{1,2})$");
+    var fecha = idFormulario.idFecha.value.trim();
 	var fechaSeparada = fecha.split("/");
+    var anio = parseInt(fechaSeparada[0]);
+    var mes = parseInt(fechaSeparada[1]);
+	var dia = parseInt(fechaSeparada[2]);
+	mes = mes-1;
 
-	var anio = fechaSeparada[0];
-	var mes = fechaSeparada[1];
-	var dia = fechaSeparada[2];
-
-	var fechaSis = new Date();
-	var anioHoy = fechaSis.getFullYear();
-	var mesHoy = fechaSis.getMonth()+1;
-	var diaHoy = fechaSis.getDate();
-	mesHoy = "0"+mesHoy;
-    if (fecha!="") {
-    	if (anio >= anioHoy && mes >= mesHoy && dia > diaHoy) {
-    		idFormulario.idFecha.style.borderColor="red";
-    		document.getElementById("aFecha").style.display="initial";
-    		fechaCorrecto = false;
-    		if (correcto == true) {
-    			document.getElementById('aFecha').focus();
-    			correcto=false;
-    		}
-    	} else {
-    		fechaCorrecto = true;
-            idFormulario.idFecha.style.borderColor="blue";
-    		document.getElementById("aFecha").style.display="none";
-    		correcto = true;
-    	}
-    } else {
-    	if (correcto == true) {
-			document.getElementById('idFecha').focus();
+    var fechaSis = new Date();
+	
+	idFormulario.idFecha.value=fechaSeparada[0] + "/" + fechaSeparada[1] + "/" + fechaSeparada[2];
+	if (anio > fechaSis.getFullYear()) {
+		idFormulario.idFecha.style.borderColor="red";
+		document.getElementById("aFecha").style.display="initial";
+		if (correcto == true) {
+			document.getElementById('aFecha').focus();
 			correcto=false;
 		}
+		fechaCorrecto = false;
+	} else if(anio == fechaSis.getFullYear() && mes > fechaSis.getMonth()) {
+		idFormulario.idFecha.style.borderColor="red";
 		document.getElementById("aFecha").style.display="initial";
-        idFormulario.idFecha.style.borderColor="red";
-        fechaCorrecto = false;
-    }
+		if (correcto == true) {
+			document.getElementById('aFecha').focus();
+			correcto=false;
+		}
+		fechaCorrecto = false;
+	} else if (anio == fechaSis.getFullYear() && mes == fechaSis.getMonth() && dia > fechaSis.getDate()) {
+		idFormulario.idFecha.style.borderColor="red";
+		document.getElementById("aFecha").style.display="initial";
+		if (correcto == true) {
+			document.getElementById('aFecha').focus();
+			correcto=false;
+		}
+		fechaCorrecto = false;
+	} else {
+		fechaCorrecto = true;
+		correcto=true;
+		idFormulario.idFecha.style.borderColor="blue";
+		document.getElementById("aFecha").style.display="none";
+	}
 }
 
 function validarProfesion() {
@@ -274,16 +279,6 @@ function cancelarRegistro(){
 				</select>
 			</div>
 			
-			<!-- <div class="form-group">
-				<label for="idProfesion">Profesiones:</label><span class="obligatorio">*</span>
-				<select class="form-control" id="idProfesion" name="profesion[]" multiple size="3" >
-					<php foreach($body['profesiones'] as $profesion): ?>
-						<option value="<= $profesion->id ?>" onclick="validarProfesion();" <=($profesion -> nombre == "Actor")?"selected='selected'":" "?>"><= $profesion->nombre ?></option>
-					<php endforeach; ?>
-				</select><span class="avisos" id="aProfesion">
-					Debes introducir al menos una profesión.
-				</span>
-			</div> -->
 			<div class="form-group">
 				<label for="idProfesion">Profesiones:</label><span class="obligatorio">*</span>
 				<select class="form-control basic-multiple" id="idProfesion" name="profesion[]" multiple="multiple">
@@ -298,7 +293,7 @@ function cancelarRegistro(){
 				<textarea class="form-control" name="biografia" id="idBiografia" placeholder="Biografía"></textarea>
 			</div>
 			
-			<input type="hidden" value="Activo" name="activo"/>
+			<input type="hidden" value="Activo" name="estado"/>
 			
 			<div class="form-group">
 				<label for="idFoto">Foto:</label>

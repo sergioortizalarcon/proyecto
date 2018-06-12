@@ -46,8 +46,8 @@
             							<td><?= $reparto->fecha_nacimiento ?></td>
             							<td><?= $reparto->paises['nombre'] ?></td>
                                         <td>
-                                            <?php foreach ($reparto->sharedProfesionList as $prof): ?>
-                                                <?= $prof->nombre ?> 
+                                            <?php foreach ($reparto->sharedProfesionesList as $prof): ?>
+                                                <?= $prof->nombre ?> ||
                                             <?php endforeach; ?>
                                         </td>
             							<td><?= $reparto->estado ?></td>

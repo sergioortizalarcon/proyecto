@@ -340,8 +340,9 @@ function cancelarRegistro(){
 			</div>
 
 			<div class="form-group">
-				<label for="idLenguage">Selecciona Lenguage</label><span class="obligatorio">*</span>
-				<input class="form-control" type="text" name="lenguage" id="idLenguage" onkeyup="validarLenguage();" />
+				<label for="idLenguage">Lenguage:</label><span class="obligatorio">*</span>
+				<input class="form-control" type="text" name="lenguage" id="idLenguage"
+				onkeyup="validarLenguage();" placeholder="Lenguage..." />
 				<span class="avisos" id="aLenguage">
 					Debes introducir un código de lenguage correcto.
 				</span>
@@ -380,13 +381,15 @@ function cancelarRegistro(){
 			</div>
 
 			<div class="form-group">
-				<label for="idFotoPoster">Cartel:</label>
-				<input type="file" class="form-control" id="idFotoPoster" name="fotoPoster" data-toogle="tooltip" />
-    			<span class="avisos" id="aFotoPoster">
-    				Debes introducir una foto con formato y tamaño correcto.
-    			</span><br/>
-    			<div id="list"></div>
-			</div>
+				<label for="idFoto">Foto:</label>
+				<input type="file" class="form-control" id="idFoto" name="fotoPoster"/>
+				<span class="avisos" id="idFoto">
+					Debes introducir una foto con formato y tamaño correcto.
+				</span><br/>
+				<div id="list">
+					
+				</div>
+			</div>	
 
 			<div class="nav navbar-form navbar-right">
 				<input type="button" class="btn btn-default" id="idCancelar" name="cancelar" value="Cancelar registro" onclick="cancelarRegistro();" />

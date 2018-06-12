@@ -1,14 +1,14 @@
 <?php
 class Genero_model extends CI_Model {
 	// Se guardan en la tabla los datos del género, comprueba que no exista uno creado con los mismos datos
-	public function crearGenero($nombre, $activo) {
+	public function crearGenero($nombre, $estado) {
 		$genero = R::find ( 'generos', 'nombre like ?', [ 
 				$nombre 
 		] );
 		if ($genero == null) {
 			$genero = R::dispense ( 'generos' );
 			$genero->nombre = $nombre;
-			$genero->activo = $activo;
+			$genero->estado = $estado;
 			R::store ( $genero );
 		} else {
 			throw new Exception ( "genero duplicado" );
@@ -20,6 +20,12 @@ class Genero_model extends CI_Model {
 	public function getTodos() {
 		$mostrar = R::find ( "generos", "order by nombre" );
 		return $mostrar;
+	}
+	
+	// Devuelve todos los datos de todos las géneros
+	public function getAllActive() {
+	    $mostrar = R::find ( "generos", "estado like ?", ['Activo']);
+	    return $mostrar;
 	}
 	
 	// Devuelve un género mediante su id
@@ -48,12 +54,12 @@ class Genero_model extends CI_Model {
 	// Permite desactivar un género mediante su id
 	public function borrar($id_genero) {
 		$genero = R::load ( 'generos', $id_genero );
-		$genero->activo = 'Inactivo';
+		$genero->estado = 'Inactivo';
 		R::store ( $genero );
 	}
 	public function activar($id_genero) {
 		$genero = R::load ( 'generos', $id_genero );
-		$genero->activo = 'Activo';
+		$genero->estado = 'Activo';
 		R::store ( $genero );
 	}
 }

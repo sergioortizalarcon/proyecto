@@ -59,6 +59,11 @@ class Reparto_model extends CI_Model {
 		$mostrar = R::find("repartos","order by apellido1,apellido2,nombre");
 		return $mostrar;
 	}
+	
+	public function getAllActive() {
+	    $mostrar = R::find("repartos","estado like ?", ['Activo']);
+	    return $mostrar;
+	}
 
 	//Devuelve una persona mediante su id
 	public function getRepartoPorId($id_reparto) {
@@ -66,7 +71,7 @@ class Reparto_model extends CI_Model {
 	}
 
 	//Permite editar los datos de la persona, no puede repetir datos ni meterlos vacios
-	public function editar($id_reparto, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto) {
+	public function editar($id_reparto, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $profesiones, $foto) {
 		$reparto = R::load ( 'repartos', $id_reparto );
 		$repartosTodos = R::find("repartos",'nombre like ? and apellido1 like ? and apellido2 like ? and fechaNacimiento like ?', [$nombre,$apellido1,$apellido2,$fechaNacimiento]);
 		$pais = R::load("paises", $id_pais);
@@ -93,10 +98,31 @@ class Reparto_model extends CI_Model {
 				$reparto->biografia = $biografia;
 				$cambio=true;
 			}
-			if ($cadProfesiones != $reparto->cadProfesiones && $cadProfesiones != "") {
-			    $reparto->cadProfesiones = $cadProfesiones;
-			    $cambio = true;
+			
+			/*foreach($reparto as $r) {
+			    foreach($r -> sharedProfesionList as $profesion) {
+			        $profesion -> ownProfesionList = [ ];
+			    }
 			}
+			R::store($reparto);
+			
+			foreach ($profesiones as $p) {
+			    $profesion = R::load('profesiones',$p);
+			    $profesion->ownProfesionesList=[];
+			    R::store($profesion);
+			    if ($profesion->id != 0) {
+			        $reparto -> sharedProfesionList[] = $profesion;
+			    }
+			    R::store($profesion);
+			}*/
+			
+			foreach ($profesiones as $p) {
+			    $profesion = R::load('profesiones',$p);
+			    if ($profesion->id != 0) {
+			        $reparto -> sharedProfesionList[] = $profesion;
+			    }
+			}
+			
 			if($foto != "") {
 				$reparto->rutaFoto = $foto;
 				$cambio=true;

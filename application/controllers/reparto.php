@@ -4,7 +4,7 @@ class reparto extends CI_Controller {
 	    $this->load->model('pais_model');
 	    $this->load->model('profesion_model');
 		$datos['body']['paises'] = $this->pais_model->getTodos();
-		$datos['body']['profesiones'] = $this->profesion_model->getAll();
+		$datos['body']['profesiones'] = $this->profesion_model->getAllActive();
 		enmarcar($this, "reparto/crear", $datos);
 	}
 
@@ -48,7 +48,6 @@ class reparto extends CI_Controller {
 
 		try {
 		    $debug = $this -> reparto_model -> createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $profesiones, $foto, $estado);
-			
 			header ("location:".base_url ()."reparto/crearOk");
 		}
 		catch (Exception $e) {
@@ -102,12 +101,12 @@ class reparto extends CI_Controller {
 		$id_reparto = $_POST ['id_reparto'];
 		$profesiones = isset($_POST['profesion'])?$_POST['profesion']:null;
 		
-		$cadProfesiones ="";
+		/*$cadProfesiones ="";
 		for ($i=0;$i<count($profesiones);$i++) {
 		    echo "$profesiones[$i] <br/>";
 		    $cadProfesiones = $profesiones[$i].",".$cadProfesiones;
 		}
-		$cadProfesiones = substr($cadProfesiones, 0, -1);
+		$cadProfesiones = substr($cadProfesiones, 0, -1);*/
 
 		if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
 			# verificamos el formato de la imagen
@@ -135,7 +134,7 @@ class reparto extends CI_Controller {
 		}
 
 		try {
-		    $this->reparto_model->editar ( $id_reparto, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto);
+		    $this->reparto_model->editar ( $id_reparto, $nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $profesiones, $foto);
 			header ("location:".base_url ()."reparto/editarOk");
 		}
 		catch (Exception $e) {

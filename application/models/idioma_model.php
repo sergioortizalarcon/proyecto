@@ -1,14 +1,14 @@
 <?php
 class Idioma_model extends CI_Model {
 	// Se guardan en la tabla los datos del idioma, comprueba que no exista uno creado con los mismos datos
-	public function crearIdioma($nombre, $activo) {
+	public function crearIdioma($nombre, $estado) {
 		$idioma = R::find ( 'idiomas', 'nombre like ?', [ 
 				$nombre 
 		] );
 		if ($idioma == null) {
 			$idioma = R::dispense ( 'idiomas' );
 			$idioma->nombre = $nombre;
-			$idioma->activo = $activo;
+			$idioma->estado = $estado;
 			R::store ( $idioma );
 		} else {
 			throw new Exception ( "idioma duplicado" );
@@ -48,12 +48,12 @@ class Idioma_model extends CI_Model {
 	// Permite desactivar un idioma mediante su id
 	public function borrar($id_idioma) {
 		$idioma = R::load ( 'idiomas', $id_idioma );
-		$idioma->activo = 'Inactivo';
+		$idioma->estado = 'Inactivo';
 		R::store ( $idioma );
 	}
 	public function activar($id_idioma) {
 		$idioma = R::load ( 'idiomas', $id_idioma );
-		$idioma->activo = 'Activo';
+		$idioma->estado = 'Activo';
 		R::store ( $idioma );
 	}
 }

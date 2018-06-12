@@ -4,14 +4,13 @@ function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];
 <script type="text/javascript">
 var correcto = true;
 var tituloCorrecto = false;
-var anioCorrecto = false;
-var duracionCorrecto = false;
-var productoraCorrecto = false;
+var tituloOriginalCorrecto = false;
+var fechaCorrecto = false;
+var lenguageCorrecto = false;
 
 var titulo="";
-var anio = "";
-var duracion = "";
-var productora = "";
+var titulooriginal="";
+var lenguage="";
 
 function validarTitulo() {
 	titulo = idFormulario.idTitulo.value.trim();
@@ -43,109 +42,128 @@ function validarTitulo() {
 	}
 }
 
-function validarAnio() {
-	var anio = idFormulario.idAnio.value;
-	var fechaSis = new Date();
-	var anioActual = fechaSis.getFullYear();
-	if (anio != "") {
-		if (anio.length == 4 && anio >= 1888 && anio <= anioActual) {
-			anioCorrecto = true;
+function validarTituloOriginal() {
+	tituloOriginal = idFormulario.idTituloOriginal.value.trim();
+	if (tituloOriginal != "") {
+
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ0-9]{2,40}$/;
+		if (expReg.test(tituloOriginal)){
+			tituloOriginalCorrecto = true;
 			correcto=true;
-			idFormulario.idAnio.style.borderColor="blue";
-			document.getElementById("aAnio").style.display="none";
+			idFormulario.idTituloOriginal.style.borderColor="blue";
+			document.getElementById("aTituloOriginal").style.display="none";
+			tituloOriginalCorrecto = true;
 		} else {
-			idFormulario.idAnio.style.borderColor="red";
-			document.getElementById("aAnio").style.display="initial";
+			idFormulario.idTituloOriginal.style.borderColor="red";
+			document.getElementById("aTituloOriginal").style.display="initial";
 			if (correcto == true) {
-				document.getElementById('aAnio').focus();
+				document.getElementById('aTituloOriginal').focus();
 				correcto=false;
 			}
-			anioCorrecto = false;
+			tituloOriginalCorrecto = false;
 		}
 	} else {
 		if (correcto == true) {
-			document.getElementById('aAnio').focus();
+			document.getElementById('aTituloOriginal').focus();
 			correcto=false;
 		}
-		document.getElementById("aAnio").style.display="initial";
-        idFormulario.idAnio.style.borderColor="red";
-        anioCorrecto = false;
+		document.getElementById("aTituloOriginal").style.display="initial";
+        idFormulario.idTituloOriginal.style.borderColor="red";
+        tituloOriginalCorrecto = false;
 	}
 }
 
-function validarDuracion() {
-	var duracion = idFormulario.idDuracion.value.trim();
-	var ExpReg = /^[0-9]{2,3}$/;
+function validarFecha(){
+    var patron=new RegExp("^(19|20)+([0-9]{2})([/])([0-9]{1,2})([/])([0-9]{1,2})$");
+    var fecha = idFormulario.idFecha.value.trim();
+	var fechaSeparada = fecha.split("/");
+    var anio = parseInt(fechaSeparada[0]);
+    var mes = parseInt(fechaSeparada[1]);
+	var dia = parseInt(fechaSeparada[2]);
+	mes = mes-1;
 
-	if (duracion != "") {
-		if (ExpReg.test(duracion)) {
-			duracionCorrecto = true;
-			correcto=true;
-			idFormulario.idDuracion.style.borderColor="blue";
-			document.getElementById("aDuracion").style.display="none";
-		} else {
-			idFormulario.idDuracion.style.borderColor="red";
-			document.getElementById("aDuracion").style.display="initial";
-			if (correcto == true) {
-				document.getElementById('aDuracion').focus();
-				correcto=false;
-			}
-			duracionCorrecto = false;
-		}
-	} else {
+    var fechaSis = new Date();
+	
+	idFormulario.idFecha.value=fechaSeparada[0] + "/" + fechaSeparada[1] + "/" + fechaSeparada[2];
+	if (anio > fechaSis.getFullYear()) {
+		idFormulario.idFecha.style.borderColor="red";
+		document.getElementById("aFecha").style.display="initial";
 		if (correcto == true) {
-			document.getElementById('aDuracion').focus();
+			document.getElementById('aFecha').focus();
 			correcto=false;
 		}
-		document.getElementById("aDuracion").style.display="initial";
-        idFormulario.idDuracion.style.borderColor="red";
-        duracionCorrecto = false;
-	}	
+		fechaCorrecto = false;
+	} else if(anio == fechaSis.getFullYear() && mes > fechaSis.getMonth()) {
+		idFormulario.idFecha.style.borderColor="red";
+		document.getElementById("aFecha").style.display="initial";
+		if (correcto == true) {
+			document.getElementById('aFecha').focus();
+			correcto=false;
+		}
+		fechaCorrecto = false;
+	} else if (anio == fechaSis.getFullYear() && mes == fechaSis.getMonth() && dia > fechaSis.getDate()) {
+		idFormulario.idFecha.style.borderColor="red";
+		document.getElementById("aFecha").style.display="initial";
+		if (correcto == true) {
+			document.getElementById('aFecha').focus();
+			correcto=false;
+		}
+		fechaCorrecto = false;
+	} else {
+		fechaCorrecto = true;
+		correcto=true;
+		idFormulario.idFecha.style.borderColor="blue";
+		document.getElementById("aFecha").style.display="none";
+	}
 }
 
-function validarProductora() {
-	productora = idFormulario.idProductora.value.trim();
-	if (productora != "") {
+function validarLenguage() {
+	lenguage = idFormulario.idLenguage.value.trim();
+	lenguage = lenguage.toLowerCase();
+	if (lenguage != "") {
 
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ/d]{2,40}$/;
-		if (expReg.test(productora)){
-			productoraCorrecto = true;
+		var expReg = /^[a-z]{2}$/;
+		if (expReg.test(lenguage)){
+			lenguageCorrecto = true;
 			correcto=true;
-			idFormulario.idProductora.style.borderColor="blue";
-			document.getElementById("aProductora").style.display="none";
+			idFormulario.idLenguage.style.borderColor="blue";
+			document.getElementById("aLenguage").style.display="none";
 		} else {
-			idFormulario.idProductora.style.borderColor="red";
-			document.getElementById("aProductora").style.display="initial";
+			idFormulario.idLenguage.style.borderColor="red";
+			document.getElementById("aLenguage").style.display="initial";
 			if (correcto == true) {
-				document.getElementById('aProductora').focus();
+				document.getElementById('aLenguage').focus();
 				correcto=false;
 			}
-			productoraCorrecto = false;
+			lenguageCorrecto = false;
 		}
 	} else {
 		if (correcto == true) {
-			document.getElementById('aProductora').focus();
+			document.getElementById('aLenguage').focus();
 			correcto=false;
 		}
-		document.getElementById("aProductora").style.display="initial";
-        idFormulario.idProductora.style.borderColor="red";
-        productoraCorrecto = false;
+		document.getElementById("aLenguage").style.display="initial";
+        idFormulario.idLenguage.style.borderColor="red";
+        lenguageCorrecto = false;
 	}
 }
 
 function permitirEnvio() {
-	if (tituloCorrecto && anioCorrecto && duracionCorrecto && productoraCorrecto) {
+	if (tituloCorrecto && tituloOriginalCorrecto && fechaCorrecto && lenguageCorrecto) {
 		idFormulario.idRegistro.disabled=false;
 	}
 }
 
 function validar() {
-	if (tituloCorrecto && anioCorrecto && duracionCorrecto && productoraCorrecto) {
+	if (tituloCorrecto && tituloOriginalCorrecto && fechaCorrecto && lenguageCorrecto) {
 		titulo = idFormulario.idTitulo.value.trim();
 		idFormulario.idTitulo.value = titulo;
-		productora = idFormulario.idProductora.value.trim();
-		idFormulario.idProductora.value = productora;
-		if (idFormulario.idReparto.value == "") {
+		tituloOriginal = idFormulario.idTituloOriginal.value.trim();
+		idFormulario.idTituloOriginal.value = tituloOriginal;
+		lenguage = idFormulario.idLenguage.value.trim();
+		lenguage = lenguage.toLowerCase();
+		idFormulario.idLenguage.value = lenguage;
+		if (idFormulario.idRepartosElegidos.value == "") {
 			if (confirm("¿Quieres guardar el formulario sin reparto?(Se pueden añadir después)")) {
 				idFormulario.submit();
 			}
@@ -154,9 +172,9 @@ function validar() {
 		}
 	} else {
 		validarTitulo();
-		validarAnio();
-		validarDuracion();
-		validarProductora();
+		validarTituloOriginal();
+		validarFecha();
+		validarLenguage();
 	}
 }
 
@@ -167,106 +185,142 @@ function cancelarRegistro(){
 		window.location.href = "<?=base_url()?>pelicula/listar";
 	}
 }
+
+function anadirGenero(value,id) {
+	document.getElementById("idGenerosElegidos").innerHTML += "<option onclick='borrarGenero("+value+","+id+");' selected id='"+id+"' value='"+value+"' selected>"+id+"</option>";
+	var seleccionado = document.getElementById("idGenerosTodos");
+	seleccionado.remove(seleccionado.selectedIndex);
+}
+
+function borrarGenero(value,id) {
+	document.getElementById("idGenerosTodos").innerHTML += "<option onclick='anadirGenero(this."+value+",this."+id+");' id='"+id+"' value='"+value+"'>"+id+"</option>";
+	var seleccionado = document.getElementById("idGenerosElegidos");
+	seleccionado.remove(seleccionado.selectedIndex);
+}
+
+function anadirReparto(value,id) {
+	document.getElementById("idRepartosElegidos").innerHTML += "<option onclick='borrarReparto("+value+","+id+");' selected id='"+id+"' value='"+value+"' selected>"+id+"</option>";
+	var seleccionado = document.getElementById("idRepartosTodos");
+	seleccionado.remove(seleccionado.selectedIndex);
+}
+
+function borrarReparto(value,id) {
+	document.getElementById("idRepartosTodos").innerHTML += "<option onclick='anadirReparto(this."+value+",this."+id+");' id='"+id+"' value='"+value+"'>"+id+"</option>";
+	var seleccionado = document.getElementById("idRepartosElegidos");
+	seleccionado.remove(seleccionado.selectedIndex);
+}
 </script>
 
 <div class="container content-wrapper">
 	<section class="content-header">
       <h1>
-        <i class="fas fa-film"></i>&nbsp;&nbsp;Registrar nueva película
+        <i class="fas fa-film"></i>&nbsp;&nbsp;Editar película
       </h1>
     </section>
 	<section class="content">
-		<div class="filtro">
-			<form action="">
-				<label for="idInfo">N: </label><input type="text" id="idInfo" placeholder="nombre peli"/><br/>
-				<input type="button" value="cargar" onclick="carga();">
-			</form>
-		</div>
+
 	<form id="idFormulario" onchange="permitirEnvio();" name="idFormulario" action="<?= base_url()?>pelicula/crearPost" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Datos</legend>
+			<small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>
 			
 			<div class="form-group">
-				<label for="idTitulo">Titulo: </label>
+				<label for="idAdulto">¿Adulto? </label>
+				<input type="checkbox" id="idAdulto" value="Si" name="adulto" />
+			</div>
+			
+			<div class="form-group">
+				<label for="idTitulo">Titulo: </label><span class="obligatorio">*</span>
 				<input class="form-control" type="text" id="idTitulo" name="titulo" value="<?= $body['peliculas']->titulo ?>"
 				 onkeyup="validarTitulo();"  data-toogle="tooltip" data-placement="left" title="Escribe un título"/>
 				<span class="avisos" id="aTitulo">
 					Debes escribir un nombre válido(3 a 40 caracteres).
 				</span>
-			</div>	
-				
-			<div class="form-group">
-				<label for="idAnio">Año del estreno:</label>
-				<input class="form-control" type="number" id="idAnio" name="anioEstreno"
-				onchange="validarAnio();" value="<?= $body['peliculas']->anioEstreno ?>" />
-				<span class="avisos" id="aAnio">
-					Debes introducir una año entre 1888 y el actual.
-				</span>
-			</div>
-
-			<div class="form-group">
-				<label for="idDuracion">Duración (en minutos):</label>
-				<input type="text" class="form-control" id="idDuracion" value="<?= $body['peliculas']->duracion ?>"
-				onKeyUp="validarDuracion();" name="duracion" data-toogle="tooltip" data-placement="left" title="Nick o correo electrónico"/>
-				<span class="avisos" id="aDuracion">
-					Debes introducir una duración válida en minutos.
-				</span>
-			</div>
-
-			<div class="form-group">
-				<label for="idPais">Selecciona país</label>
-				<select class="form-control" name="pais" id="idPais"
-				data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
-    				<?php foreach ($paises as $pais): ?>
-    					<option value="<?=$pais -> id?>" <?= ($pais -> nombre == $body['peliculas']->paises['nombre'] )?"selected='selected'":" "?>>
-							<?= $pais->nombre ?>
-						</option>
-    				<?php endforeach;?>
-				</select>
-			</div>
-
-			<div class="form-group">
-				<label for="idReparto">Reparto:</label>
-				<select multiple class="form-control" id="idReparto" name="reparto[]"
-				data-toogle="tooltip" data-placement="left" title="Selecciona la persona" size="5">
-					<?php foreach($repartos as $reparto):?>
-						<option value="<?=$reparto -> id?>" <?= ($reparto -> id == $body['peliculas']->reparto['id'] )?"selected='selected'":" "?>>
-							<?= $reparto->nombre ?> <?= $reparto->apellido1?>
-						</option>
-					<?php endforeach; ?>
-				</select>
 			</div>
 			
-			<input type="hidden" value="true" name="activo" />
-
 			<div class="form-group">
-				<label for="idProductora">Productora:</label>
-				<input type="text" class="form-control" id="idProductora" value="<?= $body['peliculas']->productora ?>"
-				onKeyUp="validarProductora();" name="productora" data-toogle="tooltip" data-placement="left" />
-				<span class="avisos" id="aProductora">
-					Debes escribir un nombre válido(3 a 20 caracteres).
+				<label for="idTituloOriginal">Titulo original: </label><span class="obligatorio">*</span>
+				<input class="form-control" type="text" id="idTituloOriginal" name="tituloOriginal" value="<?= $body['peliculas']->tituloOriginal ?>"
+				 onkeyup="validarTituloOriginal();"  data-toogle="tooltip" data-placement="left" title="Escribe un título""/>
+				<span class="avisos" id="aTituloOriginal">
+					Debes escribir un nombre válido(3 a 40 caracteres).
+				</span>
+			</div>
+				
+			<div class="form-group">
+				<label for="idFecha">Fecha de lanzamiento:</label><span class="obligatorio">*</span>
+				<input class="form-control" type="text" id="idFecha" name="fechaLanzamiento"
+				onchange="validarFecha();" value="<?= $body['peliculas']->fechaLanzamiento ?>" />
+				<span class="avisos" id="aFecha">
+					Debes introducir una fecha anterior al día actual.
 				</span>
 			</div>
 
 			<div class="form-group">
-				<label for="idGenero">Género</label>
-				<select multiple class="form-control" id="idGenero" name="genero[]"
-				data-toogle="tooltip" data-placement="left" title="Selecciona el género" size="5">
-					<?php foreach($generos as $genero):?>
-						<option value="<?=$genero -> id?>" <?= ($genero -> id == $body['peliculas']->genero['id'] )?"selected='selected'":" "?>>
-							<?= $genero->nombre ?>
-						</option>
-					<?php endforeach; ?>
-				</select>
+				<label for="idLenguage">Lenguage:</label><span class="obligatorio">*</span>
+				<input class="form-control" type="text" name="lenguage" id="idLenguage"
+				onkeyup="validarLenguage();" value="<?= $body['peliculas']->original_language ?>"/>
+				<span class="avisos" id="aLenguage">
+					Debes introducir un código de lenguage correcto.
+				</span>
 			</div>
+
+			<div class="row">
+                <div class="form-group col-md-6">
+                    <label for="idRepartosTodos">Repartos todos:</label>
+                    <select class="form-control" id="idRepartosTodos" name="reparto[]" multiple size="5">
+                        <?php foreach($body['repartos'] as $reparto): ?>
+                        	<option onclick="anadirReparto(this.value, this.id);" id="<?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>" value="<?= $reparto->id ?>" >
+                        		<?= $reparto->nombre ?>&nbsp<?= $reparto->apellido1 ?>&nbsp<?= $reparto->apellido2 ?>
+                        	</option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="idRepartosElegidos">Repartos elegidos:</label>
+                    <select class="form-control" id="idRepartosElegidos" name="reparto[]" multiple size="5">
+                        <?php foreach ($body['peliculas']->sharedRepartosList as $rep): ?>
+                        	<option selected id="<?= $rep->nombre ?> <?= $rep->apellido1 ?> <?= $rep->apellido2 ?>" value="<?= $rep->id ?>" onclick="borrarReparto(this.value, this.id)">
+                            	<?= $rep->nombre ?> <?= $rep->apellido1 ?> <?= $rep->apellido2 ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
+			<div class="form-group">
+				<label for="idPopularidad">Popularidad: </label><span class="obligatorio">*</span>
+				<input class="form-control" type="number" id="idPopularidad" name="popularity" value="<?= $body['peliculas']->popularidad?>" />
+			</div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="idGenerosTodos">Géneros todos:</label>
+                    <select class="form-control" id="idGenerosTodos" name="genero[]" multiple size="5">
+                        <?php foreach($body['generos'] as $genero): ?>
+                        	<option onclick="anadirGenero(this.value, this.id);" id="<?= $genero->nombre ?>" value="<?= $genero->id ?>" >
+                        		<?= $genero->nombre ?>
+                        	</option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="idGenerosElegidos">Géneros elegidos:</label>
+                    <select class="form-control" id="idGenerosElegidos" name="genero[]" multiple size="5">
+                        <?php foreach ($body['peliculas']->sharedGenerosList as $gen): ?>
+                        	<option selected id="<?= $gen->nombre ?>" value="<?= $gen->id ?>" onclick="borrarGenero(this.value, this.id)">
+                            	<?= $gen->nombre ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
 
 			<div class="form-group">
 				<label for="idSinopsis">Sinopsis:</label>
-				<textarea class="form-control" name="sinopsis" id="idSinopsis" value="<?= $body['peliculas']->sinopsis ?>"></textarea>
+				<textarea class="form-control" name="sinopsis" id="idSinopsis"><?= $body['peliculas']->sinopsis ?></textarea>
 			</div>
 
-			<input type="hidden" name="fotoFija" value="<?= $body['peliculas']->foto ?>" />
-			
 			<div class="form-group">
 				<label for="idFotoPoster">Cartel:</label>
 				<input type="file" class="form-control" id="idFotoPoster" name="fotoPoster" data-toogle="tooltip" />
@@ -274,13 +328,16 @@ function cancelarRegistro(){
     				Debes introducir una foto con formato y tamaño correcto.
     			</span><br/>
     			<div id="list">
-    				<img class="thumb" src="<?= base_url().$body["peliculas"]->rutaFoto ?>" style="width:250px; height:300px;"/>
-    			</div>
+					<img class="thumb" src="<?= $body["peliculas"]->ruta_cartel?>" style="width:210px; height:320px;"/>
+				</div>
 			</div>
+			
+			<input type="hidden" name="id_pelicula" value="<?= $body['peliculas']->id ?>" />
+			<input type="hidden" name="fotoFija" value="<?= $body['peliculas']->foto_poster ?>" />
 
 			<div class="nav navbar-form navbar-right">
 				<input type="button" class="btn btn-default" id="idCancelar" name="cancelar" value="Cancelar registro" onclick="cancelarRegistro();" />
-				<input type="button" class="btn btn-default" id="idRegistro" name="registrarPelicula" disabled value="Registrar película" onclick="validar();" />
+				<input type="button" class="btn btn-default" id="idRegistro" name="registrarPelicula" value="Registrar película" onclick="validar();" />
 			</div>
 		</fieldset>
 	</form>

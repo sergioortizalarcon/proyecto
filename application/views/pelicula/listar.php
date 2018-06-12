@@ -33,7 +33,7 @@
                 	<table id="efectoTabla" class="display">
                    		<thead>
                         	<tr>
-                            	<th>Id Tmdb</th>
+                            	<th>Id</th>
                             	<th>Cartel</th>
                             	<th>Título película</th>
                             	<th>Título original</th>
@@ -49,13 +49,9 @@
 	                        <?php foreach ($body['peliculas'] as $pelicula): ?>
     	                        <?php if($pelicula -> estado != 'Inactivo'):?>
         	                        <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
-            	                        <td><?=$pelicula->id_tmdb?></td>
-                	                    <?php if($pelicula->ruta_cartel != 'null'): ?>
-                    	                <td><img src="<?= $pelicula->ruta_cartel ?>"></td>
-                        	            <?php else: ?>
-                            	        <td><img src="<?=base_url()?>/assets/img/images/image_notfound.png" width='96' height="138"></td>
-                                	    <?php endif;?>
-                                    	<td><?= $pelicula->titulo ?></td>
+            	                        <td><?=$pelicula->id?></td>
+                	                    <td><img src="<?= $pelicula->ruta_cartel ?>"></td>
+                        	            <td><?= $pelicula->titulo ?></td>
                                     	<td><?= $pelicula->titulo_original ?></td>
                                     	<td><?= $pelicula->fecha_lanzamiento ?></td>
                                     	<td><?= $pelicula->popularidad ?></td>
@@ -80,13 +76,9 @@
                                     </tr>
                                 <?php else: ?>
                                     <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
-                                        <td><?=$pelicula->id_tmdb?></td>
-                	                    <?php if($pelicula->ruta_cartel != 'null'): ?>
-                    	                <td><img src="<?= $pelicula->ruta_cartel ?>"></td>
-                        	            <?php else: ?>
-                            	        <td><img src="<?=base_url()?>/assets/img/images/image_notfound.png" width='96' height="138"></td>
-                                	    <?php endif;?>
-                                    	<td><?= $pelicula->titulo ?></td>
+                                        <td><?=$pelicula->id?></td>
+                	                    <td><img src="<?= $pelicula->ruta_cartel ?>"></td>
+                        	            <td><?= $pelicula->titulo ?></td>
                                     	<td><?= $pelicula->titulo_original ?></td>
                                     	<td><?= $pelicula->fecha_lanzamiento ?></td>
                                     	<td><?= $pelicula->popularidad ?></td>
@@ -108,7 +100,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>Id Tmdb</th>
+                                <th>Id</th>
                                 <th>Cartel</th>
                                 <th>Título película</th>
                                 <th>Título original</th>
@@ -140,11 +132,7 @@
                     		<?php foreach ($body['peliculas'] as $pelicula): ?>
     	                        <?php if($pelicula -> estado != 'Inactivo'):?>
         	                        <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
-                	                    <?php if($pelicula->ruta_cartel != 'null'): ?>
-                    	                <td><img src="<?= $pelicula->ruta_cartel ?>"></td>
-                        	            <?php else: ?>
-                            	        <td><img src="<?=base_url()?>/assets/img/images/image_notfound.png" width='96' height="138"></td>
-                                	    <?php endif;?>
+                	                    <td><img src="<?= $pelicula->ruta_cartel ?>"></td>
                                     	<td><?= $pelicula->titulo ?></td>
                                     	<td><?= $pelicula->titulo_original ?></td>
                                     	<td><?= $pelicula->fecha_lanzamiento ?></td>
@@ -154,7 +142,6 @@
                                     </tr>
                                 <?php endif; ?>
                             <?php endforeach; ?>
-                        </tbody>
                         </tbody>
                         <tfoot>
                             <tr>

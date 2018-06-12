@@ -7,10 +7,10 @@ class genero extends CI_Controller {
 		$this->load->model ( "genero_model" );
 		
 		$nombre = isset ( $_POST ["nombre"] ) ? $_POST ["nombre"] : null;
-		$activo = isset ( $_POST ['activo'] ) ? $_POST ['activo'] : 'Inactivo';
+		$estado = isset ( $_POST ['estado'] ) ? $_POST ['estado'] : 'Inactivo';
 		
 		try {
-			$registro = $this->genero_model->crearGenero ( $nombre, $activo );
+			$registro = $this->genero_model->crearGenero ( $nombre, $estado );
 			header ( "location:" . base_url () . "genero/crearOk" );
 		} catch ( Exception $e ) {
 			$datos ['mensaje'] ['texto'] = "El género ya existe";

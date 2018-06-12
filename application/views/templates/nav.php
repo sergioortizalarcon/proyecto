@@ -42,48 +42,7 @@
 			</li>
 			-->
 			
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Géneros<span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li class="dropdown-header">Géneros</li>
-					<li><a href="<?=base_url()?>genero/crear">Nuevo</a></li>
-					<li><a href="<?=base_url()?>genero/listar">Listar</a></li>
-				</ul>
-			</li>
 			
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Países<span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li class="dropdown-header">Países</li>
-					<li><a href="<?=base_url()?>pais/crear">Nuevo</a></li>
-					<li><a href="<?=base_url()?>pais/listar">Listar</a></li>
-				</ul>
-			</li>
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Idiomas<span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li class="dropdown-header">Idiomas</li>
-					<li><a href="<?=base_url()?>idioma/crear">Nuevo</a></li>
-					<li><a href="<?=base_url()?>idioma/listar">Listar</a></li>
-				</ul>
-			</li>
-			
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Usuarios<span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li class="dropdown-header">Usuarios</li>
-					<li><a href="<?=base_url()?>administrador/listar">Listar</a></li>
-				</ul>
-			</li>
-			
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Profesiones<span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li class="dropdown-header">Profesiones</li>
-					<li><a href="<?=base_url()?>profesion/crear">Nuevo</a></li>
-					<li><a href="<?=base_url()?>profesion/listar">Listar</a></li>
-				</ul>
-			</li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<?php if ( !isset($_COOKIE["usuario"]) ): ?>

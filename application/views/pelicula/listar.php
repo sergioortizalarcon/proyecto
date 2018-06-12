@@ -28,217 +28,157 @@
             </div>
         </div>
         <?php if(isset($body) && ($body['peliculas'] != null)):?>
-            <div class="table-responsive">
-                <table id="efectoTabla" class="display">
-                   <thead>
-                        <tr>
-                            <th>Id Tmdb</th>
-                            <th>Cartel</th>
-                            <th>Título película</th>
-                            <th>Título original</th>
-                            <th>Fecha de estreno</th>
-                            <th>Popularidad</th>
-                            <th>Adulto</th>
-                            <th>Nacionalidad</th>
-                            <th>Productora</th>
-                            <th>Sinopsis</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($body['peliculas'] as $pelicula): ?>
-                            <?php if($pelicula -> activo != 'Inactivo'):?>
-                                <tr>
-                                    <td><?=$pelicula->id_tmdb?></td>
-                                    <?php if($pelicula->ruta_cartel != 'null'): ?>
-                                    <td><img src="http://image.tmdb.org/t/p/w92<?= $pelicula->ruta_cartel ?>"></td>
-                                    <?php else: ?>
-                                    <td><img src="<?=base_url()?>/assets/img/images/image_notfound.png" width='96' height="138"></td>
-                                    <?php endif;?>
-                                    <td><?= $pelicula->titulo ?></td>
-                                    <td><?= $pelicula->titulo_original ?></td>
-                                    <td><?= $pelicula->fecha_lanzamiento ?></td>
-                                    <td><?= $pelicula->popularidad ?></td>
-                                    <td><?= $pelicula->adulto ?></td>
-                                    <td><?= $pelicula->pais ?></td>
-                                    <td><?= $pelicula->productora ?></td>
-                                    <td><div class="sinp"><?= $pelicula->sinopsis ?></div></td>
-                                    <td>
-                                        <form class="listado" id="idFormEdit<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/editar" method="post">
-                                            <input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>">
-                                            <button class="btn btn-info btn-sm" onclick="function f() {document.getElementById('Borrar<?= $pelicula->id ?>').submit();}">
-                                            <i class="fas fa-edit"></i>
-                                            </button>
-                                        </form>
-                                        <form class="listado" id="idFormRemove<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/borrarPost" method="post">
-                                            <input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>">
-                                            <input type="hidden" name="v" value="listarTodos">
-                                            <button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Editar<?= $pelicula->id ?>').submit();}">
-                                            <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php else: ?>
-                                <tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
-                                     <td><img src="<?=base_url()?><?= $pelicula->rutaFoto ?>" height="60" width="50"></td>
-                                    <td><?= $pelicula->titulo ?></td>
-                                    <td><?= $pelicula->anioEstreno ?></td>
-                                    <td><?= $pelicula->pais ?></td>
-                                    <td><?= $pelicula->productora ?></td>
-                                    <td>
-                                        Inactivo
-                                        <form class="listado" id="idFormActive<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/activarPost" method="post">
-                                            <input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>">
-                                            <input type="hidden" name="v" value="listarTodos">
-                                            <button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Activar<?= $pelicula->id ?>').submit();}">
-                                                <i class="fas fa-plus-circle"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php endif;?>
-                        <?php endforeach;?>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>Id Tmdb</th>
-                            <th>Cartel</th>
-                            <th>Título película</th>
-                            <th>Título original</th>
-                            <th>Fecha de estreno</th>
-                            <th>Popularidad</th>
-                            <th>Adulto</th>
-                            <th>Nacionalidad</th>
-                            <th>Productora</th>
-                            <th>Sinopsis</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </tfoot> 
-                </table>
-            </div>
-            <?php if($body['peliculas'] != null):?>
-            	<?php if  ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")): ?>
-                    <div class="table-responsive">
-                        <table id="efectoTabla" class="display table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Cartel</th>
-                                    <th>Título película</th>
-                                    <th>Fecha de estreno</th>
-                                    <th>Pais</th>
-                                    <th>Productora</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($body['peliculas'] as $pelicula): ?>
-                                	<?php if($pelicula -> estado != 'Inactivo'):?>
-                                        <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);">
-                                            <td><img src="<?=base_url()?><?= $pelicula->rutaFoto ?>" height="60" width="50"></td>
-                                            <td><?= $pelicula->titulo ?></td>
-                                            <td><?= $pelicula->anioEstreno ?></td>
-                                            <td><?= $pelicula->paises['nombre'] ?></td>
-                                            <td><?= $pelicula->productora ?></td>
-                                            <th><?= $pelicula->estado ?></th>
-                                            <td>
-                                                <form class="listado" id="idFormEdit<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/editar" method="post">
-                                                    <input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>">
-                                                    <button class="btn btn-info btn-sm" onclick="function f() {document.getElementById('Borrar<?= $pelicula->id ?>').submit();}">
-                                                    <i class="fas fa-edit"></i>
-                                                    </button>
-                                                </form>
-                                                <form class="listado" id="idFormRemove<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/borrarPost" method="post">
-                                                    <input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>">
-                                                    <input type="hidden" name="v" value="listarTodos">
-                                                    <button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Editar<?= $pelicula->id ?>').submit();}">
-                                                    <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    <?php else: ?>
-                                    	<tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
-                							 <td><img src="<?=base_url()?><?= $pelicula->rutaFoto ?>" height="60" width="50"></td>
-                                            <td><?= $pelicula->titulo ?></td>
-                                            <td><?= $pelicula->anioEstreno ?></td>
-                                            <td><?= $pelicula->pais ?></td>
-                                            <td><?= $pelicula->productora ?></td>
-                                            <th><?= $pelicula->estado ?></th>
-                                            <td>
-                								<form class="listado" id="idFormActive<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/activarPost" method="post">
-                									<input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>">
-                									<input type="hidden" name="v" value="listarTodos">
-                									<button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Activar<?= $pelicula->id ?>').submit();}">
-                										<i class="fas fa-plus-circle"></i>
-                									</button>
-                								</form>
-                							</td>
-                						</tr>
-                					<?php endif;?>
-                                <?php endforeach;?>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Cartel</th>
-                                    <th>Título película</th>
-                                    <th>Fecha de estreno</th>
-                                    <th>Pais</th>
-                                    <th>Productora</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                <?php else: ?>
-                	<div class="table-responsive">
-                        <table id="efectoTabla" class="display table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Cartel</th>
-                                    <th>Título película</th>
-                                    <th>Fecha de estreno</th>
-                                    <th>Pais</th>
-                                    <th>Productora</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                             	<?php foreach ($body['peliculas'] as $pelicula): ?>
-                                	<?php if($pelicula -> activo != 'false'):?>
-                                        <tr>
-                                            <td><img src="<?=base_url()?><?= $pelicula->rutaFoto ?>" height="60" width="50"></td>
-                                            <td><?= $pelicula->titulo ?></td>
-                                            <td><?= $pelicula->anioEstreno ?></td>
-                                            <td><?= $pelicula->paises['nombre'] ?></td>
-                                            <td><?= $pelicula->productora ?></td>
-                                        </tr>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Cartel</th>
-                                    <th>Título película</th>
-                                    <th>Fecha de estreno</th>
-                                    <th>Pais</th>
-                                    <th>Productora</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                <?php endif; ?>
-    		<?php else:?>
-                <div class="container" style="width:90%;">
-                    <h2 class="alert alert-info" style="font-size: x-large;">¡ATENCIÓN!</h2>
-                    <div class="well">
-                        <div class="alert alert-warning">
-                        	<strong>¡ADVERTENCIA!</strong> No hay películas en la base de datos, o no se han podido cargar
-                        </div>
-                    </div>
+            <?php if  ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")): ?>
+            	<div class="table-responsive">
+                	<table id="efectoTabla" class="display">
+                   		<thead>
+                        	<tr>
+                            	<th>Id Tmdb</th>
+                            	<th>Cartel</th>
+                            	<th>Título película</th>
+                            	<th>Título original</th>
+                            	<th>Fecha de estreno</th>
+                            	<th>Popularidad</th>
+                            	<th>Adulto</th>
+                            	<th>Idioma</th>
+                            	<th>Estado</th>
+                            	<th>Acciones</th>
+                        	</tr>
+                    	</thead>
+                    	<tbody>
+	                        <?php foreach ($body['peliculas'] as $pelicula): ?>
+    	                        <?php if($pelicula -> estado != 'Inactivo'):?>
+        	                        <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
+            	                        <td><?=$pelicula->id_tmdb?></td>
+                	                    <?php if($pelicula->ruta_cartel != 'null'): ?>
+                    	                <td><img src="<?= $pelicula->ruta_cartel ?>"></td>
+                        	            <?php else: ?>
+                            	        <td><img src="<?=base_url()?>/assets/img/images/image_notfound.png" width='96' height="138"></td>
+                                	    <?php endif;?>
+                                    	<td><?= $pelicula->titulo ?></td>
+                                    	<td><?= $pelicula->titulo_original ?></td>
+                                    	<td><?= $pelicula->fecha_lanzamiento ?></td>
+                                    	<td><?= $pelicula->popularidad ?></td>
+                                    	<td><?= $pelicula->adulto ?></td>
+                                        <td><?= $pelicula->original_language ?></td>
+                                        <td><?= $pelicula->estado ?>
+                                        <td>
+                                            <form class="listado" id="idFormEdit<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/editar" method="post">
+                                                <input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>">
+                                                <button class="btn btn-info btn-sm" onclick="function f() {document.getElementById('Borrar<?= $pelicula->id ?>').submit();}">
+                                                <i class="fas fa-edit"></i>
+                                                </button>
+                                            </form>
+                                            <form class="listado" id="idFormRemove<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/borrarPost" method="post">
+                                                <input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>">
+                                                <input type="hidden" name="v" value="listarTodos">
+                                                <button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Editar<?= $pelicula->id ?>').submit();}">
+                                                <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <?php else: ?>
+                                    <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
+                                        <td><?=$pelicula->id_tmdb?></td>
+                	                    <?php if($pelicula->ruta_cartel != 'null'): ?>
+                    	                <td><img src="<?= $pelicula->ruta_cartel ?>"></td>
+                        	            <?php else: ?>
+                            	        <td><img src="<?=base_url()?>/assets/img/images/image_notfound.png" width='96' height="138"></td>
+                                	    <?php endif;?>
+                                    	<td><?= $pelicula->titulo ?></td>
+                                    	<td><?= $pelicula->titulo_original ?></td>
+                                    	<td><?= $pelicula->fecha_lanzamiento ?></td>
+                                    	<td><?= $pelicula->popularidad ?></td>
+                                    	<td><?= $pelicula->adulto ?></td>
+                                        <td><?= $pelicula->original_language ?></td>
+                                        <td><?= $pelicula->estado ?>
+                                        <td>
+                                            <form class="listado" id="idFormActive<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/activarPost" method="post">
+                                                <input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>">
+                                                <input type="hidden" name="v" value="listarTodos">
+                                                <button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Activar<?= $pelicula->id ?>').submit();}">
+                                                    <i class="fas fa-plus-circle"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <?php endif;?>
+                            <?php endforeach;?>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Id Tmdb</th>
+                                <th>Cartel</th>
+                                <th>Título película</th>
+                                <th>Título original</th>
+                                <th>Fecha de estreno</th>
+                                <th>Popularidad</th>
+                                <th>Idioma</th>
+                                <th>Adulto</th>
+                            	<th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </tfoot> 
+                    </table>
+                </div>
+            <?php else: ?>
+            	<div class="table-responsive">
+                	<table id="efectoTabla" class="display">
+                   		<thead>
+                        	<tr>
+                            	<th>Cartel</th>
+                            	<th>Título película</th>
+                            	<th>Título original</th>
+                            	<th>Fecha de estreno</th>
+                            	<th>Popularidad</th>
+                            	<th>Adulto</th>
+                            	<th>Idioma</th>
+                        	</tr>
+                    	</thead>
+                    	<tbody>
+                    		<?php foreach ($body['peliculas'] as $pelicula): ?>
+    	                        <?php if($pelicula -> estado != 'Inactivo'):?>
+        	                        <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
+                	                    <?php if($pelicula->ruta_cartel != 'null'): ?>
+                    	                <td><img src="<?= $pelicula->ruta_cartel ?>"></td>
+                        	            <?php else: ?>
+                            	        <td><img src="<?=base_url()?>/assets/img/images/image_notfound.png" width='96' height="138"></td>
+                                	    <?php endif;?>
+                                    	<td><?= $pelicula->titulo ?></td>
+                                    	<td><?= $pelicula->titulo_original ?></td>
+                                    	<td><?= $pelicula->fecha_lanzamiento ?></td>
+                                    	<td><?= $pelicula->popularidad ?></td>
+                                    	<td><?= $pelicula->adulto ?></td>
+                                        <td><?= $pelicula->original_language ?></td>
+                                    </tr>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </tbody>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Cartel</th>
+                                <th>Título película</th>
+                                <th>Título original</th>
+                                <th>Fecha de estreno</th>
+                                <th>Popularidad</th>
+                                <th>Adulto</th>
+                                <th>Idiomad</th>
+                            </tr>
+                        </tfoot> 
+                    </table>
                 </div>
             <?php endif; ?>
+    	<?php else:?>
+            <div class="container" style="width:90%;">
+                <h2 class="alert alert-info" style="font-size: x-large;">¡ATENCIÓN!</h2>
+                <div class="well">
+                    <div class="alert alert-warning">
+                    	<strong>¡ADVERTENCIA!</strong> No hay películas en la base de datos, o no se han podido cargar
+                    </div>
+                </div>
+            </div>
         <?php endif;?>
     </section>
 </div>

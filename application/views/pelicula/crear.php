@@ -28,7 +28,6 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
 			xhr.onreadystatechange=function(){
 				if (xhr.readyState==this.DONE) {
 					valores = JSON.parse(this.responseText);
-					var raiz_pelis = "http://image.tmdb.org/t/p/w185";
 					mostrar = document.getElementById("mostrarInfo");
 					vendetta = valores.results;
 					console.log(valores.results);
@@ -102,18 +101,17 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
 			xhr.send(datosSerializados);
 		}
 	</script>
-<!--
+
 <script type="text/javascript">
 var correcto = true;
 var tituloCorrecto = false;
-var anioCorrecto = false;
-var duracionCorrecto = false;
-var productoraCorrecto = false;
+var tituloOriginalCorrecto = false;
+var fechaCorrecto = false;
+var lenguageCorrecto = false;
 
 var titulo="";
-var anio = "";
-var duracion = "";
-var productora = "";
+var titulooriginal="";
+var lenguage="";
 
 function validarTitulo() {
 	titulo = idFormulario.idTitulo.value.trim();
@@ -145,108 +143,127 @@ function validarTitulo() {
 	}
 }
 
-function validarAnio() {
-	var anio = idFormulario.idAnio.value;
-	var fechaSis = new Date();
-	var anioActual = fechaSis.getFullYear();
-	if (anio != "") {
-		if (anio.length == 4 && anio >= 1888 && anio <= anioActual) {
-			anioCorrecto = true;
+function validarTituloOriginal() {
+	tituloOriginal = idFormulario.idTituloOriginal.value.trim();
+	if (tituloOriginal != "") {
+
+		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ0-9]{2,40}$/;
+		if (expReg.test(tituloOriginal)){
+			tituloOriginalCorrecto = true;
 			correcto=true;
-			idFormulario.idAnio.style.borderColor="blue";
-			document.getElementById("aAnio").style.display="none";
+			idFormulario.idTituloOriginal.style.borderColor="blue";
+			document.getElementById("aTituloOriginal").style.display="none";
+			tituloOriginalCorrecto = true;
 		} else {
-			idFormulario.idAnio.style.borderColor="red";
-			document.getElementById("aAnio").style.display="initial";
+			idFormulario.idTituloOriginal.style.borderColor="red";
+			document.getElementById("aTituloOriginal").style.display="initial";
 			if (correcto == true) {
-				document.getElementById('aAnio').focus();
+				document.getElementById('aTituloOriginal').focus();
 				correcto=false;
 			}
-			anioCorrecto = false;
+			tituloOriginalCorrecto = false;
 		}
 	} else {
 		if (correcto == true) {
-			document.getElementById('aAnio').focus();
+			document.getElementById('aTituloOriginal').focus();
 			correcto=false;
 		}
-		document.getElementById("aAnio").style.display="initial";
-        idFormulario.idAnio.style.borderColor="red";
-        anioCorrecto = false;
+		document.getElementById("aTituloOriginal").style.display="initial";
+        idFormulario.idTituloOriginal.style.borderColor="red";
+        tituloOriginalCorrecto = false;
 	}
 }
 
-function validarDuracion() {
-	var duracion = idFormulario.idDuracion.value.trim();
-	var ExpReg = /^[0-9]{2,3}$/;
+function validarFecha(){
+    var patron=new RegExp("^(19|20)+([0-9]{2})([/])([0-9]{1,2})([/])([0-9]{1,2})$");
+    var fecha = idFormulario.idFecha.value.trim();
+	var fechaSeparada = fecha.split("/");
+    var anio = parseInt(fechaSeparada[0]);
+    var mes = parseInt(fechaSeparada[1]);
+	var dia = parseInt(fechaSeparada[2]);
+	mes = mes-1;
 
-	if (duracion != "") {
-		if (ExpReg.test(duracion)) {
-			duracionCorrecto = true;
-			correcto=true;
-			idFormulario.idDuracion.style.borderColor="blue";
-			document.getElementById("aDuracion").style.display="none";
-		} else {
-			idFormulario.idDuracion.style.borderColor="red";
-			document.getElementById("aDuracion").style.display="initial";
-			if (correcto == true) {
-				document.getElementById('aDuracion').focus();
-				correcto=false;
-			}
-			duracionCorrecto = false;
-		}
-	} else {
+    var fechaSis = new Date();
+	
+	idFormulario.idFecha.value=fechaSeparada[0] + "/" + fechaSeparada[1] + "/" + fechaSeparada[2];
+	if (anio > fechaSis.getFullYear()) {
+		idFormulario.idFecha.style.borderColor="red";
+		document.getElementById("aFecha").style.display="initial";
 		if (correcto == true) {
-			document.getElementById('aDuracion').focus();
+			document.getElementById('aFecha').focus();
 			correcto=false;
 		}
-		document.getElementById("aDuracion").style.display="initial";
-        idFormulario.idDuracion.style.borderColor="red";
-        duracionCorrecto = false;
-	}	
+		fechaCorrecto = false;
+	} else if(anio == fechaSis.getFullYear() && mes > fechaSis.getMonth()) {
+		idFormulario.idFecha.style.borderColor="red";
+		document.getElementById("aFecha").style.display="initial";
+		if (correcto == true) {
+			document.getElementById('aFecha').focus();
+			correcto=false;
+		}
+		fechaCorrecto = false;
+	} else if (anio == fechaSis.getFullYear() && mes == fechaSis.getMonth() && dia > fechaSis.getDate()) {
+		idFormulario.idFecha.style.borderColor="red";
+		document.getElementById("aFecha").style.display="initial";
+		if (correcto == true) {
+			document.getElementById('aFecha').focus();
+			correcto=false;
+		}
+		fechaCorrecto = false;
+	} else {
+		fechaCorrecto = true;
+		correcto=true;
+		idFormulario.idFecha.style.borderColor="blue";
+		document.getElementById("aFecha").style.display="none";
+	}
 }
 
-function validarProductora() {
-	productora = idFormulario.idProductora.value.trim();
-	if (productora != "") {
+function validarLenguage() {
+	lenguage = idFormulario.idLenguage.value.trim();
+	lenguage = lenguage.toLowerCase();
+	if (lenguage != "") {
 
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ/d]{2,40}$/;
-		if (expReg.test(productora)){
-			productoraCorrecto = true;
+		var expReg = /^[a-z]{2}$/;
+		if (expReg.test(lenguage)){
+			lenguageCorrecto = true;
 			correcto=true;
-			idFormulario.idProductora.style.borderColor="blue";
-			document.getElementById("aProductora").style.display="none";
+			idFormulario.idLenguage.style.borderColor="blue";
+			document.getElementById("aLenguage").style.display="none";
 		} else {
-			idFormulario.idProductora.style.borderColor="red";
-			document.getElementById("aProductora").style.display="initial";
+			idFormulario.idLenguage.style.borderColor="red";
+			document.getElementById("aLenguage").style.display="initial";
 			if (correcto == true) {
-				document.getElementById('aProductora').focus();
+				document.getElementById('aLenguage').focus();
 				correcto=false;
 			}
-			productoraCorrecto = false;
+			lenguageCorrecto = false;
 		}
 	} else {
 		if (correcto == true) {
-			document.getElementById('aProductora').focus();
+			document.getElementById('aLenguage').focus();
 			correcto=false;
 		}
-		document.getElementById("aProductora").style.display="initial";
-        idFormulario.idProductora.style.borderColor="red";
-        productoraCorrecto = false;
+		document.getElementById("aLenguage").style.display="initial";
+        idFormulario.idLenguage.style.borderColor="red";
+        lenguageCorrecto = false;
 	}
 }
 
 function permitirEnvio() {
-	if (tituloCorrecto && anioCorrecto && duracionCorrecto && productoraCorrecto) {
+	if (tituloCorrecto && tituloOriginalCorrecto && fechaCorrecto && lenguageCorrecto) {
 		idFormulario.idRegistro.disabled=false;
 	}
 }
 
 function validar() {
-	if (tituloCorrecto && anioCorrecto && duracionCorrecto && productoraCorrecto) {
+	if (tituloCorrecto && tituloOriginalCorrecto && fechaCorrecto && lenguageCorrecto) {
 		titulo = idFormulario.idTitulo.value.trim();
 		idFormulario.idTitulo.value = titulo;
-		productora = idFormulario.idProductora.value.trim();
-		idFormulario.idProductora.value = productora;
+		tituloOriginal = idFormulario.idTituloOriginal.value.trim();
+		idFormulario.idTituloOriginal.value = tituloOriginal;
+		lenguage = idFormulario.idLenguage.value.trim();
+		lenguage = lenguage.toLowerCase();
+		idFormulario.idLenguage.value = lenguage;
 		if (idFormulario.idReparto.value == "") {
 			if (confirm("¿Quieres guardar el formulario sin reparto?(Se pueden añadir después)")) {
 				idFormulario.submit();
@@ -256,9 +273,9 @@ function validar() {
 		}
 	} else {
 		validarTitulo();
-		validarAnio();
-		validarDuracion();
-		validarProductora();
+		validarTituloOriginal();
+		validarFecha();
+		validarLenguage();
 	}
 }
 
@@ -270,7 +287,7 @@ function cancelarRegistro(){
 	}
 }
 </script>
--->
+
 <div class="container content-wrapper">
 	<section class="content-header">
       <h1>
@@ -291,41 +308,43 @@ function cancelarRegistro(){
 			<small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>
 			
 			<div class="form-group">
+				<label for="idAdulto">¿Adulto? </label>
+				<input type="checkbox" id="idAdulto" value="Si" name="adulto" />
+			</div>
+			
+			<div class="form-group">
 				<label for="idTitulo">Titulo: </label><span class="obligatorio">*</span>
 				<input class="form-control" type="text" id="idTitulo" name="titulo" placeholder="Título de la película.."
 				 onkeyup="validarTitulo();"  data-toogle="tooltip" data-placement="left" title="Escribe un título""/>
 				<span class="avisos" id="aTitulo">
 					Debes escribir un nombre válido(3 a 40 caracteres).
 				</span>
-			</div>	
+			</div>
+			
+			<div class="form-group">
+				<label for="idTituloOriginal">Titulo original: </label><span class="obligatorio">*</span>
+				<input class="form-control" type="text" id="idTituloOriginal" name="tituloOriginal" placeholder="Título de la película.."
+				 onkeyup="validarTituloOriginal();"  data-toogle="tooltip" data-placement="left" title="Escribe un título""/>
+				<span class="avisos" id="aTituloOriginal">
+					Debes escribir un nombre válido(3 a 40 caracteres).
+				</span>
+			</div>
 				
 			<div class="form-group">
-				<label for="idAnio">Año del estreno:</label><span class="obligatorio">*</span>
-				<input class="form-control" type="number" id="idAnio" name="anioEstreno"
-				onchange="validarAnio();" placeholder="Pincha para elegir año de estreno..." />
-				<span class="avisos" id="aAnio">
-					Debes introducir una año entre 1888 y el actual.
+				<label for="idFecha">Fecha de lanzamiento:</label><span class="obligatorio">*</span>
+				<input class="form-control" type="text" id="idFecha" name="fechaLanzamiento"
+				onchange="validarFecha();" placeholder="Pincha para elegir año de estreno..." />
+				<span class="avisos" id="aFecha">
+					Debes introducir una fecha anterior al día actual.
 				</span>
 			</div>
 
 			<div class="form-group">
-				<label for="idDuracion">Duración (en minutos):</label><span class="obligatorio">*</span>
-				<input type="text" class="form-control" id="idDuracion" placeholder="Duración..."
-				onKeyUp="validarDuracion();" name="duracion" data-toogle="tooltip" data-placement="left" title="Nick o correo electrónico"/>
-				<span class="avisos" id="aDuracion">
-					Debes introducir una duración válida en minutos.
+				<label for="idLenguage">Selecciona Lenguage</label><span class="obligatorio">*</span>
+				<input class="form-control" type="text" name="lenguage" id="idLenguage" onkeyup="validarLenguage();" />
+				<span class="avisos" id="aLenguage">
+					Debes introducir un código de lenguage correcto.
 				</span>
-			</div>
-
-			<div class="form-group">
-				<label for="idPais">Selecciona país</label><span class="obligatorio">*</span>
-				<select class="form-control" name="pais" id="idPais"
-				data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
-				<?php foreach ($paises as $pais): ?>
-					<option value="<?=$pais->id?>" <?=($pais->nombre == "España") ? "selected='selected'" : " "?> >
-						<?=$pais->nombre?></option>
-				<?php endforeach;?>
-				</select>
 			</div>
 
 			<div class="form-group">
@@ -341,12 +360,8 @@ function cancelarRegistro(){
 			<input type="hidden" value="Activo" name="estado" />
 
 			<div class="form-group">
-				<label for="idProductora">Productora:</label><span class="obligatorio">*</span>
-				<input type="text" class="form-control" id="idProductora" placeholder="Productora..."
-				onKeyUp="validarProductora();" name="productora" data-toogle="tooltip" data-placement="left" title="#"/>
-				<span class="avisos" id="aProductora">
-					Debes escribir un nombre válido(3 a 20 caracteres).
-				</span>
+				<label for="idPopularidad">Popularidad: </label><span class="obligatorio">*</span>
+				<input class="form-control" type="number" id="idPopularidad" name="popularity" placeholder="Popularidad..." />
 			</div>
 
 			<div class="form-group">

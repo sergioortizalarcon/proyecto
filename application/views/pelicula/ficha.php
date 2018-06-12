@@ -3,17 +3,37 @@
 		<div id="tabs" style="height:500px;">
 			<ul>
 				<li><a href="#pricipal"><i class="far fa-id-card"></i></a></li>
-				<li><a href="#reparto"> <i class="fas fa-book"></i> Biografía </a></li>
-				<li><a href="#sinopsis"> <i class="fas fa-film"></i> Filmografía </a></li>
-				<li><a href="#noticias"> <i class="far fa-newspaper"></i> Noticia </a></li>
+				<li><a href="#sinopsis"> <i class="fas fa-book"></i> Sinopsis </a></li>
+				<li><a href="#reparto"> <i class="fas fa-film"></i> Reparto </a></li>
+				<li><a href="#noticias"> <i class="far fa-newspaper"></i> Noticias </a></li>
 				<li><a href="#galeria"> <i class="far fa-images"></i> Galería </a></li>
 			</ul>
 		
 			<div id="principal">
-				<div class="col-md-3">
+				<div class="col-md-3" style="padding-top:20px;">
     				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
     					<div class="col-md-12">
-    						<img src="<?= base_url() ?><?= $body['peliculas']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
+    						<img src="<?= $body['peliculas']->ruta_cartel ?>" style="width:150px; heigth:200px"/>
+    					</div>
+    					<div class="col-md-12">
+    						<h4><?= $body['peliculas']->titulo ?></h4>
+    					</div>
+    				</div>
+				</div>
+				<div class="col-md-9" style="padding-top:20px;">
+    				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
+        				<h5>Título original: <?=$body['peliculas']->titulo_original ?></h5>
+        				<h5>Fecha de estreno: <?=$body['peliculas']->fecha_lanzamiento ?></h5>
+        				<h5>Idioma original: <?= $body['peliculas']->original_language ?></h5>
+    				</div>
+				</div>
+			</div>
+			
+			<div id="sinopsis">
+				<div class="col-md-3">
+    				<div class="rowd" style="float:left; display:inline-grid; height:100%; margin:1% 1% 5% 0;">
+    					<div class="col-md-12">
+    						<img src="http://image.tmdb.org/t/p/w92<?= $body['peliculas']->ruta_cartel ?>" style="width:150px; heigth:200px"/>
     					</div>
     					<div class="col-md-12">
     						<h4><?= $body['peliculas']->titulo ?></h4>
@@ -22,8 +42,7 @@
 				</div>
 				<div class="col-md-9">
     				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
-        				<h5>Fecha de estreno: <?=$body['peliculas']->anioEstreno ?></h5>
-        				<h5>País de creación: <?= $body['peliculas']->paises['nombre'] ?></h5>
+    					<?= $body['peliculas']->sinopsis ?>
     				</div>
 				</div>
 			</div>
@@ -47,24 +66,6 @@
     				</div>
 				</div>
 				-->
-			</div>
-			
-			<div id="sinopsis">
-				<div class="col-md-3">
-    				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
-    					<div class="col-md-12">
-    						<img src="<?= base_url() ?><?= $body['peliculas']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
-    					</div>
-    					<div class="col-md-12">
-    						<h4><?= $body['peliculas']->titulo ?></h4>
-    					</div>
-    				</div>
-				</div>
-				<div class="col-md-9">
-    				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
-    					<?= $body['peliculas']->sinopsis ?>
-    				</div>
-				</div>
 			</div>
 			
 			<div id="noticias">

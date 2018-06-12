@@ -1,17 +1,19 @@
 <?php
 class Pelicula_model extends CI_Model {
 
-    public function createFilm ( $titulo, $anioEstreno, $duracion, $id_pais, $cadRepartos, $productora, $cadGeneros, $sinopsis, $foto, $estado) {
-        $pelicula = R::find('peliculas', 'titulo like ? and anioEstreno like ? and duracion like ? and productora like ?', [$titulo,$anioEstreno,$duracion,$productora]);
+    public function createFilm ( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartos, $cadGeneros, $sinopsis, $foto, $estado) {
+        $pelicula = R::find('peliculas', 'titulo like ? and tituloOriginal like ? and fechaLanzamiento like ?', [$titulo,$tituloOriginal,$fechaLanzamiento]);
         if ($pelicula == null) {
             $pelicula = R::dispense ( 'peliculas' );
             $pelicula -> titulo = $titulo;
-            $pelicula -> anioEstreno = $anioEstreno;
-            $pelicula -> duracion = $duracion;
-            $pelicula -> productora = $productora;
+            $pelicula -> titulo_original = $tituloOriginal;
+            $pelicula -> adulto = $adulto;
+            $pelicula -> fecha_lanzamiento = $fechaLanzamiento;
+            $pelicula -> popularidad = $popularity;
             $pelicula -> sinopsis = $sinopsis;
-            $pelicula -> rutaFoto = $foto;
+            $pelicula -> ruta_cartel = $foto;
             $pelicula -> estado = $estado;
+            $pelicula -> original_language = $lenguage;
             $generos = explode(",",$cadGeneros);
             for ($i=0;$i<count($generos);$i++) {
                 $genero = R::load("generos",$generos[$i]);
@@ -24,9 +26,6 @@ class Pelicula_model extends CI_Model {
                 $reparto -> sharedPeliculasList[] = $pelicula;
                 R::store($reparto);
             }
-            $pais = R::load("paises", $id_pais);
-            $pais -> xownPeliculasList[] = $pelicula;
-            R::store($pais);
         } else {
             throw new Exception("Película duplicada");
         }
@@ -49,19 +48,20 @@ class Pelicula_model extends CI_Model {
 	    return R::load("peliculas",$id_pelicula);
 	}
 	
-	 public function insertPelicula($id,$title,$original_title,$poster_path,$popularity,$release_date,$adult,$original_language,$overview,$genre_ids) {
+	 public function insertPelicula($id,$title,$original_title,$poster_path,$popularity,$release_date,$adult,$original_language,$overview,$genre_ids,$estado) {
 		$pelicula = R::findOne('peliculas','id_tmdb = ? and titulo_original = ? and titulo = ?',[$id,$original_title,$title]);
 		if ($pelicula == null) {
 		$nueva_pelicula = R::dispense('peliculas');
 		$nueva_pelicula -> titulo = $title;
 		$nueva_pelicula -> titulo_original = $original_title;
-		$nueva_pelicula ->ruta_cartel = $poster_path;
-		$nueva_pelicula ->popularidad = $popularity;
+		$nueva_pelicula -> ruta_cartel = "http://image.tmdb.org/t/p/w185".$poster_path;
+		$nueva_pelicula -> popularidad = $popularity;
 		$nueva_pelicula -> fecha_lanzamiento= $release_date;
 		$nueva_pelicula -> adulto= $adult;
 		$nueva_pelicula -> original_language= $original_language;
 		$nueva_pelicula -> sinopsis= $overview;
 		$nueva_pelicula -> id_tmdb = $id;
+		$nueva_pelicula -> estado = $estado; 
 		foreach ($genre_ids as $id_g) {
 			$nueva_pelicula->sharedGenerosList[] = R::load('generos',$id_g);
 		}

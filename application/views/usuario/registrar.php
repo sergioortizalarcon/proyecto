@@ -340,7 +340,7 @@ function calcularEdad() {
 
 function validar() {
 	console.log("a"+idFormulario.idFecha.value)
-	if (validarNombre() && validarApeUno() && validarApeDos() && verificarCorreo() &&confirmarPass() && validarPass() && calcularEdad() ) {
+	if (validarAlias() && validarNombre() && validarApeUno() && validarApeDos() && verificarCorreo() &&confirmarPass() && validarPass() && calcularEdad() ) {
 		enviarRegistro();
 		function enviarRegistro(){
 			pwd = document.getElementById("idPwd").value;

@@ -10,7 +10,7 @@ var fechaCorrecto = false;
 
 var nombre="";
 var apellido1="";
-var apellido2="";
+var apellido2=""; 
 
 function mayuscula(palabra, id) {
 	var palabrasSeparadas = palabra.split(" ");

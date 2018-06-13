@@ -50,7 +50,7 @@
                                                 <?= $prof->nombre ?> ||
                                             <?php endforeach; ?>
                                         </td>
-            							<td><?= $reparto->estado ?></td>
+            							<td><?= $reparto->estado ?></td> 
             							<td>
             								<form class="listado" id="idFormEdit<?= $reparto->id ?>" action="<?=base_url()?>reparto/editar" method="post">
             									<input type="hidden" name="id_reparto" value="<?= $reparto -> id?>">

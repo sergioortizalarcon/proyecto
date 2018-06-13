@@ -26,7 +26,7 @@
 			console.log(xhr.readyState+"   "+xhr.status);
 			document.getElementById("result").innerHTML = xhr.responseText;
 		}
-	}
+	} 
 }
 
 function validarNombre() {

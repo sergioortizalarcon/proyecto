@@ -8,7 +8,7 @@
 				<li><a href="#galeria"> <i class="far fa-images"></i> Galería </a></li>
 			</ul>
 		
-			<div id="perfil">
+			<div id="perfil"> 
 				<div class="col-md-3">
     				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
     					<div class="col-md-12">

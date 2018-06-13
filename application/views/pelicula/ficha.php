@@ -18,7 +18,7 @@
     						<h4><?= $body['peliculas']->titulo ?></h4>
     					</div>
     				</div>
-				</div>
+				</div> 
 				<div class="col-md-9" style="padding-top:20px;">
     				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
         				<h5>Título original: <?=$body['peliculas']->titulo_original ?></h5>

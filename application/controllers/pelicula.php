@@ -293,7 +293,7 @@ class Pelicula extends CI_Controller {
 		    $this->listar(); 
 		} else {
 			$this->acceso_denegado();
-		}
+		} 
 	}
 	
 	public function abrirFicha() {

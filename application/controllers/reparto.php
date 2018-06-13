@@ -203,7 +203,7 @@ class reparto extends CI_Controller {
 		} else {
 			$this->acceso_denegado();
 		}
-	}
+	} 
 
 	public function abrirFicha() {
 	    $this->load->model ( 'reparto_model' );

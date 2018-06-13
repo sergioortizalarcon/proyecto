@@ -106,7 +106,7 @@ class profesion extends CI_Controller {
 		} else {
 			$this->acceso_denegado();
 		}
-	}
+	} 
 	
 	public function activarPost() {
 		if ($this->comprobarRol()) {

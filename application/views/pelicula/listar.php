@@ -16,7 +16,7 @@
             <i class="fas fa-film"></i> Gestión de Películas
             <small>Add, Edit, Delete</small>
         </h1>
-    </section>
+    </section> 
     
     <section class="content">
         <div class="row">

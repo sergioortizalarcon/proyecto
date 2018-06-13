@@ -21,7 +21,7 @@
 				<ul class="btn">
 					<li><a href="<?=base_url()?>reparto/listar" style="color:#9d9d9d;">Reparto</a></li>
 				</ul>
-			</li>
+			</li> 
 			
 		</ul>
 		<ul class="nav navbar-nav navbar-right">

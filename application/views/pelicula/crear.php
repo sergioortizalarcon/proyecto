@@ -15,7 +15,7 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
         if(this[i] && this[i].parentElement) {
             this[i].parentElement.removeChild(this[i]);
         }
-    }
+    } 
 }
 		function carga() {
 			//Si guarda cambiar submit por function con ajax q vaya subiendo los datos al terminar de cargar cada form completo

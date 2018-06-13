@@ -18,7 +18,7 @@
 						</a>
 					</div>
 				</div>
-			</div>
+			</div> 
 	 <?php if($body['profesiones'] != null):?>
 				<div class="table-responsive">
 				<table id="efectoTabla" class="display table table-bordered ">

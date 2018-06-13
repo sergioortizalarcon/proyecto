@@ -147,7 +147,7 @@ function validarLenguage() {
         lenguageCorrecto = false;
 	}
 }
-
+ 
 function permitirEnvio() {
 	if (tituloCorrecto && tituloOriginalCorrecto && fechaCorrecto && lenguageCorrecto) {
 		idFormulario.idRegistro.disabled=false;

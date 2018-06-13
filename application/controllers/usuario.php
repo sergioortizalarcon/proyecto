@@ -57,8 +57,7 @@ class usuario extends CI_Controller {
 			$comprobacion = $this -> usuario_model -> comprobar_usuario($alias, $email);
 			if ($comprobacion) {
 				$ver = $this -> usuario_model -> create_usuario($nombre, $ape1, $ape2, $alias, $email, $pwd, $fecha,$idPais);
-				print_r('<code><pre>'.$ver.'</pre></code>');
-				// header('Location:'.base_url().'usuario/crearOk');
+				header('Location:'.base_url().'usuario/crearOk');
 			} else {
 				header('Location:'.base_url().'usuario/crearError');
 			}

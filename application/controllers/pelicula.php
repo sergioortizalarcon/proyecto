@@ -1,14 +1,30 @@
 <?php
 class Pelicula extends CI_Controller {
-
+	public function comprobarRol(){
+		if (session_status () == PHP_SESSION_NONE) {session_start ();}
+		if (isset ( $_SESSION ['rol'] ) && ($_SESSION['rol'] == 'administrador')) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public function acceso_denegado(){
+		header ("location:".base_url());
+	}
+	
 	public function crear() {
-	    $this -> load -> model("pais_model");
-	    $this -> load -> model("genero_model");
-	    $this -> load -> model("reparto_model");
-	    $datos["paises"] = $this -> pais_model -> getTodos();
-	    $datos["generos"] = $this -> genero_model -> getAllActive();
-	    $datos["repartos"] = $this -> reparto_model ->getAllActive();
-		enmarcar($this, "pelicula/crear",$datos);
+		if ($this -> comprobarRol()) {
+		    $this -> load -> model("pais_model");
+		    $this -> load -> model("genero_model");
+		    $this -> load -> model("reparto_model");
+		    $datos["paises"] = $this -> pais_model -> getTodos();
+		    $datos["generos"] = $this -> genero_model -> getAllActive();
+		    $datos["repartos"] = $this -> reparto_model ->getAllActive();
+			enmarcar($this, "pelicula/crear",$datos);
+		} else {
+			$this->acceso_denegado();
+		}
 	}
 	
 	public function crearPost() {
@@ -140,16 +156,20 @@ class Pelicula extends CI_Controller {
     }
     
     public function editar() {
-        $this->load->model ( 'pelicula_model' );
-        $this->load->model('pais_model');
-        $this->load->model('reparto_model');
-        $this->load->model('genero_model');
-        $id_pelicula = $_POST ['id_pelicula'];
-        $datos['body']['peliculas'] = $this->pelicula_model->getPeliculaPorId ( $id_pelicula );
-        $datos['body']['paises'] = $this->pais_model->getTodos();
-        $datos['body']['repartos'] = $this->reparto_model->getAllActive();
-        $datos['body']['generos'] = $this->genero_model->getAllActive();
-        enmarcar ( $this, 'pelicula/editar', $datos);
+    	if ($this->comprobarRol()) {
+	        $this->load->model ( 'pelicula_model' );
+	        $this->load->model('pais_model');
+	        $this->load->model('reparto_model');
+	        $this->load->model('genero_model');
+	        $id_pelicula = $_POST ['id_pelicula'];
+	        $datos['body']['peliculas'] = $this->pelicula_model->getPeliculaPorId ( $id_pelicula );
+	        $datos['body']['paises'] = $this->pais_model->getTodos();
+	        $datos['body']['repartos'] = $this->reparto_model->getAllActive();
+	        $datos['body']['generos'] = $this->genero_model->getAllActive();
+	        enmarcar ( $this, 'pelicula/editar', $datos);
+    	} else {
+    		$this->acceso_denegado();
+    	}
     }
     
     public function editarPost() {
@@ -254,18 +274,26 @@ class Pelicula extends CI_Controller {
 	}
 	
 	public function borrarPost() {
-	    $this->load->model ( 'pelicula_model' );
-	    $id_pelicula = $_POST ['id_pelicula'];
-	    $this->pelicula_model->borrar ( $id_pelicula );
-	    $this->listar();
+		if ($this->comprobarRol()) {
+		    $this->load->model ( 'pelicula_model' );
+		    $id_pelicula = $_POST ['id_pelicula'];
+		    $this->pelicula_model->borrar ( $id_pelicula );
+		    $this->listar();
+		} else {
+			$this->acceso_denegado();
+		}
 	}
 	
 	public function activarPost() {
-	    $this->load->model ( 'pelicula_model' );
-	    $id_pelicula = $_POST ['id_pelicula'];
-	    $this->pelicula_model->activar ( $id_pelicula );
-	    
-	    $this->listar();
+		if ($this->comprobarRol()) {
+		    $this->load->model ( 'pelicula_model' );
+		    $id_pelicula = $_POST ['id_pelicula'];
+		    $this->pelicula_model->activar ( $id_pelicula );
+		    
+		    $this->listar(); 
+		} else {
+			$this->acceso_denegado();
+		}
 	}
 	
 	public function abrirFicha() {

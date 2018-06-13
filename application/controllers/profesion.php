@@ -1,5 +1,18 @@
 <?php
 class profesion extends CI_Controller {
+	public function comprobarRol(){
+		if (session_status () == PHP_SESSION_NONE) {session_start ();}
+		if (isset ( $_SESSION ['rol'] ) && ($_SESSION['rol'] == 'administrador')) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public function acceso_denegado(){
+		header ("location:".base_url());
+	}
+	
 	public function comprobarprofesion() {
 		$this->load->model ( "profesion_model" );
 		$nombre = isset ( $_POST ["nombre"] ) ? $_POST ["nombre"] : null;
@@ -14,7 +27,11 @@ class profesion extends CI_Controller {
 	}
 	
 	public function crear() {
-		enmarcar ( $this, "profesion/crear" );
+		if ($this -> comprobarRol()) {
+			enmarcar ( $this, "profesion/crear" );
+		} else {
+			$this->acceso_denegado();
+		}
 	}
 	
 	public function crearPost() {
@@ -52,15 +69,13 @@ class profesion extends CI_Controller {
 	}
 	
 	public function editar() {
-		$this->load->model ( 'profesion_model' );
-		$id_profesion = isset ( $_POST ['id_profesion'] ) ? $_POST ['id_profesion'] : null;
-		try {
+		if ($this->comprobarRol()) {
+			$this->load->model ( 'profesion_model' );
+			$id_profesion = isset ( $_POST ['id_profesion'] ) ? $_POST ['id_profesion'] : null;
 			$datos ['body'] ['profesiones'] = $this->profesion_model->getprofesionPorId ( $id_profesion );
 			enmarcar ( $this, 'profesion/editar', $datos );
-		} catch ( Exception $e ) {
-			$datos ['mensaje'] ['texto'] = "Error";
-			$datos ['mensaje'] ['nivel'] = "error";
-			enmarcar ( $this, 'profesion/mensaje', $datos );
+		} else {
+			$this->acceso_denegado();
 		}
 	}
 	
@@ -83,18 +98,25 @@ class profesion extends CI_Controller {
 	}
 	
 	public function borrarPost() {
-		$this->load->model ( 'profesion_model' );
-		$id_profesion = $_POST ['id_profesion'];
-		$this->profesion_model->borrar ( $id_profesion );
-		$this->listar();
+		if ($this->comprobarRol()) {
+			$this->load->model ( 'profesion_model' );
+			$id_profesion = $_POST ['id_profesion'];
+			$this->profesion_model->borrar ( $id_profesion );
+			$this->listar();
+		} else {
+			$this->acceso_denegado();
+		}
 	}
 	
 	public function activarPost() {
-	    $this->load->model ( 'profesion_model' );
-	    $id_profesion = $_POST ['id_profesion'];
-	    $this->profesion_model->activar ( $id_profesion );
-	    
-	    $this->listar();
+		if ($this->comprobarRol()) {
+		    $this->load->model ( 'profesion_model' );
+		    $id_profesion = $_POST ['id_profesion'];
+		    $this->profesion_model->activar ( $id_profesion );
+		    $this->listar();
+		} else {
+			$this->acceso_denegado();
+		}
 	}
 }
 

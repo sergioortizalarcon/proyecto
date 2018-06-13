@@ -9,39 +9,19 @@
 		<a class="navbar-brand" href="<?=base_url()?>">CRUD</a>
 	</div>
 	<div class="collapse navbar-collapse" id="navegacionPagina">
-		<ul class="nav navbar-nav">
-			
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Peliculas<span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li class="dropdown-header">Peliculas</li>
-					<li><a href="<?=base_url()?>pelicula/crear">Nueva</a></li>
-					<li><a href="<?=base_url()?>pelicula/listar">Listar</a></li>
+		<ul class="nav navbar-nav" style="padding:7px;">
+		
+			<li>
+				<ul class="btn">
+					<li><a href="<?=base_url()?>pelicula/listar" style="color:#9d9d9d;">Películas</a></li>
 				</ul>
 			</li>
 			
-
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Reparto<span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li class="dropdown-header">Reparto</li>
-					<li><a href="<?=base_url()?>reparto/crear">Nueva</a></li>
-					<li><a href="<?=base_url()?>reparto/listar">Listar</a></li>
+			<li>
+				<ul class="btn">
+					<li><a href="<?=base_url()?>reparto/listar" style="color:#9d9d9d;">Reparto</a></li>
 				</ul>
 			</li>
-			
-			<!--
-			Por si se quiere diferenciar en el futuro
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Directores<span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li class="dropdown-header">Directores</li>
-					<li><a href="<?=base_url()?>director/crear">Nueva</a></li>
-					<li><a href="<?=base_url()?>director/listar">Listar</a></li>
-				</ul>
-			</li>
-			-->
-			
 			
 		</ul>
 		<ul class="nav navbar-nav navbar-right">

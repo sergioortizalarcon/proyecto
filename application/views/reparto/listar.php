@@ -54,14 +54,14 @@
             							<td>
             								<form class="listado" id="idFormEdit<?= $reparto->id ?>" action="<?=base_url()?>reparto/editar" method="post">
             									<input type="hidden" name="id_reparto" value="<?= $reparto -> id?>">
-            									<button class="btn btn-info btn-sm" onclick="function f() {document.getElementById('Borrar<?= $reparto->id ?>').submit();}">
+            									<button class="btn btn-info btn-sm" onclick="function f() {document.getElementById('Editar<?= $reparto->id ?>').submit();}">
             										<i class="fas fa-edit"></i>
             									</button>
             								</form>
             								<form class="listado" id="idFormRemove<?= $reparto->id ?>" action="<?=base_url()?>reparto/borrarPost" method="post">
             									<input type="hidden" name="id_reparto" value="<?= $reparto -> id?>">
             									<input type="hidden" name="v" value="listarTodos">
-            									<button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Editar<?= $reparto->id ?>').submit();}">
+            									<button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Borrar<?= $reparto->id ?>').submit();}">
             										<i class="fas fa-trash"></i>
             									</button>
             								</form>

@@ -1,11 +1,28 @@
 <?php
 class reparto extends CI_Controller {
+	public function comprobarRol(){
+		if (session_status () == PHP_SESSION_NONE) {session_start ();}
+		if (isset ( $_SESSION ['rol'] ) && ($_SESSION['rol'] == 'administrador')) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public function acceso_denegado(){
+		header ("location:".base_url());
+	}
+	
 	public function crear() {
-	    $this->load->model('pais_model');
-	    $this->load->model('profesion_model');
-		$datos['body']['paises'] = $this->pais_model->getTodos();
-		$datos['body']['profesiones'] = $this->profesion_model->getAllActive();
-		enmarcar($this, "reparto/crear", $datos);
+		if ($this -> comprobarRol()) {
+		    $this->load->model('pais_model');
+		    $this->load->model('profesion_model');
+			$datos['body']['paises'] = $this->pais_model->getTodos();
+			$datos['body']['profesiones'] = $this->profesion_model->getAllActive();
+			enmarcar($this, "reparto/crear", $datos);
+		} else {
+			$this->acceso_denegado();
+		}
 	}
 
 	public function crearPost() {
@@ -86,14 +103,18 @@ class reparto extends CI_Controller {
 	}
 
 	public function editar() {
-		$this->load->model ( 'reparto_model' );
-		$this->load->model('pais_model');
-		$this->load->model('profesion_model');
-		$id_reparto = $_POST ['id_reparto'];
-		$datos ['body']['repartos'] = $this->reparto_model->getRepartoPorId ( $id_reparto );
-		$datos['body']['paises'] = $this->pais_model->getTodos();
-		$datos['body']['profesiones'] = $this->profesion_model->getAllActive();
-		enmarcar ( $this, 'reparto/editar', $datos);
+		if ($this -> comprobarRol()) {
+			$this->load->model ( 'reparto_model' );
+			$this->load->model('pais_model');
+			$this->load->model('profesion_model');
+			$id_reparto = $_POST ['id_reparto'];
+			$datos ['body']['repartos'] = $this->reparto_model->getRepartoPorId ( $id_reparto );
+			$datos['body']['paises'] = $this->pais_model->getTodos();
+			$datos['body']['profesiones'] = $this->profesion_model->getAllActive();
+			enmarcar ( $this, 'reparto/editar', $datos);
+		} else {
+			$this->acceso_denegado();
+		}
 	}
 
 	public function editarPost() {
@@ -162,26 +183,26 @@ class reparto extends CI_Controller {
 		enmarcar($this, "reparto/mensaje",$datos);
 	}
 
-	public function borrar() {
-		$datos ['body'] ['accion'] = 'borrar';
-		$datos ['body'] ['filtro'] = '';
-		$this->filtrar ( $datos );
-	}
-
 	public function borrarPost() {
-		$this->load->model ( 'reparto_model' );
-		$id_reparto = $_POST ['id_reparto'];
-		$this->reparto_model->borrar ( $id_reparto );
-
-		$this->listar();
+		if ($this->comprobarRol()) {
+			$this->load->model ( 'reparto_model' );
+			$id_reparto = $_POST ['id_reparto'];
+			$this->reparto_model->borrar ( $id_reparto );
+			$this->listar();
+		} else {
+			$this->acceso_denegado();
+		}
 	}
 	
 	public function activarPost() {
-	    $this->load->model ( 'reparto_model' );
-	    $id_reparto = $_POST ['id_reparto'];
-	    $this->reparto_model->activar ( $id_reparto );
-	    
-	    $this->listar();
+		if ($this->comprobarRol()) {
+		    $this->load->model ( 'reparto_model' );
+		    $id_reparto = $_POST ['id_reparto'];
+		    $this->reparto_model->activar ( $id_reparto );
+		    $this->listar();
+		} else {
+			$this->acceso_denegado();
+		}
 	}
 
 	public function abrirFicha() {

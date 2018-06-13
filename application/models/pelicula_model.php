@@ -43,6 +43,10 @@ class Pelicula_model extends CI_Model {
 	public function getAll() {
 		return R::findAll("peliculas");
 	}
+	
+	public function getAllActive() {
+		return R::findAll("peliculas","estado like ?", ['Activo']);
+	}
 
 	public function getPeliculaPorId ( $id_pelicula ) {
 	    return R::load("peliculas",$id_pelicula);

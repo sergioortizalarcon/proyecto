@@ -261,8 +261,12 @@ class Pelicula extends CI_Controller {
 	
 	public function abrirFicha() {
 	    $this->load->model ( 'pelicula_model' );
+	    $this->load->model('reparto_model');
+		$this->load->model('genero_model');
 	    $id_pelicula = $_GET ['id_pelicula'];
 	    $datos ['body']['peliculas'] = $this->pelicula_model->getPeliculaPorId ( $id_pelicula );
+		$datos['body']['repartos'] = $this->reparto_model->getAllActive();
+		$datos['body']['generos'] = $this->genero_model->getAllActive();
 	    enmarcar($this, "pelicula/ficha",$datos);
 	}
 }

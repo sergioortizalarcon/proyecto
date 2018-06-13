@@ -5,7 +5,6 @@
 				<li><a href="#perfil"><i class="far fa-id-card"></i></a></li>
 				<li><a href="#bio"> <i class="fas fa-book"></i> Biografía </a></li>
 				<li><a href="#filmog"> <i class="fas fa-film"></i> Filmografía </a></li>
-				<li><a href="#noticias"> <i class="far fa-newspaper"></i> Noticia </a></li>
 				<li><a href="#galeria"> <i class="far fa-images"></i> Galería </a></li>
 			</ul>
 		
@@ -13,7 +12,7 @@
 				<div class="col-md-3">
     				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
     					<div class="col-md-12">
-    						<img src="<?= base_url() ?><?= $body['repartos']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
+    						<img src="<?= $body['repartos']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
     					</div>
     					<div class="col-md-12">
     						<h4><?= $body['repartos']->nombre ?> <?= $body['repartos']->apellido1 ?> <?= $body['repartos']->apellido2 ?></h4>
@@ -22,7 +21,11 @@
 				</div>
 				<div class="col-md-9">
     				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
-    					<h5><?= $body['repartos']->cadProfesiones ?></h5>
+    					<h5>
+							<?php foreach($body['profesiones'] as $profesion): ?>
+    							<?= $profesion->nombre ?> ||
+    						<?php endforeach; ?>
+						</h5>
         				<h5>Fecha de nacimiento: <?=$body['repartos']->fechaNacimiento ?></h5>
         				<h5>País de nacimiento: <?= $body['repartos']->paises['nombre'] ?></h5>
     				</div>
@@ -32,8 +35,8 @@
 			<div id="bio">
 				<div class="col-md-3">
     				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
-    					<div class="col-md-12">
-    						<img src="<?= base_url() ?><?= $body['repartos']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
+    					<div class="col-md-12" >
+    						<img src="<?= $body['repartos']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
     					</div>
     					<div class="col-md-12">
     						<h4><?= $body['repartos']->nombre ?> <?= $body['repartos']->apellido1 ?> <?= $body['repartos']->apellido2 ?></h4>
@@ -41,7 +44,7 @@
     				</div>
 				</div>
     			<div class="col-md-9">
-    				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
+    				<div class="row-md-12" style=";height: 100%;margin: 1% 1% 5% 0;">
     					<?= $body['repartos']->biografia ?>
     				</div>
 				</div>
@@ -51,7 +54,7 @@
 				<div class="col-md-3">
 					<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
     					<div class="col-md-12">
-    						<img src="<?= base_url() ?><?= $body['repartos']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
+    						<img src="<?= $body['repartos']->rutaFoto ?>" class="imgPerfilFichaIndividual" />
     					</div>
     					<div class="col-md-12">
     						<h4><?= $body['repartos']->nombre ?> <?= $body['repartos']->apellido1 ?> <?= $body['repartos']->apellido2 ?></h4>
@@ -59,26 +62,18 @@
     				</div>
 				</div>
 				<div class="col-md-9">
-    				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
-    					Lorem ipsum dolor sit amet.Lorem ipsum dolor.
-    				</div>
-				</div>
-			</div>
-			
-			<div id="noticias">
-				<div class="col-md-3">
-    				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
-    					<div class="col-md-12">
-    						<img src="<?= base_url() ?><?= $body['repartos']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
-    					</div>
-    					<div class="col-md-12">
-    						<h4><?= $body['repartos']->nombre ?> <?= $body['repartos']->apellido1 ?> <?= $body['repartos']->apellido2 ?></h4>
-    					</div>
-    				</div>
-				</div>
-    			<div class="col-md-9">
-    				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
-    					Lorem ipsum.
+    				<div class="row-md-9" style="height: 100%;margin: 1% 1% 5% 0;display: inline-grid">
+    					<?php foreach($body['peliculas'] as $pelicula): ?>
+    						<div class="row-md-12" style="border:1px solid black;">
+    							<div class="row-md-3" style="display:inline">
+	    							<img src="<?= $pelicula->ruta_cartel ?>" style="width:100px; height:150px;" />
+	    						</div>
+	    						<div class="row-md-8" style="display:inline">
+		    						<?= $pelicula->titulo ?><br/>
+		    						<?= $pelicula->titulo_original ?>
+	    						</div>
+    						</div>
+    					<?php endforeach; ?>
     				</div>
 				</div>
 			</div>
@@ -87,7 +82,7 @@
 				<div class="col-md-3">
     				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
     					<div class="col-md-12">
-    						<img src="<?= base_url() ?><?= $body['repartos']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
+    						<img src="<?= $body['repartos']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
     					</div>
     					<div class="col-md-12">
     						<h4><?= $body['repartos']->nombre ?> <?= $body['repartos']->apellido1 ?> <?= $body['repartos']->apellido2 ?></h4>

@@ -186,8 +186,12 @@ class reparto extends CI_Controller {
 
 	public function abrirFicha() {
 	    $this->load->model ( 'reparto_model' );
+		$this->load->model('profesion_model');
+		$this->load->model('pelicula_model');
 		$id_reparto = $_GET ['id_reparto'];
 		$datos ['body']['repartos'] = $this->reparto_model->getRepartoPorId ( $id_reparto );
+		$datos['body']['profesiones'] = $this->profesion_model->getAllActive();
+		$datos['body']['peliculas'] = $this->pelicula_model->getAllActive();
 		enmarcar($this, "reparto/ficha",$datos);
 	}
 }

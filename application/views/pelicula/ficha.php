@@ -5,7 +5,6 @@
 				<li><a href="#pricipal"><i class="far fa-id-card"></i></a></li>
 				<li><a href="#sinopsis"> <i class="fas fa-book"></i> Sinopsis </a></li>
 				<li><a href="#reparto"> <i class="fas fa-film"></i> Reparto </a></li>
-				<li><a href="#noticias"> <i class="far fa-newspaper"></i> Noticias </a></li>
 				<li><a href="#galeria"> <i class="far fa-images"></i> Galería </a></li>
 			</ul>
 		
@@ -33,7 +32,7 @@
 				<div class="col-md-3">
     				<div class="rowd" style="float:left; display:inline-grid; height:100%; margin:1% 1% 5% 0;">
     					<div class="col-md-12">
-    						<img src="http://image.tmdb.org/t/p/w92<?= $body['peliculas']->ruta_cartel ?>" style="width:150px; heigth:200px"/>
+    						<img src="<?= $body['peliculas']->ruta_cartel ?>" class="imgPerfilFichaIndividual" />
     					</div>
     					<div class="col-md-12">
     						<h4><?= $body['peliculas']->titulo ?></h4>
@@ -48,12 +47,10 @@
 			</div>
 			
 			<div id="reparto">
-			    <!-- TODO 
 				<div class="col-md-3">
     				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
-    					Meter todas las personas que han trabajado en la pelicula
     					<div class="col-md-12">
-    						<img src="<?= base_url() ?><?= $body['peliculas']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
+    						<img src="<?= $body['peliculas']->ruta_cartel ?>" class="imgPerfilFichaIndividual" />
     					</div>
     					<div class="col-md-12">
     						<h4><?= $body['peliculas']->titulo ?></h4>
@@ -62,26 +59,6 @@
 				</div>
 				<div class="col-md-9">
     				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
-    					<?= $body['repartos']->biografia ?>
-    				</div>
-				</div>
-				-->
-			</div>
-			
-			<div id="noticias">
-				<div class="col-md-3">
-    				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
-    					<div class="col-md-12">
-    						<img src="<?= base_url() ?><?= $body['peliculas']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
-    					</div>
-    					<div class="col-md-12">
-    						<h4><?= $body['peliculas']->titulo ?></h4>
-    					</div>
-    				</div>
-				</div>
-				<div class="col-md-9">
-    				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
-    					Lorem ipsum.
     				</div>
 				</div>
 			</div>
@@ -90,7 +67,7 @@
 				<div class="col-md-3">
     				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
     					<div class="col-md-12">
-    						<img src="<?= base_url() ?><?= $body['repartos']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
+    						<img src="<?= $body['peliculas']->ruta_cartel ?>" class="imgPerfilFichaIndividual" />
     					</div>
     					<div class="col-md-12">
     						<h4><?= $body['peliculas']->titulo ?></h4>
@@ -106,9 +83,7 @@
 				<!-- TEMPORAL añadir imagenes a la galería de cada persona -->
     			<div class="col-md-9">
     				<form action="<?= base_url()?>reparto/insertarImagenes" method="post" enctype="multipart/form-data">
-    					<div class="rowd" id="galeriaFotografica">
-    					
-    					</div>
+    					<div class="rowd" id="galeriaFotografica"></div>
     				</form>
 				</div>
 			</div>

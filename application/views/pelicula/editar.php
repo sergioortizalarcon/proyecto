@@ -163,6 +163,16 @@ function validar() {
 		lenguage = idFormulario.idLenguage.value.trim();
 		lenguage = lenguage.toLowerCase();
 		idFormulario.idLenguage.value = lenguage;
+		var seleccionados = document.forms["idFormulario"].idRepartosElegidos;
+		var cantidad = seleccionados.length;
+		for (i=0;i<cantidad; i++) {
+			seleccionados[i].selected = true;
+		}
+		var seleccionados = document.forms["idFormulario"].idGenerosElegidos;
+		var cantidad = seleccionados.length;
+		for (i=0;i<cantidad; i++) {
+			seleccionados[i].selected = true;
+		}
 		if (idFormulario.idRepartosElegidos.value == "") {
 			if (confirm("¿Quieres guardar el formulario sin reparto?(Se pueden añadir después)")) {
 				idFormulario.submit();

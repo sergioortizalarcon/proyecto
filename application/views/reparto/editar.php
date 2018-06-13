@@ -150,6 +150,11 @@ function validar() {
 		apellido1 = idFormulario.idApellido1.value.trim();
 		apellido2 = apellido2.trim();
 		apellido2 = idFormulario.idApellido2.value.trim();
+		var seleccionados = document.forms["idFormulario"].idProfesionesElegidas;
+		var cantidad = seleccionados.length;
+		for (i=0;i<cantidad; i++) {
+			seleccionados[i].selected = true;
+		}
 		idFormulario.submit();
 	} else {
 		validarNombre();

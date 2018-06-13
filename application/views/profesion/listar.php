@@ -19,90 +19,75 @@
 					</div>
 				</div>
 			</div> 
-	 <?php if($body['profesiones'] != null):?>
-				<div class="table-responsive">
-				<table id="efectoTabla" class="display table table-bordered ">
-					<thead>
-						<tr>
-							<th>Id profesión</th>
-							<th>Nombre</th>
-							<th>Estado</th>
-							<th>Acciones</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php foreach ($body['profesiones'] as $profesion): ?>
-<?php if ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")):?>
+			<?php if($body['profesiones'] != null):?>
+			 	<?php if ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")):?>
+					<div class="table-responsive">
+						<table id="efectoTabla" class="display table table-bordered ">
+							<thead>
+								<tr>
+									<th>Id profesión</th>
+									<th>Nombre</th>
+									<th>Estado</th>
+									<th>Acciones</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach ($body['profesiones'] as $profesion): ?>
+									<?php if($profesion -> estado != 'Inactivo'):?>
+										<tr>
+											<td><?= $profesion->id ?></td>
+											<td><?= $profesion->nombre ?></td>
+											<td><?= $profesion->estado ?></td>
+											<td>
+												<form class="listado" id="idFormedit"
+													action="<?=base_url()?>profesion/editar" method="post">
+													<input type="hidden" name="id_profesion"
+														value="<?= $profesion -> id?>">
+													<button class="btn btn-info btn-sm" class="botones"
+														onclick="function f() {document.getElementById('idFormEdit').submit();}">
+														<i class="fas fa-edit"></i>
+													</button>
+												</form>
+												<form class="listado" id="idFormRemove"
+													action="<?=base_url()?>profesion/borrarPost" method="post">
+													<input type="hidden" name="id_profesion"
+														value="<?= $profesion -> id?>"> <input type="hidden" name="v"
+														value="listarTodos">
+													<button class="btn btn-warning btn-sm" class="botones"
+														onclick="function f() {document.getElementById('idFormRemove').submit();}">
+														<i class="fas fa-trash"></i>
+													</button>
+												</form>
+											</td>
+										</tr>
+									<?php else: ?>
+				    					<tr>
+											<td><?= $profesion->id ?></td>
+											<td><?= $profesion->nombre ?></td>
+											<td><?= $profesion->estado ?></td>
+											<td>
+	            								<form class="listado" id="idFormActive<?= $profesion->id ?>" action="<?=base_url()?>profesion/activarPost" method="post">
+	            									<input type="hidden" name="id_profesion" value="<?= $profesion -> id?>">
+	            									<input type="hidden" name="v" value="listarTodos">
+	            									<button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Activar<?= $profesion->id ?>').submit();}">
+	            										<i class="fas fa-plus-circle"></i>
+	            									</button>
+	            								</form>
+            								</td>
+										</tr>
+									<?php endif; ?>
+							<?php endforeach;?>
+						</tbody>
+						<tfoot>
 							<tr>
-							<td><?= $profesion->id ?></td>
-							<td><?= $profesion->nombre ?></td>
-							<td><?= $profesion->estado ?></td>
-							<td>
-								<form class="listado" id="idFormedit"
-									action="<?=base_url()?>profesion/editar" method="post">
-									<input type="hidden" name="id_profesion"
-										value="<?= $profesion -> id?>">
-									<button class="btn btn-info btn-sm" class="botones"
-										onclick="function f() {document.getElementById('idFormEdit').submit();}">
-										<i class="fas fa-edit"></i>
-									</button>
-								</form>
-								<form class="listado" id="idFormRemove"
-									action="<?=base_url()?>profesion/borrarPost" method="post">
-									<input type="hidden" name="id_profesion"
-										value="<?= $profesion -> id?>"> <input type="hidden" name="v"
-										value="listarTodos">
-									<button class="btn btn-warning btn-sm" class="botones"
-										onclick="function f() {document.getElementById('idFormRemove').submit();}">
-										<i class="fas fa-trash"></i>
-									</button>
-								</form>
-							</td>
-						</tr>
-<?php else: ?>
-			
-							<?php if($profesion->activo != 'Inactivo'):?>
-    							<tr>
-							<td><?= $profesion->id ?></td>
-							<td><?= $profesion->nombre ?></td>
-							<td><?= $profesion->activo ?></td>
-							<td>
-								<form class="listado" id="idFormedit"
-									action="<?=base_url()?>profesion/editar" method="post">
-									<input type="hidden" name="id_profesion"
-										value="<?= $profesion -> id?>">
-									<button class="btn btn-info btn-sm" class="botones"
-										onclick="function f() {document.getElementById('idFormEdit').submit();}">
-										<i class="fas fa-edit"></i>
-									</button>
-								</form>
-								<form class="listado" id="idFormRemove"
-									action="<?=base_url()?>profesion/borrarPost" method="post">
-									<input type="hidden" name="id_profesion"
-										value="<?= $profesion -> id?>"> <input type="hidden" name="v"
-										value="listarTodos">
-									<button class="btn btn-warning btn-sm" class="botones"
-										onclick="function f() {document.getElementById('idFormRemove').submit();}">
-										<i class="fas fa-trash"></i>
-									</button>
-								</form>
-							</td>
-						</tr>
-        				<?php endif;?>	
-							<?php endif;?>
-						<?php endforeach;?>
-						
-				
-				</tbody>
-					<tfoot>
-						<tr>
-							<th>Id profesión</th>
-							<th>Nombre</th>
-							<th>Estado</th>
-							<th>Acciones</th>
-						</tr>
-					</tfoot>
-				</table>
+								<th>Id profesión</th>
+								<th>Nombre</th>
+								<th>Estado</th>
+								<th>Acciones</th>
+							</tr>
+						</tfoot>
+					</table>
+				<?php endif; ?>
 			<?php else: ?>
 				<div class="container" style="width: 90%;">
 					<h2 class="alert alert-info" style="font-size: x-large;">¡ATENCIÓN!</h2>

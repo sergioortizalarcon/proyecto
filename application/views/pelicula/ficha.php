@@ -59,16 +59,37 @@
 				</div>
 				<div class="col-md-9">
     				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
+    					Director:
     					<?php foreach($body['repartos'] as $reparto): ?>
-    						<div class="row-md-12" style="border:1px solid black;">
-    							<div class="row-md-3" style="display:inline">
-	    							<img src="<?= $reparto->ruta_foto ?>" style="width:100px; height:150px;" />
-	    						</div>
-	    						<div class="row-md-8" style="display:inline">
-		    						<?= $reparto->titulo ?><br/>
-		    						<?= $reparto->titulo_original ?>
-	    						</div>
-    						</div>
+    						<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
+								<?php if($prof->nombre == 'Director'):?>
+									<div class="row-md-12" id="<?= $prof->id ?>"onclick="mostrarFicha(this.id);">
+    									<div class="row-md-3" style="display:inline">
+	    									<img src="<?= $reparto->ruta_foto ?>" style="width:100px; height:150px;" />
+	    								</div>
+		    							<div class="row-md-8" style="display:inline">
+				    						<?= $reparto->nombre ?> 
+				    						<?= $reparto->apellido1 ?>
+		    							</div>
+    								</div>
+								<?php endif; ?>
+							<?php endforeach; ?>
+    					<?php endforeach; ?>
+    					Actores:
+    					<?php foreach($body['repartos'] as $reparto): ?>
+    						<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
+								<?php if($prof->nombre == 'Actor'):?>
+									<div class="row-md-12"  id="<?= $prof->id ?>"onclick="mostrarFicha(this.id);">
+    									<div class="row-md-3" style="display:inline">
+	    									<img src="<?= $reparto->ruta_foto ?>" style="width:100px; height:150px;" />
+	    								</div>
+		    							<div class="row-md-8" style="display:inline">
+				    						<?= $reparto->titulo ?><br/>
+				    						<?= $reparto->titulo_original ?>
+		    							</div>
+    								</div>
+								<?php endif; ?>
+							<?php endforeach; ?>
     					<?php endforeach; ?>
     				</div>
 				</div>
@@ -113,4 +134,10 @@
 
 		window.open("","nombreventa na", opciones);
 	}
+
+
+	function mostrarFicha(id) {
+		window.location="<?= base_url() ?>reparto/abrirFicha?id_reparto="+id;
+	}
+	
 </script>

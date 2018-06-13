@@ -62,18 +62,17 @@
     				</div>
 				</div>
 				<div class="col-md-9">
-    				<div class="row-md-9" style="height: 100%;margin: 1% 1% 5% 0;display: inline-grid">
-    					<?php foreach($body['peliculas'] as $pelicula): ?>
-    						<div class="row-md-12" style="border:1px solid black;">
+    				<div class="row-md-9" style="height: 100%;margin: 1% 1% 5% 0;">
+    					<?php foreach ($body['repartos']->sharedPeliculasList as $pel): ?>
+							<div class="row-md-12" id="<?= $pel->id ?>"onclick="mostrarFicha(this.id);" >
     							<div class="row-md-3" style="display:inline">
-	    							<img src="<?= $pelicula->ruta_cartel ?>" style="width:100px; height:150px;" />
+	    							<img src="<?= $pel->ruta_cartel ?>" style="width:100px; height:150px;" />
 	    						</div>
-	    						<div class="row-md-8" style="display:inline">
-		    						<?= $pelicula->titulo ?><br/>
-		    						<?= $pelicula->titulo_original ?>
-	    						</div>
+		    					<div class="row-md-8" style="display:inline">
+				    				<?= $pel->titulo ?> 
+		    					</div>
     						</div>
-    					<?php endforeach; ?>
+						<?php endforeach; ?>
     				</div>
 				</div>
 			</div>
@@ -117,4 +116,9 @@
 
 		window.open("","nombreventa na", opciones);
 	}
+
+	function mostrarFicha(id) {
+		window.location="<?= base_url() ?>pelicula/abrirFicha?id_pelicula="+id;
+	}
+	
 </script>

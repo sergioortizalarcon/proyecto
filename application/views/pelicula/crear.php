@@ -264,8 +264,8 @@ function validar() {
 		lenguage = idFormulario.idLenguage.value.trim();
 		lenguage = lenguage.toLowerCase();
 		idFormulario.idLenguage.value = lenguage;
-		if (idFormulario.idReparto.value == "") {
-			if (confirm("¿Quieres guardar el formulario sin reparto?(Se pueden añadir después)")) {
+		if (idFormulario.idRepartoDirector.value == "" || idFormulario.idRepartoActor.value == "") {
+			if (confirm("¿Quieres guardar el formulario sin actores o director?(Se pueden añadir después)")) {
 				idFormulario.submit();
 			}
 		} else {
@@ -349,16 +349,29 @@ function cancelarRegistro(){
 			</div>
 
 			<div class="form-group">
-				<label for="idReparto">Reparto:</label><span class="obligatorio">*</span>
-				<select multiple class="form-control" id="idReparto" name="reparto[]"
+				<label for="idRepartoDirector">Director/es:</label><span class="obligatorio">*</span>
+				<select multiple class="form-control" id="idRepartoDirector" name="repartoDirector[]"
 				data-toogle="tooltip" data-placement="left" title="Selecciona la persona" size="5">
-					<!--<?php foreach ($repartos->sharedProfesionesList as $prof): ?>
-						<?php if($prof->nombre == 'Actor'):?>
-							<option value="<?=$reparto -> id?>" <?=($reparto -> id == "1")?"selected='selected'":" "?>"><?= $reparto->nombre ?> <?= $reparto->apellido1?></option>
-						<?php endif; ?>
-					<?php endforeach; ?>-->
 					<?php foreach($repartos as $reparto):?>
-						<option value="<?=$reparto -> id?>" <?=($reparto -> id == "1")?"selected='selected'":" "?>"><?= $reparto->nombre ?> <?= $reparto->apellido1?></option>
+						<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
+							<?php if($prof->nombre == 'Director'):?>
+								<option value="<?=$reparto -> id?>" <?=($reparto -> id == "1")?"selected='selected'":" "?>><?= $reparto->nombre ?> <?= $reparto->apellido1?></option>
+							<?php endif; ?>
+						<?php endforeach; ?>
+					<?php endforeach; ?>
+				</select>
+			</div>
+			
+			<div class="form-group">
+				<label for="idRepartoActor">Actor/es:</label><span class="obligatorio">*</span>
+				<select multiple class="form-control" id="idRepartoActor" name="repartoActor[]"
+				data-toogle="tooltip" data-placement="left" title="Selecciona la persona" size="5">
+					<?php foreach($repartos as $reparto):?>
+						<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
+							<?php if($prof->nombre == 'Actor'):?>
+								<option value="<?=$reparto -> id?>" <?=($reparto -> id == "1")?"selected='selected'":" "?>><?= $reparto->nombre ?> <?= $reparto->apellido1?></option>
+							<?php endif; ?>
+						<?php endforeach; ?>
 					<?php endforeach; ?>
 				</select>
 			</div>

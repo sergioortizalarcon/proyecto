@@ -163,7 +163,12 @@ function validar() {
 		lenguage = idFormulario.idLenguage.value.trim();
 		lenguage = lenguage.toLowerCase();
 		idFormulario.idLenguage.value = lenguage;
-		var seleccionados = document.forms["idFormulario"].idRepartosElegidos;
+		var seleccionados = document.forms["idFormulario"].idDirectoresElegidos;
+		var cantidad = seleccionados.length;
+		for (i=0;i<cantidad; i++) {
+			seleccionados[i].selected = true;
+		}
+		var seleccionados = document.forms["idFormulario"].idActoresElegidos;
 		var cantidad = seleccionados.length;
 		for (i=0;i<cantidad; i++) {
 			seleccionados[i].selected = true;
@@ -173,8 +178,8 @@ function validar() {
 		for (i=0;i<cantidad; i++) {
 			seleccionados[i].selected = true;
 		}
-		if (idFormulario.idRepartosElegidos.value == "") {
-			if (confirm("¿Quieres guardar el formulario sin reparto?(Se pueden añadir después)")) {
+		if (idFormulario.idDirectoresElegidos.value == "" || idFormulario.idActoresElegidos.value == "") {
+			if (confirm("¿Quieres guardar el formulario sin actores o director?(Se pueden añadir después)")) {
 				idFormulario.submit();
 			}
 		} else {
@@ -208,15 +213,27 @@ function borrarGenero(value,id) {
 	seleccionado.remove(seleccionado.selectedIndex);
 }
 
-function anadirReparto(value,id) {
-	document.getElementById("idRepartosElegidos").innerHTML += "<option onclick='borrarReparto("+value+","+id+");' selected id='"+id+"' value='"+value+"' selected>"+id+"</option>";
-	var seleccionado = document.getElementById("idRepartosTodos");
+function anadirRepartoActor(value,id) {
+	document.getElementById("idActoresElegidos").innerHTML += "<option onclick='borrarRepartoActor("+value+","+id+");' selected id='"+id+"' value='"+value+"' selected>"+id+"</option>";
+	var seleccionado = document.getElementById("idActoresTodos");
 	seleccionado.remove(seleccionado.selectedIndex);
 }
 
-function borrarReparto(value,id) {
-	document.getElementById("idRepartosTodos").innerHTML += "<option onclick='anadirReparto(this."+value+",this."+id+");' id='"+id+"' value='"+value+"'>"+id+"</option>";
-	var seleccionado = document.getElementById("idRepartosElegidos");
+function borrarRepartoActor(value,id) {
+	document.getElementById("idActoresTodos").innerHTML += "<option onclick='anadirRepartoActor(this."+value+",this."+id+");' id='"+id+"' value='"+value+"'>"+id+"</option>";
+	var seleccionado = document.getElementById("idActoresElegidos");
+	seleccionado.remove(seleccionado.selectedIndex);
+}
+
+function anadirRepartoDirector(value,id) {
+	document.getElementById("idDirectoresElegidos").innerHTML += "<option onclick='borrarRepartoDirector("+value+","+id+");' selected id='"+id+"' value='"+value+"' selected>"+id+"</option>";
+	var seleccionado = document.getElementById("idDirectoresTodos");
+	seleccionado.remove(seleccionado.selectedIndex);
+}
+
+function borrarRepartoDirector(value,id) {
+	document.getElementById("idDirectoresTodos").innerHTML += "<option onclick='anadirRepartoDirector(this."+value+",this."+id+");' id='"+id+"' value='"+value+"'>"+id+"</option>";
+	var seleccionado = document.getElementById("idDirectoresElegidos");
 	seleccionado.remove(seleccionado.selectedIndex);
 }
 </script>
@@ -277,22 +294,53 @@ function borrarReparto(value,id) {
 
 			<div class="row">
                 <div class="form-group col-md-6">
-                    <label for="idRepartosTodos">Repartos todos:</label>
-                    <select class="form-control" id="idRepartosTodos" name="reparto[]" multiple size="5">
+                    <label for="idDirectoresTodos">Directores todos:</label>
+                    <select class="form-control" id="idDirectoresTodos" multiple size="5">
                         <?php foreach($body['repartos'] as $reparto): ?>
-                        	<option onclick="anadirReparto(this.value, this.id);" id="<?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>" value="<?= $reparto->id ?>" >
-                        		<?= $reparto->nombre ?>&nbsp<?= $reparto->apellido1 ?>&nbsp<?= $reparto->apellido2 ?>
+                        	<option onclick="anadirRepartoDirector(this.value, this.id);" id="<?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>" value="<?= $reparto->id ?>" >
+                        		<?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>
                         	</option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="idRepartosElegidos">Repartos elegidos:</label>
-                    <select class="form-control" id="idRepartosElegidos" name="reparto[]" multiple size="5">
-                        <?php foreach ($body['peliculas']->sharedRepartosList as $rep): ?>
-                        	<option selected id="<?= $rep->nombre ?> <?= $rep->apellido1 ?> <?= $rep->apellido2 ?>" value="<?= $rep->id ?>" onclick="borrarReparto(this.value, this.id)">
-                            	<?= $rep->nombre ?> <?= $rep->apellido1 ?> <?= $rep->apellido2 ?>
-                            </option>
+                    <label for="idDirectoresElegidos">Directores elegidos:</label>
+                    <select class="form-control" id="idDirectoresElegidos" name="repartoDirector[]" multiple size="5">
+                        <?php foreach($body['repartos'] as $reparto):?>
+							<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
+								<?php if($prof->nombre == 'Director'):?>
+									<option onclick="borrarRepartoDirector(this.value, this.id);" value="<?=$reparto -> id?>" <?=($reparto -> id == "1")?"selected='selected'":" "?>>
+										<?= $reparto->nombre ?> <?= $reparto->apellido1?>
+									</option>
+								<?php endif; ?>
+							<?php endforeach; ?>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
+			<div class="row">
+                <div class="form-group col-md-6">
+                    <label for="idActoresTodos">Actores todos:</label>
+                    <select class="form-control" id="idActoresTodos" multiple size="5">
+                        <?php foreach($body['repartos'] as $reparto): ?>
+                        	<option onclick="anadirRepartoActor(this.value, this.id);" id="<?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>" value="<?= $reparto->id ?>" >
+                        		<?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>
+                        	</option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="idActoresElegidos">Actores elegidos:</label>
+                    <select class="form-control" id="idActoresElegidos" name="repartoActor[]" multiple size="5">
+                        <?php foreach($body['repartos'] as $reparto):?>
+							<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
+								<?php if($prof->nombre == 'Actor'):?>
+									<option onclick="borrarRepartoActor(this.value, this.id);"  value="<?=$reparto -> id?>" <?=($reparto -> id == "1")?"selected='selected'":" "?>>
+										<?= $reparto->nombre ?> <?= $reparto->apellido1?>
+									</option>
+								<?php endif; ?>
+							<?php endforeach; ?>
                         <?php endforeach; ?>
                     </select>
                 </div>

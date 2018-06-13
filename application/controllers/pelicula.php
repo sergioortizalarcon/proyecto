@@ -21,7 +21,8 @@ class Pelicula extends CI_Controller {
 		$popularity = isset($_POST['popularity'])?$_POST['popularity']:null;
 		$adulto = isset($_POST['adulto'])?$_POST['adulto']:"No";
 		//Reparto(Array con nombres)
-		$repartos = isset($_POST['reparto'])?$_POST['reparto']:null;
+		$repartosDirector = isset($_POST['repartoDirector'])?$_POST['repartoDirector']:null;
+		$repartosActor = isset($_POST['repartoActor'])?$_POST['repartoActor']:null;
 		$generos = isset($_POST['genero'])?$_POST['genero']:null;
 		$sinopsis = isset($_POST['sinopsis'])?$_POST['sinopsis']:null;
 		$estado = isset($_POST['estado'])?$_POST['estado']:'Inactivo';
@@ -39,12 +40,20 @@ class Pelicula extends CI_Controller {
     		$cadGeneros = substr($cadGeneros, 0, -1);
 		}
 		
-		if ($repartos!="") {
-    		$cadRepartos = "";
-    		for ($i=0; $i<count($repartos);$i++) {
-    		    $cadRepartos = $repartos[$i].",".$cadRepartos;
+		if ($repartosDirector!="") {
+    		$cadRepartosDirector = "";
+    		for ($i=0; $i<count($repartosDirector);$i++) {
+    		    $cadRepartosDirector = $repartosDirector[$i].",".$cadRepartosDirector;
     		}
-    		$cadRepartos = substr($cadRepartos, 0, -1);
+    		$cadRepartosDirector = substr($cadRepartosDirector, 0, -1);
+		}
+		
+		if ($repartosActor!="") {
+			$cadRepartosActor = "";
+			for ($i=0; $i<count($repartosActor);$i++) {
+				$cadRepartosActor = $repartosActor[$i].",".$cadRepartosActor;
+			}
+			$cadRepartosActor = substr($cadRepartosActor, 0, -1);
 		}
 		
 		if (is_uploaded_file($_FILES['fotoPoster']['tmp_name'])) {
@@ -70,7 +79,7 @@ class Pelicula extends CI_Controller {
 		    $foto = "assets/img/poster/default.png";
 		}
 		try {
-		    $this->pelicula_model->createPelicula ( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartos, $cadGeneros, $sinopsis, $foto, $estado);
+		    $this->pelicula_model->createPelicula ( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartosDirector, $cadRepartosActor, $cadGeneros, $sinopsis, $foto, $estado);
 			header ("location:".base_url()."pelicula/crearOk");
 		}
 		catch (Exception $e) {

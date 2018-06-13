@@ -1,7 +1,7 @@
 <?php
 class Pelicula_model extends CI_Model {
 
-    public function createPelicula ( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartos, $cadGeneros, $sinopsis, $foto, $estado) {
+    public function createPelicula ( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartosDirector, $cadRepartosActor, $cadGeneros, $sinopsis, $foto, $estado) {
         $pelicula = R::find('peliculas', 'titulo like ? and tituloOriginal like ? and fechaLanzamiento like ?', [$titulo,$tituloOriginal,$fechaLanzamiento]);
         if ($pelicula == null) {
             $pelicula = R::dispense ( 'peliculas' );
@@ -20,11 +20,17 @@ class Pelicula_model extends CI_Model {
                 $genero -> sharedPeliculasList[] = $pelicula;
                 R::store($genero);
             }
-            $repartos = explode(",",$cadRepartos);
-            for ($i=0;$i<count($repartos);$i++) {
-                $reparto = R::load("repartos",$repartos[$i]);
-                $reparto -> sharedPeliculasList[] = $pelicula;
-                R::store($reparto);
+            $repartosDirector = explode(",",$cadRepartosDirector);
+            for ($i=0;$i<count($repartosDirector);$i++) {
+                $repartoDirector = R::load("repartos",$repartosDirector[$i]);
+                $repartoDirector -> sharedPeliculasList[] = $pelicula;
+                R::store($repartoDirector);
+            }
+            $repartosActor = explode(",",$cadRepartosActor);
+            for ($i=0;$i<count($repartosActor);$i++) {
+            	$repartoActor = R::load("repartos",$repartosActor[$i]);
+            	$repartoActor -> sharedPeliculasList[] = $pelicula;
+            	R::store($repartoActor);
             }
         } else {
             throw new Exception("Película duplicada");

@@ -2,7 +2,7 @@
 	<section class="content">
 		<div id="tabs" style="height:500px;">
 			<ul>
-				<li><a href="#pricipal"><i class="far fa-id-card"></i></a></li>
+				<li><a href="#principal"><i class="far fa-id-card"></i></a></li>
 				<li><a href="#sinopsis"> <i class="fas fa-book"></i> Sinopsis </a></li>
 				<li><a href="#reparto"> <i class="fas fa-film"></i> Reparto </a></li>
 				<li><a href="#galeria"> <i class="far fa-images"></i> Galería </a></li>
@@ -59,6 +59,17 @@
 				</div>
 				<div class="col-md-9">
     				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
+    					<?php foreach($body['repartos'] as $reparto): ?>
+    						<div class="row-md-12" style="border:1px solid black;">
+    							<div class="row-md-3" style="display:inline">
+	    							<img src="<?= $reparto->ruta_foto ?>" style="width:100px; height:150px;" />
+	    						</div>
+	    						<div class="row-md-8" style="display:inline">
+		    						<?= $reparto->titulo ?><br/>
+		    						<?= $reparto->titulo_original ?>
+	    						</div>
+    						</div>
+    					<?php endforeach; ?>
     				</div>
 				</div>
 			</div>

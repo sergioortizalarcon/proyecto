@@ -117,7 +117,7 @@ function validarTitulo() {
 	titulo = idFormulario.idTitulo.value.trim();
 	if (titulo != "") {
 
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ0-9]{2,40}$/;
+		var expReg = /^[a-zA-Z-: ñÑáéíóúÁÉÍÓÚ0-9]{2,40}$/;
 		if (expReg.test(titulo)){
 			tituloCorrecto = true;
 			correcto=true;
@@ -147,7 +147,7 @@ function validarTituloOriginal() {
 	tituloOriginal = idFormulario.idTituloOriginal.value.trim();
 	if (tituloOriginal != "") {
 
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ0-9]{2,40}$/;
+		var expReg = /^[a-zA-Z-: ñÑáéíóúÁÉÍÓÚ0-9]{2,40}$/;
 		if (expReg.test(tituloOriginal)){
 			tituloOriginalCorrecto = true;
 			correcto=true;

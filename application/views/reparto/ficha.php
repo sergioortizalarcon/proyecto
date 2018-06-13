@@ -9,7 +9,7 @@
 			</ul>
 		
 			<div id="perfil"> 
-				<div class="col-md-3">
+				<div class="col-md-3" style="padding-top:20px;">
     				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
     					<div class="col-md-12">
     						<img src="<?= $body['repartos']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
@@ -19,7 +19,7 @@
     					</div>
     				</div>
 				</div>
-				<div class="col-md-9">
+				<div class="col-md-9" style="padding-top:20px;">
     				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
     					<h5>
 							<?php foreach($body['profesiones'] as $profesion): ?>
@@ -33,7 +33,7 @@
 			</div>
 			
 			<div id="bio">
-				<div class="col-md-3">
+				<div class="col-md-3" style="padding-top:20px;">
     				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
     					<div class="col-md-12" >
     						<img src="<?= $body['repartos']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
@@ -43,7 +43,7 @@
     					</div>
     				</div>
 				</div>
-    			<div class="col-md-9">
+    			<div class="col-md-9" style="padding-top:20px;">
     				<div class="row-md-12" style=";height: 100%;margin: 1% 1% 5% 0;">
     					<?= $body['repartos']->biografia ?>
     				</div>
@@ -51,7 +51,7 @@
 			</div>
 			
 			<div id="filmog">
-				<div class="col-md-3">
+				<div class="col-md-3" style="padding-top:20px;">
 					<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
     					<div class="col-md-12">
     						<img src="<?= $body['repartos']->rutaFoto ?>" class="imgPerfilFichaIndividual" />
@@ -62,7 +62,8 @@
     				</div>
 				</div>
 				<div class="col-md-9">
-    				<div class="row-md-9" style="height: 100%;margin: 1% 1% 5% 0;">
+    				<div class="col-md-6" style="height: 100%;margin: 1% 1% 5% 0;">
+    					<h4>Películas en las que participa:</h4>
     					<?php foreach ($body['repartos']->sharedPeliculasList as $pel): ?>
 							<div class="row-md-12" id="<?= $pel->id ?>"onclick="mostrarFicha(this.id);" >
     							<div class="row-md-3" style="display:inline">
@@ -78,7 +79,7 @@
 			</div>
 			
 			<div id="galeria">
-				<div class="col-md-3">
+				<div class="col-md-3" style="padding-top:20px;">
     				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
     					<div class="col-md-12">
     						<img src="<?= $body['repartos']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
@@ -95,7 +96,7 @@
     				</div>
 				</div>
 				<!-- TEMPORAL añadir imagenes a la galería de cada persona -->
-    			<div class="col-md-9">
+    			<div class="col-md-9" style="padding-top:20px;">
     				<form action="<?= base_url()?>reparto/insertarImagenes" method="post" enctype="multipart/form-data">
     					<div class="rowd" id="galeriaFotografica"></div>
     				</form>

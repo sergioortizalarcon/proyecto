@@ -253,7 +253,7 @@ function borrarRepartoDirector(value,id) {
 			
 			<div class="form-group">
 				<label for="idAdulto">¿Adulto? </label>
-				<input type="checkbox" id="idAdulto" value="Si" name="adulto" />
+				<input type="checkbox" id="idAdulto" value="Si" name="adulto" <?= ($body['peliculas'] -> adulto == "Si")?"checked='checked'":" "?>/>
 			</div>
 			
 			<div class="form-group">
@@ -396,7 +396,7 @@ function borrarRepartoDirector(value,id) {
 
 			<div class="nav navbar-form navbar-right">
 				<input type="button" class="btn btn-default" id="idCancelar" name="cancelar" value="Cancelar registro" onclick="cancelarRegistro();" />
-				<input type="button" class="btn btn-default" id="idRegistro" name="registrarPelicula" value="Registrar película" onclick="validar();" />
+				<input type="button" class="btn btn-default" id="idRegistro" name="registrarPelicula" value="Editar película" onclick="validar();" />
 			</div>
 		</fieldset>
 	</form>

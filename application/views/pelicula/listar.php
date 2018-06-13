@@ -50,7 +50,7 @@
 	    	                        <?php if($pelicula -> estado != 'Inactivo'):?>
 	        	                        <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
 	            	                        <td><?=$pelicula->id?></td>
-	                	                    <td><img src="<?= $pelicula->ruta_cartel ?>"></td>
+	                	                    <td><img src="<?= $pelicula->ruta_cartel ?>" class="imgFotoListado"></td>
 	                        	            <td><?= $pelicula->titulo ?></td>
 	                                    	<td><?= $pelicula->titulo_original ?></td>
 	                                    	<td><?= $pelicula->fecha_lanzamiento ?></td>
@@ -77,7 +77,7 @@
 	                                <?php else: ?>
 	                                    <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
 	                                        <td><?=$pelicula->id?></td>
-	                	                    <td><img src="<?= $pelicula->ruta_cartel ?>"></td>
+	                	                    <td><img src="<?= $pelicula->ruta_cartel ?>" class="imgFotoListado"></td>
 	                        	            <td><?= $pelicula->titulo ?></td>
 	                                    	<td><?= $pelicula->titulo_original ?></td>
 	                                    	<td><?= $pelicula->fecha_lanzamiento ?></td>
@@ -87,7 +87,7 @@
 	                                        <td><?= $pelicula->estado ?>
 	                                        <td>
 	                                            <form class="listado" id="idFormActive<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/activarPost" method="post">
-	                                                <input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>">
+	                                                <input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>" height="80" width="70">
 	                                                <input type="hidden" name="v" value="listarTodos">
 	                                                <button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Activar<?= $pelicula->id ?>').submit();}">
 	                                                    <i class="fas fa-plus-circle"></i>
@@ -132,7 +132,7 @@
 	                    		<?php foreach ($body['peliculas'] as $pelicula): ?>
 	    	                        <?php if($pelicula -> estado != 'Inactivo'):?>
 	        	                        <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
-	                	                    <td><img src="<?= $pelicula->ruta_cartel ?>"></td>
+	                	                    <td><img src="<?= $pelicula->ruta_cartel ?>" class="imgFotoListado"></td>
 	                                    	<td><?= $pelicula->titulo ?></td>
 	                                    	<td><?= $pelicula->titulo_original ?></td>
 	                                    	<td><?= $pelicula->fecha_lanzamiento ?></td>

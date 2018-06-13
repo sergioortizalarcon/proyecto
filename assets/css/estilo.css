@@ -134,3 +134,14 @@ a.icono-tw{
 	 height:200px !important;
 	 width:150px !important;
 }
+
+.imgFotoListado {
+	 margin:5px;
+	 height:100px;
+	 width:90;
+}
+
+.divPestanas {
+	 height:500px;
+	 overflow:scroll;
+}

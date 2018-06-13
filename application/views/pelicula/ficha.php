@@ -1,6 +1,6 @@
 <div class="container content-wrapper">
 	<section class="content">
-		<div id="tabs" style="height:500px;">
+		<div id="tabs" class="divPestanas">
 			<ul>
 				<li><a href="#principal"><i class="far fa-id-card"></i></a></li>
 				<li><a href="#sinopsis"> <i class="fas fa-book"></i> Sinopsis </a></li>
@@ -12,7 +12,7 @@
 				<div class="col-md-3" style="padding-top:20px;">
     				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
     					<div class="col-md-12">
-    						<img src="<?= $body['peliculas']->ruta_cartel ?>" style="width:150px; heigth:200px"/>
+    						<img src="<?= $body['peliculas']->ruta_cartel ?>" class="imgPerfilFichaIndividual" />
     					</div>
     					<div class="col-md-12">
     						<h4><?= $body['peliculas']->titulo ?></h4>
@@ -23,13 +23,18 @@
     				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
         				<h5>Título original: <?=$body['peliculas']->titulo_original ?></h5>
         				<h5>Fecha de estreno: <?=$body['peliculas']->fecha_lanzamiento ?></h5>
+        				Géneros: 
+    					<?php foreach ($body['peliculas']->sharedGenerosList as $gen): ?>
+							 <?= $gen->nombre ?>
+						<?php endforeach; ?>
+						<h5>¿Todos los públicos? <?= $body['peliculas']->adulto ?></h5>
         				<h5>Idioma original: <?= $body['peliculas']->original_language ?></h5>
     				</div>
 				</div>
 			</div>
 			
 			<div id="sinopsis">
-				<div class="col-md-3">
+				<div class="col-md-3" style="padding-top:20px;">
     				<div class="rowd" style="float:left; display:inline-grid; height:100%; margin:1% 1% 5% 0;">
     					<div class="col-md-12">
     						<img src="<?= $body['peliculas']->ruta_cartel ?>" class="imgPerfilFichaIndividual" />
@@ -39,7 +44,7 @@
     					</div>
     				</div>
 				</div>
-				<div class="col-md-9">
+				<div class="col-md-9" style="padding-top:20px;">
     				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
     					<?= $body['peliculas']->sinopsis ?>
     				</div>
@@ -47,7 +52,7 @@
 			</div>
 			
 			<div id="reparto">
-				<div class="col-md-3">
+				<div class="col-md-3" style="padding-top:20px;">
     				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
     					<div class="col-md-12">
     						<img src="<?= $body['peliculas']->ruta_cartel ?>" class="imgPerfilFichaIndividual" />
@@ -59,11 +64,11 @@
 				</div>
 				<div class="col-md-9">
     				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
-    					Director:
+    					<h4>Director:</h4>
     					<?php foreach($body['repartos'] as $reparto): ?>
     						<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
 								<?php if($prof->nombre == 'Director'):?>
-									<div class="row-md-12" id="<?= $prof->id ?>"onclick="mostrarFicha(this.id);">
+									<div class="col-md-6" id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);">
     									<div class="row-md-3" style="display:inline">
 	    									<img src="<?= $reparto->ruta_foto ?>" style="width:100px; height:150px;" />
 	    								</div>
@@ -75,17 +80,17 @@
 								<?php endif; ?>
 							<?php endforeach; ?>
     					<?php endforeach; ?>
-    					Actores:
+    					<h4>Actores:</h4>
     					<?php foreach($body['repartos'] as $reparto): ?>
     						<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
 								<?php if($prof->nombre == 'Actor'):?>
-									<div class="row-md-12"  id="<?= $prof->id ?>"onclick="mostrarFicha(this.id);">
+									<div class="col-md-6" id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);">
     									<div class="row-md-3" style="display:inline">
 	    									<img src="<?= $reparto->ruta_foto ?>" style="width:100px; height:150px;" />
 	    								</div>
 		    							<div class="row-md-8" style="display:inline">
-				    						<?= $reparto->titulo ?><br/>
-				    						<?= $reparto->titulo_original ?>
+				    						<?= $reparto->nombre ?>
+				    						<?= $reparto->apellido1 ?>
 		    							</div>
     								</div>
 								<?php endif; ?>
@@ -96,7 +101,7 @@
 			</div>
 			
 			<div id="galeria">
-				<div class="col-md-3">
+				<div class="col-md-3" style="padding-top:20px;">
     				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
     					<div class="col-md-12">
     						<img src="<?= $body['peliculas']->ruta_cartel ?>" class="imgPerfilFichaIndividual" />
@@ -113,7 +118,7 @@
     				</div>
 				</div>
 				<!-- TEMPORAL añadir imagenes a la galería de cada persona -->
-    			<div class="col-md-9">
+    			<div class="col-md-9" style="padding-top:20px;">
     				<form action="<?= base_url()?>reparto/insertarImagenes" method="post" enctype="multipart/form-data">
     					<div class="rowd" id="galeriaFotografica"></div>
     				</form>

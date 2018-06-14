@@ -1,5 +1,8 @@
 <?php
-
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require 'vendor/autoload.php';
 class Administrador extends CI_Controller {
 
 	public function comprobarRol(){
@@ -225,7 +228,7 @@ class Administrador extends CI_Controller {
 	}
 	
 	public function resetPasswordUser() {
-		if ($this->comprobarRol()) {
+		// if ($this->comprobarRol()) {
 			$this-> load -> model("administrador_model");
 			$correo = isset($_POST['correo'])?$_POST['correo']:null;
 			$tokenAdm = isset($_POST["tken"])?1:null;
@@ -241,9 +244,9 @@ class Administrador extends CI_Controller {
 				$datos['mensaje']['nivel'] = 'error';
 				enmarcar($this,'templates_admin/forgotPassword', $datos);
 			}
-		} else {
-			$this->acceso_denegado();
-		}
+		// } else {
+		// 	$this->acceso_denegado();
+		// }
 	}
 
 
@@ -255,12 +258,12 @@ class Administrador extends CI_Controller {
 //Para usar esto hay q instalar phpmailer ( con composer en la raiz del proyecto)
 	public function enviarCorreoAUsuario ($correo) {
 		$the_subject = "Primera prueba mailer";
-		$email_user = "usuariodosfilms@gmail.com";
-		$email_word = "usuarioDosFilm";
-		$cuerpoMensaje = 'Probando etiquetas';
-		$cuerpoMensaje .="<h1>Hola Mundo</h1>";
-		$cuerpoMensaje .="<p>Acepta es pero entre etiquetas, no tildes</p>";
-		$cuerpoMensaje .="Fecha y Hora: ".date("d-m-Y h:i:s");
+			$email_user = "usuariodosfilms@gmail.com";
+			$email_word = "usuarioDosFilm";
+			$cuerpoMensaje = 'Probando etiquetas';
+			$cuerpoMensaje .="<h1>Hola Mundo</h1>";
+			$cuerpoMensaje .="<p>Acepta es pero entre etiquetas, no tildes</p>";
+			$cuerpoMensaje .="Fecha y Hora: ".date("d-m-Y h:i:s");
 
 		$mail = new PHPMailer(true); 
 		try {

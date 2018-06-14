@@ -19,7 +19,7 @@ function enviarMail(){
 }
 </script>
 
-<form id="idFormulario" name="idFormulario" action="<?= base_url()?>administrador/recuperarPost" method="post">
+<form id="idFormulario" name="idFormulario" action="<?= base_url()?>administrador/resetPasswordUser" method="post">
 <fieldset>
 <legend>Restablecer contraseña.</legend>
 	<div class="form-group">

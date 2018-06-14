@@ -1,9 +1,9 @@
 <?php
 
-//use PHPMailer\PHPMailer\SMTP;
-//use PHPMailer\PHPMailer\PHPMailer;
-//use PHPMailer\PHPMailer\Exception;
-//require 'vendor/autoload.php';
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\src\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require 'vendor/autoload.php';
 
 class usuario extends CI_Controller {
 	
@@ -20,10 +20,10 @@ class usuario extends CI_Controller {
 		$alias = isset($_POST["alias"])?$_POST["alias"]:null;
 		$comprobacion = $this -> usuario_model -> comprobar_alias($alias);
 		if ($comprobacion) {
-			return true;
-			} else {
-			return false;
-			}
+			echo 'true';
+		} else {
+			echo 'false';
+		}
 	}
 
 	public function comprobarDispCorreo() {
@@ -31,12 +31,10 @@ class usuario extends CI_Controller {
 		$correo = isset($_POST["correo"])?$_POST["correo"]:null;
 		$comprobacion = $this -> usuario_model -> comprobar_email($correo);
 		if ($comprobacion) {
-			//editar -> si no existe no devuelve nada por lo q si es correcto no devuelve nada y se evalua eso
-			$datos['mensaje']['texto'] = "Mail ok";
-			$datos['mensaje']['nivel'] = 'ok';
-			} else {
-			return false;
-			}
+			echo 'true';
+		} else {
+			echo 'false';
+		}
 	}
 
 	/* 1.- */

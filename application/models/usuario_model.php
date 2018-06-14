@@ -14,9 +14,10 @@ class usuario_model extends CI_Model {
 		}
 	}
 
-	public function comprobar_alias($alias){
-		$aliasD = R::findOne("usuarios","alias=?",[$alias]);
+	public function comprobar_alias($alias_user){
+		$aliasD = R::findOne("usuarios","alias=?",[$alias_user]);
 		if ($aliasD == null) {
+			R::close();
 			return true;
 		} else {
 			return false;

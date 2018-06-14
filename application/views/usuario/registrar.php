@@ -5,6 +5,12 @@
 		xhr = new XMLHttpRequest();
 	}
 
+var val=false;
+var returned_data=false;
+var performSomeAction = function(returned_data) {
+    val = returned_data;
+}
+
 
 function cancelarRegistro(){
 	var cancelarRegistro = confirm("¿Realmente quieres cancelar el registo?");
@@ -16,14 +22,11 @@ function cancelarRegistro(){
 
 function comprobarAlias(alias) {
 	xhr.open("POST", "<?=base_url()?>usuario/comprobarDispAlias", true);
-	xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xhr.send("alias="+alias);
 	xhr.onreadystatechange = function(){
 		if (xhr.readyState==4 && xhr.status==200) {
-			document.getElementById("aliasEx").innerHTML =xhr.responseText;
-			if(xhr.responseText == false){
-				console.log(xht.responseText);
+			if(xhr.responseText == 'true'){
 				idFormulario.idAlias.style.borderColor="blue";
 				document.getElementById("aAlias").style.display="none";
 				document.getElementById("aliasEx").style.display="none";
@@ -34,19 +37,18 @@ function comprobarAlias(alias) {
 	}
 }
 
-function comprobarCorreo(correo) {
+function comprobarCorreo(correo,callback) {
 	xhr.open("POST", "<?=base_url()?>usuario/comprobarDispCorreo", true);
-	xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xhr.send("correo="+correo);
 	xhr.onreadystatechange = function(){
 		if (xhr.readyState==4 && xhr.status==200) {
-			document.getElementById("mailAviso").innerHTML =xhr.responseText;
-			//Si no recibe nada es que esta disponible y cambia los estilos del input
-			if(!xhr.responseText){
+			if(xhr.responseText == 'true'){
 				idFormulario.idEmail.style.borderColor="blue";
 		        document.getElementById("aEmail").style.display="none";
 				document.getElementById("mailAviso").style.display="none";
+				 returned = true;
+            	callback.apply(this,[returned]);
 			} else {
 				document.getElementById("mailAviso").style.display="initial";
 			}
@@ -55,15 +57,16 @@ function comprobarCorreo(correo) {
 }
 
 function validarCorreo() {
-	var correo = document.getElementById("idEmail").value;
+	var correo = document.getElementById("idEmail").value.trim();
 		if (correo!="") {
 		expresion =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,4})$/i;
 
 		    if (expresion.test(correo)) {
-			//Realiza la accion del sgte if pero muestra la consola de su correspondiente else.
-		    	if (comprobarCorreo(correo)) {
+			comprobarCorreo(correo,performSomeAction);
+		    	if (val) {
 		        	idFormulario.idEmail.style.borderColor="blue";
 		        	document.getElementById("aEmail").style.display="none";
+		        	val=false;
 		        	return true;
 		        } else {
 					idFormulario.idEmail.style.borderColor="red";
@@ -85,32 +88,33 @@ function validarCorreo() {
 function verificarCorreo() {
 	var verifCorreo = document.getElementById("idEmailV").value;
 	var primerCorreo = document.getElementById("idEmail").value;
-			if (verifCorreo.trim() == primerCorreo.trim()) {
-		       	idFormulario.idEmailV.style.borderColor="blue";
-		       	document.getElementById("aEmailDos").style.display="none";
-				return true;
-		   	} else {
-		   		idFormulario.idEmailV.style.borderColor="red";
-				document.getElementById("aEmailDos").style.display="initial";
-			   	return false;
-			}
+		if (verifCorreo.trim() == primerCorreo.trim()) {
+	       	idFormulario.idEmailV.style.borderColor="blue";
+	       	document.getElementById("aEmailDos").style.display="none";
+			return true;
+	   	} else {
+	   		idFormulario.idEmailV.style.borderColor="red";
+			document.getElementById("aEmailDos").style.display="initial";
+		   	return false;
+		}
 }
 
 function validarAlias() {
-	var alias = document.getElementById("idAlias").value;
+	var alias = document.getElementById("idAlias").value.trim();
 		if(alias!="") {
 			expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑçÇ\d]{0,4}[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑçÇ]{1,4}[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑçÇ\d]{1,6}$/;
 			if (expresion.test(alias)) {
-				if (comprobarAlias(alias)) {
+				comprobarAlias(alias,performSomeAction);
+				if (val) {
+					val=false;
 					idFormulario.idAlias.style.borderColor="blue";
 					document.getElementById("aAlias").style.display="none";
-
+					return true;
 				} else {
 					idFormulario.idAlias.style.borderColor="red";
 					document.getElementById("aAlias").style.display="initial";
 				    return false;
 				}
-				return true;
 			} else {
 				idFormulario.idAlias.style.borderColor="red";
 				document.getElementById("aAlias").style.display="initial";
@@ -174,7 +178,7 @@ function validarAlias() {
 
 
 	function validarApeDos() {
-		var ape2 = document.getElementById("idApe2").value.trim();
+		var ape2 = document.getElementById("idApe2").value;
 		if (ape2!=""){
 			expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{0,15}$/;
 			if (expresion.test(ape2)) {
@@ -239,7 +243,6 @@ function validate_fecha(fecha){
 
     if(fecha.search(patron)==0){
         var values=fecha.split("/");
-        console.log("entro: "+values);
         function isValidDate(day,month,year){
 		    var dteDate;
 		    //En javascript mes empieza en la posicion 0 y termina en la 11 por esta razon, tenemos que restar 1 al mes
@@ -263,14 +266,12 @@ function validate_fecha(fecha){
 function calcularEdad() {
 	fecha = document.getElementById("idFecha").value;
 	if(fecha!=""){
-		console.log(fecha)
 	    if(validate_fecha(fecha)==true) {
 	        // Si la fecha es correcta, calculamos la edad
 	        var values=fecha.split("/");
 	        var dia = values[2];
 	        var mes = values[1];
 	        var ano = values[0];
-	        console.log(dia,mes,ano)
 	        // cogemos los valores actuales
 	        var fecha_hoy = new Date();
 	        var ahora_ano = fecha_hoy.getYear();
@@ -339,7 +340,7 @@ function calcularEdad() {
 */
 
 function validar() {
-	console.log("a"+idFormulario.idFecha.value)
+	validarApeDos();
 	if (validarAlias() && validarNombre() && validarApeUno() && validarApeDos() && verificarCorreo() &&confirmarPass() && validarPass() && calcularEdad() ) {
 		enviarRegistro();
 		function enviarRegistro(){
@@ -457,7 +458,7 @@ data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
 <br/>
 <div class="input-group">
 <label for="idFecha">Fecha de nacimiento</label><span class="obligatorio">*</span>&nbsp;&nbsp;
-<input  type="text" id="idFecha" name="fecha" onfocusout="calcularEdad();" />
+<input  type="text" id="idFecha" name="fecha" onchange="calcularEdad();" />
 <span class="avisos" id="aFecha">
 	Debes ser mayor de 13 años.
 </span>

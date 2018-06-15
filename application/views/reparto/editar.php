@@ -54,6 +54,14 @@ function validarNombre() {
 			}
 			nombreCorrecto = false;
 		}
+	} else {
+		idFormulario.idNombre.style.borderColor="red";
+		document.getElementById("aNombre").style.display="initial";
+		if (correcto == true) {
+			document.getElementById('idNombre').focus();
+			correcto=false;
+		}
+		nombreCorrecto = false;
 	}
 }
 
@@ -143,6 +151,11 @@ function permitirEnvio() {
 }
 
 function validar() {
+	validarNombre();
+	validarApellido1();
+	validarApellido2();
+	validarFecha();
+	
 	if (nombreCorrecto && apellido1Correcto && apellido2Correcto && fechaCorrecto) {
 		nombre = idFormulario.idNombre.value.trim();
 		idFormulario.idNombre.value = nombre;

@@ -155,6 +155,11 @@ function permitirEnvio() {
 }
 
 function validar() {
+	validarTitulo();
+	validarTituloOriginal();
+	validarFecha();
+	validarLenguage();
+	
 	if (tituloCorrecto && tituloOriginalCorrecto && fechaCorrecto && lenguageCorrecto) {
 		titulo = idFormulario.idTitulo.value.trim();
 		idFormulario.idTitulo.value = titulo;

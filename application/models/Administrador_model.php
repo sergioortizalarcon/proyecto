@@ -137,7 +137,7 @@ class Administrador_model extends CI_Model {
 		$usuario -> email = $email;
 		$usuario -> fecha_nacimiento = $fecha;
 		$usuario -> password = $pwd;
-		$pais->paises = R::load("paises",$idPais);
+		$usuario->paises = R::load("paises",$idPais);
 
 		R::store($usuario);
 		R::close();
@@ -151,8 +151,7 @@ class Administrador_model extends CI_Model {
 		$usuario -> apellido_dos = $ape2;
 		$usuario -> email = $email;
 		$usuario -> fecha_nacimiento = $fecha;
-		$pais->paises = R::load("paises",$idPais);
-
+		$usuario->paises = R::load("paises",$idPais);
 		R::store($usuario);
 		R::close();
 	}

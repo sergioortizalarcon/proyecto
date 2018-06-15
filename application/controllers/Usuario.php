@@ -215,6 +215,8 @@ class Usuario extends CI_Controller {
 		echo($user_id." - ".$nombre." - ".$ape1." - ".$ape2." - ".$email." - ".$pwd." - ".$fecha." - ".$idPais." - ".$pwd_anterior."<br/><br/>");
 		$comprobarUser = $this->administrador_model->getByID($user_id);
 		if ($comprobarUser) {
+			$idPais =($idPais=='0')?$comprobarUser->paises_id:$idPais;
+			// echo $comprobarUser->paises_id."<br>";echo $idPais;
 			if ($nombre&&$ape1&&$email&&$fecha&&$idPais&&$pwd_anterior&&$pwd) {
 				if ($comprobarUser['password'] == $pwd_anterior) {
 					try{

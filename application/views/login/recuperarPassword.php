@@ -41,10 +41,25 @@ function validarCorreo() {
 		}
 	}
 
+	function confirmarPass() {
+		var pwd = document.getElementById("idPwd").value;
+		var pwdDos = document.getElementById("idPwdD").value;
+    	if (pwd == pwdDos) {
+
+        	document.getElementById("aPwdD").style.display="none";
+        	idFormulario.idPwdD.style.borderColor="blue";
+        	return true;
+    	} else {
+    		document.getElementById("aPwdD").style.display="initial";
+        	idFormulario.idPwdD.style.borderColor="red";
+        	return false;
+    	}
+	}
+
 	function validar() {
 		validarCorreo();
 		validarPass();
-	if (validarCorreo() && validarPass()) {
+	if (validarCorreo() && validarPass() && confirmarPass()) {
 		enviarRegistro();
 		function enviarRegistro(){
 			pwd = document.getElementById("idPwd").value;
@@ -88,6 +103,14 @@ function validarCorreo() {
 				 value="<?=isset($user_id)?$user_id:' '?>" />
 				<span class="avisos" id="aPwd">
 					Entre 5 y 15 caracteres. La contraseña ha de incluir al menos tres de los siguientes elementos: números, mayúsculas, minúsculas o alguno de estos símbolos ($, @, !, %,*, &amp;).
+				</span>
+			</div>
+			<div class="form-group">
+				<label for="idPwdD">Confirmar Contraseña</label><span class="obligatorio">*</span>
+				<input class="form-control" type="password" id="idPwdD" 
+				data-toogle="tooltip" data-placement="left" title="repite la contraseña"/>
+				<span class="avisos" id="aPwdD">
+					Debe coincidir con la contraseña introducida en el recuadro anterior.
 				</span>
 			</div>
 			<div class="nav navbar-form navbar-right">

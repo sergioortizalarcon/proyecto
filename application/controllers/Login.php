@@ -40,47 +40,51 @@ class Login extends CI_Controller{
 				$identificarse = $this -> usuario_model -> comprobar_login($usuario,$pwd);
 
 				if ($identificarse) {
-					$f_ban = $identificarse['fecha_ban'];
-					$token_pwd = $identificarse['token_pwd'];
-					if ($f_ban > 0) {
-						//Faltaría meter áños, si los hay. o dejarlo solo en días.
-						$actual = strtotime(date("d-m-Y H:i:00",($today/1000)));
-						$fecha_baneo = strtotime(date("d-m-Y H:i:00",($f_ban/1000)));
-						//Si la fecha de hoy es menor q la del baneo
-						$resto = ($actual - $fecha_baneo);
-
-						if ($actual < $fecha_baneo) {
-							if ($resto < 0) {
-								//paso a positivo el resto
-								$resto = $resto*(-1);
-							}
-						header("location:".base_url()."login/usuario_baneado?time=".$resto);
-						} else {
-							$idUser = $identificarse['id'];
-							 $this -> administrador_model -> editar_estado($idUser,1,0,' ');
-							 header("location:".base_url()."login/desbaneo");
-						}
+					if ($identificarse['desactivado_user']>0) {
+						header("location:".base_url()."login/loginError");
 					} else {
-						$aliasLogeado  = $identificarse["alias"];
-						setcookie("usuario", $aliasLogeado,0,"/");
-						session_start();
-						$_SESSION['rol'] = $this -> administrador_model -> obtener_rol_user($identificarse["roles_id"]);
-						$_SESSION['idUser'] = $identificarse["id"];
-						if (strcmp($recordar,"recordar") === 0) {
-							$_SESSION['recordar'] = $aliasLogeado;
-							if(!isset($_COOKIE['recordar'])){
-								setcookie('recordar','ok',0,"/");
+						$f_ban = $identificarse['fecha_ban'];
+						$token_pwd = $identificarse['token_pwd'];
+						if ($f_ban > 0) {
+							//Faltaría meter áños, si los hay. o dejarlo solo en días.
+							$actual = strtotime(date("d-m-Y H:i:00",($today/1000)));
+							$fecha_baneo = strtotime(date("d-m-Y H:i:00",($f_ban/1000)));
+							//Si la fecha de hoy es menor q la del baneo
+							$resto = ($actual - $fecha_baneo);
+
+							if ($actual < $fecha_baneo) {
+								if ($resto < 0) {
+									//paso a positivo el resto
+									$resto = $resto*(-1);
+								}
+							header("location:".base_url()."login/usuario_baneado?time=".$resto);
+							} else {
+								$idUser = $identificarse['id'];
+								 $this -> administrador_model -> editar_estado($idUser,1,0,' ');
+								 header("location:".base_url()."login/desbaneo");
 							}
 						} else {
-							if(isset($_COOKIE['recordar'])){
-								setcookie('recordar','',time() - 3600,"/");
+							$aliasLogeado  = $identificarse["alias"];
+							setcookie("usuario", $aliasLogeado,0,"/");
+							session_start();
+							$_SESSION['rol'] = $this -> administrador_model -> obtener_rol_user($identificarse["roles_id"]);
+							$_SESSION['idUser'] = $identificarse["id"];
+							if (strcmp($recordar,"recordar") === 0) {
+								$_SESSION['recordar'] = $aliasLogeado;
+								if(!isset($_COOKIE['recordar'])){
+									setcookie('recordar','ok',0,"/");
+								}
+							} else {
+								if(isset($_COOKIE['recordar'])){
+									setcookie('recordar','',time() - 3600,"/");
+								}
 							}
-						}
-						
-						if ( strcmp($_SESSION['rol'],"administrador") === 0 ) {
-							header("location:".base_url()."login/loginOk?token=".$tokenAdm);
-						}  else {
-							header("location:".base_url()."login/loginOk?nombre=".$aliasLogeado);
+							
+							if ( strcmp($_SESSION['rol'],"administrador") === 0 ) {
+								header("location:".base_url()."login/loginOk?token=".$tokenAdm);
+							}  else {
+								header("location:".base_url()."login/loginOk?nombre=".$aliasLogeado);
+							}
 						}
 					}
 				} else {
@@ -192,11 +196,6 @@ class Login extends CI_Controller{
 			$token = isset($_GET['token'])?$_GET['token']:null;
 			if ($user_id && $token) {
 				$comprobar = $this->administrador_model->getByID($user_id);
-				// echo $user_id;
-				// echo "<br>";
-				// echo $token;
-				// echo "<br>";
-				// print_r($comprobar);
 				if ($comprobar) {
 					if($token == $comprobar['token_pwd']) {
 						$datos["token"] = $token;

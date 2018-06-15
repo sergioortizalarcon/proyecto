@@ -226,16 +226,16 @@ function validarAlias() {
 	function confirmarPass() {
 		var pwd = document.getElementById("idPwd").value;
 		var pwdDos = document.getElementById("idPwdD").value;
-		    	if (pwd == pwdDos) {
+    	if (pwd == pwdDos) {
 
-		        	document.getElementById("aPwdD").style.display="none";
-		        	idFormulario.idPwdD.style.borderColor="blue";
-		        	return true;
-		    	} else {
-		    		document.getElementById("aPwdD").style.display="initial";
-		        	idFormulario.idPwdD.style.borderColor="red";
-		        	return false;
-		    	}
+        	document.getElementById("aPwdD").style.display="none";
+        	idFormulario.idPwdD.style.borderColor="blue";
+        	return true;
+    	} else {
+    		document.getElementById("aPwdD").style.display="initial";
+        	idFormulario.idPwdD.style.borderColor="red";
+        	return false;
+    	}
 	}
 
 function validate_fecha(fecha){

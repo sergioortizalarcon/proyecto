@@ -4,7 +4,6 @@ function validarCorreo() {
 	if (correo!="") {
 		expresion =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,4})$/i;
 		if (expresion.test(correo)) {
-			  idFormulario.idEmail.style.borderColor="blue";
 			  document.getElementById("aEmail").style.display="none";
 			  return true;
 			} else {
@@ -51,7 +50,6 @@ function validarNombre() {
 				ape1= m1.toUpperCase()+ape1.substring(1,ape1.length);
 				idFormulario.idApe1.style.borderColor="blue";
 				document.getElementById("aApellido").style.display="none";
-			    apeUnoOk=true;
 				return true;
 			} else {
 				idFormulario.idApe1.style.borderColor="red";
@@ -101,17 +99,15 @@ function validarApeDos() {
           return false;
       }
     } else {
-        document.getElementById("aPwd").style.display="initial";
-        idFormulario.idPwd.style.borderColor="red";
         return true;
     }
   }
 
   function confirmarPass() {
-    var pwd = document.getElementById("idPwd").value;
-    var pwdDos = document.getElementById("idPwdD").value;
+    var pwd = document.getElementById("idPwd").value.trim();
+    var pwdDos = document.getElementById("idPwdD").value.trim();
     if(pwd != '' && pwdDos !='') {
-    	if (pwd.trim() == pwdDos.trim()) {
+    	if (pwd == pwdDos) {
 			document.getElementById("aPwdD").style.display="none";
 			idFormulario.idPwdD.style.borderColor="blue";
 			return true;
@@ -120,9 +116,9 @@ function validarApeDos() {
             idFormulario.idPwdD.style.borderColor="red";
             return false;
           }
-      } else {
-      	return true;
-      }
+	} else {
+		return true;
+	}
   }
 
 function validate_fecha(fecha){
@@ -240,9 +236,11 @@ function validar() {
 		function enviarRegistro(){
 			var pwd = document.getElementById("idPwd").value.trim();
 			var pwd_antigua = document.getElementById("pass_antigua").value.trim();
-			pcripto = sha256(pwd);
+			if (pwd!='') {
+				pcripto = sha256(pwd);
+				idFormulario.hash_passwrd.value=pcripto;
+			}
 			pccripto_antigua = sha256(pwd_antigua);
-			idFormulario.hash_passwrd.value=pcripto;
 			idFormulario.ant_hash_passwrd.value=pccripto_antigua;
 			idFormulario.submit();
 		}
@@ -324,7 +322,7 @@ function confirmacion() {
 	         $('#idFecha').val(content.info['fecha_nacimiento']);
 
 	         $('#tabs-1 span.pais').text(content.info['pais']);
-	         $('#idPais select').val(content.info['pais']);
+	         // $('#idPais select').val(content.info['pais']);
 	        },
 	        error:function(jqXHR,estado,error){
 	          alert(error)
@@ -439,9 +437,11 @@ function confirmacion() {
 			<label for="idPais">Selecciona país</label><span class="obligatorio">*</span>
 			<select class="form-control" name="pais" id="idPais"
 			data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
+				<option value="0">...</option>
 			<?php foreach ($paises as $pais): ?>
-				<option value="<?=$pais->id?>" <?=($pais->nombre == "España") ? "selected='selected'" : " "?> >
-					<?=$pais->nombre?></option>
+				<option value="<?=$pais->id?>">
+					<?=$pais->nombre?>
+				</option>
 			<?php endforeach;?>
 			</select>
 			</div>
@@ -457,7 +457,7 @@ function confirmacion() {
 			<hr/>
 			<div class="form-group">
 				<p>Debes introducir tu antigua contraseña si quieres seguir adelante.</p>
-			<label for="pass_antigua">Antigua ontraseña</label><span class="obligatorio">*</span>
+			<label for="pass_antigua">Antigua contraseña</label><span class="obligatorio">*</span>
 			<input class="form-control" type="password" id="pass_antigua"
 			data-toogle="tooltip" data-placement="left" title="contraseña" onchange="comprobar_pwd()"/>
 			<input class="form-control" type="hidden" id="ant_hash_passwrd" name="ant_hash_passwrd" />
@@ -467,7 +467,7 @@ function confirmacion() {
 			</div>
 
 			<div class="form-group">
-			<input type="button" class="btn btn-default" value="Borrar esta" onclick="validar();"
+			<input type="button" class="btn btn-default" value="Actualizar cuenta" onclick="validar();"
 			 />
 			 <input type="hidden" id="idUsuario" class="idUsuario" name="idUsuario">
 			</div>
@@ -491,7 +491,7 @@ function confirmacion() {
 		</span>
 	</div>
 	<div class="form-group">
-		<input type="button" class="btn btn-default" id="registrarse" name ="registrarse" value="Registrarse" onclick="confirmacion();"
+		<input type="button" class="btn btn-default" value="Borrar cuenta" onclick="confirmacion();"
 		 />
 		 <input type="hidden" id="idUsu" class="idUsuario" name="idUsu">
 	</div>

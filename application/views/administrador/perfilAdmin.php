@@ -8,13 +8,13 @@
         dataType: 'text',
         success: function( data ) {
          var content = JSON.parse(data);
-         $('#tabs-1 p.alias').text(content.info['alias']);//'info'-> nombre del array enviado desde PHP
-         $('#tabs-1 p.nombre').text(content.info['nombre']);
-         $('#tabs-1 p.ap1').text(content.info['apellido_uno']);
-         $('#tabs-1 p.ap2').text(content.info['apellido_dos']);
-         $('#tabs-1 p.email').text(content.info['email']);
-         $('#tabs-1 p.fecha').text(content.info['fecha_nacimiento']);
-         $('#tabs-1 p.pais').text(content.info['pais']);
+         $('#tabs-1 span.alias').text(content.info['alias']);//'info'-> nombre del array enviado desde PHP
+         $('#tabs-1 span.nombre').text(content.info['nombre']);
+         $('#tabs-1 span.ap1').text(content.info['apellido_uno']);
+         $('#tabs-1 span.ap2').text(content.info['apellido_dos']);
+         $('#tabs-1 span.email').text(content.info['email']);
+         $('#tabs-1 span.fecha').text(content.info['fecha_nacimiento']);
+         $('#tabs-1 span.pais').text(content.info['pais']);
         },
         error:function(jqXHR,estado,error){
           alert(error)
@@ -26,6 +26,7 @@
     });
       });
   </script>
+  
 <div class="content-wrapper">
 	<section class="content-header">
 		<h1>Mi Perfil</h1>
@@ -40,19 +41,19 @@
   <div id="tabs-1">
     <h2 class="datos_user">Datos personales</h2>
       <h4 class="datos_user">Alias</h4>
-      <p class="alias"></p>
+      &nbsp;&nbsp;<i class="fas fa-arrow-right perfil-arrow">&nbsp;&nbsp;</i><span class="alias formato-datos"></span>
       <h4 class="datos_user">Nombre </h4>
-      <p class="nombre"></p>
+      &nbsp;&nbsp;<i class="fas fa-arrow-right perfil-arrow">&nbsp;&nbsp;</i><span class="nombre formato-datos"></span>
       <h4 class="datos_user">Primer Apellido</h4>
-      <p class="ap1"></p>
+      &nbsp;&nbsp;<i class="fas fa-arrow-right perfil-arrow">&nbsp;&nbsp;</i><span class="ap1 formato-datos"></span>
       <h4 class="datos_user">Segundo Apellido</h4>
-      <p class="ap2"></p>
+      &nbsp;&nbsp;<i class="fas fa-arrow-right perfil-arrow">&nbsp;&nbsp;</i><span class="ap2 formato-datos"></span>
       <h4 class="datos_user">Correo electrnónico</h4>
-      <p class="email"></p>
+      &nbsp;&nbsp;<i class="fas fa-arrow-right perfil-arrow">&nbsp;&nbsp;</i><span class="email formato-datos"></span>
       <h4 class="datos_user">Fecha de nacimiento</h4>
-      <p class="fecha"></p>
+      &nbsp;&nbsp;<i class="fas fa-arrow-right perfil-arrow">&nbsp;&nbsp;</i><span class="fecha formato-datos"></span>
       <h4 class="datos_user">País</h4>
-      <p class="pais"></p>
+      &nbsp;&nbsp;<i class="fas fa-arrow-right perfil-arrow">&nbsp;&nbsp;</i><span class="pais formato-datos"></span>
 	<div id="cargando"><img src="<?=base_url()?>assets/img/ajax-loader.gif" alt="cargando..."/></div>
   </div>
   <div id="tabs-2">

@@ -1,5 +1,5 @@
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+<!-- <div class="content-wrapper">
+
     <section class="content-header">
       <h1>
         <i class="fa fa-users"></i> User Management
@@ -85,3 +85,4 @@
         });
     });
 </script>
+ -->

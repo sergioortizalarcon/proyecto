@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
 	<h1>Listado de usuarios</h1>
 	<br/>
 	<h3> Filtrar por email:</h3>
@@ -69,4 +69,4 @@
         </tfoot>
 </table>
 <br/><hr/>
-</div>
+</div> -->

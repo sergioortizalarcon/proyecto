@@ -1,5 +1,4 @@
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+<!-- <div class="content-wrapper">
     <section class="content-header">
       <h1>
         Change Password
@@ -9,12 +8,9 @@
     <section class="content">
         <div class="row">
             <div class="col-md-4">
-              <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Enter Details</h3>
-                    </div><!-- /.box-header -->
-                    <!-- form start -->
                     <form role="form" action="<?php echo base_url() ?>changePassword" method="post">
                         <div class="box-body">
                             <div class="row">
@@ -42,7 +38,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- /.box-body -->
     
                         <div class="box-footer">
                             <input type="submit" class="btn btn-primary" value="Submit" />
@@ -93,4 +88,4 @@
             </div>
         </div>
     </section>
-</div>
+</div> -->

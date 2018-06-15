@@ -1,5 +1,4 @@
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+<!-- <div class="content-wrapper">
     <section class="content-header">
       <h1>
         <i class="fa fa-users"></i> User Management
@@ -10,17 +9,13 @@
     <section class="content">
     
         <div class="row">
-            <!-- left column -->
             <div class="col-md-8">
-              <!-- general form elements -->
                 
                 
                 
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Enter User Details</h3>
-                    </div><!-- /.box-header -->
-                    <!-- form start -->
                     <?php $this->load->helper("form"); ?>
                     <form role="form" id="addUser" action="<?php echo base_url() ?>addNewUser" method="post" role="form">
                         <div class="box-body">
@@ -80,7 +75,6 @@
                                     </div>
                                 </div>    
                             </div>
-                        </div><!-- /.box-body -->
     
                         <div class="box-footer">
                             <input type="submit" class="btn btn-primary" value="Submit" />
@@ -122,4 +116,4 @@
     </section>
     
 </div>
-<script src="<?php echo base_url(); ?>assets/js/addUser.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/js/addUser.js" type="text/javascript"></script> -->

@@ -1,6 +1,6 @@
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/datepicker/datepicker3.css" />
+<!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/datepicker/datepicker3.css" />
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+    Content Header 
     <section class="content-header">
       <h1>
         <i class="fa fa-users"></i> Login History
@@ -31,7 +31,7 @@
                     <h3 class="box-title"><?= $userInfo->name." : ".$userInfo->email ?></h3>
                     <div class="box-tools">
                     </div>
-                </div><!-- /.box-header -->
+                </div>
                 <div class="box-body table-responsive no-padding">
                   <table class="table table-hover">
                     <tr>
@@ -62,11 +62,11 @@
                     ?>
                   </table>
                   
-                </div><!-- /.box-body -->
+                </div>
                 <div class="box-footer clearfix">
                     <?php echo $this->pagination->create_links(); ?>
                 </div>
-              </div><!-- /.box -->
+              </div>
             </div>
         </div>
     </section>
@@ -87,3 +87,4 @@
         });
     });
 </script>
+ -->

@@ -1,5 +1,4 @@
-
-<form id="idFormulario" name="idFormulario" action="<?= base_url()?>usuario/editar_usuarioPost" method="post">
+<!-- <form id="idFormulario" name="idFormulario" action="<?= base_url()?>usuario/editar_usuarioPost" method="post">
 <fieldset>
 <legend>Datos de usuario<legend>
 <small style="float:right;"> (<span class="obligatorio">*</span> Campos obligatorios)</small>
@@ -51,4 +50,4 @@ data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
 </div>
 </fieldset>
 </form>
-</div>
+</div> -->

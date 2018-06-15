@@ -259,6 +259,25 @@ function validar() {
   	alert("Debes introducir tu anterior contraseña para continuar");
   }
 }
+
+//Funciones para borrar cuenta.
+
+function confirmacion() {
+	var confirmarBorrado = confirm("¿Realmente quieres cancelar el registo?");
+	if (confirmarBorrado) {
+		borradoUser();
+		function borradoUser(){
+			var pwd = document.getElementById("pwdConf").value.trim();
+			if (verf_password(pwd)) {
+				var pccripto_antigua = sha256(pwd);
+				formBorrado.hash_pwd.value=pccripto_antigua;
+				formBorrado.submit();
+			}
+		}
+	}
+}
+
+
 </script>
 
   <script>
@@ -286,25 +305,25 @@ function validar() {
 	        dataType: 'text',
 	        success: function( data ) {
 	         var content = JSON.parse(data);
-	         $('#tabs-1 p.alias').text(content.info['alias']);//'info'-> nombre del array enviado desde PHP
-	         $('#idUsuario').val(content.info['id']);
+	         $('#tabs-1 span.alias').text(content.info['alias']);//'info'-> nombre del array enviado desde PHP
+	         $('.idUsuario').val(content.info['id']);
 
-	         $('#tabs-1 p.nombre').text(content.info['nombre']);
+	         $('#tabs-1 span.nombre').text(content.info['nombre']);
 	         $('#idNombre').val(content.info['nombre']);
 
-	         $('#tabs-1 p.ap1').text(content.info['apellido_uno']);
+	         $('#tabs-1 span.ap1').text(content.info['apellido_uno']);
 	         $('#idApe1').val(content.info['apellido_uno']);
 
-	         $('#tabs-1 p.ap2').text(content.info['apellido_dos']);
+	         $('#tabs-1 span.ap2').text(content.info['apellido_dos']);
 	         $('#idApe2').val(content.info['apellido_dos']);
 
-	         $('#tabs-1 p.email').text(content.info['email']);
+	         $('#tabs-1 span.email').text(content.info['email']);
 	         $('#idEmail').val(content.info['email']);
 
-	         $('#tabs-1 p.fecha').text(content.info['fecha_nacimiento']);
+	         $('#tabs-1 span.fecha').text(content.info['fecha_nacimiento']);
 	         $('#idFecha').val(content.info['fecha_nacimiento']);
 
-	         $('#tabs-1 p.pais').text(content.info['pais']);
+	         $('#tabs-1 span.pais').text(content.info['pais']);
 	         $('#idPais select').val(content.info['pais']);
 	        },
 	        error:function(jqXHR,estado,error){
@@ -317,19 +336,16 @@ function validar() {
 	        }
 	    });
 	});
+
 </script>
 
 <style>
-	p {
-    right: -5%;
-    position: relative;
-}
 
 .ui-tabs{
 	background: none;
 }
 </style>
-<div class="content-wrapper" style="margin:1%;">
+<div class="content-wrapper">
 	<section class="content-header">
 		<h1>Mi Perfil</h1>
 	</section>
@@ -338,24 +354,24 @@ function validar() {
 <ul>
     <li><a href="#tabs-1">Resumen</a></li>
     <li><a href="#tabs-2">Editar Perfil</a></li>
-    <li><a href="#tabs-3">Aenean lacinia</a></li>
+    <li><a href="#tabs-3">Acción de usuario</a></li>
   </ul>
   <div id="tabs-1">
     <h2 class="datos_user" style="text-align: center">Datos personales</h2>
       <h4 class="datos_user">Alias</h4>
-      <p class="alias formato-datos"></p>
+      &nbsp;&nbsp;<i class="fas fa-arrow-right perfil-arrow">&nbsp;&nbsp;</i><span class="alias formato-datos"></span>
       <h4 class="datos_user">Nombre </h4>
-      <p class="nombre formato-datos"></p>
+      &nbsp;&nbsp;<i class="fas fa-arrow-right perfil-arrow">&nbsp;&nbsp;</i> <span class="nombre formato-datos"></span>
       <h4 class="datos_user">Primer Apellido</h4>
-      <p class="ap1 formato-datos"></p>
+      &nbsp;&nbsp;<i class="fas fa-arrow-right perfil-arrow">&nbsp;&nbsp;</i> <span class="ap1 formato-datos"></span>
       <h4 class="datos_user">Segundo Apellido</h4>
-      <p class="ap2 formato-datos"></p>
+      &nbsp;&nbsp;<i class="fas fa-arrow-right perfil-arrow">&nbsp;&nbsp;</i> <span class="ap2 formato-datos"></span>
       <h4 class="datos_user">Correo electrnónico</h4>
-      <p class="email formato-datos"></p>
+      &nbsp;&nbsp;<i class="fas fa-arrow-right perfil-arrow">&nbsp;&nbsp;</i> <span class="email formato-datos"></span>
       <h4 class="datos_user">Fecha de nacimiento</h4>
-      <p class="fecha formato-datos"></p>
+      &nbsp;&nbsp;<i class="fas fa-arrow-right perfil-arrow">&nbsp;&nbsp;</i> <span class="fecha formato-datos"></span>
       <h4 class="datos_user">País</h4>
-      <p class="pais formato-datos"></p>
+      &nbsp;&nbsp;<i class="fas fa-arrow-right perfil-arrow">&nbsp;&nbsp;</i> <span class="pais formato-datos"></span>
 	<div id="cargando"><img src="<?=base_url()?>assets/img/ajax-loader.gif" alt="cargando..."/></div>
   </div>
 <div id="tabs-2">
@@ -403,7 +419,7 @@ function validar() {
 			<div class="form-group">
 			<label for="idPwd"> Nueva Contraseña</label><span class="obligatorio">*</span>
 			<input class="form-control" type="password" id="idPwd"
-			data-toogle="tooltip" data-placement="left" title="contraseña" onfocusout="validarPass()"/>
+			data-toogle="tooltip" data-placement="left" title="contraseña"/>
 			<input class="form-control" type="hidden" id="hash_passwrd" name="hash_passwrd" />
 			<span class="avisos" id="aPwd">
 				Entre 5 y 15 caracteres. La contraseña ha de incluir al menos tres de los siguientes elementos: números, mayúsculas, minúsculas o alguno de estos símbolos ($, @, !, %,*, &amp;).
@@ -412,7 +428,7 @@ function validar() {
 
 			<div class="form-group">
 			<label for="idPwdD">Repetir Contraseña</label><span class="obligatorio">*</span>
-			<input class="form-control" type="password" id="idPwdD" onfocusout="confirmarPass();"
+			<input class="form-control" type="password" id="idPwdD"
 			data-toogle="tooltip" data-placement="left" title="repite la contraseña"/>
 			<span class="avisos" id="aPwdD">
 				Debe coincidir con la contraseña introducida en el recuadro anterior.
@@ -450,18 +466,58 @@ function validar() {
 			</span>
 			</div>
 
-			<div class="nav navbar-form navbar-right">
-			<input type="button" class="btn btn-default" id="registrarse" name ="registrarse" value="Registrarse" onclick="validar();"
+			<div class="form-group">
+			<input type="button" class="btn btn-default" value="Borrar esta" onclick="validar();"
 			 />
-			 <input type="hidden" id="idUsuario" name="idUsuario">
+			 <input type="hidden" id="idUsuario" class="idUsuario" name="idUsuario">
 			</div>
 			</form>
 </div>
 <div id="tabs-3">
-<h2>Content heading 3</h2>
-
+<p style="color: red;font-weight: 600;">** Antes de continuar debes tener en cuenta que una vez desactives tu cuenta no  podrás volver a hacer uso de ella.</p>
+<form id="formBorrado" name="formBorrado" action="<?=base_url()?>administrador/cancelarCuenta" method="post">
+	<fieldset>
+		<legend>
+			DESACTIVACIÓN DE CUENTA
+		</legend>
+	<div class="form-group">
+		<h5>Introduce tu contraseña para continuar</h5>
+		<label for="hash_pwd">Contraseña actual:</label><span class="obligatorio">*</span>
+		<input class="form-control" type="password" id="pwdConf"
+		data-toogle="tooltip" data-placement="left" title="contraseña"/>
+		<input class="form-control" type="hidden" id="hash_pwd" name="hash_pwd" />
+		<span class="avisos" id="con_pas">
+			la contraseña debe tener un formato válido.
+		</span>
+	</div>
+	<div class="form-group">
+		<input type="button" class="btn btn-default" id="registrarse" name ="registrarse" value="Registrarse" onclick="confirmacion();"
+		 />
+		 <input type="hidden" id="idUsu" class="idUsuario" name="idUsu">
+	</div>
+	</fieldset>
+</form>
 </div>
-
 </section>
 </div>
+<script>
+	function verf_password(confm) {
+    if (confm!="") {
+    	expresion = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{5,15}$/;
+		if (expresion.test(confm)) {
+			idFormulario.idPwd.style.borderColor="blue";
+			document.getElementById("con_pas").style.display="none";
+			return true;
+		} else {
+			document.getElementById("con_pas").style.display="initial";
+			idFormulario.idPwd.style.borderColor="red";
+			return false;
+		}
+    } else {
+		document.getElementById("con_pas").style.display="initial";
+		idFormulario.idPwd.style.borderColor="red";
+		return false;
+    }
+}
+</script>
 

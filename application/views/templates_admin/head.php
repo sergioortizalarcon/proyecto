@@ -28,7 +28,7 @@
     <script src="<?php echo base_url(); ?>assets/js/jquery-3.1.1.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery-ui.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.js" type="text/javascript"></script>
-
+    <script type="text/javascript" src="<?=base_url()?>assets/js/cripto.js"></script>
     <!-- Esto controla el show/hide del sidebar -->
     <script src="<?php echo base_url(); ?>assets/a_style/dist/js/app.min.js" type="text/javascript"></script>
     

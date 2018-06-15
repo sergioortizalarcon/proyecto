@@ -125,6 +125,7 @@ a.icono-tw{
     font-size: x-large;
     text-decoration: underline;
     font-weight: 600;
+    text-decoration-color: royalblue;
 }
 
 p.formato-datos {
@@ -132,7 +133,12 @@ p.formato-datos {
     position: relative;
 }
 
+i.perfil-arrow,span.formato-datos {
+    left: 5%;
+    position: relative;
+	}
 
+/*VISTA DATOS PERFIL USUARIO  */
 
 /*estilo botones*/
 

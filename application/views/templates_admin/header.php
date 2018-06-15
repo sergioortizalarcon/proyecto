@@ -32,7 +32,7 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="<?=base_url()?>administrador/perfilUsuario" class="btn btn-default btn-flat">
+                      <a href="<?=base_url()?>usuario/perfilUsuario" class="btn btn-default btn-flat">
                         <i class="far fa-user-circle"></i>&nbsp;&nbsp;Acceder a perfil</a>
                     </div>
                     <div class="pull-right">

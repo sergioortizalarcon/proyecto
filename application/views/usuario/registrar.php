@@ -200,7 +200,7 @@ function validarAlias() {
 	function validarPass() {
 	var pwd = document.getElementById("idPwd").value;
 		if (pwd!="") {
-		expresion = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}$/;
+		expresion = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{5,15}$/;
 			if (expresion.test(pwd)) {
 			    idFormulario.idPwd.style.borderColor="blue";
 			    document.getElementById("aPwd").style.display="none";
@@ -432,7 +432,7 @@ placeholder="email@email.com" data-toogle="tooltip" data-placement="left" title=
 data-toogle="tooltip" data-placement="left" title="contraseña" onfocusout="validarPass()"/>
 <input class="form-control" type="hidden" id="hash_passwrd" name="hash_passwrd" />
 <span class="avisos" id="aPwd">
-	Entre 8 y 15 caracteres. La contraseña ha de incluir al menos tres de los siguientes elementos: números, mayúsculas, minúsculas o alguno de estos símbolos ($, @, !, %,*, &amp;).
+	Entre 5 y 15 caracteres. La contraseña ha de incluir al menos tres de los siguientes elementos: números, mayúsculas, minúsculas o alguno de estos símbolos ($, @, !, %,*, &amp;).
 </span>
 </div>
 
@@ -482,7 +482,7 @@ document.getElementById("idApe1").value="Fernández";
 document.getElementById("idAlias").value="cp08";
 document.getElementById("idEmail").value="19pc@gmail.com";
 document.getElementById("idEmailV").value="19pc@gmail.com";
-document.getElementById("idPwd").value="23aA$@$!%*?&";//aksjdEErE$3
+document.getElementById("idPwd").value="23aA$@$!%*?&";//   eudSsd$3q!
 document.getElementById("idPwdD").value="23aA$@$!%*?&";
 </script>
 </div>

@@ -3,16 +3,24 @@
 class usuario_model extends CI_Model {
 
 	public function comprobar_login($usuario,$pwd) {
-		$identidicar = R::findOne("usuarios", "alias like ? or email like ? and password like ?",[$usuario,$usuario,$pwd]);
-		if($identidicar != null) {
+		$v_alias = R::findOne("usuarios", "alias = ? and password = ?",[$usuario,$pwd]);
+		if($v_alias != null) {
+			return $v_alias;
 			R::close();
-			return $identidicar;
 		} else {
-			R::close();
+			$v_correo =R::findOne("usuarios", "email = ? and password = ?",[$usuario,$pwd]);
+			if ($v_correo != null) {
+				return $v_correo;
+				R::close();
+			} else {
 			return false;
 			throw new Exception("usuario o password erroneas.");
+			R::close();
+			}
 		}
 	}
+
+
 
 	public function comprobar_alias($alias_user){
 		$aliasD = R::findOne("usuarios","alias=?",[$alias_user]);
@@ -113,9 +121,9 @@ class usuario_model extends CI_Model {
 			$usuario -> password = $pwd;
 			$usuario -> observacion= ""; //mensaje de ban
 			$usuario -> fecha_ban = 0; // pasar este valor a milisegundos al guardar.
-			// $rol = R::load("roles",$id_rol);
+			$usuario -> token_pwd = 0;
+			
 			$id_rol -> xownUsuarioList[] = $usuario;
-
 			// $estado_cuenta = R::load("estados",$id_estado);
 			$id_estado -> xownUsuarioList[] = $usuario;
 			//esto guarda el valor

@@ -37,6 +37,7 @@ class Administrador extends CI_Controller {
 		session_start();
 		if (strcmp($idUser,$_SESSION['idUser']) === 0) {
 			$info = $this->administrador_model->getByID($idUser);
+			$envio['info']['id']=$info->id;
 			$envio['info']['alias']=$info->alias;
 			$envio['info']['nombre']=$info->nombre;
 			$envio['info']['apellido_uno']=$info->apellido_uno;
@@ -126,7 +127,6 @@ class Administrador extends CI_Controller {
 			$messagetext = isset($_POST['messagetext'])?$_POST['messagetext']:null;
 
 			if ($estado_cuenta['id'] != '0') {//Devolvería cero en caso de no existir el usuario
-				echo ('<pre><code>'.$estado_cuenta['estados']['id'].', '.$idEstado.'</pre></code>');
 				if ($estado_cuenta['estados']['id'] != $idEstado) {
 					$this->update_estado($idUser,$idEstado,$fechaBan,$messagetext);
 				} else if ($idRol != $estado_cuenta['roles']['id']) {
@@ -226,27 +226,45 @@ class Administrador extends CI_Controller {
 	public function recuperarPwd() {
 		enmarcar($this, "usuario/recuperarPwd");
 	}
+
+	public function generar_nuevo_password(){
+		$longitud = 14;
+		$psswd = substr( md5(microtime()), 1, $longitud);
+		return $psswd;
+	}
 	
 	public function resetPasswordUser() {
-		// if ($this->comprobarRol()) {
-			$this-> load -> model("administrador_model");
-			$correo = isset($_POST['correo'])?$_POST['correo']:null;
-			$tokenAdm = isset($_POST["tken"])?1:null;
-			$existe = false;
-			if ($tokenAdm != null) {
-				$existe = $this -> administrador_model ->comprobar_emailAdm($correo);
-			}
+		$this-> load -> model("administrador_model");
+		$correo = isset($_POST['correo'])?$_POST['correo']:null;
+		$existe = false;
+		$correo = filter_var($correo,FILTER_SANITIZE_EMAIL);
 
-			if (!$existe) {
-				$this -> enviarCorreoAUsuario($correo);
-			} else {
-				$datos['mensaje']['texto'] = "El correo no es correcto o no existe en nuestros registros. Inténtalo de nuevo.";
-				$datos['mensaje']['nivel'] = 'error';
-				enmarcar($this,'templates_admin/forgotPassword', $datos);
+		if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+		      header('Location:'.base_url().'usuario/recuperacionErronea?aviso=1');
+		} else {
+		    if (strlen($correo) < 10) {
+		       header('Location:'.base_url().'usuario/recuperacionErronea?aviso=2');
+		    } else {
+		    	$existe = $this -> administrador_model ->getUsuario($correo);
+				if ($existe != null) {
+					$id_user = $existe['id'];
+					$alias_user = $existe['alias'];
+					$token = $this->generar_nuevo_password();
+					$this-> administrador_model -> recuperar_pwd($token,$id_user);
+					$envio = $this -> enviarCorreoAUsuario($correo,$alias_user,$token,$id_user);
+					if($envio){
+						header('Location:'.base_url().'usuario/recuperacionOk');
+						// $datos['mensaje']['texto'] = "Se envió correctamente el correo electrónico.";
+						// $datos['mensaje']['nivel'] = 'ok';
+						// $this->load->view('usuario/mensaje', $datos);
+					} else {
+						header('Location:'.base_url().'usuario/recuperacionErronea');
+					}
+				} else {
+					header('Location:'.base_url().'usuario/recuperacionErronea');
+				}
 			}
-		// } else {
-		// 	$this->acceso_denegado();
-		// }
+		}
 	}
 
 
@@ -256,18 +274,23 @@ class Administrador extends CI_Controller {
 
 
 //Para usar esto hay q instalar phpmailer ( con composer en la raiz del proyecto)
-	public function enviarCorreoAUsuario ($correo) {
-		$the_subject = "Primera prueba mailer";
-			$email_user = "usuariodosfilms@gmail.com";
-			$email_word = "usuarioDosFilm";
-			$cuerpoMensaje = 'Probando etiquetas';
-			$cuerpoMensaje .="<h1>Hola Mundo</h1>";
-			$cuerpoMensaje .="<p>Acepta es pero entre etiquetas, no tildes</p>";
-			$cuerpoMensaje .="Fecha y Hora: ".date("d-m-Y h:i:s");
+	public function enviarCorreoAUsuario($correo,$alias_user,$token,$user_id) {
+		$url = base_url().'login/cambiar_pass?user_id='.$user_id.'&token='.$token;
+		$the_subject = "Petición de recuperación de  contrase&ntilde;a.";
+		$email_user = "usuariodosfilms@gmail.com";
+		$email_word = "usuarioDosFilm";
+		$cuerpoMensaje = "<strong>Hola ". $alias_user.",</strong><br/><br/>";
+		$cuerpoMensaje .= 'Recientemente se solicitó la recuperación de la  contrase&ntilde;a asociada a la cuenta de correo: '.$correo;
+		$cuerpoMensaje .="<br/>Fecha y Hora: ".date("d-m-Y h:i:s")."<br/>";
+		$cuerpoMensaje .="Para cambian tu contrase&ntilde;a debes visitar la siguiente direcci&oacute;n: ".$url."<br/><br/>";
+		$cuerpoMensaje .="Le recomendamos encarecidamente que actualice la  contrase&ntilde; después de iniciar sesión correctamente. <br/>Gracias, <br/><br/>";
+		$cuerpoMensaje .="Att. Staff de blablabla<br/><br/>";
+		$cuerpoMensaje .='<a href="#">WhatviewNow</a>';
 
 		$mail = new PHPMailer(true); 
 		try {
 			$mail->CharSet = 'UTF-8';
+			$mail->setLanguage('es');
 				//Server settings
 		    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
 		    $mail->isSMTP();                                      // Set mailer to use SMTP
@@ -292,12 +315,12 @@ class Administrador extends CI_Controller {
 			        'allow_self_signed' => true
 			    )
 			);
+			header('Location:'.base_url().'usuario/recuperacionOk');
 		    $exito =  $mail->send();
-
 			if($exito){
-				header('Location:'.base_url().'usuario/recuperacionOk?enviado');
+				return true;
 			} else {
-				header('Location:'.base_url().'usuario/recuperacionErronea');
+				return false;
 			}
 			/*
 			Los mensajes enviados por smtp no se guardan así q si se quieren guardar se debe usar IMAP
@@ -313,7 +336,7 @@ class Administrador extends CI_Controller {
 		} catch (Exception $e) {
 		$datos['mensaje']['texto'] = "Ocurrió un error inesperado con él envió del correo electrónico, inténtelo de nuevo más tarde, disculpa las molestias. $e";
 		$datos['mensaje']['nivel'] = 'error';
-		enmarcar($this,'templates_admin/forgotPassword', $datos);
+		enmarcar($this,'usuario/mensaje', $datos);
 		}
 	
 	}
@@ -332,15 +355,22 @@ class Administrador extends CI_Controller {
 	 */
 	
 	public function recuperacionOk() {
-		$datos['mensaje']['texto'] = "Se envió correctamente el correo electrónico.";
+		$datos['mensaje']['texto'] = "Hemos enviado un mensaje a tu correo electronico para restablecer tu password.<br />";
 		$datos['mensaje']['nivel'] = 'ok';
-		$this ->load ->view ('templates_admin/forgotPassword', $datos);
+		enmarcar($this,'usuario/mensaje', $datos);
 	}
 	
 	public function recuperacionErronea() {
-		$datos['mensaje']['texto'] = "El email ingresado no existe en nuestros registros. ";
-		$datos['mensaje']['nivel'] = 'error';
-		$this ->load ->view ('templates_admin/forgotPassword', $datos);
+		if ((isset($_GET['aviso'])) && ($GET['aviso']=="1")) {
+			$datos['mensaje']['texto'] = "Correo electrónico no válido";
+		} else if((isset($_GET['aviso'])) && ($GET['aviso']=="2")) {
+			$datos['mensaje']['texto'] = "El correo electrónico es demasiado corto";
+		} else{
+			$datos['mensaje']['texto'] = "El email ingresado no existe en nuestros registros. ";
+		}
+			$datos['mensaje']['nivel'] = 'error';
+			enmarcar($this,'usuario/mensaje', $datos);
+			header("Refresh:3;url=".base_url()."usuario/recuperarPwd");
 	}
 
 	public function vista_usuario(){
@@ -362,4 +392,45 @@ class Administrador extends CI_Controller {
 			$this->acceso_denegado();
 		}
 	}
+
+	public function cambiarPwd(){
+		$this->load->model("administrador_model");
+		$email = isset($_POST['email'])?$_POST['email']:null;
+		$hash_passwrd = isset($_POST['hash_passwrd'])?$_POST['hash_passwrd']:null;
+		$token_confirmacion = isset($_POST['token_confirmacion'])?$_POST['token_confirmacion']:null;
+		$user_id = isset($_POST['user_id'])?$_POST['user_id']:null;
+
+		// echo ($email." - ".$hash_passwrd." - ".$token_confirmacion." - ".$user_id);
+		if ($email && $hash_passwrd && $token_confirmacion && $user_id) {
+			//si los valores no son nulos carga el usuario con los datos pasados
+			$user = $this->administrador_model->confirmacion_reset_password($email,$token_confirmacion,$user_id);
+			// print_r($user);
+			if ($user != null) {
+				$id_user = $user['id'];
+				//en la linea anterior obtiene el id del usuario cargado y lo usa para actualizar la password
+				$cambio = $this->administrador_model->update_pwd($hash_passwrd,$id_user);
+				if ($cambio) {
+					header("location:".base_url()."administrador/confirmarCambio");
+				} else {
+					header("location:".base_url()."administrador/CambioErroneo");
+				}
+			}
+		}
+	}
+
+	public function confirmarCambio(){
+		$datos['mensaje']['texto'] = "Se ha cambiado la contrase&ntilde;a correctamente. Redirigiendo al login...";
+		$datos['mensaje']['nivel'] = 'ok';
+		enmarcar($this,'usuario/mensaje', $datos);
+		header("Refresh:3;url=".base_url()."login/loginGet");
+	}
+
+	public function CambioErroneo(){
+		$datos['mensaje']['texto'] = "Error, no se ha podido cambiar la contrase&ntilde;a. Redirigiendo a la pagina principal...";
+		$datos['mensaje']['nivel'] = 'error';
+		enmarcar($this,'usuario/mensaje', $datos);
+		header("Refresh:3;url=".base_url());
+	}
+
+
 }

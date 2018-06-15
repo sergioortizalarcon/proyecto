@@ -1,9 +1,9 @@
 <?php
 
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\src\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-require 'vendor/autoload.php';
+// use PHPMailer\PHPMailer\SMTP;
+// use PHPMailer\PHPMailer\src\PHPMailer;
+// use PHPMailer\PHPMailer\Exception;
+// require 'vendor/autoload.php';
 
 class usuario extends CI_Controller {
 	
@@ -195,6 +195,77 @@ class usuario extends CI_Controller {
 		$datos['mensaje']['texto'] = "El email ingresado no existe en nuestros registros. ";
 		$datos['mensaje']['nivel'] = 'error';
 		enmarcar($this, 'usuario/mensaje', $datos);
+	}
+
+
+	/* VISTA USUARIO */
+	public function perfilUsuario(){
+		$this -> load -> model("pais_model");
+		$datos["paises"] = $this -> pais_model -> getTodos();
+		enmarcar($this,"login/perfilUser",$datos);
+	}
+
+
+	/* EDICION DE USUARIO */
+
+	public function editarPost(){
+		$this -> load -> model("administrador_model");
+		$user_id =  isset($_POST["idUsuario"])?$_POST["idUsuario"]:null;
+		$nombre= isset($_POST["nombre"])?$_POST["nombre"]:null;
+		$ape1 = isset($_POST["apellido1"])?$_POST["apellido1"]:null;
+		$ape2 = isset($_POST["apellido2"])?$_POST["apellido2"]:"";
+		$email = isset($_POST["correo"])?$_POST["correo"]:null;
+		$pwd = isset($_POST["hash_passwrd"])?$_POST["hash_passwrd"]:null;
+		$fecha = isset($_POST["fecha"])?$_POST["fecha"]:null;
+		$idPais = isset($_POST["pais"])?$_POST["pais"]:null;
+		$pwd_anterior = isset($_POST["ant_hash_passwrd"])?$_POST["ant_hash_passwrd"]:null;
+
+		echo($user_id." - ".$nombre." - ".$ape1." - ".$ape2." - ".$email." - ".$pwd." - ".$fecha." - ".$idPais." - ".$pwd_anterior."<br/><br/>");
+		$comprobarUser = $this->administrador_model->getByID($user_id);
+		print_r($comprobarUser);
+		if ($comprobarUser) {
+			if ($nombre&&$ape1&&$email&&$fecha&&$idPais&&$pwd_anterior&&$pwd) {
+				if ($comprobarUser['password'] == $pwd_anterior) {
+					try{
+						$this->administrador_model-> actualizar_datos_uno($comprobarUser['id'],$nombre,$ape1,$ape2,$email,$fecha,$idPais,$pwd);
+						header('Location:'.base_url().'usuario/updateOk');
+					}catch(Exception $e){
+						header('Location:'.base_url().'usuario/updateError');
+					}
+				} else {
+					header('Location:'.base_url().'usuario/updateError');
+				}
+			} elseif ($nombre&&$ape1&&$email&&$fecha&&$idPais&&$pwd_anterior) {
+				if ($comprobarUser['password'] == $pwd_anterior) {
+					try {
+						$this->administrador_model-> actualizar_datos_dos($comprobarUser['id'],$nombre,$ape1,$ape2,$email,$fecha,$idPais);
+						header('Location:'.base_url().'usuario/updateOk');
+					} catch(Exception $e) {
+						header('Location:'.base_url().'usuario/updateError');
+					}
+				} else {
+					header('Location:'.base_url().'usuario/updateError');
+				}
+			} else {
+				header('Location:'.base_url().'usuario/updateError');
+			}
+		} else {
+			header('Location:'.base_url().'usuario/updateOk');
+		}
+	}
+
+	public function updateOk() {
+		$datos['mensaje']['texto'] = "Los cambios se han realizado correctamente. Redirigiendo...";
+		$datos['mensaje']['nivel'] = 'ok';
+		enmarcar($this, 'usuario/mensaje', $datos);
+		header("Refresh:3;url=".base_url().'usuario/perfilUsuario');
+	}
+
+	public function updateError() {
+		$datos['mensaje']['texto'] = "Se ha producido un error inesperado. Por favor, intentelo de nuevo.";
+		$datos['mensaje']['nivel'] = 'error';
+		enmarcar($this, 'usuario/mensaje', $datos);
+		header("Refresh:3;url=".base_url().'usuario/perfilUsuario');
 	}
 	
 }

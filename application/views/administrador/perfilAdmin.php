@@ -1,8 +1,3 @@
-<style>
-	#cargando {
-		display: none;
-	}
-</style>
 <script>
   $(document).ready(function(){
       var request = $.ajax({
@@ -14,7 +9,7 @@
         success: function( data ) {
          var content = JSON.parse(data);
          $('#tabs-1 p.alias').text(content.info['alias']);//'info'-> nombre del array enviado desde PHP
-         $('#tabs-1 p.nombre').text(content.info['nombre']),
+         $('#tabs-1 p.nombre').text(content.info['nombre']);
          $('#tabs-1 p.ap1').text(content.info['apellido_uno']);
          $('#tabs-1 p.ap2').text(content.info['apellido_dos']);
          $('#tabs-1 p.email').text(content.info['email']);

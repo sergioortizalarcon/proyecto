@@ -24,7 +24,7 @@ function enviarMail(){
 <legend>Restablecer contraseña.</legend>
 	<div class="form-group">
 <label for="idEmail">Correo electrónico</label><span class="obligatorio">*</span>
-<input class="form-control" type="email" id="idEmail" name="correo"
+<input class="form-control" type="email" id="idEmail" name="correo" value="usuariounofilms@gmail.com" 
 placeholder="email@email.com" data-toogle="tooltip" data-placement="left" title="introduce un correo electrónico válido">
 <br/>
 <span>

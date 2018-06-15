@@ -1,99 +1,467 @@
-<script>
+ <script>
+function validarCorreo() {
+	var correo = document.getElementById("idEmail").value.trim();
+	if (correo!="") {
+		expresion =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,4})$/i;
+		if (expresion.test(correo)) {
+			  idFormulario.idEmail.style.borderColor="blue";
+			  document.getElementById("aEmail").style.display="none";
+			  return true;
+			} else {
+				idFormulario.idEmail.style.borderColor="red";
+				document.getElementById("aEmail").style.display="initial";
+				return false;
+			}
+	} else {
+		document.getElementById("aEmail").style.display="initial";
+		idFormulario.idEmail.style.borderColor="red";
+		return false;
+	}
+}
+
+function validarNombre() {
+	var nombre = document.getElementById("idNombre").value.trim();
+    if(nombre!="") {
+    expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,20}$/;
+		if (expresion.test(nombre)) {
+	        var m = nombre.charAt(0);
+	        nombre= m.toUpperCase()+nombre.substring(1,nombre.length);
+	        idFormulario.idNombre.style.borderColor="blue";
+	        document.getElementById("aNombre").style.display="none";
+	        idFormulario.idNombre.value=nombre;
+	        return true;
+		} else {
+		    idFormulario.idNombre.style.borderColor="red";
+		    document.getElementById("aNombre").style.display="initial";
+		    return false;
+		}
+    } else {
+        document.getElementById("aNombre").style.display="initial";
+        idFormulario.idNombre.style.borderColor="red";
+        return false;
+    }
+}
+
+    function validarApeUno(){
+		var ape1 = document.getElementById("idApe1").value.trim();
+		if(ape1!="") {
+			expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{3,20}$/;
+			if (expresion.test(ape1)) {
+				var m1 = ape1.charAt(0);
+				ape1= m1.toUpperCase()+ape1.substring(1,ape1.length);
+				idFormulario.idApe1.style.borderColor="blue";
+				document.getElementById("aApellido").style.display="none";
+			    apeUnoOk=true;
+				return true;
+			} else {
+				idFormulario.idApe1.style.borderColor="red";
+				document.getElementById("aApellido").style.display="initial";
+				return false;
+			}
+		} else {
+			document.getElementById("aApellido").style.display="initial";
+			idFormulario.idApe1.style.borderColor="green";
+			return false;
+		}
+  }
+
+
+
+function validarApeDos() {
+	var ape2 = document.getElementById("idApe2").value.trim();
+	if (ape2!=""){
+		expresion = /^[a-zA-ZáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙñÑ]{0,15}$/;
+		if (expresion.test(ape2)) {
+			m2 = ape2.charAt(0);
+			ape2= ape2.toUpperCase()+ape2.substring(1,ape2.length);
+			idFormulario.idApe2.style.borderColor="blue";
+			document.getElementById("aApellidoDos").style.display="none";
+		} else {
+			document.getElementById("aApellidoDos").style.display="initial";
+			idFormulario.idApe2.style.borderColor="red";
+			return false;
+		}
+	}
+	return true;
+}
+
+
+
+  function validarPass() {
+  var pwd = document.getElementById("idPwd").value.trim();
+    if (pwd!="") {
+    expresion = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{5,15}$/;
+      if (expresion.test(pwd)) {
+          idFormulario.idPwd.style.borderColor="blue";
+          document.getElementById("aPwd").style.display="none";
+            return true;
+      } else {
+          document.getElementById("aPwd").style.display="initial";
+          idFormulario.idPwd.style.borderColor="red";
+          return false;
+      }
+    } else {
+        document.getElementById("aPwd").style.display="initial";
+        idFormulario.idPwd.style.borderColor="red";
+        return true;
+    }
+  }
+
+  function confirmarPass() {
+    var pwd = document.getElementById("idPwd").value;
+    var pwdDos = document.getElementById("idPwdD").value;
+    if(pwd != '' && pwdDos !='') {
+    	if (pwd.trim() == pwdDos.trim()) {
+			document.getElementById("aPwdD").style.display="none";
+			idFormulario.idPwdD.style.borderColor="blue";
+			return true;
+          } else {
+            document.getElementById("aPwdD").style.display="initial";
+            idFormulario.idPwdD.style.borderColor="red";
+            return false;
+          }
+      } else {
+      	return true;
+      }
+  }
+
+function validate_fecha(fecha){
+    var patron=new RegExp("^(19|20)+([0-9]{2})([/])([0-9]{1,2})([/])([0-9]{1,2})$");
+
+    if(fecha.search(patron)==0){
+        var values=fecha.split("/");
+        function isValidDate(day,month,year){
+        var dteDate;
+        //En javascript mes empieza en la posicion 0 y termina en la 11 por esta razon, tenemos que restar 1 al mes
+        month=month-1;
+        dteDate=new Date(year,month,day);
+        return ( (day==dteDate.getDate()) && (month==dteDate.getMonth()) && (year==dteDate.getFullYear()) );
+    }
+
+        if(isValidDate(values[2],values[1],values[0])) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function calcularEdad() {
+  fecha = document.getElementById("idFecha").value;
+  if(fecha!=""){
+      if(validate_fecha(fecha)==true) {
+          // Si la fecha es correcta, calculamos la edad
+          var values=fecha.split("/");
+          var dia = values[2];
+          var mes = values[1];
+          var ano = values[0];
+          // cogemos los valores actuales
+          var fecha_hoy = new Date();
+          var ahora_ano = fecha_hoy.getYear();
+          var ahora_mes = fecha_hoy.getMonth()+1;
+          var ahora_dia = fecha_hoy.getDate();
+
+          // realizamos el calculo
+          var edad = (ahora_ano + 1900) - ano;
+          if ( ahora_mes < mes ) {
+              edad--;
+          }
+          if ((mes == ahora_mes) && (ahora_dia < dia)) {
+              edad--;
+          }
+          if (edad > 1900) {
+              edad -= 1900;
+          }
+
+          // calculamos los meses
+          var meses=0;
+          if(ahora_mes>mes)
+              meses=ahora_mes-mes;
+          if(ahora_mes<mes)
+              meses=12-(mes-ahora_mes);
+          if(ahora_mes==mes && dia>ahora_dia)
+              meses=11;
+
+          // calculamos los dias
+          var dias=0;
+          if(ahora_dia>dia)
+              dias=ahora_dia-dia;
+          if(ahora_dia<dia) {
+              ultimoDiaMes=new Date(ahora_ano, ahora_mes, 0);
+              dias=ultimoDiaMes.getDate()-(dia-ahora_dia);
+          }
+
+          //debug  borrar más adelante
+          document.getElementById("result").innerHTML="Tienes "+edad+" años, "+meses+" meses y "+dias+" días";
+          if (edad<13) {
+            document.getElementById("aFecha").style.display="initial";
+        return false;
+          } else {
+            document.getElementById("result").innerHTML="";
+            document.getElementById("aFecha").style.display="none";
+            return true;
+          }
+      } else {
+          document.getElementById("result").innerHTML="La fecha "+fecha+" es incorrecta";
+          return false;
+      }
+  } else {
+    document.getElementById("aFecha").style.display="initial";
+    document.getElementById("result").innerHTML="";
+    return false;
+  }
+}
+
+
+function comprobar_pwd() {
+  var pwd = document.getElementById("pass_antigua").value.trim();
+    if (pwd!="") {
+    expresion = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{5,15}$/;
+		if (expresion.test(pwd)) {
+		  idFormulario.pass_antigua.style.borderColor="blue";
+		  document.getElementById("anteriorPwd").style.display="none";
+		    return true;
+		} else {
+		  document.getElementById("anteriorPwd").style.display="initial";
+		  idFormulario.pass_antigua.style.borderColor="red";
+		  return false;
+		}
+    } else {
+        document.getElementById("anteriorPwd").style.display="initial";
+        idFormulario.pass_antigua.style.borderColor="red";
+        return false;
+    }
+  }
+
+function validar() {
+  if (comprobar_pwd()) {
+	validarApeDos();
+	if (validarNombre() && validarApeUno() && validarApeDos() && validarCorreo() &&confirmarPass() && validarPass() && calcularEdad() ) {
+		enviarRegistro();
+		function enviarRegistro(){
+			var pwd = document.getElementById("idPwd").value.trim();
+			var pwd_antigua = document.getElementById("pass_antigua").value.trim();
+			pcripto = sha256(pwd);
+			pccripto_antigua = sha256(pwd_antigua);
+			idFormulario.hash_passwrd.value=pcripto;
+			idFormulario.ant_hash_passwrd.value=pccripto_antigua;
+			idFormulario.submit();
+		}
+	} else {
+	    var error =  document.getElementsByTagName("input");
+		for (var i = 1; i < error.length; i++) {
+			if (error[i].style.borderColor!="blue") {
+			    error[i].focus();
+			    break;
+			}
+		}
+	}
+  } else {
+  	alert("Debes introducir tu anterior contraseña para continuar");
+  }
+}
+</script>
+
+  <script>
   $( function() {
-    $( "#tabsV" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
-    $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+    $( "#tabsV" ).tabs({
+      beforeLoad: function( event, ui ) {
+        ui.jqXHR.fail(function() {
+          ui.panel.html(
+            "Couldn't load this tab. We'll try to fix this as soon as possible. " +
+            "If this wouldn't be a demo." );
+        });
+      }
+    });
   } );
   </script>
-  <style>
-  .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 12em; }
-  .ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
-  .ui-tabs-vertical .ui-tabs-nav li a { display:block; }
-  .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; }
-  .ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right;}
-  </style>
 
+<script>
+	$(document).ready(function(){
+	  	var content="";
+	      var request = $.ajax({
+	        type: "POST",
+	        url: '<?=base_url()?>administrador/datos_user',
+	        beforeSend:$('#cargando').css('display:initial'),
+	        data: {idUser:'<?=$_SESSION["idUser"]?>'},
+	        dataType: 'text',
+	        success: function( data ) {
+	         var content = JSON.parse(data);
+	         $('#tabs-1 p.alias').text(content.info['alias']);//'info'-> nombre del array enviado desde PHP
+	         $('#idUsuario').val(content.info['id']);
+
+	         $('#tabs-1 p.nombre').text(content.info['nombre']);
+	         $('#idNombre').val(content.info['nombre']);
+
+	         $('#tabs-1 p.ap1').text(content.info['apellido_uno']);
+	         $('#idApe1').val(content.info['apellido_uno']);
+
+	         $('#tabs-1 p.ap2').text(content.info['apellido_dos']);
+	         $('#idApe2').val(content.info['apellido_dos']);
+
+	         $('#tabs-1 p.email').text(content.info['email']);
+	         $('#idEmail').val(content.info['email']);
+
+	         $('#tabs-1 p.fecha').text(content.info['fecha_nacimiento']);
+	         $('#idFecha').val(content.info['fecha_nacimiento']);
+
+	         $('#tabs-1 p.pais').text(content.info['pais']);
+	         $('#idPais select').val(content.info['pais']);
+	        },
+	        error:function(jqXHR,estado,error){
+	          alert(error)
+	          console.log(estado)
+	        },
+	        complete:function (jqXHR,estado) {
+	        	$('#cargando').css('display','none');
+	          console.log(estado)
+	        }
+	    });
+	});
+</script>
+
+<style>
+	p {
+    right: -5%;
+    position: relative;
+}
+
+.ui-tabs{
+	background: none;
+}
+</style>
 <div class="content-wrapper" style="margin:1%;">
 	<section class="content-header">
 		<h1>Mi Perfil</h1>
 	</section>
 <section class="content">
 	<div id="tabsV">
-	  <ul>
-	    <li><a href="#tabs-1">Datos personales</a></li>
-	    <li><a href="#tabs-2">Cuenta</a></li>
-	    <li><a href="#tabs-3">Aenean lacinia</a></li>
-	  </ul>
-	  <div id="tabs-1">
-	    <h2>Content heading 1</h2>
-	    <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
-	  </div>
-	  <div id="tabs-2">
-	    <h2>Content heading 2</h2>
-	    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-	  </div>
+<ul>
+    <li><a href="#tabs-1">Resumen</a></li>
+    <li><a href="#tabs-2">Editar Perfil</a></li>
+    <li><a href="#tabs-3">Aenean lacinia</a></li>
+  </ul>
+  <div id="tabs-1">
+    <h2 class="datos_user" style="text-align: center">Datos personales</h2>
+      <h4 class="datos_user">Alias</h4>
+      <p class="alias formato-datos"></p>
+      <h4 class="datos_user">Nombre </h4>
+      <p class="nombre formato-datos"></p>
+      <h4 class="datos_user">Primer Apellido</h4>
+      <p class="ap1 formato-datos"></p>
+      <h4 class="datos_user">Segundo Apellido</h4>
+      <p class="ap2 formato-datos"></p>
+      <h4 class="datos_user">Correo electrnónico</h4>
+      <p class="email formato-datos"></p>
+      <h4 class="datos_user">Fecha de nacimiento</h4>
+      <p class="fecha formato-datos"></p>
+      <h4 class="datos_user">País</h4>
+      <p class="pais formato-datos"></p>
+	<div id="cargando"><img src="<?=base_url()?>assets/img/ajax-loader.gif" alt="cargando..."/></div>
+  </div>
+<div id="tabs-2">
+	<form id="idFormulario" name="idFormulario" action="<?=base_url()?>usuario/editarPost" method="post">
+		<legend>Editar detos de perfil</legend>
 
-	  <div id="tabs-3">
-	    <h2>Content heading 3</h2>
-	    <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-	    <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
-	  </div>
-	</div>
-<!-- <div class="column">
-	<ul class="profile-navi-desk">
-		<li>
-			<a href="/comunidad/usuarios/#/personal" data-drupal-link-system-path="user/32742/personal" class="is-active">
-				Datos personales
-			</a>
-		</li>
-		<li>
-			<a href="/comunidad/usuarios/#/edit" data-drupal-link-system-path="user/32742/edit">
-		Cuenta
-			</a>
-		</li>
-		<li>
-			<a href="/comunidad/usuarios/#/profile" data-drupal-link-system-path="user/32742/profile">
-		Mis perfiles
-			</a>
-		</li>
-		<li>
-			<a href="/comunidad/usuarios/#/reviews" data-drupal-link-system-path="user/32742/reviews">
-		Mis análisis
-			</a>
+			<div class="form-group">
+			<label for="idNombre">Nombre</label><span class="obligatorio">*</span>
+			<input class="form-control nombre-user" type="text" id="idNombre" name="nombre"
+			placeholder="Nombre..." data-toogle="tooltip" data-placement="left" title="Escribe un nombre" />
+			<span class="avisos" id="aNombre">
+				Debes escribir un nombre válido(3 a 20 caracteres no númericos o simbolos).
+			</span>
+			</div>
 
-		</li>
-	</ul>
+			<div class="form-group">
+			<label for="idApe1">Primer apellido</label><span class="obligatorio">*</span>
+			<input class="form-control" type="text" id="idApe1" name="apellido1"
+			placeholder="Apellido..." data-toogle="tooltip" data-placement="left" title="Escribe un apellido" />
+			<span class="avisos" id="aApellido">
+				Debes escribir un apellido válido( 3 a 20 caracteres no númericos o simbolos).
+			</span>
+			</div>
 
-	<ul id="menuUser">
-		<li href="login/editarCampos">
-		Datos
-		</li>
+			<div class="form-group">
+			<label for="idApe2">Segundo apellido</label>
+			<input class="form-control" type="text" id="idApe2" name="apellido2"
+			placeholder="apellido..." data-toogle="tooltip" data-placement="left" title="Escribe un apellido(opcional)" />
+			<span class="avisos" id="aApellidoDos">
+				Puedes escribir tres apellido como máximo( 3 a 10 caracteres no númericos o simbolos).
+			</span>
+			</div>
 
-		<li href="#">
-		a
-		</li>
-
-		<li href="#">
-		b
-		</li>
-	</ul>
-
-
-	<h3>Añadir foto de perfil.</h3>
-
-	<form action="login/fotoPerfil" enctype="multipart/form-data" method="post">
-
-    <label for="imagen">
-    Imagen:
-		</label>
-
-    <input id="imagen" name="imagen" size="30" type="file" />
+			<div class="form-group">
+			<label for="idEmail">Email</label><span class="obligatorio">*</span>
+			<input class="form-control" type="text" id="idEmail" name="correo"
+			placeholder="email@email.com" data-toogle="tooltip" data-placement="left" title="introduce un correo electrónico válido"/>
+			<span class="avisos" id="aEmail">
+				Debes escribir un correo válido.
+			</span>
+			</div>
+			<div class="avisos" id="mailAviso"></div>
 
 
-    <input name="submit" type="submit" value="Guardar" />
+			<div class="form-group">
+			<label for="idPwd"> Nueva Contraseña</label><span class="obligatorio">*</span>
+			<input class="form-control" type="password" id="idPwd"
+			data-toogle="tooltip" data-placement="left" title="contraseña" onfocusout="validarPass()"/>
+			<input class="form-control" type="hidden" id="hash_passwrd" name="hash_passwrd" />
+			<span class="avisos" id="aPwd">
+				Entre 5 y 15 caracteres. La contraseña ha de incluir al menos tres de los siguientes elementos: números, mayúsculas, minúsculas o alguno de estos símbolos ($, @, !, %,*, &amp;).
+			</span>
+			</div>
 
+			<div class="form-group">
+			<label for="idPwdD">Repetir Contraseña</label><span class="obligatorio">*</span>
+			<input class="form-control" type="password" id="idPwdD" onfocusout="confirmarPass();"
+			data-toogle="tooltip" data-placement="left" title="repite la contraseña"/>
+			<span class="avisos" id="aPwdD">
+				Debe coincidir con la contraseña introducida en el recuadro anterior.
+			</span>
+			</div>
 
-</form> 
--->
+			<div class="form-group">
+			<label for="idPais">Selecciona país</label><span class="obligatorio">*</span>
+			<select class="form-control" name="pais" id="idPais"
+			data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
+			<?php foreach ($paises as $pais): ?>
+				<option value="<?=$pais->id?>" <?=($pais->nombre == "España") ? "selected='selected'" : " "?> >
+					<?=$pais->nombre?></option>
+			<?php endforeach;?>
+			</select>
+			</div>
+			<br/>
+			<div class="input-group">
+			<label for="idFecha">Fecha de nacimiento</label><span class="obligatorio">*</span>&nbsp;&nbsp;
+			<input  type="text" id="idFecha" name="fecha" onchange="calcularEdad();" />
+			<span class="avisos" id="aFecha">
+				Debes ser mayor de 13 años.
+			</span>
+			<div id="result"></div>
+			</div>
+			<hr/>
+			<div class="form-group">
+				<p>Debes introducir tu antigua contraseña si quieres seguir adelante.</p>
+			<label for="pass_antigua">Antigua ontraseña</label><span class="obligatorio">*</span>
+			<input class="form-control" type="password" id="pass_antigua"
+			data-toogle="tooltip" data-placement="left" title="contraseña" onchange="comprobar_pwd()"/>
+			<input class="form-control" type="hidden" id="ant_hash_passwrd" name="ant_hash_passwrd" />
+			<span class="avisos" id="anteriorPwd">
+				Entre 5 y 15 caracteres. La contraseña ha de incluir al menos tres de los siguientes elementos: números, mayúsculas, minúsculas o alguno de estos símbolos ($, @, !, %,*, &amp;).
+			</span>
+			</div>
+
+			<div class="nav navbar-form navbar-right">
+			<input type="button" class="btn btn-default" id="registrarse" name ="registrarse" value="Registrarse" onclick="validar();"
+			 />
+			 <input type="hidden" id="idUsuario" name="idUsuario">
+			</div>
+			</form>
+</div>
+<div id="tabs-3">
+<h2>Content heading 3</h2>
+
+</div>
+
 </section>
 </div>
 

@@ -12,6 +12,19 @@ class Login extends CI_Controller{
 		enmarcar($this,"login/loginForm",$datos);
 	}
 
+	public function comprobarRol(){
+		if (session_status () == PHP_SESSION_NONE) {session_start ();}
+		if (isset ( $_SESSION ['rol'] ) && ($_SESSION['rol'] == 'administrador')) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function acceso_denegado(){
+		$this->load -> view('templates_admin/access');
+	}
+
 	public function loginPost(){
 		$this -> load ->model("usuario_model");
 		$this -> load ->model("administrador_model");
@@ -21,11 +34,14 @@ class Login extends CI_Controller{
 		$recordar = isset($_POST["recordar"])?$_POST["recordar"]:"";
 		$tokenAdm = isset($_POST["tken"])?$_POST["tken"]:null;
 		//Comparacion de String -> Devuelve < 0 si str1 es menor que str2; > 0 si str1 es mayor que str2 y 0 si son iguales.
+		$ok = false;
 		if($usuario !=null && $today!=null) {
 			try {
 				$identificarse = $this -> usuario_model -> comprobar_login($usuario,$pwd);
+
 				if ($identificarse) {
 					$f_ban = $identificarse['fecha_ban'];
+					$token_pwd = $identificarse['token_pwd'];
 					if ($f_ban > 0) {
 						//Faltaría meter áños, si los hay. o dejarlo solo en días.
 						$actual = strtotime(date("d-m-Y H:i:00",($today/1000)));
@@ -94,6 +110,11 @@ class Login extends CI_Controller{
 			$datos["mensaje"]['nivel']="ok";
 			enmarcar($this, 'login/mensaje',$datos);
 			header("Refresh:3;url=".base_url());
+		} elseif ((isset($_GET['aviso'])) && ($_GET['aviso']=='1')) {
+			$datos["mensaje"]["texto"]="Logueado con éxito, recuerda cambiar tu contrase&ntilde;a temporal. <br/>Redirigiendo al inicio...";
+			$datos["mensaje"]['nivel']="ok";
+			enmarcar($this, 'login/mensaje',$datos);
+			header("Refresh:3;url=".base_url());
 		} else {
 			// enmarcar($this, 'templates_admin/dashboard',$datos);
 			header("location:".base_url());
@@ -102,12 +123,12 @@ class Login extends CI_Controller{
 	
 	public function loginError() {
 		if (isset($_GET['tken'])) {
-			$datos["mensaje"]["texto"]="Usuario o contraseña incorrecta.";
+			$datos["mensaje"]["texto"]="Usuario o contrase&ntilde;a incorrecta.";
 			$datos["mensaje"]['nivel']="error";
 			// header("location:".base_url()."templates_admin/loginAdmin".$datos);
 			header('location:'.base_url().'login/vista_login_administrador?n=aviso');
 		} else {
-			$datos["mensaje"]["texto"]="Usuario o contraseña incorrecta. ¡Prueba otra vez!...";
+			$datos["mensaje"]["texto"]="Usuario o contrase&ntilde;a incorrecta. ¡Prueba otra vez!...";
 			$datos["mensaje"]['nivel']="error";
 			enmarcar($this, 'login/mensaje',$datos);
 			header("Refresh:3;url=".base_url()."login/loginGet");
@@ -161,16 +182,29 @@ class Login extends CI_Controller{
 		}
 	}
 
-
-
 	public function vista_login_administrador(){
 		$this-> load -> view('templates_admin/loginAdmin');
 	}
 
-	//Acceso a perfil
-
-	public function perfilUsuario(){
-		enmarcar($this,"login/perfilUser");
+	public function cambiar_pass(){
+			$this->load->model('administrador_model');
+			$user_id = isset($_GET['user_id'])?$_GET['user_id']:null;
+			$token = isset($_GET['token'])?$_GET['token']:null;
+			if ($user_id && $token) {
+				$comprobar = $this->administrador_model->getByID($user_id);
+				// echo $user_id;
+				// echo "<br>";
+				// echo $token;
+				// echo "<br>";
+				// print_r($comprobar);
+				if ($comprobar) {
+					if($token == $comprobar['token_pwd']) {
+						$datos["token"] = $token;
+						$datos["user_id"] = $user_id;
+						enmarcar($this,"login/recuperarPassword",$datos);
+					}
+				}
+			}
 	}
 
 }

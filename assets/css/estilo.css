@@ -114,12 +114,22 @@ a.icono-tw{
 
 
 /*VISTA DATOS PERFIL USUARIO  */
-.datos_user{
+
+/*gif de carga*/
+#cargando {
+		display: none;
+	}
+
+.datos_user {
+    position: relative;
     font-size: x-large;
-    font-weight: 600;
-    font-style: italic;
     text-decoration: underline;
-    text-decoration-color: darkcyan;
+    font-weight: 600;
+}
+
+p.formato-datos {
+	right: -5%;
+    position: relative;
 }
 
 

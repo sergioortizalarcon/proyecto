@@ -40,7 +40,7 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="<?=base_url()?>login/perfilUsuario"><i class="fas fa-user"></i> User Profile</a>
+                        <li><a href="<?=base_url()?>usuario/perfilUsuario"><i class="fas fa-user"></i> User Profile</a>
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>

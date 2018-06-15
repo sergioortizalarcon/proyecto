@@ -6,7 +6,7 @@
 <link rel="shortcut icon" href="<?= base_url(); ?>assets/img/images/favicon.ico">
 
 <link rel="stylesheet" href="<?=base_url()?>assets/css/dataTables.min.css">
-<link rel="stylesheet" href="<?=base_url()?>assets/css/jquery-ui.css">
+<link href="<?=base_url()?>assets/css/jquery-ui.css" rel="stylesheet" type="text/css" />
 
 <link rel="stylesheet" href="<?=base_url()?>assets/css/fontawesome-all.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/css/fa-brands.min.css">
@@ -26,33 +26,12 @@
 <!--Necesarios para el sorteo de la lista-->
 <script type="text/javascript" src="<?=base_url()?>assets/js/datatables.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/dataTables.jqueryui.js"></script>
-<!--Iconos sociales...-->
 
-<!--Esto es opcional:
-	se debería poner para que saliesen los tooltips pero funcionan sin ello, por la librería online
-	de jquery presupongo, igual lo dejo para evitar problemas mientras
--->
 <script>
 	  $(document).ready(function(){
 	  	$('[data-toggle="tooltip"]').tooltip();
 	  });
   </script>
-<!-- <script>
-  $(document).ready(function(){
-    //$("#idFecha").datepicker("option",$.datepicker.regional["es"]);
-    $("#idFecha").datepicker({
-    changeMonth: true,
-        changeYear: true,
-        regional: "es",
-        yearRange: '1918:2018',
-        showAnim: 'clip',
-        showOn: "button",
-        buttonImage: "<=base_url()?>assets/img/images/calendar.gif",
-        buttonImageOnly: true,
-        buttonText: "Selecciona una fecha válida"
-    });
-  });
-</script> -->
 <script>
   $(document).ready(function(){
     $("#tabs").tabs();

@@ -7,8 +7,8 @@ class Administrador_model extends CI_Model {
 		return R::findAll('usuarios','order by id asc');
 	}
 
-	public function getUsuario($filtro='') {
-		return R::findOne("usuarios","email or alias like ?", [$filtro]);
+	public function getUsuario($filtro) {
+		return R::findOne("usuarios","email = ? or alias = ?", [$filtro,$filtro]);
 	}
 
 	public function getByID($id) {
@@ -89,6 +89,40 @@ class Administrador_model extends CI_Model {
 			return false;
 		}
 	}
+
+
+	//esto agrega el token al usuario cuando se pide restaurar pwd, en controller. admin
+	public function recuperar_pwd($encriptar_password,$id_user){
+		$usuario = R::load("usuarios",$id_user);
+		$usuario -> token_pwd = $encriptar_password;
+		R::store($usuario);
+	}
+
+	//confirmacion del cambio obteniendo el token agregado y la id
+	public function confirmacion_reset_password($email,$token_confirmacion,$user_id) {
+		$cargar = R::findOne("usuarios","email=? and token_pwd=? and id=?",[$email,$token_confirmacion,$user_id]);
+		return $cargar;
+	}
+
+
+
+	public function update_pwd($hash_passwrd,$id_user){
+		$cargar = $this-> getByID($id_user);
+		if ($cargar->id!=0) {
+			$cargar -> password = $hash_passwrd;
+			$cargar->token_pwd = 0;
+			R::store($cargar);
+			return true;
+		} else {
+			throw new Exception("Se ha producido algún error");
+			return false;
+		}
+		R::close();
+	}
+
+
+
+
 	
 		/*
 	public function borrar($id) {
@@ -98,18 +132,46 @@ class Administrador_model extends CI_Model {
 		}
 		R::close ();
 	}
+
+	*/
 	
 	public function update($id, $nombre) {
 		$us = R::load ( 'usuarios', $id );
-		
 		$us->nombre = $nombre;
-		
 		R::store($us);
 		R::close();
 		
 	}
 
-	*/
+	//envia pwd nuevo
+	public function actualizar_datos_uno($user_id,$nombre,$ape1,$ape2,$email,$fecha,$idPais,$pwd) {
+		$usuario = R::load ('usuarios',$user_id);
+		$usuario -> nombre = $nombre;
+		$usuario -> apellido_uno = $ape1;
+		$usuario -> apellido_dos = $ape2;
+		$usuario -> email = $email;
+		$usuario -> fecha_nacimiento = $fecha;
+		$usuario -> password = $pwd;
+		$pais->paises = R::load("paises",$idPais);
+
+		R::store($usuario);
+		R::close();
+	}
+
+	//Envia demas datos, todos obligatorios
+	public function actualizar_datos_dos($user_id,$nombre,$ape1,$ape2,$email,$fecha,$idPais) {
+		$usuario = R::load ('usuarios',$user_id);
+		$usuario -> nombre = $nombre;
+		$usuario -> apellido_uno = $ape1;
+		$usuario -> apellido_dos = $ape2;
+		$usuario -> email = $email;
+		$usuario -> fecha_nacimiento = $fecha;
+		$pais->paises = R::load("paises",$idPais);
+
+		R::store($usuario);
+		R::close();
+	}
+
 
 
 

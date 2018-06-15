@@ -84,7 +84,7 @@ function validarFecha(){
 
     var fechaSis = new Date();
 	
-	idFormulario.idFecha.value=fechaSeparada[0] + "/" + fechaSeparada[1] + "/" + fechaSeparada[2];
+	idFormulario.idFecha.value=fechaSeparada[0] + "-" + fechaSeparada[1] + "-" + fechaSeparada[2];
 	if (anio > fechaSis.getFullYear()) {
 		idFormulario.idFecha.style.borderColor="red";
 		document.getElementById("aFecha").style.display="initial";

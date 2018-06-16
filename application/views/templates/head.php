@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="shortcut icon" href="<?= base_url(); ?>assets/img/images/favicon.ico">
+<!-- IE -->
+<link rel="shortcut icon" type="image/x-icon" href="<?= base_url(); ?>assets/img/images/favicon.ico" />
+<!-- other browsers -->
+<link rel="icon" type="image/x-icon" href="<?= base_url(); ?>assets/img/images/favicon.ico" />
 
 <link rel="stylesheet" href="<?=base_url()?>assets/css/dataTables.min.css">
 <link href="<?=base_url()?>assets/css/jquery-ui.css" rel="stylesheet" type="text/css" />

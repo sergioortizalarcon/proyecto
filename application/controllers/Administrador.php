@@ -57,17 +57,6 @@ class Administrador extends CI_Controller {
 	}
 
 
-	// public function aviso_mensaje($texto,$nivel,$link=[]){
-	// 	$datos['mensaje']['texto'] = $texto;
-	// 	$datos['mensaje']['nivel'] = $nivel;
-	// foreach($link as $key => $value){
-	// $datos ['mensaje'] ['link'] [$key] = $value;
-		
-	// }
-	// 	$this ->load ->view('templates_admin/mensaje', $datos);
-	// }
-
-
 		/*			ACCIONES CONTRA CUENTA DE USUARIO 			*/
 
 	public function update_estado($idUser,$idEstado,$fechaBan,$messagetext) {
@@ -377,7 +366,7 @@ class Administrador extends CI_Controller {
 		if ($this->comprobarRol()) {
 			if (session_status () == PHP_SESSION_NONE) {session_start ();}
 			$_SESSION['vista_user']="permiso";
-			header("Refresh:1;url=".base_url()."welcome/index");
+			header("Refresh:0;url=".base_url()."welcome/index");
 		} else {
 			$this->acceso_denegado();
 		}
@@ -387,7 +376,7 @@ class Administrador extends CI_Controller {
 		if ($this->comprobarRol()) {
 			if (session_status () == PHP_SESSION_NONE) {session_start ();}
 			unset($_SESSION['vista_user']);
-			header("Refresh:1;url=".base_url()."welcome/index");
+			header("Refresh:0;url=".base_url()."welcome/index");
 		} else {
 			$this->acceso_denegado();
 		}

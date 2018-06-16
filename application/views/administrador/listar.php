@@ -94,7 +94,6 @@
 	        </tfoot>
 		</table>
 	</div>
-<br/><hr/>
 </section>
 </div>
 <script>

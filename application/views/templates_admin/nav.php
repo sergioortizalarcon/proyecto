@@ -12,25 +12,25 @@
               </a>
             </li>
             <li class="treeview">
-              <a href="<?=base_url()?>pelicula/listar">
+              <a href="<?=base_url()?>Pelicula/listar">
                 &nbsp;&nbsp;&nbsp;<i class="fas fa-film"></i>&nbsp;
                 <span>Películas</span>
               </a>
             </li>
             <li class="treeview">
-              <a href="<?=base_url()?>reparto/listar" >
+              <a href="<?=base_url()?>Reparto/listar" >
                 &nbsp;&nbsp;&nbsp;<i class="fas fa-address-card"></i>&nbsp;
                 <span>Reparto</span>
               </a>
             </li>
             <li class="treeview">
-              <a href="<?=base_url()?>profesion/listar" >
-                &nbsp;&nbsp;&nbsp;<i class="fas fa-folder-open"></i>&nbsp;
+              <a href="<?=base_url()?>Profesion/listar" >
+                &nbsp;&nbsp;&nbsp;<i class="fas fa-people-carry"></i>&nbsp;
                 <span>Profesiones</span>
               </a>
             </li>
             <li class="treeview">
-              <a href="<?= base_url()?>pais/listar" >
+              <a href="<?= base_url()?>Pais/listar" >
                 &nbsp;&nbsp;&nbsp;<i class="fas fa-globe"></i>&nbsp;
                 <span>Países</span>
               </a>
@@ -42,19 +42,19 @@
               </a>
             </li>
             <li class="treeview">
-              <a href="<?= base_url()?>idioma/listar">
+              <a href="<?= base_url()?>Idioma/listar">
                 &nbsp;&nbsp;&nbsp;<i class="fas fa-language"></i>&nbsp;
                 <span>Idiomas</span>
               </a>
             </li>
             <li class="treeview">
-              <a href="<?= base_url()?>administrador/listar">
+              <a href="<?= base_url()?>Administrador/listar">
                 &nbsp;&nbsp;&nbsp;<i class="fa fa-users"></i>&nbsp;
                 <span>Usuarios</span>
               </a>
             </li>
             <li class="treeview">
-              <a href="<?=base_url()?>administrador/vista_usuario" >&nbsp;&nbsp;&nbsp;<i class="fas fa-door-open"></i>&nbsp;
+              <a href="<?=base_url()?>Administrador/vista_usuario" >&nbsp;&nbsp;&nbsp;<i class="fas fa-door-open"></i>&nbsp;
                 <span>Vista usuario</span>
               </a>
             </li>

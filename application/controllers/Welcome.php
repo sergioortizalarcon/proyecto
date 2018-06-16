@@ -17,7 +17,10 @@ class Welcome extends CI_Controller {
 			if(isset($_SESSION['vista_user']) && $_SESSION['vista_user']=='permiso'){
 				enmarcar($this, 'welcome_message');
 			} else {
-				enmarcar($this, 'templates_admin/dashboard');
+				$this->load->model("pelicula_model");
+				$var = $this->pelicula_model->getAll();
+				$datos['peliculas'] = count($var);
+				enmarcar($this, 'templates_admin/dashboard',$datos);
 			}
 	} else {
 			enmarcar($this, 'welcome_message');

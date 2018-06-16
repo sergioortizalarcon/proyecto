@@ -83,6 +83,27 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
 								}
 							}
 						}
+						var input2 = document.createElement('input');
+									input2.setAttribute('type','text');
+									input2.setAttribute('id','media_votos_totales'+i);
+									input2.setAttribute('name','media_votos_totales');
+									input2.setAttribute('size','70');
+									input2.setAttribute('value',0);
+									formi.appendChild(input2);
+						var input3 = document.createElement('input');
+									input3.setAttribute('type','text');
+									input3.setAttribute('id','votos_totales'+i);
+									input3.setAttribute('name','votos_totales');
+									input3.setAttribute('size','70');
+									input3.setAttribute('value',0);
+									formi.appendChild(input3);
+						var input31 = document.createElement('input');
+									input31.setAttribute('type','text');
+									input31.setAttribute('id','suma_total_votos'+i);
+									input31.setAttribute('name','suma_total_votos');
+									input31.setAttribute('size','70');
+									input31.setAttribute('value',0);
+									formi.appendChild(input31);
 						document.body.appendChild(formi);
 						inferno(nombre);
 					}

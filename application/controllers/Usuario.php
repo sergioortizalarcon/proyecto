@@ -302,6 +302,34 @@ class Usuario extends CI_Controller {
 			header("Refresh:3;url=".base_url().'usuario/perfilUsuario');
 		}
 	}
+
+
+	public function guardar_voto(){
+		$this->load->model("Pelicula_model");
+		$this->load->model("Administrador_model");
+		$this->load->model("usuario_model");
+
+		$id_peli = isset($_POST['postID'])?$_POST['postID']:null;
+		$voto = isset($_POST['ratingPoints'])?$_POST['ratingPoints']:null;
+		$id_user = isset($_POST['user'])?$_POST['user']:null;
+
+		$ratingRow['status'] = 'err';
+		if ($id_user != 0) {
+			$usuario = $this->Administrador_model->getByID($id_user);
+			$peli = $this->Pelicula_model->getPeliculaPorId($id_peli);
+			if ($usuario->id!=0 && $peli->id!=0) {
+				$p = $this->usuario_model->guardar_votacion_peli($id_peli,$voto,$id_user);
+        		$ratingRow['status'] = 'ok';
+        	}
+    	}
+    	if ($ratingRow['status'] == 'ok') {
+    		$ratingRow['actualizacion'] =  $this->Pelicula_model->getPeliculaPorId($id_peli);
+    	}
+
+		
+    //Return json formatted rating data
+    echo json_encode($ratingRow);
+	}
 	
 }
 

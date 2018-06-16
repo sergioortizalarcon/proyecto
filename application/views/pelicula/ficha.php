@@ -1,3 +1,8 @@
+<script>
+    $(document).ready(function(){
+        $( '.info-gen' ).tooltip();
+    });
+</script>
 <div class="container content-wrapper">
 	<section class="content">
 		<div id="tabs" class="divPestanas">
@@ -7,7 +12,6 @@
 				<li><a href="#reparto"> <i class="fas fa-film"></i> Reparto </a></li>
 				<li><a href="#galeria"> <i class="far fa-images"></i> Galería </a></li>
 			</ul>
-		
 			<div id="principal">
 				<div class="col-md-3" style="padding-top:20px;">
     				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
@@ -17,6 +21,26 @@
     					<div class="col-md-12">
     						<h4><?= $body['peliculas']->titulo ?></h4>
     					</div>
+    					<?php if (isset($_SESSION['idUser'])):?>
+                            <?php if (isset($body['votos']['voto'])): ?>
+                                <div class="info-gen aviso-user" title="Has calificado con <?=$body['votos']['voto']?>/5 esta película">
+                            <?else;?>
+                            <div class="info-gen aviso-user">
+                            <?php endif ?>
+							<input type="hidden" id="userId" value="<?=$_SESSION['idUser']?>" name="user"/>
+							<input name="rating" value="<?=isset($body['votos']['voto'])?$body['votos']['voto']:' '?>" id="rating_star" type="hidden" postID="<?=$body['peliculas']['id']?>" />
+                            </div>
+						<?php else: ?>
+                            <a class="info-gen" href="<?=base_url()?>Login/loginGet" title="Debes estar logueado para poder votar esta película">
+							<input type="hidden" id="userId" value="0" name="user"/>
+							<input name="rating" value="<?=$body['peliculas']['media_votos_totales']?>" id="rating_star" type="hidden" postID="<?=$body['peliculas']['id']?>" />
+                            </a>
+    					<?php endif; ?>
+    					<div class="overall-rating">
+						    <h6>(Calificación media <span id="avgrat"><?php echo $body['peliculas']['media_votos_totales']; ?>
+						    </span>
+                            <br/>basada en <span id="totalrat"><?php echo $body['peliculas']['votos_totales']; ?></span> votos totales)</h6>
+						</div>
     				</div>
 				</div> 
 				<div class="col-md-9" style="padding-top:20px;">
@@ -145,4 +169,38 @@
 		window.location="<?= base_url() ?>reparto/abrirFicha?id_reparto="+id;
 	}
 	
+</script>
+<script>
+</script>
+<script>
+    $( document ).ready(function() {
+    $("#rating_star").codexworld_rating_widget({
+        starLength: '5',
+        initialValue: '<?php echo isset($body['votos']['voto'])?$body['votos']['voto']:$body['peliculas']['media_votos_totales']?>',
+        callbackFunctionName: 'processRating',
+        imageDirectory: '<?=base_url()?>assets/img/images/',
+        inputAttr: 'postID'
+    });
+});
+    function processRating(val, attrVal){
+    user = $("#userId").val();
+    $.ajax({
+        type: 'POST',
+        url: '<?=base_url()?>Usuario/guardar_voto',
+        data: 'postID='+attrVal+'&ratingPoints='+val+'&user='+user,
+        dataType: 'json',
+        success : function(data) {
+            if (data.status == 'ok') {
+                alert('Has calificado con '+val+'/5 esta película');
+                $( ".aviso-user" ).attr( "title",'Has calificado con '+val+'/5 esta película');
+                $('#avgrat').text(data.actualizacion.media_votos_totales);
+                $('#totalrat').text(data.actualizacion.votos_totales);
+            }else{
+                <?php if(isset($_SESSION['idUser'])): ?>
+                alert('Some problem occured, please try again.');
+                <?php endif;?>
+            }
+        }
+    });
+};
 </script>

@@ -300,7 +300,14 @@ class Pelicula extends CI_Controller {
 	    $this->load->model ( 'pelicula_model' );
 	    $this->load->model('reparto_model');
 		$this->load->model('genero_model');
+		$this->load->model('usuario_model');
+		if (session_status () == PHP_SESSION_NONE) {session_start ();}
+		$id_user = isset($_SESSION['idUser'])?$_SESSION['idUser']:0;
 	    $id_pelicula = $_GET ['id_pelicula'];
+		$votos_usuario = $this->usuario_model->listar_votos_peli($id_pelicula,$id_user);
+		if ($votos_usuario!=null) {
+			$datos['body']['votos'] = $votos_usuario;
+		}
 	    $datos ['body']['peliculas'] = $this->pelicula_model->getPeliculaPorId ( $id_pelicula );
 		$datos['body']['repartos'] = $this->reparto_model->getAllActive();
 		$datos['body']['generos'] = $this->genero_model->getAllActive();

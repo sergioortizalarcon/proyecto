@@ -140,6 +140,93 @@ class Usuario_model extends CI_Model {
 	}
 
 
+	public function listar_votos_peli($id_pelicula,$id_user){
+		return R::findOne("votacion","pelicula_id=? and usuario_id=?",[$id_pelicula,$id_user]);
+	}
+
+	//guarda y actualiza el voto del usuario
+	public function guardar_votacion_peli($id_peli,$voto,$id_user){
+		$votaciones = R::findOne("votacion","pelicula_id = ? and usuario_id = ?",[$id_peli,$id_user]);
+		if ($votaciones == null) {
+			$votaciones = R::dispense("votacion");
+			$votaciones->pelicula_id = $id_peli;
+			$votaciones->usuario_id = $id_user;
+			$votaciones->voto = $voto;
+			$votaciones->creado = date("Y-m-d H:i:s");
+			$votaciones->modificado = date("Y-m-d H:i:s");
+			R::store($votaciones);
+			$this->guardar_votos_totales_pelis($id_peli,$voto);
+		} else {
+			$voto_anterior=$votaciones->voto;
+			$this->actualizar_votos_totales_pelis($id_peli,$voto,$voto_anterior);
+			$votaciones->voto = $voto;
+			$votaciones->modificado = date("Y-m-d H:i:s");
+			R::store($votaciones);
+		}
+		R::close();
+		return $votaciones;
+	}
+
+	//guarda el voto de la pelicula
+	public function guardar_votos_totales_pelis($id_peli,$voto){
+		$pelicula = R::load("peliculas",$id_peli);
+		//obtengo numero de votos totales en esta peli
+		$numero_votos=$pelicula->votos_totales;
+
+		//le sumo 1 dado que se guarda por primera vez para usuario-peli
+		$numero_votos_sumado=$numero_votos+1;
+
+		//le sumo el voto al total de votos que haya para poder hacer update de cada voto.
+		$suma_total=$pelicula->suma_total_votos+$voto;
+
+		//obtengo la media entre el total y el numero de votos
+		$media = $suma_total/$numero_votos_sumado;
+		$mediadivision=round($media,1);
+		if ($mediadivision <= -1) {
+			$mediadivision=50;
+		} else if($mediadivision >= 5){
+			$mediadivision=5;
+		}
+		
+		$pelicula->votos_totales=$numero_votos_sumado;
+		$pelicula->suma_total_votos=$suma_total;
+		$pelicula->media_votos_totales=$mediadivision;
+		R::store($pelicula);
+	}
+
+	//actualiza el voto de la pelicula con los cambios que haga el usuario
+	public function actualizar_votos_totales_pelis($id_peli,$voto_actualizado,$voto_anterior){
+		$pelicula = R::load("peliculas",$id_peli);
+		//obtengo numero de votos totales en esta peli
+		$numero_votos = $pelicula->votos_totales;
+		
+		//Obtengo la suma total de esos votos
+		$suma_total=$pelicula->suma_total_votos;
+		
+		//le resto del total el voto anterior del usuario
+		$votocambio=$suma_total-$voto_anterior;
+		
+		//le sumo el nuevo voto al total
+		$votocambio_actualizado=$votocambio+$voto_actualizado;
+
+		$media = $votocambio_actualizado/$numero_votos;
+		$mediadivision=round($media,1);
+		if ($mediadivision <= -1) {
+			$mediadivision=100;
+		} else if($mediadivision >= 5){
+			$mediadivision=5;
+		}
+
+		$pelicula->suma_total_votos=$votocambio_actualizado;
+		$pelicula->media_votos_totales=$mediadivision;
+		R::store($pelicula);
+	}
+
+	// public function listar_votaciones_totales(){
+		
+	// }
+
+
 
 }
 

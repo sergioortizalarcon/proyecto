@@ -10,7 +10,7 @@
 
 <link rel="stylesheet" href="<?=base_url()?>assets/css/dataTables.min.css">
 <link href="<?=base_url()?>assets/css/jquery-ui.css" rel="stylesheet" type="text/css" />
-
+<link href="<?=base_url()?>assets/css/rating.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="<?=base_url()?>assets/css/fontawesome-all.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/css/fa-brands.min.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/css/vistaImagenActor.css">
@@ -28,6 +28,7 @@
 
 <!--Necesarios para el sorteo de la lista-->
 <script type="text/javascript" src="<?=base_url()?>assets/js/datatables.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/js/rating.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/dataTables.jqueryui.js"></script>
 
 <script>

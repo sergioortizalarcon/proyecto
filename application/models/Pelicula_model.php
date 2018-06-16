@@ -2,7 +2,7 @@
 class Pelicula_model extends CI_Model {
 
     public function createPelicula ( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartosDirector, $cadRepartosActor, $cadGeneros, $sinopsis, $foto, $estado) {
-        $pelicula = R::find('peliculas', 'titulo like ? and tituloOriginal like ? and fechaLanzamiento like ?', [$titulo,$tituloOriginal,$fechaLanzamiento]);
+        $pelicula = R::find('peliculas', 'titulo = ? and tituloOriginal = ? and fechaLanzamiento = ?', [$titulo,$tituloOriginal,$fechaLanzamiento]);
         if ($pelicula == null) {
             $pelicula = R::dispense ( 'peliculas' );
             $pelicula -> titulo = $titulo;
@@ -10,6 +10,9 @@ class Pelicula_model extends CI_Model {
             $pelicula -> adulto = $adulto;
             $pelicula -> fecha_lanzamiento = $fechaLanzamiento;
             $pelicula -> popularidad = $popularity;
+            $pelicula -> votos_totales = 0;
+            $pelicula -> suma_total_votos = 0;
+            $pelicula -> media_votos_totales = 0;
             $pelicula -> sinopsis = $sinopsis;
             $pelicula -> ruta_cartel = base_url().$foto;
             $pelicula -> estado = $estado;
@@ -59,13 +62,15 @@ class Pelicula_model extends CI_Model {
 	}
 	
     public function insertPelicula($id,$title,$original_title,$poster_path,$popularity,$release_date,$adult,$original_language,$overview,$genre_ids,$estado) {
-        $pelicula = R::findOne('peliculas','id_tmdb like ? and titulo_original like ? and titulo like ?',[$id,$original_title,$title]);
+        $pelicula = R::findOne('peliculas','id_tmdb = ? and titulo_original = ? and titulo = ?',[$id,$original_title,$title]);
         if ($pelicula == null) {
             $nueva_pelicula = R::dispense('peliculas');
             $nueva_pelicula -> titulo = $title;
             $nueva_pelicula -> titulo_original = $original_title;
             $nueva_pelicula -> ruta_cartel = $poster_path;
             $nueva_pelicula -> popularidad = $popularity;
+            $nueva_pelicula -> votos_totales = 0;
+            $nueva_pelicula -> media_votos_totales = 0;
             $nueva_pelicula -> fecha_lanzamiento= $release_date;
             $nueva_pelicula -> adulto= $adult;
             $nueva_pelicula -> original_language= $original_language;
@@ -94,6 +99,8 @@ class Pelicula_model extends CI_Model {
 		$pelicula -> popularidad = $popularity;
 		$pelicula -> sinopsis = $sinopsis;
 		$pelicula -> ruta_cartel = base_url().$foto;
+        $pelicula -> votos_totales = 0;
+        $pelicula -> media_votos_totales = 0;
 		$pelicula -> estado = $estado;
 		$pelicula -> original_language = $lenguage;
 		$generos = explode(",",$cadGeneros);

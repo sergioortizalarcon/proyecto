@@ -475,14 +475,5 @@ data-toogle="tooltip" data-placement="left" title="Selecciona tu país">
 </form>
 </div>
 
-<script>
 
-	document.getElementById("idNombre").value="juan";
-document.getElementById("idApe1").value="Fernández";
-document.getElementById("idAlias").value="cp08";
-document.getElementById("idEmail").value="19pc@gmail.com";
-document.getElementById("idEmailV").value="19pc@gmail.com";
-document.getElementById("idPwd").value="23aA$@$!%*?&";//   eudSsd$3q! ajsut!12E$c
-document.getElementById("idPwdD").value="23aA$@$!%*?&";
-</script>
 </div>

@@ -71,27 +71,44 @@ body.custom-background {
 
 	/* EFECTOS DE FOOTER  */
 #footer{
-    background: #161616;
+    color: black;
+    border-top: 1px solid black;
+    
     font-size: 15px;
     padding-top: 1%;
     padding-bottom: 1%;
     line-height: 1.8;
-    background-color: black;
+    
     border-radius: 5px;
 }
-
+.text-right{
+	text-align: right;
+}
+.bold{
+	font-weight: bold;
+}
 #footer ul{
-	float: left;
+	
 	list-style:none;
 }
 
 .wrap {
 	overflow: hidden;
 }
-
+.width-50{
+	width: 50%;
+	margin: 0 auto;
+}
+.float-left{
+	float: left;
+}
+.float-right{
+	float: right;
+}
 li.titulo {
-	font-weight: 600;
-	color:white;
+	font-weight: 2em;
+	color:black;
+	font-weight: bold;
 }
 
 i.icono-face {

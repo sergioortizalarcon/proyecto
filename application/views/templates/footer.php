@@ -1,20 +1,21 @@
 <footer class="container">
 	<div id="footer">
         <div class="wrap">
-				<ul>
+				<ul class="width-50 float-left bold text-right">
                     <li class="titulo">Información</li>
-					<li><a href="#">FAQ</a></li>
-					<li><a href="#">Contactanos</a></li>
-				</ul>
-				<ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Contáctanos</a></li>
+                </ul>
+				<ul class="width-50 float-left bold">
                     <li class="titulo">Redes</li>
 					<li>
-						<a href="https://www.facebook.com/"><span class="fab fa-facebook"> Facebook</span></a>
+						<a href="https://www.facebook.com/" target="_blank"><span class="fab fa-facebook"> Facebook</span></a>
 					</li>
 					<li>
-    				<a href="https://www.twitter.com/"><span class="fab fa-twitter"> Twitter</span></a>
+    				<a href="https://www.twitter.com/" target="_blank"><span class="fab fa-twitter"> Twitter</span></a>
   					</li>
 				</ul>
+
 		</div>
     </div>
 

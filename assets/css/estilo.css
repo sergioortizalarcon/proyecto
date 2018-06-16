@@ -71,9 +71,9 @@ body.custom-background {
 
 	/* EFECTOS DE FOOTER  */
 #footer{
-    color: black;
+    color: grey;
     border-top: 1px solid black;
-    
+    background-color: black;
     font-size: 15px;
     padding-top: 1%;
     padding-bottom: 1%;
@@ -107,7 +107,7 @@ body.custom-background {
 }
 li.titulo {
 	font-weight: 2em;
-	color:black;
+	color:grey;
 	font-weight: bold;
 }
 

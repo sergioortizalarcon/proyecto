@@ -1,8 +1,8 @@
 <!DOCTYPE html >
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 <!-- IE -->
 <link rel="shortcut icon" type="image/x-icon" href="<?= base_url(); ?>assets/img/images/favicon.ico" />
 <!-- other browsers -->

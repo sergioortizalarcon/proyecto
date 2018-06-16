@@ -21,12 +21,8 @@
     					<div class="col-md-12">
     						<h4><?= $body['peliculas']->titulo ?></h4>
     					</div>
-    					<?php if (isset($_SESSION['idUser'])):?>
-                            <?php if (isset($body['votos']['voto'])): ?>
-                                <div class="info-gen aviso-user" title="Has calificado con <?=$body['votos']['voto']?>/5 esta película">
-                            <?else;?>
-                            <div class="info-gen aviso-user">
-                            <?php endif ?>
+    					<?php if(isset($_SESSION['idUser'])):?>
+                        <div class="info-gen aviso-user" title="Has calificado con <?=isset($body['votos']['voto'])?$body['votos']['voto']:'0'?>/5 esta película">
 							<input type="hidden" id="userId" value="<?=$_SESSION['idUser']?>" name="user"/>
 							<input name="rating" value="<?=isset($body['votos']['voto'])?$body['votos']['voto']:' '?>" id="rating_star" type="hidden" postID="<?=$body['peliculas']['id']?>" />
                             </div>
@@ -92,7 +88,7 @@
     					<?php foreach($body['repartos'] as $reparto): ?>
     						<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
 								<?php if($prof->nombre == 'Director'):?>
-									<div class="col-md-6" id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);">
+									<div class="col-md-6" id="<?= $reparto->id ?>" onclick="mostrarFicha(this.id);">
     									<div class="row-md-3" style="display:inline">
 	    									<img src="<?= $reparto->ruta_foto ?>" style="width:100px; height:150px;" />
 	    								</div>
@@ -108,7 +104,7 @@
     					<?php foreach($body['repartos'] as $reparto): ?>
     						<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
 								<?php if($prof->nombre == 'Actor'):?>
-									<div class="col-md-6" id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);">
+									<div class="col-md-6" id="<?= $reparto->id ?>" onclick="mostrarFicha(this.id);">
     									<div class="row-md-3" style="display:inline">
 	    									<img src="<?= $reparto->ruta_foto ?>" style="width:100px; height:150px;" />
 	    								</div>

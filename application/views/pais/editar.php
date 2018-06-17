@@ -3,6 +3,14 @@ var correcto = true;
 var nombreCorrecto = false;
 var nombre="";
 
+function cancelarCambio(){
+	var cancelarRegistro = confirm("¿Realmente quieres cancelar la edición de este elemento?");
+
+	if (cancelarRegistro) {
+		window.location.href = "<?=base_url()?>/pais/listar";
+	}
+}
+
 function mayuscula(palabra, id) {
 	var palabrasSeparadas = palabra.split(" ");
 	var palabraNueva="";
@@ -80,7 +88,7 @@ function cancelarRegistro(){
 }
 </script>
 
-<div class="container content-wrapper">
+<div class="content-wrapper">
 	<section class="content-header">
       <h1>
         <i class="fas fa-globe"></i>&nbsp;&nbsp;Editar país

@@ -28,7 +28,7 @@
 			<thead>
 			<tr>
 				<th>Id usuario</th>
-				<th>info</th>
+				<th>Estado cuenta</th>
 				<th>Nombre usuario</th>
 				<th>1º Apellido usuario</th>
 				<th>2º Apellido usuario</th>
@@ -36,7 +36,6 @@
 				<th>Email usuario</th>
 				<th>País</th>
 				<th>Rol</th>
-				<th>Estado cuenta</th>
 				<th>Fecha de nacimiento del usuario</th>
 				<th>Acciones</th>
 
@@ -64,7 +63,6 @@
 					<td> <?=$key->email?> </td>
 					<td> <?=$key->paises["nombre"]?> </td>
 					<td> <?=$key->roles["rol"]?> </td>
-					<td> <?=$key->estados['estado']?></td>
 					<td> <?=$key->fecha_nacimiento?></td>
 
 					<td class="botones">
@@ -78,8 +76,8 @@
 	        </tbody>
 	        <tfoot>
 	        <tr>
-		        <th>info</th>
 		        <th>Id usuario</th>
+		        <th>Estado cuenta</th>
 		        <th>Nombre usuario</th>
 				<th>1º Apellido usuario</th>
 				<th>2º Apellido usuario</th>
@@ -87,7 +85,6 @@
 				<th>Email usuario</th>
 				<th>País</th>
 				<th>Rol</th>
-				<th>Estado cuenta</th>
 				<th>Fecha de nacimiento del usuario</th>
 				<th>Acciones</th>
 			</tr>

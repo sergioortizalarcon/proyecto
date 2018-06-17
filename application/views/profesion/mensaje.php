@@ -1,4 +1,4 @@
-<div class="container content-wrapper">
+<div class="content-wrapper">
 <section class="content-header">
   <span class="alert alert-info" style="font-size: x-large;">Info!</span>
 </section>

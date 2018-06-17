@@ -27,7 +27,7 @@ class Profesion_model extends CI_Model {
 	}
 	
 	public function getprofesionPorId($id_profesion) {
-		return R::load ( 'profesion', $id_profesion );
+		return R::load ( 'profesiones', $id_profesion );
 	}
 	
 	public function getprofesionPorNombre($nombre) {

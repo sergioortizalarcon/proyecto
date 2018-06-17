@@ -80,7 +80,7 @@ function cancelarRegistro(){
 </script>
 
 
-<div class="container content-wrapper">
+<div class="content-wrapper">
 	<section class="content-header">
       <h1>
         <i class="far fa-folder-open"></i>&nbsp;&nbsp;Editar género
@@ -90,12 +90,11 @@ function cancelarRegistro(){
 	<form id="idFormulario" method="post" action="<?=base_url()?>profesion/editarPost">
 		<fieldset>
 			<legend>Editar profesion</legend>
-
 			<div class="form-group">
 				<label for="idNombreAnterior">Nombre anterior</label> <input
 				class="form-control" type="text" id="idNombreAnterior"
-				name="nombreAnterior" disabled="disabled"
-				<?= ($body["profesiones"]->nombre)?"value=".$body["profesiones"]->nombre:"" ?>>
+				name="nombreAnterior" disabled="disabled" 
+				value="<?= isset($body['profesiones']->nombre)?$body['profesiones']->nombre:" "?>"/>
 
 			</div>
 			<div class="form-group">

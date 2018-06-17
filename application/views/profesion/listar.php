@@ -43,8 +43,8 @@
 												action="<?=base_url()?>profesion/editar" method="post">
 												<input type="hidden" name="id_profesion"
 													value="<?= $profesion -> id?>">
-												<button class="btn btn-info btn-sm" class="botones"
-													onclick="function f() {document.getElementById('idFormEdit').submit();}">
+												<button class="btn btn-info btn-sm"
+													type="submit">
 													<i class="fas fa-edit"></i>
 												</button>
 											</form>
@@ -53,8 +53,8 @@
 												<input type="hidden" name="id_profesion"
 													value="<?= $profesion -> id?>"> <input type="hidden" name="v"
 													value="listarTodos">
-												<button class="btn btn-warning btn-sm" class="botones"
-													onclick="function f() {document.getElementById('idFormRemove').submit();}">
+												<button class="btn btn-warning btn-sm botones"
+													type="submit()">
 													<i class="fas fa-trash"></i>
 												</button>
 											</form>
@@ -69,7 +69,8 @@
             								<form class="listado" id="idFormActive<?= $profesion->id ?>" action="<?=base_url()?>profesion/activarPost" method="post">
             									<input type="hidden" name="id_profesion" value="<?= $profesion -> id?>">
             									<input type="hidden" name="v" value="listarTodos">
-            									<button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Activar<?= $profesion->id ?>').submit();}">
+            									<button class="btn btn-warning btn-sm botones"
+													type="submit()">
             										<i class="fas fa-plus-circle"></i>
             									</button>
             								</form>

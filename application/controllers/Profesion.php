@@ -89,6 +89,8 @@ class Profesion extends CI_Controller {
 				
 			$datos ['mensaje'] ['texto'] = "La profesión " . $nombre_anterior . " se ha actualizado a " . $nombre_nuevo;
 			$datos ['mensaje'] ['nivel'] = 'ok';
+			$datos ['mensaje'] ['link'] ['listar'] = "profesion";
+			$datos ['mensaje'] ['link'] ['crear'] = "profesion";
 			enmarcar ( $this, 'profesion/mensaje', $datos );
 		} catch ( Exception $e ) {
 			$datos ['mensaje'] ['texto'] = "El nuevo nombre ya existe";

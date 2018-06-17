@@ -1,3 +1,13 @@
+<script>
+	function confirmarBorrado(){
+	var cancelarRegistro = confirm("¿Realmente quieres cancelar el registo?");
+
+	if (cancelarRegistro) {
+		borrado.submit();
+	}
+}
+</script>
+
 <?php if ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")):?>
 <div class="content-wrapper">
 <?php else: ?>
@@ -25,6 +35,7 @@
 				<table id="efectoTabla" class="display table table-bordered ">
 					<thead>
 						<tr>
+							<th>Id</th>
 							<th>Nombre</th>
 							<th>Estado</th>
 							<th>Acciones</th>
@@ -34,6 +45,7 @@
         					<?php foreach ($body['paises'] as $pais): ?>
             					<?php if($pais-> activo != 'inactivo'):?>
             						<tr id="<?= $pais->id ?>">
+							<td><?= $pais->id?></td>
 							<td><?= $pais->nombre ?></td>
 							<td><?= $pais->estado ?></td>
 							<td>
@@ -46,13 +58,13 @@
 										<i class="fas fa-edit"></i>
 									</button>
 								</form>
-								<form class="listado" id="idFormRemove<?= $pais->id ?>"
+								<form class="listado" name="borrado" id="idFormRemove<?= $pais->id ?>"
 									action="<?=base_url()?>pais/borrarPost" method="post">
 									<input type="hidden" name="id_pais"
 										value="<?= $pais-> id?>"> <input type="hidden" name="v"
 										value="listarTodos">
 									<button class="btn btn-warning btn-sm"
-										onclick="function f() {document.getElementById('Editar<?= $pais->id ?>').submit();}">
+										onclick="confirmarBorrado();">
 										<i class="fas fa-trash"></i>
 									</button>
 								</form>
@@ -63,13 +75,13 @@
 							<td><?= $pais->nombre ?></td>
 							<td><?= $pais->estado ?></td>
 							<td>
-								<form class="listado" id="idFormActive<?= $pais->id ?>"
+								<form class="listado" name="borrado" id="idFormActive<?= $pais->id ?>"
 									action="<?=base_url()?>pais/activarPost" method="post">
 									<input type="hidden" name="id_pais"
 										value="<?= $pais-> id?>"> <input type="hidden" name="v"
 										value="listarTodos">
 									<button class="btn btn-warning btn-sm"
-										onclick="function f() {document.getElementById('Activar<?= $pais->id ?>').submit();}">
+										onclick="confirmarBorrado();">
 										<i class="fas fa-plus-circle"></i>
 									</button>
 								</form>
@@ -80,6 +92,7 @@
         				</tbody>
 					<tfoot>
 						<tr>
+							<th>Id</th>
 							<th>Nombre</th>
 							<th>Estado</th>
 							<th>Acciones</th>

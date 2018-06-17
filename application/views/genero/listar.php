@@ -38,16 +38,15 @@
 							<td><?= $genero->estado ?></td>
 							<td>
 								<form class="listado" id="idFormEdit<?= $genero->id ?>"
-									action="<?=base_url()?>genero/editar" method="post">
+									action="<?=base_url()?>Genero/editar" method="post">
 									<input type="hidden" name="id_genero"
 										value="<?= $genero-> id?>">
-									<button class="btn btn-info btn-sm"
-										onclick="function f() {document.getElementById('Borrar<?= $genero->id ?>').submit();}">
+									<button type ="submit" class="btn btn-info btn-sm">
 										<i class="fas fa-edit"></i>
 									</button>
 								</form>
 								<form class="listado" id="idFormRemove<?= $genero->id ?>"
-									action="<?=base_url()?>genero/borrarPost" method="post">
+									action="<?=base_url()?>Genero/borrarPost" method="post">
 									<input type="hidden" name="id_genero"
 										value="<?= $genero-> id?>"> <input type="hidden" name="v"
 										value="listarTodos">

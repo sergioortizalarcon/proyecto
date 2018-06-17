@@ -382,14 +382,13 @@ function cancelarRegistro(){
 					<?php endforeach; ?>
 				</select>
 			</div>
-			
 			<div class="form-group">
 				<label for="idRepartoActor">Actor/es:</label><span class="obligatorio">*</span>
 				<select multiple class="form-control" id="idRepartoActor" name="repartoActor[]"
 				data-toogle="tooltip" data-placement="left" title="Selecciona la persona" size="5">
 					<?php foreach($repartos as $reparto):?>
 						<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
-							<?php if($prof->nombre == 'Actor'):?>
+							<?php if(strtoupper($prof->nombre) == strtoupper('Actor')):?>
 								<option value="<?=$reparto -> id?>" <?=($reparto -> id == "1")?"selected='selected'":" "?>><?= $reparto->nombre ?> <?= $reparto->apellido1?></option>
 							<?php endif; ?>
 						<?php endforeach; ?>
@@ -399,9 +398,13 @@ function cancelarRegistro(){
 			
 			<input type="hidden" value="Activo" name="estado" />
 
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<label for="idPopularidad">Popularidad: </label><span class="obligatorio">*</span>
-				<input class="form-control" type="number" id="idPopularidad" name="popularity" placeholder="Popularidad..." />
+				<input class="form-control bfh-number" data-min="5" data-max="25" type="number" id="idPopularidad" name="popularity" data-bind="value:replyNumber" placeholder="Popularidad..." />
+			</div> -->
+			<div id="slider">
+			  <div id="custom-handle" class="ui-slider-handle"></div>
+			  <input type="hidden" id="idPopularidad" name="popularity"/>
 			</div>
 
 			<div class="form-group">
@@ -438,6 +441,35 @@ function cancelarRegistro(){
 	</form>
 	</section>
 </div>
+<style type="text/css">
+	#custom-handle {
+    width: 3em;
+    height: 1.6em;
+    top: 50%;
+    margin-top: -.8em;
+    text-align: center;
+    line-height: 1.6em;
+  }
+</style>
+
+<script>
+  $( function() {
+    var handle = $( "#custom-handle" );
+    $( "#slider" ).slider({
+    	value:100,
+            min: 0,
+            max: 5000000,
+            step: 104,
+      create: function() {
+        handle.text( $( this ).slider( "value" ) +"k.");
+      },
+      slide: function( event, ui ) {
+        handle.text( ui.value +"k.");
+        $("#idPopularidad").val(ui.value+"k.");
+      }
+    });
+  } );
+</script>
 <script>
 	function archivo(evt) {
       	var files = evt.target.files; // FileList object

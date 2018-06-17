@@ -6,7 +6,7 @@
     overflow: auto;
 }
 </style>
-<?php if ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")):?>
+<?php if ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador") &&(!isset($_SESSION['vista_user']))):?>
 <div class="content-wrapper">
 	<?php else: ?>
 	<div class="container content-wrapper">

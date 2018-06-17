@@ -42,8 +42,6 @@
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="<?=base_url()?>usuario/perfilUsuario"><i class="fas fa-user"></i>Perfil de usuario</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
                         <?php if(isset($_SESSION['rol']) && ($_SESSION['rol'] == 'administrador')): ?>
 	                        <li>
 			              		<a href="<?=base_url()?>administrador/vista_admin" >

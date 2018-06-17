@@ -184,7 +184,7 @@ function validar() {
 			seleccionados[i].selected = true;
 		}
 		if (idFormulario.idDirectoresElegidos.value == "" || idFormulario.idActoresElegidos.value == "") {
-			if (confirm("¿Quieres guardar el formulario sin actores o director?(Se pueden añadir después)")) {
+			if (confirm("¿Quieres guardar el formulario sin actores o directores?(Se pueden añadir después)")) {
 				idFormulario.submit();
 			}
 		} else {
@@ -213,8 +213,8 @@ function anadirGenero(value,id) {
 	seleccionado.remove(seleccionado.selectedIndex);
 }
 
-function borrarGenero(value,id1) {
-	var sel = document.getElementById("idGenerosTodos").innerHTML += "<option onclick='anadirGenero(this.value,this.id);' id='"+id1+"' value='"+value+"'>"+id1+"</option>";
+function borrarGenero(value,id) {
+	var sel = document.getElementById("idGenerosTodos").innerHTML += "<option id='"+id+"' value='"+value+"' onclick='anadirGenero(this.value,this.id);'>"+id+"</option>";
 	var seleccionado = document.getElementById("idGenerosElegidos");
 	seleccionado.remove(seleccionado.selectedIndex);
 }
@@ -328,7 +328,7 @@ function borrarRepartoDirector(value,id) {
 			<div class="row">
                 <div class="form-group col-md-6">
                     <label for="idActoresTodos">Listado de actores:</label>
-                    <select class="form-control" id="idActoresTodos" multiple size="5">
+                    <select class="form-control basic-multiple" id="idActoresTodos" multiple size="5">
                         <?php foreach($body['repartos'] as $reparto): ?>
                         	<option onclick="anadirRepartoActor(this.value, this.id);" id="<?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>" value="<?= $reparto->id ?>" >
                         		<?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>
@@ -338,7 +338,7 @@ function borrarRepartoDirector(value,id) {
                 </div>
                 <div class="form-group col-md-6">
                     <label for="idActoresElegidos">Actores que trabajan en esta película:</label>
-                    <select class="form-control" id="idActoresElegidos" name="repartoActor[]" multiple size="5">
+                    <select class="form-control basic-multiple" id="idActoresElegidos" name="repartoActor[]" multiple size="5">
                         <?php foreach($body['repartos'] as $reparto):?>
 							<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
 								<?php if($prof->nombre == 'Actor'):?>
@@ -360,7 +360,7 @@ function borrarRepartoDirector(value,id) {
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="idGenerosTodos">Géneros todos:</label>
-                    <select class="form-control" id="idGenerosTodos" name="genero[]" multiple size="5">
+                    <select class="form-control basic-multiple" id="idGenerosTodos" name="genero[]" multiple size="5">
                         <?php foreach($body['generos'] as $genero): ?>
                         	<option onclick="anadirGenero(this.value, this.id);" id="<?= $genero->nombre ?>" value="<?= $genero->id ?>" >
                         		<?= $genero->nombre ?>
@@ -370,7 +370,7 @@ function borrarRepartoDirector(value,id) {
                 </div>
                 <div class="form-group col-md-6">
                     <label for="idGenerosElegidos">Géneros elegidos:</label>
-                    <select class="form-control" id="idGenerosElegidos" name="genero[]" multiple size="5">
+                    <select class="form-control basic-multiple" id="idGenerosElegidos" name="genero[]" multiple size="5">
                         <?php foreach ($body['peliculas']->sharedGenerosList as $gen): ?>
                         	<option selected id="<?= $gen->nombre ?>" value="<?= $gen->id ?>" onclick="borrarGenero(this.value, this.id)">
                             	<?= $gen->nombre ?>

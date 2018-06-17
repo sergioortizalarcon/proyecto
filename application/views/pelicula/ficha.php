@@ -14,7 +14,7 @@ float:left;
         $("#tabs").tabs();
     });
 </script>
-<?php if(((isset ( $_SESSION ['rol'])) && ($_SESSION ['rol']!="administrador"))): ?>
+<?php if( !(isset ( $_SESSION ['rol'])) || ((isset ( $_SESSION ['rol'])) && ($_SESSION ['rol']!="administrador"))): ?>
 <div class="container content-wrapper">
 	<section class="content">
 		<div id="tabs" class="divPestanas">
@@ -163,6 +163,7 @@ float:left;
 <!--
 
 
+                VISTA DEL ADMINISTRADOR DESDE AQUI HACIA ABAJO
 
 
  -->
@@ -174,7 +175,7 @@ float:left;
                 <li><a href="#principal"><i class="far fa-id-card"></i></a></li>
                 <li><a href="#sinopsis"> <i class="fas fa-book"></i> Sinopsis </a></li>
                 <li><a href="#reparto"> <i class="fas fa-film"></i> Reparto </a></li>
-                <!-- <li><a href="#galeria"> <i class="far fa-images"></i> Galería </a></li> -->
+                <li><a href="#galeria"> <i class="far fa-images"></i> Galería </a></li>
             </ul>
             <div id="principal">
                 <div class="estilo-img posicion-div-info">
@@ -212,21 +213,22 @@ float:left;
             <div id="sinopsis">
                 <div class="estilo-img posicion-div-info">
                     <img src="<?= $body['peliculas']->ruta_cartel ?>" class="imgPerfilFichaIndividual" />
-                </div>
-                <div class="posicion-div-info">
+                    <br/>
                     <h4><?= $body['peliculas']->titulo ?></h4>
-                    <hr/>
+                </div>
+                <div class="posicion-div-info" style="width: 70%;margin-top: 2%;">
+                    <!-- <hr/> -->
+    
                     <?= $body['peliculas']->sinopsis ?>
                 </div>
             </div>
             
             <div id="reparto">
-                    <div class="estilo-img posicion-div-info">
-                        <img src="<?= $body['peliculas']->ruta_cartel ?>" class="imgPerfilFichaIndividual" />
-                    </div>
-                    <div>
-                         <h4><?= $body['peliculas']->titulo ?></h4>
-                    </div>
+                <div class="estilo-img posicion-div-info">
+                    <img src="<?= $body['peliculas']->ruta_cartel ?>" class="imgPerfilFichaIndividual" />
+                <br/>
+                     <h4><?= $body['peliculas']->titulo ?></h4>
+                </div>
                 <div class="posicion-div-info">
                     <div>
                         <h4>Director:</h4>
@@ -265,47 +267,53 @@ float:left;
                 </div>
             </div>
             
-            <!-- <div id="galeria">
-                <div>
+            <div id="galeria">
+                <div class="estilo-img posicion-div-info">
                     <div>
                         <img src="<?= $body['peliculas']->ruta_cartel ?>" class="imgPerfilFichaIndividual" />
-                    </div>
-                    <div>
+                    <br/>
                         <h4><?= $body['peliculas']->titulo ?></h4>
                     </div>
                     <div>
-                        <input class="btn btn-default" type="button" onclick="insertarFotos();" value="Añadir fotos" />
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#avisoCambio">Añadir fotos</button>
                     </div>
                 </div>
 
-                <div>
+                <div class="posicion-div-info">
                     <form action="<?= base_url()?>reparto/insertarImagenes" method="post" enctype="multipart/form-data">
                         <div class="row" id="galeriaFotografica"></div>
                     </form>
                 </div>
-            </div> -->
+            </div>
         </div>
     </section>
 </div>
 
+    <div class="modal fade" id="avisoCambio" tabindex="-1" role="dialog" aria-labelledby="avisoCambioModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h3 class="modal-title" id="avisoCambioModalLabel">Galería</h3>
+          </div>
+          <div class="modal-body">
+            <form enctype="multipart/form-data" action="uploader.php" method="POST">
+              <div class="form-group">
+                <label for="cast" class="col-form-label">Imagenes de: </label><br/><br/>
+                <input type="file" name="archivos" multiple="multiple">
+              </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-info" id="open">Subir fotos</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 <?php endif; ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -326,8 +334,6 @@ float:left;
 		window.location="<?= base_url() ?>reparto/abrirFicha?id_reparto="+id;
 	}
 	
-</script>
-<script>
 </script>
 <script>
     $( document ).ready(function() {

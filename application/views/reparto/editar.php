@@ -186,13 +186,13 @@ function cancelarRegistro(){
 }
 
 function anadirRegistro(value,id) {
-	document.getElementById("idProfesionesElegidas").innerHTML += "<option onclick='borrarRegistro("+value+","+id+");' selected id='"+id+"' value='"+value+"' selected>"+id+"</option>";
+	document.getElementById("idProfesionesElegidas").innerHTML += "<option onclick='borrarRegistro(this.value,this.id);' selected id='"+id+"' value='"+value+"' selected>"+id+"</option>";
 	var seleccionado = document.getElementById("idProfesionesTodas");
 	seleccionado.remove(seleccionado.selectedIndex);
 }
 
 function borrarRegistro(value,id) {
-	document.getElementById("idProfesionesTodas").innerHTML += "<option onclick='anadirRegistro(this."+value+",this."+id+");' id='"+id+"' value='"+value+"'>"+id+"</option>";
+	document.getElementById("idProfesionesTodas").innerHTML += "<option onclick='anadirRegistro(this.value,this.id);' id='"+id+"' value='"+value+"'>"+id+"</option>";
 	var seleccionado = document.getElementById("idProfesionesElegidas");
 	seleccionado.remove(seleccionado.selectedIndex);
 }
@@ -252,7 +252,7 @@ function borrarRegistro(value,id) {
 					
 					<div class="form-group">
 						<label for="idPais">Pais de nacimiento</label><span class="obligatorio">*</span>
-						<select class="form-control" id="idPais" name="pais">
+						<select class="form-control basic-multiple" id="idPais" name="pais">
 							<?php foreach($body['paises'] as $pais):?>
 								<option value="<?=$pais -> id?>" <?= ($pais -> nombre == $body['repartos']->paises['nombre'] )?"selected='selected'":" "?>>
 									<?= $pais->nombre ?>
@@ -264,7 +264,7 @@ function borrarRegistro(value,id) {
 					<div class="row">
     					<div class="form-group col-md-6">
         					<label for="idProfesionesTodas">Profesiones todas:</label><span class="obligatorio">*</span>
-        					<select class="form-control" id="idProfesionesTodas" name="profesion[]" multiple size="5">
+        					<select class="form-control basic-multiple" id="idProfesionesTodas" name="profesion[]" multiple size="5">
         						<?php foreach($body['profesiones'] as $profesion): ?>
     								<option onclick="anadirRegistro(this.value, this.id);" id="<?= $profesion->nombre ?>" value="<?= $profesion->id ?>" >
     									<?= $profesion->nombre ?>
@@ -274,7 +274,7 @@ function borrarRegistro(value,id) {
     					</div>
     					<div class="form-group col-md-6">
         					<label for="idProfesionesElegidas">Profesiones seleccionadas:</label><span class="obligatorio">*</span>
-        					<select class="form-control" id="idProfesionesElegidas" name="profesion[]" multiple size="5">
+        					<select class="form-control basic-multiple" id="idProfesionesElegidas" name="profesion[]" multiple size="5">
     							<?php foreach ($body['repartos']->sharedProfesionesList as $prof): ?>
         							<option selected id="<?= $prof->nombre ?>" value="<?= $prof->id ?>" onclick="borrarRegistro(this.value, this.id)">
         							     <?= $prof->nombre ?>

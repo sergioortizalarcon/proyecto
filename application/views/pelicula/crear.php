@@ -3,11 +3,11 @@ function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];
 </script>
 	<script>
 
-// 		var xhr;
-// 		var keyPi = 'api_key=d6c1959156d6a00119e929d60865c6d3';
-// 		idioma = 'language=es&include_adult=true';
+		var xhr;
+		var keyPi = 'api_key=d6c1959156d6a00119e929d60865c6d3';
+		idioma = 'language=es&include_adult=true';
 
-// 		Element.prototype.remove = function() {
+		Element.prototype.remove = function() {
 //     this.parentElement.removeChild(this);
 // }
 // NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
@@ -51,6 +51,7 @@ function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];
 		// 							for (var r = 0; r < v[key].length; r++) {
 		// 								var option = document.createElement("option");
 		// 								option.setAttribute("selected","selected");
+		// 								option.setAttribute("value",v['id']);
 		// 								var t = document.createTextNode(v[key][r]);
 		// 								option.appendChild(t);
 		// 								sel.appendChild(option);
@@ -105,6 +106,7 @@ function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];
 		// 							input31.setAttribute('value',0);
 		// 							formi.appendChild(input31);
 		// 				document.body.appendChild(formi);
+		// 				console.log(formi);
 		// 				inferno(nombre);
 		// 			}
 		// 		}
@@ -120,6 +122,11 @@ function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];
 		// 	xhr.open("POST", "<?=base_url()?>pelicula/crearPostdb?" + datosSerializados, true);
 		// 	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		// 	xhr.send(datosSerializados);
+		// 	xhr.onreadystatechange=function(){
+		// 		if (this.readyState == this.DONE) {
+		// 			console.log(xhr.responseText);
+		// 		}
+		// 	}
 		// }
 	</script>
 
@@ -441,35 +448,6 @@ function cancelarRegistro(){
 	</form>
 	</section>
 </div>
-<style type="text/css">
-	#custom-handle {
-    width: 3em;
-    height: 1.6em;
-    top: 50%;
-    margin-top: -.8em;
-    text-align: center;
-    line-height: 1.6em;
-  }
-</style>
-
-<script>
-  $( function() {
-    var handle = $( "#custom-handle" );
-    $( "#slider" ).slider({
-    	value:100,
-            min: 0,
-            max: 5000000,
-            step: 104,
-      create: function() {
-        handle.text( $( this ).slider( "value" ) +"k.");
-      },
-      slide: function( event, ui ) {
-        handle.text( ui.value +"k.");
-        $("#idPopularidad").val(ui.value+"k.");
-      }
-    });
-  } );
-</script>
 <script>
 	function archivo(evt) {
       	var files = evt.target.files; // FileList object

@@ -48,7 +48,9 @@ body.custom-background {
 	background-attachment:scroll;
 }
 
-
+li{
+	list-style: none;
+}
 
 	/*form de registro */
 	#creator{
@@ -185,3 +187,14 @@ i.perfil-arrow,span.formato-datos {
 	 height:500px;
 	 overflow:scroll;
 }
+
+
+/* posicion de elementos en ficha */
+
+ .estilo-img{
+padding-right: 3%;
+ }
+
+ .posicion-div-info{
+float:left;
+ }

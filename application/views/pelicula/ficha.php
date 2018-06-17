@@ -1,12 +1,3 @@
-<style>
- .estilo-img{
-padding-right: 3%;
- }
-
- .posicion-div-info{
-float:left;
- }
-</style>
 <script>
     $(document).ready(function(){
         $( '.info-gen' ).tooltip();
@@ -231,37 +222,20 @@ float:left;
                 </div>
                 <div class="posicion-div-info">
                     <div>
+                        <div>
                         <h4>Director:</h4>
-                        <?php foreach($body['repartos'] as $reparto): ?>
-                            <?php foreach ($reparto->sharedProfesionesList as $prof): ?>
-                                <?php if($prof->nombre == 'Director'):?>
-                                    <div id="<?= $reparto->id ?>" onclick="mostrarFicha(this.id);">
-                                        <div>
-                                            <img src="<?= $reparto->ruta_foto ?>" />
-                                        </div>
-                                        <div>
-                                            <?= $reparto->nombre ?> 
-                                            <?= $reparto->apellido1 ?>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
+                        <?php foreach($body['peliculas']->sharedRepartosList as $dir): ?>
+                        <img src="<?= $dir->ruta_foto ?>" class="imgPerfilFichaIndividual" />
+                        <?= $dir->nombre ?> <?= $dir->apellido1 ?> <?= $dir->apellido2 ?>
+                            <?php echo "<br>" ?>
                         <?php endforeach; ?>
+                        </div>
+
                         <h4>Actores:</h4>
-                        <?php foreach($body['repartos'] as $reparto): ?>
-                            <?php foreach ($reparto->sharedProfesionesList as $prof): ?>
-                                <?php if($prof->nombre == 'Actor'):?>
-                                    <div id="<?= $reparto->id ?>" onclick="mostrarFicha(this.id);">
-                                        <div >
-                                            <img src="<?= $reparto->ruta_foto ?>" />
-                                        </div>
-                                        <div>
-                                            <?= $reparto->nombre ?>
-                                            <?= $reparto->apellido1 ?>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
+                        <?php foreach($body['peliculas']->sharedActoresList as $reparto): ?>
+                            <img src="<?= $reparto->ruta_foto ?>" class="imgPerfilFichaIndividual" />
+                                <?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>
+                            <?php echo "<br>" ?>
                         <?php endforeach; ?>
                     </div>
                 </div>

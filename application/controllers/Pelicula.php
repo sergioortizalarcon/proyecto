@@ -37,9 +37,9 @@ class Pelicula extends CI_Controller {
 		$popularity = isset($_POST['popularity'])?$_POST['popularity']:null;
 		$adulto = isset($_POST['adulto'])?$_POST['adulto']:"No";
 		//Reparto(Array con nombres)
-		$repartosDirector = isset($_POST['repartoDirector'])?$_POST['repartoDirector']:null;
-		$repartosActor = isset($_POST['repartoActor'])?$_POST['repartoActor']:null;
-		$generos = isset($_POST['genero'])?$_POST['genero']:null;
+		$repartosDirector = isset($_POST['repartoDirector'])?$_POST['repartoDirector']:[];
+		$repartosActor = isset($_POST['repartoActor'])?$_POST['repartoActor']:[];
+		$generos = isset($_POST['genero'])?$_POST['genero']:[];
 		$sinopsis = isset($_POST['sinopsis'])?$_POST['sinopsis']:null;
 		$estado = isset($_POST['estado'])?$_POST['estado']:'Inactivo';
 		
@@ -48,29 +48,6 @@ class Pelicula extends CI_Controller {
 		$tituloSinEspacios = str_replace(" ","",$titulo);
 		$tituloOriginalSinEspacios = str_replace(" ","",$tituloOriginal);
 		
-		if ($generos!="") {
-    		$cadGeneros ="";
-    		for ($i=0;$i<count($generos);$i++) {
-    			$cadGeneros = $generos[$i].",".$cadGeneros;
-    		}
-    		$cadGeneros = substr($cadGeneros, 0, -1);
-		}
-		
-		if ($repartosDirector!="") {
-    		$cadRepartosDirector = "";
-    		for ($i=0; $i<count($repartosDirector);$i++) {
-    		    $cadRepartosDirector = $repartosDirector[$i].",".$cadRepartosDirector;
-    		}
-    		$cadRepartosDirector = substr($cadRepartosDirector, 0, -1);
-		}
-		
-		if ($repartosActor!="") {
-			$cadRepartosActor = "";
-			for ($i=0; $i<count($repartosActor);$i++) {
-				$cadRepartosActor = $repartosActor[$i].",".$cadRepartosActor;
-			}
-			$cadRepartosActor = substr($cadRepartosActor, 0, -1);
-		}
 		
 		if (is_uploaded_file($_FILES['fotoPoster']['tmp_name'])) {
 			# verificamos el formato de la imagen
@@ -95,7 +72,7 @@ class Pelicula extends CI_Controller {
 		    $foto = "assets/img/poster/default.png";
 		}
 		try {
-		    $this->pelicula_model->createPelicula ( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartosDirector, $cadRepartosActor, $cadGeneros, $sinopsis, $foto, $estado);
+		    $this->pelicula_model->createPelicula ( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $repartosDirector, $repartosActor, $generos, $sinopsis, $foto, $estado);
 			header ("location:".base_url()."pelicula/crearOk");
 		}
 		catch (Exception $e) {
@@ -189,7 +166,6 @@ class Pelicula extends CI_Controller {
         $id_pelicula = $_POST ['id_pelicula'];
         $estado = $_POST['estado'];
         $fechaLanzamiento = str_replace("/","-",$fechaLanzamiento);
-        
         $tituloSinEspacios = str_replace(" ","",$titulo);
         $tituloOriginalSinEspacios = str_replace(" ","",$tituloOriginal);
         
@@ -229,7 +205,7 @@ class Pelicula extends CI_Controller {
         	}
         }else {
             $foto = $_POST['fotoFija'];
-            $foto = str_replace("http://localhost/proyecto/","",$foto);
+            // $foto = str_replace("http://localhost/proyecto/","",$foto);
         }
         
         try {

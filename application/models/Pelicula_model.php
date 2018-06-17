@@ -17,24 +17,22 @@ class Pelicula_model extends CI_Model {
             $pelicula -> ruta_cartel = base_url().$foto;
             $pelicula -> estado = $estado;
             $pelicula -> original_language = $lenguage;
-            $generos = explode(",",$cadGeneros);
-            for ($i=0;$i<count($generos);$i++) {
-                $genero = R::load("generos",$generos[$i]);
-                $genero -> sharedPeliculasList[] = $pelicula;
-                R::store($genero);
+            $pelicula -> id_tmdb = 0;
+
+            foreach ($cadGeneros as $genero) {
+                $pelicula->sharedGenerosList[] = R::load('generos',$genero);
             }
-            $repartosDirector = explode(",",$cadRepartosDirector);
-            for ($i=0;$i<count($repartosDirector);$i++) {
-                $repartoDirector = R::load("repartos",$repartosDirector[$i]);
-                $repartoDirector -> sharedPeliculasList[] = $pelicula;
-                R::store($repartoDirector);
+
+            foreach ($cadRepartosDirector as $director) {
+                $pelicula->sharedRepartosList[] = R::load('repartos',$director);
             }
-            $repartosActor = explode(",",$cadRepartosActor);
-            for ($i=0;$i<count($repartosActor);$i++) {
-            	$repartoActor = R::load("repartos",$repartosActor[$i]);
-            	$repartoActor -> sharedPeliculasList[] = $pelicula;
-            	R::store($repartoActor);
+             R::store($pelicula);
+            foreach ($cadRepartosActor as $actor) {
+                $pelicula->sharedActoresList[] = R::load('repartos',$actor);
             }
+
+            R::store($pelicula);
+
         } else {
             throw new Exception("Película duplicada");
         }
@@ -71,6 +69,7 @@ class Pelicula_model extends CI_Model {
             $nueva_pelicula -> popularidad = $popularity;
             $nueva_pelicula -> votos_totales = 0;
             $nueva_pelicula -> media_votos_totales = 0;
+            $nueva_pelicula -> suma_total_votos = 0;
             $nueva_pelicula -> fecha_lanzamiento= $release_date;
             $nueva_pelicula -> adulto= $adult;
             $nueva_pelicula -> original_language= $original_language;
@@ -89,20 +88,16 @@ class Pelicula_model extends CI_Model {
 		
     public function editarPelicula( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartos, $cadGeneros, $sinopsis, $foto, $id_pelicula, $estado) {
 		$pelicula = R::load ( 'peliculas', $id_pelicula );
-		R::trash($pelicula);
-	  
-		$pelicula = R::dispense ( 'peliculas' );
 		$pelicula -> titulo = $titulo;
 		$pelicula -> titulo_original = $tituloOriginal;
 		$pelicula -> adulto = $adulto;
 		$pelicula -> fecha_lanzamiento = $fechaLanzamiento;
 		$pelicula -> popularidad = $popularity;
 		$pelicula -> sinopsis = $sinopsis;
-		$pelicula -> ruta_cartel = base_url().$foto;
-        $pelicula -> votos_totales = 0;
-        $pelicula -> media_votos_totales = 0;
+		$pelicula -> ruta_cartel = $foto;
 		$pelicula -> estado = $estado;
 		$pelicula -> original_language = $lenguage;
+
 		$generos = explode(",",$cadGeneros);
 		for ($i=0;$i<count($generos);$i++) {
 			$genero = R::load("generos",$generos[$i]);

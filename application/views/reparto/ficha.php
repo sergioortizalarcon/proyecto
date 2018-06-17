@@ -23,7 +23,7 @@
     					</div>
     				</div>
 				</div>
-				<div class="col-md-9" style="padding-top:20px;">
+				<div class="col-md-9" style="float:left;padding-top:20px;">
     				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
     					<h5>
 							<?php foreach($body['profesiones'] as $profesion): ?>
@@ -47,7 +47,7 @@
     					</div>
     				</div>
 				</div>
-    			<div class="col-md-9" style="padding-top:20px;">
+    			<div class="col-md-9" style="float:left;padding-top:20px;">
     				<div class="row-md-12" style=";height: 100%;margin: 1% 1% 5% 0;">
     					<?= $body['repartos']->biografia ?>
     				</div>

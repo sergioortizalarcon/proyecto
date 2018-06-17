@@ -16,7 +16,7 @@ function validarTitulo() {
 	titulo = idFormulario.idTitulo.value.trim();
 	if (titulo != "") {
 
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ0-9]{2,40}$/;
+		var expReg = /^[a-zA-Z:\sñÑáéíóúÁÉÍÓÚ0-9]{2,60}$/;
 		if (expReg.test(titulo)){
 			tituloCorrecto = true;
 			correcto=true;
@@ -46,7 +46,7 @@ function validarTituloOriginal() {
 	tituloOriginal = idFormulario.idTituloOriginal.value.trim();
 	if (tituloOriginal != "") {
 
-		var expReg = /^[a-zA-Z ñÑáéíóúÁÉÍÓÚ0-9]{2,40}$/;
+		var expReg = /^[a-zA-Z\s:ñÑáéíóúÁÉÍÓÚ0-9]{2,60}$/;
 		if (expReg.test(tituloOriginal)){
 			tituloOriginalCorrecto = true;
 			correcto=true;
@@ -352,15 +352,20 @@ function borrarRepartoDirector(value,id) {
                 </div>
             </div>
 
+				<!-- <label for="idPopularidad">Popularidad: </label><span class="obligatorio">*</span>
+				<input class="form-control" type="number" id="idPopularidad" name="popularity" value="?= $body['peliculas']->popularidad?>" /> -->
+
 			<div class="form-group">
-				<label for="idPopularidad">Popularidad: </label><span class="obligatorio">*</span>
-				<input class="form-control" type="number" id="idPopularidad" name="popularity" value="<?= $body['peliculas']->popularidad?>" />
+			<div id="slider">
+			  <div id="custom-handle" id="idPopularidad" class="ui-slider-handle" value="<?= $body['peliculas']->popularidad?>"></div>
+			  <input type="hidden"  name="popularity"/>
+			</div>
 			</div>
 
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="idGenerosTodos">Géneros todos:</label>
-                    <select class="form-control basic-multiple" id="idGenerosTodos" name="genero[]" multiple size="5">
+                    <select class="form-control basic-multiple" id="idGenerosTodos" multiple size="5">
                         <?php foreach($body['generos'] as $genero): ?>
                         	<option onclick="anadirGenero(this.value, this.id);" id="<?= $genero->nombre ?>" value="<?= $genero->id ?>" >
                         		<?= $genero->nombre ?>
@@ -399,7 +404,6 @@ function borrarRepartoDirector(value,id) {
 			<input type="hidden" name="id_pelicula" value="<?= $body['peliculas']->id ?>" />
 			<input type="hidden" name="fotoFija" value="<?= $body['peliculas']->ruta_cartel ?>" />
 			<input type="hidden" name="estado" value="<?= $body['peliculas']->estado ?>" />
-
 			<div class="nav navbar-form navbar-right">
 				<input type="button" class="btn btn-default" id="idCancelar" name="cancelar" value="Cancelar registro" onclick="cancelarRegistro();" />
 				<input type="button" class="btn btn-default" id="idRegistro" name="registrarPelicula" value="Editar película" onclick="validar();" />

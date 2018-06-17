@@ -62,6 +62,34 @@
             }
         }
     </script>
-    </script>
+    <style type="text/css">
+    #custom-handle {
+    width: 8em;
+    height: 1.8em;
+    top: 50%;
+    margin-top: -.8em;
+    text-align: center;
+    line-height: 1.6em;
+  }
+</style>
+
+<script>
+  $( function() {
+    var handle = $( "#custom-handle" );
+    $( "#slider" ).slider({
+        value:100,
+            min: 0,
+            max: 5000000,
+            step: 104,
+      create: function() {
+        handle.text( $( this ).slider( "value" ) +"k.");
+      },
+      slide: function( event, ui ) {
+        handle.text( ui.value +"k.");
+        $("#idPopularidad").val(ui.value+"k.");
+      }
+    });
+  } );
+</script>
   </head>
   <body class="skin-blue sidebar-mini">

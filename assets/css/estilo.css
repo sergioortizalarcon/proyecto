@@ -198,3 +198,28 @@ padding-right: 3%;
  .posicion-div-info{
 float:left;
  }
+ 
+.mySlides {
+	display:none;
+	width:100%;
+	height:300px;
+}
+
+.slidePeliculas {
+	padding-bottom:20px;
+}
+
+.imgPrincipal{
+	width:300px;
+	weight:200px;
+	margin:20px;
+}
+
+.divPeliculas{
+	padding:50px;
+	margin-left:50px;
+}
+
+.divPeliculas img {
+	border-radius:20px;
+}

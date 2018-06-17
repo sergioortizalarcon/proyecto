@@ -5,6 +5,7 @@
 		  <img class="mySlides" src="<?= base_url() ?>assets/img/banner/bannerBatman.jpg">
 		  <img class="mySlides" src="<?= base_url() ?>assets/img/banner/bannerReadyPlayerOne.jpg">
 		  <img class="mySlides" src="<?= base_url() ?>assets/img/banner/bannerSherlock.jpg">
+		  <img class="mySlides" src="<?= base_url() ?>assets/img/banner/bannerX-Men.jpg">
 		</div>
 	</section>
 	<section class="content">
@@ -23,14 +24,6 @@
 		</p>
 	</section>
 </div>
-
-<style>
-	.mySlides {display:none;width:100%;height:300px;}
-	.slidePeliculas {padding-bottom:20px;}
-	.imgPrincipal{width:300px;weight:200px;margin:20px;}
-	.divPeliculas{ padding:50px;margin-left:100px;}
-	.divPeliculas img {border-radius:20px;}
-</style>
 
 <script>
 var myIndex = 0;

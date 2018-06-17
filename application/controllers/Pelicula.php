@@ -160,12 +160,12 @@ class Pelicula extends CI_Controller {
 	        $this->load->model ( 'pelicula_model' );
 	        $this->load->model('pais_model');
 	        $this->load->model('reparto_model');
-	        $this->load->model('genero_model');
+	        $this->load->model('Genero_model');
 	        $id_pelicula = $_POST ['id_pelicula'];
 	        $datos['body']['peliculas'] = $this->pelicula_model->getPeliculaPorId ( $id_pelicula );
 	        $datos['body']['paises'] = $this->pais_model->getTodos();
 	        $datos['body']['repartos'] = $this->reparto_model->getAllActive();
-	        $datos['body']['generos'] = $this->genero_model->getAllActive();
+	        $datos['body']['generos'] = $this->Genero_model->getAllActive();
 	        enmarcar ( $this, 'pelicula/editar', $datos);
     	} else {
     		$this->acceso_denegado();

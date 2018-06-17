@@ -5,9 +5,15 @@
     <meta charset="UTF-8">
     <title>Panel administrador</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <link rel="stylesheet" href="<?= base_url(); ?>assets/img/images/favicon.ico">
+    <!-- IE -->
+    <link rel="shortcut icon" type="image/x-icon" href="<?= base_url(); ?>assets/img/images/favicon.ico" />
+    <!-- other browsers -->
+    <link rel="icon" type="image/x-icon" href="<?= base_url(); ?>assets/img/images/favicon.ico" />
+    
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css" />    
     <link href="<?php echo base_url(); ?>assets/css/fontawesome-all.css" rel="stylesheet" type="text/css" />
+
+    <link href="<?=base_url()?>assets/css/rating.css" rel="stylesheet" type="text/css" />
 
     <link href="<?php echo base_url(); ?>assets/a_style/dist/css/AdminLTE.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/css/jquery-ui.css" rel="stylesheet" type="text/css" />
@@ -40,44 +46,14 @@
     <script type="text/javascript" src="<?=base_url()?>assets/js/datatables.js"></script>
     <script type="text/javascript" src="<?=base_url()?>assets/js/dataTables.jqueryui.js"></script>
     <script type="text/javascript" src="<?=base_url()?>assets/js/tabs_vertical.js"></script>
-    <!-- 
-    <script src="php echo base_url(); ?>assets/a_style/js/jquery.validate.js" type="text/javascript"></script>
-    <script src="php echo base_url(); ?>assets/a_style/js/validation.js" type="text/javascript"></script>
-    -->
-
+    
+    <!-- Js para la votacion con estellas -->
+    <script type="text/javascript" src="<?=base_url()?>assets/js/rating.js"></script>
     <!-- Cambia el estilo de los multiselects... mas info->select2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     
-    <script>
-    $(document).ready(function(){
-        $(".basic-multiple").select2({
-            placeholder: 'Hacer click para elegir profesiones...',
-            //maximumSelectionLength:7, <-- total elementos seleccionables
-            closeOnSelect: false,  //<-- para que no se cierre el select. Da problemas con el max lenght, quitar uno de los dos
-            allowClear: true,
-        });
-    });
-</script>
-<style>
-    select,ul.select2-selection__rendered:hover{
-        cursor: pointer;
-    }
-</style>
 
-    <script>
-    
-    $(document).ready(function(){
-        //$("#idFecha").datepicker("option",$.datepicker.regional["es"]);
-        $("#idFecha").datepicker({
-        changeMonth: true,
-        changeYear: true,
-        regional: "es",
-        yearRange: '1918:2018',
-        showAnim: 'clip',
-        });
-    });
-    </script>
     <script>
         window.onload= function(){
             var sels = document.getElementsByTagName("select");

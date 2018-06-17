@@ -155,6 +155,13 @@ i.perfil-arrow,span.formato-datos {
     position: relative;
 	}
 
+
+
+	/* CURSOR PARA LOS MULTISELECT DE SELECT2 */
+	select,ul.select2-selection__rendered:hover,li>input{
+        cursor: pointer;
+    }
+
 /*VISTA DATOS PERFIL USUARIO  */
 
 /*estilo botones*/

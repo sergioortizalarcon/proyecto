@@ -1,8 +1,20 @@
+<style>
+ .estilo-img{
+padding-right: 3%;
+ }
+
+ .posicion-div-info{
+float:left;
+ }
+</style>
 <script>
     $(document).ready(function(){
         $( '.info-gen' ).tooltip();
+
+        $("#tabs").tabs();
     });
 </script>
+<?php if(((isset ( $_SESSION ['rol'])) && ($_SESSION ['rol']!="administrador"))): ?>
 <div class="container content-wrapper">
 	<section class="content">
 		<div id="tabs" class="divPestanas">
@@ -147,6 +159,155 @@
 		</div>
 	</section>
 </div>
+
+<!--
+
+
+
+
+ -->
+<?php else: ?>
+<div class="content-wrapper">
+    <section class="content">
+        <div id="tabs" class="divPestanas">
+            <ul>
+                <li><a href="#principal"><i class="far fa-id-card"></i></a></li>
+                <li><a href="#sinopsis"> <i class="fas fa-book"></i> Sinopsis </a></li>
+                <li><a href="#reparto"> <i class="fas fa-film"></i> Reparto </a></li>
+                <!-- <li><a href="#galeria"> <i class="far fa-images"></i> Galería </a></li> -->
+            </ul>
+            <div id="principal">
+                <div class="estilo-img posicion-div-info">
+                    <img src="<?= $body['peliculas']->ruta_cartel ?>" class="imgPerfilFichaIndividual" />
+                    <h4><?= $body['peliculas']->titulo ?></h4>
+                    <?php if(isset($_SESSION['idUser'])):?>
+                    <div class="info-gen aviso-user" title="Has calificado con <?=isset($body['votos']['voto'])?$body['votos']['voto']:'0'?>/5 esta película">
+                        <input type="hidden" id="userId" value="<?=$_SESSION['idUser']?>" name="user"/>
+                        <input name="rating" value="<?=isset($body['votos']['voto'])?$body['votos']['voto']:' '?>" id="rating_star" type="hidden" postID="<?=$body['peliculas']['id']?>" />
+                    </div>
+                    <?php else: ?>
+                        <a class="info-gen" href="<?=base_url()?>Login/loginGet" title="Debes estar logueado para poder votar esta película">
+                        <input type="hidden" id="userId" value="0" name="user"/>
+                        <input name="rating" value="<?=$body['peliculas']['media_votos_totales']?>" id="rating_star" type="hidden" postID="<?=$body['peliculas']['id']?>" />
+                        </a>
+                    <?php endif; ?>
+                    <div class="overall-rating">
+                        <h6>(Calificación media <span id="avgrat"><?php echo $body['peliculas']['media_votos_totales']; ?>
+                        </span>
+                        <br/>basada en <span id="totalrat"><?php echo $body['peliculas']['votos_totales']; ?></span> votos totales)</h6>
+                    </div>
+                </div>
+                <div class="posicion-div-info">
+                    <h5>Título original: <?=$body['peliculas']->titulo_original ?></h5>
+                    <h5>Fecha de estreno: <?=$body['peliculas']->fecha_lanzamiento ?></h5>
+                    Géneros: 
+                    <?php foreach ($body['peliculas']->sharedGenerosList as $gen): ?>
+                         <?= $gen->nombre ?>
+                    <?php endforeach; ?>
+                    <h5>¿Todos los públicos? <?= $body['peliculas']->adulto ?></h5>
+                    <h5>Idioma original: <?= $body['peliculas']->original_language ?></h5>
+                </div>
+            </div>
+            
+            <div id="sinopsis">
+                <div class="estilo-img posicion-div-info">
+                    <img src="<?= $body['peliculas']->ruta_cartel ?>" class="imgPerfilFichaIndividual" />
+                </div>
+                <div class="posicion-div-info">
+                    <h4><?= $body['peliculas']->titulo ?></h4>
+                    <hr/>
+                    <?= $body['peliculas']->sinopsis ?>
+                </div>
+            </div>
+            
+            <div id="reparto">
+                    <div class="estilo-img posicion-div-info">
+                        <img src="<?= $body['peliculas']->ruta_cartel ?>" class="imgPerfilFichaIndividual" />
+                    </div>
+                    <div>
+                         <h4><?= $body['peliculas']->titulo ?></h4>
+                    </div>
+                <div class="posicion-div-info">
+                    <div>
+                        <h4>Director:</h4>
+                        <?php foreach($body['repartos'] as $reparto): ?>
+                            <?php foreach ($reparto->sharedProfesionesList as $prof): ?>
+                                <?php if($prof->nombre == 'Director'):?>
+                                    <div id="<?= $reparto->id ?>" onclick="mostrarFicha(this.id);">
+                                        <div>
+                                            <img src="<?= $reparto->ruta_foto ?>" />
+                                        </div>
+                                        <div>
+                                            <?= $reparto->nombre ?> 
+                                            <?= $reparto->apellido1 ?>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php endforeach; ?>
+                        <h4>Actores:</h4>
+                        <?php foreach($body['repartos'] as $reparto): ?>
+                            <?php foreach ($reparto->sharedProfesionesList as $prof): ?>
+                                <?php if($prof->nombre == 'Actor'):?>
+                                    <div id="<?= $reparto->id ?>" onclick="mostrarFicha(this.id);">
+                                        <div >
+                                            <img src="<?= $reparto->ruta_foto ?>" />
+                                        </div>
+                                        <div>
+                                            <?= $reparto->nombre ?>
+                                            <?= $reparto->apellido1 ?>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- <div id="galeria">
+                <div>
+                    <div>
+                        <img src="<?= $body['peliculas']->ruta_cartel ?>" class="imgPerfilFichaIndividual" />
+                    </div>
+                    <div>
+                        <h4><?= $body['peliculas']->titulo ?></h4>
+                    </div>
+                    <div>
+                        <input class="btn btn-default" type="button" onclick="insertarFotos();" value="Añadir fotos" />
+                    </div>
+                </div>
+
+                <div>
+                    <form action="<?= base_url()?>reparto/insertarImagenes" method="post" enctype="multipart/form-data">
+                        <div class="row" id="galeriaFotografica"></div>
+                    </form>
+                </div>
+            </div> -->
+        </div>
+    </section>
+</div>
+
+<?php endif; ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script type="text/javascript">
 	function insertarFotos() {

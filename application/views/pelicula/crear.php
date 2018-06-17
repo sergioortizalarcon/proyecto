@@ -3,124 +3,124 @@ function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];
 </script>
 	<script>
 
-		var xhr;
-		var keyPi = 'api_key=d6c1959156d6a00119e929d60865c6d3';
-		idioma = 'language=es&include_adult=true';
+// 		var xhr;
+// 		var keyPi = 'api_key=d6c1959156d6a00119e929d60865c6d3';
+// 		idioma = 'language=es&include_adult=true';
 
-		Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-}
-NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    } 
-}
-		function carga() {
-			//Si guarda cambiar submit por function con ajax q vaya subiendo los datos al terminar de cargar cada form completo
-			var pagina = document.getElementById("idInfo").value;
-			var uri = 'https://api.themoviedb.org/3/discover/movie';
-			var data = "{}";
-			xhr = new XMLHttpRequest();
-			xhr.open('GET',uri+'?'+keyPi+"&"+idioma+'&page='+pagina);
-			xhr.send(data);
-			xhr.onreadystatechange=function(){
-				if (xhr.readyState==this.DONE) {
-					valores = JSON.parse(this.responseText);
-					mostrar = document.getElementById("mostrarInfo");
-					vendetta = valores.results;
-					console.log(valores.results);
-					var claves = ['id','title','original_title','poster_path','popularity','release_date','adult','original_language','overview','genre_ids'];
-					for (var i = 0; i < vendetta.length; i++) {
-						v = vendetta[i];
-						var nombre="idFormi"+i;
-						var formi = document.createElement("form");
-						formi.setAttribute('name','idFormi');
-						formi.setAttribute('id',nombre);
-						formi.setAttribute('action',"<?=base_url()?>pelicula/crearPost");
-						formi.setAttribute('method','post');
-						for(var key in v) {
-							if(claves.includes(key)){
-								if (key == 'genre_ids') {
-									var sel = document.createElement("select");
-									sel.setAttribute('name','genre[]');
-									sel.setAttribute("id","genre"+v['id']);
-									sel.setAttribute('multiple','multiple');
-									formi.appendChild(sel);
-									for (var r = 0; r < v[key].length; r++) {
-										var option = document.createElement("option");
-										option.setAttribute("selected","selected");
-										var t = document.createTextNode(v[key][r]);
-										option.appendChild(t);
-										sel.appendChild(option);
-									}
-								} else if(key == 'overview') {
-									var textarea = document.createElement("textarea");
-									textarea.setAttribute('name',key);
-									textarea.setAttribute("id",key+v['id']);
-									textarea.setAttribute('rows','6');
-									textarea.setAttribute('cols','100');
-									var t = document.createTextNode(v[key]);
-									textarea.appendChild(t);
-									formi.appendChild(textarea);
-								} else {
-									var valor = v[key];
-									if (key == 'adult') {
-										if (valor == false) {
-											valor = "No";
-										} else if(valor == true) {
-											valor = "Sí";
-										}
-									}
-									var input = document.createElement('input');
-									input.setAttribute('type','text');
-									input.setAttribute('id',key+v['id'])
-									input.setAttribute('name',key);
-									input.setAttribute('size','70');
-									input.setAttribute('value',valor);
-									formi.appendChild(input);
-								}
-							}
-						}
-						var input2 = document.createElement('input');
-									input2.setAttribute('type','text');
-									input2.setAttribute('id','media_votos_totales'+i);
-									input2.setAttribute('name','media_votos_totales');
-									input2.setAttribute('size','70');
-									input2.setAttribute('value',0);
-									formi.appendChild(input2);
-						var input3 = document.createElement('input');
-									input3.setAttribute('type','text');
-									input3.setAttribute('id','votos_totales'+i);
-									input3.setAttribute('name','votos_totales');
-									input3.setAttribute('size','70');
-									input3.setAttribute('value',0);
-									formi.appendChild(input3);
-						var input31 = document.createElement('input');
-									input31.setAttribute('type','text');
-									input31.setAttribute('id','suma_total_votos'+i);
-									input31.setAttribute('name','suma_total_votos');
-									input31.setAttribute('size','70');
-									input31.setAttribute('value',0);
-									formi.appendChild(input31);
-						document.body.appendChild(formi);
-						inferno(nombre);
-					}
-				}
-				var list = document.getElementsByName("idFormi");
-			    for (var i = 0; i < list.length; i++) {
-					list.remove();
-				}
-			}
-		}
+// 		Element.prototype.remove = function() {
+//     this.parentElement.removeChild(this);
+// }
+// NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+//     for(var i = this.length - 1; i >= 0; i--) {
+//         if(this[i] && this[i].parentElement) {
+//             this[i].parentElement.removeChild(this[i]);
+//         }
+//     } 
+// }
+		// function carga() {
+		// 	//Si guarda cambiar submit por function con ajax q vaya subiendo los datos al terminar de cargar cada form completo
+		// 	var pagina = document.getElementById("idInfo").value;
+		// 	var uri = 'https://api.themoviedb.org/3/discover/movie';
+		// 	var data = "{}";
+		// 	xhr = new XMLHttpRequest();
+		// 	xhr.open('GET',uri+'?'+keyPi+"&"+idioma+'&page='+pagina);
+		// 	xhr.send(data);
+		// 	xhr.onreadystatechange=function(){
+		// 		if (xhr.readyState==this.DONE) {
+		// 			valores = JSON.parse(this.responseText);
+		// 			mostrar = document.getElementById("mostrarInfo");
+		// 			vendetta = valores.results;
+		// 			console.log(valores.results);
+		// 			var claves = ['id','title','original_title','poster_path','popularity','release_date','adult','original_language','overview','genre_ids'];
+		// 			for (var i = 0; i < vendetta.length; i++) {
+		// 				v = vendetta[i];
+		// 				var nombre="idFormi"+i;
+		// 				var formi = document.createElement("form");
+		// 				formi.setAttribute('name','idFormi');
+		// 				formi.setAttribute('id',nombre);
+		// 				formi.setAttribute('action',"<?=base_url()?>pelicula/crearPost");
+		// 				formi.setAttribute('method','post');
+		// 				for(var key in v) {
+		// 					if(claves.includes(key)){
+		// 						if (key == 'genre_ids') {
+		// 							var sel = document.createElement("select");
+		// 							sel.setAttribute('name','genre[]');
+		// 							sel.setAttribute("id","genre"+v['id']);
+		// 							sel.setAttribute('multiple','multiple');
+		// 							formi.appendChild(sel);
+		// 							for (var r = 0; r < v[key].length; r++) {
+		// 								var option = document.createElement("option");
+		// 								option.setAttribute("selected","selected");
+		// 								var t = document.createTextNode(v[key][r]);
+		// 								option.appendChild(t);
+		// 								sel.appendChild(option);
+		// 							}
+		// 						} else if(key == 'overview') {
+		// 							var textarea = document.createElement("textarea");
+		// 							textarea.setAttribute('name',key);
+		// 							textarea.setAttribute("id",key+v['id']);
+		// 							textarea.setAttribute('rows','6');
+		// 							textarea.setAttribute('cols','100');
+		// 							var t = document.createTextNode(v[key]);
+		// 							textarea.appendChild(t);
+		// 							formi.appendChild(textarea);
+		// 						} else {
+		// 							var valor = v[key];
+		// 							if (key == 'adult') {
+		// 								if (valor == false) {
+		// 									valor = "No";
+		// 								} else if(valor == true) {
+		// 									valor = "Sí";
+		// 								}
+		// 							}
+		// 							var input = document.createElement('input');
+		// 							input.setAttribute('type','text');
+		// 							input.setAttribute('id',key+v['id'])
+		// 							input.setAttribute('name',key);
+		// 							input.setAttribute('size','70');
+		// 							input.setAttribute('value',valor);
+		// 							formi.appendChild(input);
+		// 						}
+		// 					}
+		// 				}
+		// 				var input2 = document.createElement('input');
+		// 							input2.setAttribute('type','text');
+		// 							input2.setAttribute('id','media_votos_totales'+i);
+		// 							input2.setAttribute('name','media_votos_totales');
+		// 							input2.setAttribute('size','70');
+		// 							input2.setAttribute('value',0);
+		// 							formi.appendChild(input2);
+		// 				var input3 = document.createElement('input');
+		// 							input3.setAttribute('type','text');
+		// 							input3.setAttribute('id','votos_totales'+i);
+		// 							input3.setAttribute('name','votos_totales');
+		// 							input3.setAttribute('size','70');
+		// 							input3.setAttribute('value',0);
+		// 							formi.appendChild(input3);
+		// 				var input31 = document.createElement('input');
+		// 							input31.setAttribute('type','text');
+		// 							input31.setAttribute('id','suma_total_votos'+i);
+		// 							input31.setAttribute('name','suma_total_votos');
+		// 							input31.setAttribute('size','70');
+		// 							input31.setAttribute('value',0);
+		// 							formi.appendChild(input31);
+		// 				document.body.appendChild(formi);
+		// 				inferno(nombre);
+		// 			}
+		// 		}
+		// 		var list = document.getElementsByName("idFormi");
+		// 	    for (var i = 0; i < list.length; i++) {
+		// 			list.remove();
+		// 		}
+		// 	}
+		// }
 		
-		function inferno(nombre) {
-			var datosSerializados = serialize(document.getElementById(nombre));
-			xhr.open("POST", "<?=base_url()?>pelicula/crearPostdb?" + datosSerializados, true);
-			xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-			xhr.send(datosSerializados);
-		}
+		// function inferno(nombre) {
+		// 	var datosSerializados = serialize(document.getElementById(nombre));
+		// 	xhr.open("POST", "<?=base_url()?>pelicula/crearPostdb?" + datosSerializados, true);
+		// 	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		// 	xhr.send(datosSerializados);
+		// }
 	</script>
 
 <script type="text/javascript">

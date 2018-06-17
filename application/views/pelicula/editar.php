@@ -207,37 +207,38 @@ function cancelarRegistro(){
 }
 
 function anadirGenero(value,id) {
-	document.getElementById("idGenerosElegidos").innerHTML += "<option onclick='borrarGenero("+value+","+id+");' selected id='"+id+"' value='"+value+"' selected>"+id+"</option>";
+	document.getElementById("idGenerosElegidos").innerHTML +=
+	 "<option selected id='"+id+"' value='"+value+"' onclick='borrarGenero(this.value,this.id);'>"+id+"</option>";
 	var seleccionado = document.getElementById("idGenerosTodos");
 	seleccionado.remove(seleccionado.selectedIndex);
 }
 
-function borrarGenero(value,id) {
-	document.getElementById("idGenerosTodos").innerHTML += "<option onclick='anadirGenero(this."+value+",this."+id+");' id='"+id+"' value='"+value+"'>"+id+"</option>";
+function borrarGenero(value,id1) {
+	var sel = document.getElementById("idGenerosTodos").innerHTML += "<option onclick='anadirGenero(this.value,this.id);' id='"+id1+"' value='"+value+"'>"+id1+"</option>";
 	var seleccionado = document.getElementById("idGenerosElegidos");
 	seleccionado.remove(seleccionado.selectedIndex);
 }
 
 function anadirRepartoActor(value,id) {
-	document.getElementById("idActoresElegidos").innerHTML += "<option onclick='borrarRepartoActor("+value+","+id+");' selected id='"+id+"' value='"+value+"' selected>"+id+"</option>";
+	document.getElementById("idActoresElegidos").innerHTML += "<option onclick='borrarRepartoActor(this.value,this.id);' selected id='"+id+"' value='"+value+"' selected>"+id+"</option>";
 	var seleccionado = document.getElementById("idActoresTodos");
 	seleccionado.remove(seleccionado.selectedIndex);
 }
 
 function borrarRepartoActor(value,id) {
-	document.getElementById("idActoresTodos").innerHTML += "<option onclick='anadirRepartoActor(this."+value+",this."+id+");' id='"+id+"' value='"+value+"'>"+id+"</option>";
+	document.getElementById("idActoresTodos").innerHTML += "<option onclick='anadirRepartoActor(this.value,this.id);' id='"+id+"' value='"+value+"'>"+id+"</option>";
 	var seleccionado = document.getElementById("idActoresElegidos");
 	seleccionado.remove(seleccionado.selectedIndex);
 }
 
 function anadirRepartoDirector(value,id) {
-	document.getElementById("idDirectoresElegidos").innerHTML += "<option onclick='borrarRepartoDirector("+value+","+id+");' selected id='"+id+"' value='"+value+"' selected>"+id+"</option>";
+	document.getElementById("idDirectoresElegidos").innerHTML += "<option onclick='borrarRepartoDirector(this.value,this.id);' selected id='"+id+"' value='"+value+"' selected>"+id+"</option>";
 	var seleccionado = document.getElementById("idDirectoresTodos");
 	seleccionado.remove(seleccionado.selectedIndex);
 }
 
 function borrarRepartoDirector(value,id) {
-	document.getElementById("idDirectoresTodos").innerHTML += "<option onclick='anadirRepartoDirector(this."+value+",this."+id+");' id='"+id+"' value='"+value+"'>"+id+"</option>";
+	document.getElementById("idDirectoresTodos").innerHTML += "<option onclick='anadirRepartoDirector(this.value,this.id);' id='"+id+"' value='"+value+"'>"+id+"</option>";
 	var seleccionado = document.getElementById("idDirectoresElegidos");
 	seleccionado.remove(seleccionado.selectedIndex);
 }
@@ -289,18 +290,18 @@ function borrarRepartoDirector(value,id) {
 			</div>
 
 			<div class="form-group">
-				<label for="idLenguage">Lenguage:</label><span class="obligatorio">*</span>
+				<label for="idLenguage">Lenguaje:</label><span class="obligatorio">*</span>
 				<input class="form-control" type="text" name="lenguage" id="idLenguage"
 				onkeyup="validarLenguage();" value="<?= $body['peliculas']->original_language ?>"/>
 				<span class="avisos" id="aLenguage">
-					Debes introducir un código de lenguage correcto.
+					Debes introducir un código de lenguaje correcto.
 				</span>
 			</div>
 
 			<div class="row">
                 <div class="form-group col-md-6">
-                    <label for="idDirectoresTodos">Directores todos:</label>
-                    <select class="form-control" id="idDirectoresTodos" multiple size="5">
+                    <label for="idDirectoresTodos">Listado de directores:</label>
+                    <select class="basic-multiple form-control" id="idDirectoresTodos" multiple size="5">
                         <?php foreach($body['repartos'] as $reparto): ?>
                         	<option onclick="anadirRepartoDirector(this.value, this.id);" id="<?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>" value="<?= $reparto->id ?>" >
                         		<?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>
@@ -309,8 +310,8 @@ function borrarRepartoDirector(value,id) {
                     </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="idDirectoresElegidos">Directores elegidos:</label>
-                    <select class="form-control" id="idDirectoresElegidos" name="repartoDirector[]" multiple size="5">
+                    <label for="idDirectoresElegidos">Directores que trabajan en esta película:</label>
+                    <select class="basic-multiple form-control" id="idDirectoresElegidos" name="repartoDirector[]" multiple size="5">
                         <?php foreach($body['repartos'] as $reparto):?>
 							<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
 								<?php if($prof->nombre == 'Director'):?>
@@ -326,7 +327,7 @@ function borrarRepartoDirector(value,id) {
 
 			<div class="row">
                 <div class="form-group col-md-6">
-                    <label for="idActoresTodos">Actores todos:</label>
+                    <label for="idActoresTodos">Listado de actores:</label>
                     <select class="form-control" id="idActoresTodos" multiple size="5">
                         <?php foreach($body['repartos'] as $reparto): ?>
                         	<option onclick="anadirRepartoActor(this.value, this.id);" id="<?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>" value="<?= $reparto->id ?>" >
@@ -336,7 +337,7 @@ function borrarRepartoDirector(value,id) {
                     </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="idActoresElegidos">Actores elegidos:</label>
+                    <label for="idActoresElegidos">Actores que trabajan en esta película:</label>
                     <select class="form-control" id="idActoresElegidos" name="repartoActor[]" multiple size="5">
                         <?php foreach($body['repartos'] as $reparto):?>
 							<?php foreach ($reparto->sharedProfesionesList as $prof): ?>

@@ -16,9 +16,10 @@
 	            <i class="fas fa-film"></i> Gestión de Películas
 	            <small>Add, Edit, Delete</small>
 	        </h1>
-	    </section> 
+	    </section>     
 	    
 	    <section class="content">
+			<?php if  ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")): ?>
 	        <div class="row">
 	            <div class="col-xs-12 text-right">
 	                <div class="form-group">
@@ -27,6 +28,8 @@
 	                </div>
 	            </div>
 	        </div>
+	        <?php endif; ?>
+	        
 	        <?php if(isset($body) && ($body['peliculas'] != null)):?>
 	            <?php if  ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")): ?>
 	            	<div class="table-responsive">

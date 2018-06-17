@@ -12,6 +12,8 @@
 	</section>
 	
 	<section class="content">
+	
+		<?php if  ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")): ?>
 		<div class="row">
             <div class="col-xs-12 text-right">
                 <div class="form-group">
@@ -20,6 +22,8 @@
                 </div>
             </div>
         </div>
+	    <?php endif; ?>
+	    
         <?php if($body['repartos'] != null):?>
             <?php if  ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")): ?>
                 <div class="table-responsive">

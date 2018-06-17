@@ -13,11 +13,8 @@ class Reparto_model extends CI_Model {
 				$reparto -> biografia = $biografia;
 				$reparto -> rutaFoto = base_url().$foto;
 				$reparto -> estado = $estado;
-				$profesiones = explode(",",$cadProfesiones);
-				for ($i=0;$i<count($profesiones);$i++) {
-					$profesion = R::load("profesiones",$profesiones[$i]);
-					$profesion -> sharedGenerosList[] = $reparto;
-					R::store($profesion);
+				foreach ($cadProfesiones as $prof) {
+					$reparto->sharedGenerosList[] = R::load('profesiones',$prof);
 				}
 				$pais = R::load("paises", $id_pais);
 				$pais -> xownRepartosList[] = $reparto;
@@ -37,11 +34,8 @@ class Reparto_model extends CI_Model {
 				$reparto -> biografia = $biografia;
 				$reparto -> rutaFoto = base_url().$foto;
 				$reparto -> estado = $estado;
-				foreach ($profesiones as $p) {
-					$profesion = R::load('profesiones',$p);
-					if ($profesion->id != 0) {
-						$reparto -> sharedProfesionList[] = $profesion;
-					}
+				foreach ($cadProfesiones as $prof) {
+					$reparto->sharedGenerosList[] = R::load('profesiones',$prof);
 				}
 				$pais = R::load("paises", $id_pais);
 				$pais -> xownRepartosList[] = $reparto;

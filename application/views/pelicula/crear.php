@@ -309,7 +309,7 @@ function cancelarRegistro(){
 }
 </script>
 
-<div class="container content-wrapper">
+<div class="content-wrapper">
 	<section class="content-header">
       <h1>
         <i class="fas fa-film"></i>&nbsp;&nbsp;Registrar nueva película
@@ -361,11 +361,11 @@ function cancelarRegistro(){
 			</div>
 
 			<div class="form-group">
-				<label for="idLenguage">Lenguage:</label><span class="obligatorio">*</span>
+				<label for="idLenguage">Lenguaje:</label><span class="obligatorio">*</span>
 				<input class="form-control" type="text" name="lenguage" id="idLenguage"
 				onkeyup="validarLenguage();" placeholder="Lenguage..." />
 				<span class="avisos" id="aLenguage">
-					Debes introducir un código de lenguage correcto.
+					Debes introducir un código de lenguaje correcto(es,en...)
 				</span>
 			</div>
 

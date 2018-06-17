@@ -1,4 +1,8 @@
+<?php if ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")):?>
+<div class="content-wrapper">
+<?php else: ?>
 <div class="container content-wrapper">
+<?php endif;?>
 	<section class="content">
 		<div id="tabs" style="height:500px;">
 			<ul>

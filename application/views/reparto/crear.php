@@ -221,7 +221,7 @@ function cancelarRegistro(){
 </script>
 
 
-<div class="container content-wrapper">
+<div class="content-wrapper">
 	<section class="content-header">
       <h1>
         <i class="fas fa-address-card"></i>

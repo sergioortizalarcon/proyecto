@@ -35,17 +35,9 @@ class Reparto extends CI_Controller {
 		$id_pais = isset($_POST['pais'])?$_POST['pais']:null;
 		$biografia = isset($_POST['biografia'])?$_POST['biografia']:null;
 		$ambos = isset($_POST['ambos'])?$_POST['ambos']:'off';
-		$profesiones = isset($_POST['profesion'])?$_POST['profesion']:null;
+		$profesiones = isset($_POST['profesion'])?$_POST['profesion']:[];
 		$estado = isset($_POST['estado'])?$_POST['estado']:'Inactivo';
 		$fechaNacimiento = str_replace("/", "-", $fechaNacimiento);
-		
-		if ($profesiones!="") {
-			$cadProfesiones ="";
-			for ($i=0;$i<count($profesiones);$i++) {
-				$cadProfesiones = $profesiones[$i].",".$cadProfesiones;
-			}
-			$cadProfesiones = substr($cadProfesiones, 0, -1);
-		}
 
 		if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
 			# verificamos el formato de la imagen
@@ -72,7 +64,7 @@ class Reparto extends CI_Controller {
 		}
 
 		try {
-		    $debug = $this -> reparto_model -> createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $cadProfesiones, $foto, $estado);
+		    $debug = $this -> reparto_model -> createReparto($nombre, $apellido1, $apellido2, $fechaNacimiento, $id_pais, $biografia, $profesiones, $foto, $estado);
 			header ("location:".base_url ()."reparto/crearOk");
 		}
 		catch (Exception $e) {

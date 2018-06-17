@@ -1,4 +1,8 @@
+<?php if ( isset($_SESSION['rol']) && ($_SESSION['rol'] == "administrador")):?>
+<div class="content-wrapper">
+<?php else: ?>
 <div class="container content-wrapper">
+<?php endif;?>
 <section class="content-header">
   <span class="alert alert-info" style="font-size: x-large;">Info!</span>
 </section>

@@ -1,20 +1,21 @@
 <div class="content-wrapper container">
 	<section class="content-header">
-		<h1>
-        	Welcome to CodeIgniter!
-		</h1>
+		
+		<div class="w3-content w3-section slidePeliculas">
+		  <img class="mySlides" src="<?= base_url() ?>assets/img/banner/bannerBatman.jpg">
+		  <img class="mySlides" src="<?= base_url() ?>assets/img/banner/bannerReadyPlayerOne.jpg">
+		  <img class="mySlides" src="<?= base_url() ?>assets/img/banner/bannerSherlock.jpg">
+		</div>
 	</section>
 	<section class="content">
 		<div id="body">
-			<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
-
-			<p>If you would like to edit this page you'll find it located at:</p>
-			<code>application/views/welcome_message.php</code>
-
-			<p>The corresponding controller for this page is found at:</p>
-			<code>application/controllers/Welcome.php</code>
-
-			<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
+			<div class="col-md-12 divPeliculas">
+				<?php foreach($body['peliculas'] as $pel): ?>
+					<div class="col-md-4 imgPrincipal">
+						<img src="<?= $pel->ruta_cartel ?>" id="<?= $pel->id ?>" onclick="mostrarFicha(this.id);">
+					</div>
+				<?php endforeach; ?>
+			</div>
 		</div>
 
 		<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds.
@@ -22,3 +23,32 @@
 		</p>
 	</section>
 </div>
+
+<style>
+	.mySlides {display:none;width:100%;height:300px;}
+	.slidePeliculas {padding-bottom:20px;}
+	.imgPrincipal{width:300px;weight:200px;margin:20px;}
+	.divPeliculas{ padding:50px;margin-left:100px;}
+	.divPeliculas img {border-radius:20px;}
+</style>
+
+<script>
+var myIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";  
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}    
+    x[myIndex-1].style.display = "block";  
+    setTimeout(carousel, 2000); // Change image every 2 seconds
+}
+
+function mostrarFicha(id) {
+	window.location="<?= base_url() ?>pelicula/abrirFicha?id_pelicula="+id;
+}
+</script>

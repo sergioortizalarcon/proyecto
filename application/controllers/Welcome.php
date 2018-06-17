@@ -12,7 +12,7 @@ class Welcome extends CI_Controller {
 		}
 	}
 
-	public function index() {
+	/*public function index() {
 		if ($this->comprobarRol()) {
 			if(isset($_SESSION['vista_user']) && $_SESSION['vista_user']=='permiso'){
 				enmarcar($this, 'welcome_message');
@@ -24,6 +24,32 @@ class Welcome extends CI_Controller {
 			}
 	} else {
 			enmarcar($this, 'welcome_message');
+		}
+	}*/
+	
+	public function index() {
+		
+		if ($this->comprobarRol()) {
+			if(isset($_SESSION['vista_user']) && $_SESSION['vista_user']=='permiso'){
+				$this->load->model("pelicula_model");
+				/*$var = $this->pelicula_model->getUltimas();
+				$datos['peliculas'] = count($var);*/
+				$datos['body']['peliculas'] = $this->pelicula_model->getUltimas();
+				enmarcar($this, 'welcome_message', $datos);
+			} else {
+				$this->load->model("pelicula_model");
+				/*$var = $this->pelicula_model->getUltimas();
+				$datos['peliculas'] = count($var);*/
+				$datos['body']['peliculas'] = $this->pelicula_model->getUltimas();
+				enmarcar($this, 'templates_admin/dashboard',$datos);
+			}
+			
+		} else {
+			$this->load->model("pelicula_model");
+			/*$var = $this->pelicula_model->getUltimas();
+			$datos['peliculas'] = count($var);*/
+			$datos['body']['peliculas'] = $this->pelicula_model->getUltimas();
+			enmarcar($this, 'welcome_message', $datos);
 		}
 	}
 }

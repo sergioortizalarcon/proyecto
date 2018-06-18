@@ -42,59 +42,61 @@
                         </thead>
                         <tbody>
                             <?php foreach ($body['repartos'] as $reparto): ?>
-            					<?php if($reparto -> estado != 'Inactivo'):?>
-            						<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
-            							<td><img src="<?= $reparto->ruta_foto ?>" class="imgFotoListado"></td>
-            							<td><?= $reparto->nombre ?></td>
-            							<td><?= $reparto->apellido1 ?></td>
-            							<td><?= $reparto->fecha_nacimiento ?></td>
-            							<td><?= $reparto->paises['nombre'] ?></td>
-                                        <td>
-                                            <?php foreach ($reparto->sharedProfesionesList as $prof): ?>
-                                                || <?= $prof->nombre ?> ||
-                                            <?php endforeach; ?>
-                                        </td>
-            							<td><?= $reparto->estado ?></td> 
-            							<td>
-            								<form class="listado" id="idFormEdit<?= $reparto->id ?>" action="<?=base_url()?>reparto/editar" method="post">
-            									<input type="hidden" name="id_reparto" value="<?= $reparto -> id?>">
-            									<button class="btn btn-info btn-sm" onclick="function f() {document.getElementById('Editar<?= $reparto->id ?>').submit();}">
-            										<i class="fas fa-edit"></i>
-            									</button>
-            								</form>
-            								<form class="listado" id="idFormRemove<?= $reparto->id ?>" action="<?=base_url()?>reparto/borrarPost" method="post">
-            									<input type="hidden" name="id_reparto" value="<?= $reparto -> id?>">
-            									<input type="hidden" name="v" value="listarTodos">
-            									<button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Borrar<?= $reparto->id ?>').submit();}">
-            										<i class="fas fa-trash"></i>
-            									</button>
-            								</form>
-            							</td>
-            						</tr>
-            					<?php else: ?>
-            						<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
-            							<td><img src="<?= $reparto->ruta_foto ?>" class="imgFotoListado"></td>
-            							<td><?= $reparto->nombre ?></td>
-            							<td><?= $reparto->apellido1 ?></td>
-            							<td><?= $reparto->fecha_nacimiento ?></td>
-            							<td><?= $reparto->paises['nombre'] ?></td>
-            							<td>
-                                            <?php foreach ($reparto->sharedProfesionesList as $prof): ?>
-                                                || <?= $prof->nombre ?> ||
-                                            <?php endforeach; ?>
-                                        </td>
-            							<td><?= $reparto->estado ?></td>
-            							<td>
-            								<form class="listado" id="idFormActive<?= $reparto->id ?>" action="<?=base_url()?>reparto/activarPost" method="post">
-            									<input type="hidden" name="id_reparto" value="<?= $reparto -> id?>">
-            									<input type="hidden" name="v" value="listarTodos">
-            									<button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Activar<?= $reparto->id ?>').submit();}">
-            										<i class="fas fa-plus-circle"></i>
-            									</button>
-            								</form>
-            							</td>
-            						</tr>
-            					<?php endif;?>
+                            	<?php if ($reparto -> nombre != null): ?>
+	            					<?php if($reparto -> estado != 'Inactivo'): ?>
+	            						<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
+	            							<td><img src="<?= $reparto->ruta_foto ?>" class="imgFotoListado"></td>
+	            							<td><?= $reparto->nombre ?></td>
+	            							<td><?= $reparto->apellido1 ?></td>
+	            							<td><?= $reparto->fecha_nacimiento ?></td>
+	            							<td><?= $reparto->paises['nombre'] ?></td>
+	                                        <td>
+	                                            <?php foreach ($reparto->sharedProfesionesList as $prof): ?>
+	                                                || <?= $prof->nombre ?> ||
+	                                            <?php endforeach; ?>
+	                                        </td>
+	            							<td><?= $reparto->estado ?></td> 
+	            							<td>
+	            								<form class="listado" id="idFormEdit<?= $reparto->id ?>" action="<?=base_url()?>reparto/editar" method="post">
+	            									<input type="hidden" name="id_reparto" value="<?= $reparto -> id?>">
+	            									<button class="btn btn-info btn-sm" onclick="function f() {document.getElementById('Editar<?= $reparto->id ?>').submit();}">
+	            										<i class="fas fa-edit"></i>
+	            									</button>
+	            								</form>
+	            								<form class="listado" id="idFormRemove<?= $reparto->id ?>" action="<?=base_url()?>reparto/borrarPost" method="post">
+	            									<input type="hidden" name="id_reparto" value="<?= $reparto -> id?>">
+	            									<input type="hidden" name="v" value="listarTodos">
+	            									<button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Borrar<?= $reparto->id ?>').submit();}">
+	            										<i class="fas fa-trash"></i>
+	            									</button>
+	            								</form>
+	            							</td>
+	            						</tr>
+	            					<?php else: ?>
+	            						<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
+	            							<td><img src="<?= $reparto->ruta_foto ?>" class="imgFotoListado"></td>
+	            							<td><?= $reparto->nombre ?></td>
+	            							<td><?= $reparto->apellido1 ?></td>
+	            							<td><?= $reparto->fecha_nacimiento ?></td>
+	            							<td><?= $reparto->paises['nombre'] ?></td>
+	            							<td>
+	                                            <?php foreach ($reparto->sharedProfesionesList as $prof): ?>
+	                                                || <?= $prof->nombre ?> ||
+	                                            <?php endforeach; ?>
+	                                        </td>
+	            							<td><?= $reparto->estado ?></td>
+	            							<td>
+	            								<form class="listado" id="idFormActive<?= $reparto->id ?>" action="<?=base_url()?>reparto/activarPost" method="post">
+	            									<input type="hidden" name="id_reparto" value="<?= $reparto -> id?>">
+	            									<input type="hidden" name="v" value="listarTodos">
+	            									<button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Activar<?= $reparto->id ?>').submit();}">
+	            										<i class="fas fa-plus-circle"></i>
+	            									</button>
+	            								</form>
+	            							</td>
+	            						</tr>
+	            					<?php endif;?>
+	            				<?php endif; ?>
         					<?php endforeach;?>
         				</tbody>
         				<tfoot>
@@ -126,6 +128,7 @@
         				</thead>
         				<tbody>
         					<?php foreach ($body['repartos'] as $reparto): ?>
+        						<?php if ($reparto -> nombre != null): ?>
             					<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
             						<td><img src="<?= $reparto->ruta_foto ?>" class="imgFotoListado"></td>
             						<td><?= $reparto->nombre ?></td>
@@ -137,6 +140,7 @@
                                             || <?= $prof->nombre ?> ||
                                         <?php endforeach; ?>
                                     </td>
+                                <?php endif; ?>
             				<?php endforeach; ?>
         				</tbody>
         				<tfoot>

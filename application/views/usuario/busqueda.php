@@ -80,7 +80,7 @@ a:link {
       </div>
       </a>
     </li>
-    <?php endforeach ?>
+    <?php endforeach; ?>
     <?php else: ?>
           <h3 style="text-align: center;">NO SE HA ENCONTRADO NINGÚN RESULTADO</h3>
         <?php endif;?>

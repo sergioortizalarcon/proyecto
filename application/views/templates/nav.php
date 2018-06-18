@@ -65,7 +65,6 @@
 		          <select class="form-control" name="indice">
 		          	<option value="peliculas">Peliculas</option>
 		          	<option value="reparto">Reparto</option>
-		          	<option value="genero">Género</option>
 		          </select>
 		        <button type="submit" class="btn btn-default">
 		        	<i class="fas fa-search"></i>

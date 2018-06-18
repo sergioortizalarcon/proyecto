@@ -26,9 +26,9 @@ class Pelicula_model extends CI_Model {
             foreach ($cadRepartosDirector as $director) {
                 $pelicula->sharedRepartosList[] = R::load('repartos',$director);
             }
-            foreach ($cadRepartosActor as $actor) {
-                $pelicula->sharedRepartosList[] = R::load('repartos',$actor);
-            }
+            // foreach ($cadRepartosActor as $actor) {
+            //     $pelicula->sharedRepartosList[] = R::load('repartos',$actor);
+            // }
 
             R::store($pelicula);
 
@@ -62,6 +62,7 @@ class Pelicula_model extends CI_Model {
 	    return R::load("peliculas",$id_pelicula);
 	}
 	
+    //De tmdb
     public function insertPelicula($id,$title,$original_title,$poster_path,$popularity,$release_date,$adult,$original_language,$overview,$genre_ids,$estado) {
         $pelicula = R::findOne('peliculas','id_tmdb = ? and titulo_original = ? and titulo = ?',[$id,$original_title,$title]);
         if ($pelicula == null) {

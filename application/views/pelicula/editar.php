@@ -300,7 +300,7 @@ function borrarRepartoDirector(value,id) {
 
 			<div class="row">
                 <div class="form-group col-md-6">
-                    <label for="idDirectoresTodos">Listado de directores:</label>
+                    <label for="idDirectoresTodos">Reparto:</label>
                     <select class="basic-multiple form-control" id="idDirectoresTodos" multiple size="5">
                         <?php foreach($body['repartos'] as $reparto): ?>
                         	<option onclick="anadirRepartoDirector(this.value, this.id);" id="<?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>" value="<?= $reparto->id ?>" >
@@ -310,13 +310,13 @@ function borrarRepartoDirector(value,id) {
                     </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="idDirectoresElegidos">Directores que trabajan en esta película:</label>
+                    <label for="idDirectoresElegidos">Personas que participan en esta película:</label>
                     <select class="basic-multiple form-control" id="idDirectoresElegidos" name="repartoDirector[]" multiple size="5">
                         <?php foreach($body['repartos'] as $reparto):?>
 							<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
 								<?php if($prof->nombre == 'Director'):?>
-									<option onclick="borrarRepartoDirector(this.value, this.id);" value="<?=$reparto -> id?>" <?=($reparto -> id == "1")?"selected='selected'":" "?>>
-										<?= $reparto->nombre ?> <?= $reparto->apellido1?>
+									<option onclick="borrarRepartoDirector(this.value, this.id);" id="<?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>" value="<?=$reparto -> id?>" <?=($reparto -> id == "1")?"selected='selected'":" "?>>
+										<?= $reparto->nombre ?> <?= $reparto->apellido1?> <?= $reparto->apellido2 ?>
 									</option>
 								<?php endif; ?>
 							<?php endforeach; ?>
@@ -325,7 +325,7 @@ function borrarRepartoDirector(value,id) {
                 </div>
             </div>
 
-			<div class="row">
+			<!-- <div class="row">
                 <div class="form-group col-md-6">
                     <label for="idActoresTodos">Listado de actores:</label>
                     <select class="form-control basic-multiple" id="idActoresTodos" multiple size="5">
@@ -342,15 +342,15 @@ function borrarRepartoDirector(value,id) {
                         <?php foreach($body['repartos'] as $reparto):?>
 							<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
 								<?php if($prof->nombre == 'Actor'):?>
-									<option onclick="borrarRepartoActor(this.value, this.id);"  value="<?=$reparto -> id?>" <?=($reparto -> id == "1")?"selected='selected'":" "?>>
-										<?= $reparto->nombre ?> <?= $reparto->apellido1?>
+									<option onclick="borrarRepartoActor(this.value, this.id);" id="<?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>" value="<?=$reparto -> id?>" <?=($reparto -> id == "1")?"selected='selected'":" "?>>
+										<?= $reparto->nombre ?> <?= $reparto->apellido1?> <?= $reparto->apellido2 ?>
 									</option>
 								<?php endif; ?>
 							<?php endforeach; ?>
                         <?php endforeach; ?>
                     </select>
                 </div>
-            </div>
+            </div> -->
 
 				<!-- <label for="idPopularidad">Popularidad: </label><span class="obligatorio">*</span>
 				<input class="form-control" type="number" id="idPopularidad" name="popularity" value="?= $body['peliculas']->popularidad?>" /> -->

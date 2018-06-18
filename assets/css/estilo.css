@@ -226,8 +226,8 @@ float:left;
 }
 
 .imgPrincipal{
-	width:220px;
-	height:200px;
+	width:200px;
+	height:250px;
 	margin:20px;
 	cursor: pointer;
 }
@@ -239,4 +239,18 @@ float:left;
 
 .divPeliculas img {
 	border-radius:20px;
+}
+
+.datosReparto {
+	float:left;
+	display:inline-grid;
+	height:100%;
+	margin:1% 1% 5% 0;
+}
+
+.datosDentro {
+	float:left;
+	padding-top:20px;
+	height:400px;
+	overflow:auto;
 }

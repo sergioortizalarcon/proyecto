@@ -48,7 +48,7 @@ class Pelicula_model extends CI_Model {
 	}
 	
 	public function getUltimas() {
-		return R::findAll("peliculas", "order by id desc limit 9");
+		return R::findAll("peliculas", "order by id desc limit 12");
 	}
 
 	public function getAll() {

@@ -202,21 +202,24 @@ float:left;
 .mySlides {
 	display:none;
 	width:100%;
-	height:300px;
+	height:100%;
 }
 
 .slidePeliculas {
 	padding-bottom:20px;
+	max-width:1200px;
+	height:300px;
 }
 
 .imgPrincipal{
-	width:300px;
-	weight:200px;
+	width:220px;
+	height:200px;
 	margin:20px;
 }
 
-.divPeliculas{
-	margin-left:80px;
+.imgPrincipal img {
+	width:100%;
+	height:100%;
 }
 
 .divPeliculas img {

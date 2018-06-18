@@ -46,7 +46,9 @@ class Pelicula extends CI_Controller {
 		$fechaLanzamiento = str_replace("/","-",$fechaLanzamiento);
 		
 		$tituloSinEspacios = str_replace(" ","",$titulo);
+		$tituloSinEspacios = str_replace(":","",$tituloSinEspacios);
 		$tituloOriginalSinEspacios = str_replace(" ","",$tituloOriginal);
+		$tituloOriginalSinEspacios = str_replace(":","",$tituloOriginalSinEspacios);
 		
 		
 		if (is_uploaded_file($_FILES['fotoPoster']['tmp_name'])) {
@@ -66,11 +68,13 @@ class Pelicula extends CI_Controller {
 				if ($_FILES["fotoPoster"]["size"] < 25000000) {
 					copy($_FILES["fotoPoster"]['tmp_name'], "assets/img/poster/".$tituloSinEspacios."_".$fechaLanzamiento."_".$lenguage.".".$extension);
 					$foto = "assets/img/poster/".$tituloSinEspacios."_".$fechaLanzamiento."_".$lenguage.".".$extension;
+					echo $foto;
 				}
 			}
 		}else {
 		    $foto = "assets/img/poster/default.png";
 		}
+		
 		try {
 		    $this->pelicula_model->createPelicula ( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $repartosDirector, $repartosActor, $generos, $sinopsis, $foto, $estado);
 			header ("location:".base_url()."pelicula/crearOk");
@@ -184,6 +188,11 @@ class Pelicula extends CI_Controller {
             }
             $cadRepartos = substr($cadRepartos, 0, -1);
         }
+        
+        $tituloSinEspacios = str_replace(" ","",$titulo);
+        $tituloSinEspacios = str_replace(":","",$tituloSinEspacios);
+        $tituloOriginalSinEspacios = str_replace(" ","",$tituloOriginal);
+        $tituloOriginalSinEspacios = str_replace(":","",$tituloOriginalSinEspacios);
        
         if (is_uploaded_file($_FILES['fotoPoster']['tmp_name'])) {
         	# verificamos el formato de la imagen
@@ -201,6 +210,7 @@ class Pelicula extends CI_Controller {
         		if ($_FILES["fotoPoster"]["size"] < 25000000) {
         			copy($_FILES["fotoPoster"]['tmp_name'], "assets/img/poster/".$tituloSinEspacios."_".$fechaLanzamiento."_".$lenguage.".".$extension);
         			$foto = "assets/img/poster/".$tituloSinEspacios."_".$fechaLanzamiento."_".$lenguage.".".$extension;
+        			echo $foto;
         		}
         	}
         }else {
@@ -208,7 +218,7 @@ class Pelicula extends CI_Controller {
             // $foto = str_replace("http://localhost/proyecto/","",$foto);
         }
         
-        try {
+        /*try {
         	$this->pelicula_model->editarPelicula ( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartos, $cadGeneros, $sinopsis, $foto, $id_pelicula, $estado);
             header ("location:".base_url()."pelicula/editarOk");
         }
@@ -218,7 +228,7 @@ class Pelicula extends CI_Controller {
             $datos['mensaje']['link']['listar'] = "pelicula";
             $datos['mensaje']['link']['crear'] = "pelicula";
             enmarcar($this,"pelicula/mensaje",$datos);
-        }
+        }*/
     }
     
     public function editarOK() {

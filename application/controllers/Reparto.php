@@ -55,8 +55,8 @@ class Reparto extends CI_Controller {
 
 				if ($_FILES["foto"]["size"] < 25000000) {
 					//Tamaño y extensión correctos, guardar imagen en carpeta
-					copy($_FILES["foto"]['tmp_name'], "assets/img/foto/".$nombre."_".$apellido1."_".$fechaCambio.".".$extension);
-					$foto = "assets/img/foto/".$nombre."_".$apellido1."_".$fechaCambio.".".$extension;
+					copy($_FILES["foto"]['tmp_name'], "assets/img/foto/".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension);
+					$foto = "assets/img/foto/".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
 				}
 			}
 		} else {
@@ -121,7 +121,7 @@ class Reparto extends CI_Controller {
 		$id_reparto = $_POST ['id_reparto'];
 		$profesiones = isset($_POST['profesion'])?$_POST['profesion']:null;
 		$estado = $_POST['estado'];
-		$fechaNacimiento = str_replace("/","-",$fechaNacimiento);
+		//$fechaNacimiento = str_replace("/","-",$fechaNacimiento);
 		
 		if ($profesiones!="") {
 			$cadProfesiones ="";
@@ -131,12 +131,12 @@ class Reparto extends CI_Controller {
 			$cadProfesiones = substr($cadProfesiones, 0, -1);
 		}
 		
-		if (is_uploaded_file($_FILES['fotoPoster']['tmp_name'])) {
+		if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
 			# verificamos el formato de la imagen
-			if ($_FILES["fotoPoster"]["type"]=="image/jpeg" || $_FILES["fotoPoster"]["type"]=="image/pjpeg" || $_FILES["fotoPoster"]["type"]=="image/png"){
+			if ($_FILES["foto"]["type"]=="image/jpeg" || $_FILES["foto"]["type"]=="image/pjpeg" || $_FILES["foto"]["type"]=="image/png"){
 				
 				# Cogemos la anchura y altura de la imagen
-				$info=getimagesize($_FILES["fotoPoster"]["tmp_name"]);
+				$info=getimagesize($_FILES["foto"]["tmp_name"]);
 				
 				$extension = 0;
 				if ($info[2] == 2) {
@@ -144,9 +144,10 @@ class Reparto extends CI_Controller {
 				} else if ($info[2] == 3) {
 					$extension = "png";
 				}
-				if ($_FILES["fotoPoster"]["size"] < 25000000) {
-					copy($_FILES["fotoPoster"]['tmp_name'], "assets/img/poster/".$tituloSinEspacios."_".$fechaLanzamiento."_".$lenguage.".".$extension);
-					$foto = "assets/img/poster/".$tituloSinEspacios."_".$fechaLanzamiento."_".$lenguage.".".$extension;
+				if ($_FILES["foto"]["size"] < 25000000) {
+					copy($_FILES["foto"]['tmp_name'], "assets/img/foto/".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension);
+					$foto = "assets/img/foto/".$nombre."_".$apellido1."_".$fechaNacimiento.".".$extension;
+					echo $foto;
 				}
 			}
 		}else {

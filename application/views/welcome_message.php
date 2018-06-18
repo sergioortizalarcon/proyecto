@@ -1,7 +1,6 @@
 <div class="content-wrapper container">
 	<section class="content-header">
-		
-		<div class="w3-content w3-section slidePeliculas">
+		<div class="w3-content w3-section slidePeliculas col-md-12">
 		  <img class="mySlides" src="<?= base_url() ?>assets/img/banner/bannerBatman.jpg">
 		  <img class="mySlides" src="<?= base_url() ?>assets/img/banner/bannerReadyPlayerOne.jpg">
 		  <img class="mySlides" src="<?= base_url() ?>assets/img/banner/bannerSherlock.jpg">
@@ -13,7 +12,7 @@
 		<div id="body">
 			<div class="col-md-12 divPeliculas">
 				<?php foreach($body['peliculas'] as $pel): ?>
-					<div class="col-md-4 imgPrincipal">
+					<div class="col-md-3 imgPrincipal">
 						<img src="<?= $pel->ruta_cartel ?>" id="<?= $pel->id ?>" onclick="mostrarFicha(this.id);">
 					</div>
 				<?php endforeach; ?>

@@ -9,6 +9,7 @@
 		</div>
 	</section>
 	<section class="content">
+		<h2>Últimas películas</h2>
 		<div id="body">
 			<div class="col-md-12 divPeliculas">
 				<?php foreach($body['peliculas'] as $pel): ?>
@@ -38,7 +39,7 @@ function carousel() {
     myIndex++;
     if (myIndex > x.length) {myIndex = 1}    
     x[myIndex-1].style.display = "block";  
-    setTimeout(carousel, 2000); // Change image every 2 seconds
+    setTimeout(carousel, 3000); // Change image every 2 seconds
 }
 
 function mostrarFicha(id) {

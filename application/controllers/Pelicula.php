@@ -218,7 +218,7 @@ class Pelicula extends CI_Controller {
             // $foto = str_replace("http://localhost/proyecto/","",$foto);
         }
         
-        /*try {
+        try {
         	$this->pelicula_model->editarPelicula ( $titulo, $tituloOriginal, $adulto, $fechaLanzamiento, $popularity, $lenguage, $cadRepartos, $cadGeneros, $sinopsis, $foto, $id_pelicula, $estado);
             header ("location:".base_url()."pelicula/editarOk");
         }
@@ -228,7 +228,7 @@ class Pelicula extends CI_Controller {
             $datos['mensaje']['link']['listar'] = "pelicula";
             $datos['mensaje']['link']['crear'] = "pelicula";
             enmarcar($this,"pelicula/mensaje",$datos);
-        }*/
+        }
     }
     
     public function editarOK() {

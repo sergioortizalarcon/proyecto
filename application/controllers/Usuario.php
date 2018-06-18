@@ -341,8 +341,10 @@ class Usuario extends CI_Controller {
 		$res="uno";
 		if ($indice =="peliculas") {
 			$res = $this->pelicula_model->buscarTitulo($valor);
+			$datos["peliculas"]=$res;
 		} else if ($indice =="reparto") {
 			$res = $this->reparto_model->buscarRep($valor);
+			$datos["repartos"]=$res;
 		} else if($indice =="genero"){
 			$res = $this->genero_model->buscarGen($valor);
 				
@@ -355,7 +357,7 @@ class Usuario extends CI_Controller {
 			// }
 
 		}
-		$datos["peliculas"]=$res;
+		
 		enmarcar($this,"usuario/busqueda",$datos);
 	}
 	

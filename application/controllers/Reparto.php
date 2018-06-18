@@ -202,7 +202,7 @@ class Reparto extends CI_Controller {
 	    $this->load->model ( 'reparto_model' );
 		$this->load->model('profesion_model');
 		$this->load->model('pelicula_model');
-		$id_reparto = $_GET ['id_reparto'];
+		$id_reparto = $_REQUEST ['id_reparto'];
 		$datos ['body']['repartos'] = $this->reparto_model->getRepartoPorId ( $id_reparto );
 		$datos['body']['profesiones'] = $this->profesion_model->getAllActive();
 		$datos['body']['peliculas'] = $this->pelicula_model->getAllActive();

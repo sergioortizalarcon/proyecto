@@ -1,6 +1,7 @@
 <script>
-function verInfo(){
-  var a = document.getElementById('id_pelicula').value;
+function verInfo(idd){
+  console.log(idd);
+  var a = document.getElementById(idd).value;
   if (a !='') {  
   document.getElementById('idFormulario').submit();
   }
@@ -45,18 +46,37 @@ a:link {
 </style>
 <div id="content" class="defaults container">
   <ul id="itemContainer" style="position: relative;left: 4%;">
-  <?php if($peliculas != 0): ?>
-    <?php foreach ($peliculas as $value): ?>
+    <?php if(isset($peliculas) &&($peliculas!= 0)): ?>
+      <?php foreach ($peliculas as $value): ?>
+      <li> 
+        <a href="javascript:void(0);" onclick="verInfo('id_pelicula');">
+        <div class="contenido">
+          <form id="idFormulario" name="idFormulario" action="<?=base_url()?>pelicula/abrirFicha" mehotd="GET">
+        <input type="hidden" name="id_pelicula" id="id_pelicula" value="<?=$value['id']?>">
+        </form>
+          <img src="<?=$value['ruta_cartel']?>"/>
+          <div style="text-align: center;">
+              <div class="titlefondo">
+                <span style="font-weight: 600;color: black;"><?=$value['titulo_original']?></span>
+              </div>
+          </div>
+        </div>
+        </a>
+      </li>
+      <?php endforeach ?>
+    <?php elseif(isset($repartos) && $repartos!=0):?>
+      <?php print_r($repartos) ?>
+       <?php foreach ($repartos as $value): ?>
     <li> 
-      <a href="javascript:void(0);" onclick="verInfo();">
+      <a href="javascript:void(0);" onclick="verInfo('id_reparto');">
       <div class="contenido">
-        <form id="idFormulario" name="idFormulario" action="<?=base_url()?>pelicula/abrirFicha" mehotd="GET">
-      <input type="hidden" name="id_pelicula" id="id_pelicula" value="<?=$value['id']?>">
+        <form id="idFormulario" name="idFormulario" action="<?=base_url()?>reparto/abrirFicha" mehotd="GET">
+      <input type="hidden" name="id_reparto" id="id_reparto" value="<?=$value['id']?>">
       </form>
-        <img src="<?=$value['ruta_cartel']?>"/>
+        <img src="<?=$value['ruta_foto']?>"/>
         <div style="text-align: center;">
             <div class="titlefondo">
-              <span style="font-weight: 600;color: black;"><?=$value['titulo_original']?></span>
+              <span style="font-weight: 600;color: black;"><?=$value['nombre']?> <?=$value['apellido1']?> <?=$value['apellido2']?></span>
             </div>
         </div>
       </div>
@@ -64,7 +84,6 @@ a:link {
     </li>
     <?php endforeach ?>
     <?php else: ?>
-      <?php print_r($peliculas) ?>
           <h3 style="text-align: center;">NO SE HA ENCONTRADO NINGÚN RESULTADO</h3>
         <?php endif;?>
   </ul>

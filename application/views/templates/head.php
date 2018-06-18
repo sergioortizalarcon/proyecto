@@ -15,9 +15,9 @@
 <link rel="stylesheet" href="<?=base_url()?>assets/css/fa-brands.min.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/css/vistaImagenActor.css">
 <link rel="stylesheet" href="<?=base_url()?>assets/css/bootstrap.css">
-
+<link rel="stylesheet" href="<?=base_url()?>assets/css/jPages.css">
 <script type="text/javascript" src="<?=base_url()?>assets/js/jquery-3.1.1.js"></script>
-
+<script type="text/javascript" src="<?=base_url()?>assets/js/jPages.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/cripto.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/bootstrap.js"></script>

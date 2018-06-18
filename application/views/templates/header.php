@@ -17,5 +17,5 @@
 </div>
 </div> -->
 <header>
-	<img class="form-group" alt="logo" height="200px" width="100%" style="padding:1% 1% 0% 1%;" src="<?= base_url() ?>assets/img/images/banner.jpg">
+	<img alt="logo" height="200px" width="100%"  src="<?= base_url() ?>assets/img/images/banner.jpg">
 </header>

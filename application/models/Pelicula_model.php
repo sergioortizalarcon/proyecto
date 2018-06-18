@@ -129,5 +129,11 @@ class Pelicula_model extends CI_Model {
 	    $pelicula->estado = 'Activo';
 	    R::store ( $pelicula );
 	}
+
+
+    public function buscarTitulo($valor){
+        $v = R::find("peliculas","titulo LIKE ?",["%".$valor."%"]);
+        return $v;
+    }
 }
 ?>

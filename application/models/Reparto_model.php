@@ -102,5 +102,10 @@ class Reparto_model extends CI_Model {
 	    $reparto->estado = 'Activo';
 	    R::store ( $reparto );
 	}
+
+	public function buscarRep($valor){
+        $v = R::find("repartos","nombre like ?",["%".$valor."%"]);
+        return $v;
+    }
 }
 ?>

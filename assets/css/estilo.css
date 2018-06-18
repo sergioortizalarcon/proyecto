@@ -37,15 +37,29 @@ td,th{text-align: center;}
 form.listado {
 	padding:1%
 }
-/*agrega fondo al body*/
+/*agrega fondo al body
 body.custom-background {
-	/*fondo de color por si falla la imagen*/
 	background-color:#F0EFEF;
 	background-image: url("../img/fondoPagina.jpg");
 	background-position: center top;
 	background-size: 100%;
 	background-repeat: repeat-y;
 	background-attachment:scroll;
+}*/
+body.custom-background {
+    background-color: #F0EFEF;
+    background-image: url(../img/images/fondo3.png);
+    background-position: center;
+    background-size: 120%;
+    background-blend-mode: screen;
+    background-attachment: fixed;
+}
+
+div.titlefondo{
+	height: 61px;
+	background-image: url(../img/images/tf2.png);
+	background-size: cover;
+	border-top: 3px solid darkblue;
 }
 
 li{
@@ -215,6 +229,7 @@ float:left;
 	width:220px;
 	height:200px;
 	margin:20px;
+	cursor: pointer;
 }
 
 .imgPrincipal img {

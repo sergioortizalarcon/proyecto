@@ -330,6 +330,34 @@ class Usuario extends CI_Controller {
     //Return json formatted rating data
     echo json_encode($ratingRow);
 	}
+
+
+	public function buscador(){
+		$this->load->model("pelicula_model");
+		$this->load->model("reparto_model");
+		$this->load->model("genero_model");
+		$valor = isset($_POST["valor"])?$_POST["valor"]:null;//busqueda
+		$indice= isset($_POST["indice"])?$_POST["indice"]:null;//bean
+		$res="uno";
+		if ($indice =="peliculas") {
+			$res = $this->pelicula_model->buscarTitulo($valor);
+		} else if ($indice =="reparto") {
+			$res = $this->reparto_model->buscarRep($valor);
+		} else if($indice =="genero"){
+			$res = $this->genero_model->buscarGen($valor);
+				
+				// foreach ($search->sharedGenerosList as $gen){
+				// 	if ($gen == $valor) {
+				// 		array_push($res,$search);
+				// 	}
+				// }
+				// print_r($res);
+			// }
+
+		}
+		$datos["peliculas"]=$res;
+		enmarcar($this,"usuario/busqueda",$datos);
+	}
 	
 }
 

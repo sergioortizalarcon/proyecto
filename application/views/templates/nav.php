@@ -1,4 +1,4 @@
-<nav class="container navbar navbar-inverse">
+<nav class="navbar navbar-inverse" style="border-radius:initial!important">
 	<div class="navbar-header">
 		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navegacionPagina">
 			<span class="sr-only">desplegar/ocultar</span>
@@ -57,9 +57,22 @@
                     </ul>
                </li>
 			<?php endif;?>
-
-			
 		</ul>	
+		<ul class="nav navbar-nav navbar-right">
+			<form class="navbar-form navbar-left" action="<?=base_url()?>usuario/buscador" method="POST" role="search">
+		        <div class="form-group">
+		          <input type="text" class="form-control" name="valor" placeholder="Search">
+		          <select class="form-control" name="indice">
+		          	<option value="peliculas">Peliculas</option>
+		          	<option value="reparto">Peparto</option>
+		          	<option value="genero">Género</option>
+		          </select>
+		        <button type="submit" class="btn btn-default">
+		        	<i class="fas fa-search"></i>
+		        </button>
+		        </div>
+	      </form>
+		</ul>
 	</div>
 </nav>
 

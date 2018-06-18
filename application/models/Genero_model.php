@@ -62,6 +62,11 @@ class Genero_model extends CI_Model {
 		$genero->estado = 'Activo';
 		R::store ( $genero );
 	}
+
+
+	public function buscarGen($valor) {
+		$v = R::findAll("peliculas",$valor);
+	}
 }
 
 ?>

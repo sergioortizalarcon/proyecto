@@ -85,40 +85,15 @@
     					</div>
     				</div>
 				</div>
-				<div class="col-md-9">
-    				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
+				<div class="col-md-9 datosDentro">
+    				<div class="col-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
     					<h4>Reparto de la película:</h4>
-    					<?php foreach($body['repartos'] as $reparto): ?>
-    						<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
-								<!-- ?php if($prof->nombre == 'Director'):?> -->
-									<div class="col-md-6" id="<?= $reparto->id ?>" onclick="mostrarFicha(this.id);">
-    									<div class="row-md-3" style="display:inline">
-	    									<img src="<?= $reparto->ruta_foto ?>" style="width:100px; height:150px;" />
-	    								</div>
-		    							<div class="row-md-8" style="display:inline">
-				    						<?= $reparto->nombre ?> 
-				    						<?= $reparto->apellido1 ?>
-		    							</div>
-    								</div>
-								<!-- ?php endif; ?> -->
-							<?php endforeach; ?>
-    					<?php endforeach; ?>
-    					<!-- <h4>Actores:</h4>
-    					<?php foreach($body['repartos'] as $reparto): ?>
-    						<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
-								<?php if($prof->nombre == 'Actor'):?>
-									<div class="col-md-6" id="<?= $reparto->id ?>" onclick="mostrarFicha(this.id);">
-    									<div class="row-md-3" style="display:inline">
-	    									<img src="<?= $reparto->ruta_foto ?>" style="width:100px; height:150px;" />
-	    								</div>
-		    							<div class="row-md-8" style="display:inline">
-				    						<?= $reparto->nombre ?>
-				    						<?= $reparto->apellido1 ?>
-		    							</div>
-    								</div>
-								<?php endif; ?>
-							<?php endforeach; ?>
-    					<?php endforeach; ?> -->
+	    				<?php foreach($body['peliculas']->sharedRepartosList as $dir): ?>
+    						<div class="col-md-6" id="<?= $dir->id ?>" onclick="mostrarFicha(this.id);">
+	                        	<img src="<?= $dir->ruta_foto ?>" class="imgPerfilFichaIndividual" />
+	                        	<?= $dir->nombre ?> <?= $dir->apellido1 ?> <?= $dir->apellido2 ?>
+                        	</div>
+	                    <?php endforeach; ?>
     				</div>
 				</div>
 			</div>
@@ -223,12 +198,14 @@
                 <div class="posicion-div-info">
                     <div>
                         <div>
-                        <h4>Reparto de la película:</h4>
-                        <?php foreach($body['peliculas']->sharedRepartosList as $dir): ?>
-                        <img src="<?= $dir->ruta_foto ?>" class="imgPerfilFichaIndividual" />
-                        <?= $dir->nombre ?> <?= $dir->apellido1 ?> <?= $dir->apellido2 ?>
-                            <?php echo "<br>" ?>
-                        <?php endforeach; ?>
+	                        <h4>Reparto de la película:</h4>
+	                        <?php foreach($body['peliculas']->sharedRepartosList as $dir): ?>
+	                        <div id="<?= $dir->id ?> onclick="mostrarFicha(this.id);">
+		                        <img src="<?= $dir->ruta_foto ?>" class="imgPerfilFichaIndividual" />
+		                        <?= $dir->nombre ?> <?= $dir->apellido1 ?> <?= $dir->apellido2 ?>
+		                            <?php echo "<br>" ?>
+		                        <?php endforeach; ?>
+	                        </div>
                         </div>
 
                     <!-- <h4>Actores:</h4>
@@ -292,24 +269,12 @@
 
 
 <script type="text/javascript">
-	function insertarFotos() {
-		//Abrir un popup que permita insertar una foto, que la valide, si es correcta la pone mediante
-		//AJAX en la pestaña de galería, si es incorrecta, muestra un mensaje y te permite poner otra,
-		//hasta que no se pulse n el botón cerrar, no se cierra el popup
-		/*alert("insertarFotos");
-		document.getElementById("galeriaFotografica").innerHTML += "Prueba";*/
-		var opciones = "width=120,height=300,scrollbars=NO";
-
-		window.open("","nombreventa na", opciones);
-	}
 
 
 	function mostrarFicha(id) {
 		window.location="<?= base_url() ?>reparto/abrirFicha?id_reparto="+id;
 	}
 	
-</script>
-<script>
     $( document ).ready(function() {
     $("#rating_star").codexworld_rating_widget({
         starLength: '5',

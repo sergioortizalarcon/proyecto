@@ -173,17 +173,18 @@ function validar() {
 		for (i=0;i<cantidad; i++) {
 			seleccionados[i].selected = true;
 		}
-		var seleccionados = document.forms["idFormulario"].idActoresElegidos;
+		/*var seleccionados = document.forms["idFormulario"].idActoresElegidos;
 		var cantidad = seleccionados.length;
 		for (i=0;i<cantidad; i++) {
 			seleccionados[i].selected = true;
-		}
+			alert("hola Actores");
+		}*/
 		var seleccionados = document.forms["idFormulario"].idGenerosElegidos;
 		var cantidad = seleccionados.length;
 		for (i=0;i<cantidad; i++) {
 			seleccionados[i].selected = true;
 		}
-		if (idFormulario.idDirectoresElegidos.value == "" || idFormulario.idActoresElegidos.value == "") {
+		if (idFormulario.idDirectoresElegidos.value == "") {
 			if (confirm("¿Quieres guardar el formulario sin actores o directores?(Se pueden añadir después)")) {
 				idFormulario.submit();
 			}

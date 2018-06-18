@@ -189,6 +189,7 @@ i.perfil-arrow,span.formato-datos {
 .imgPerfilFichaIndividual {
 	 height:200px !important;
 	 width:150px !important;
+	 margin:20px;
 }
 
 .imgFotoListado {

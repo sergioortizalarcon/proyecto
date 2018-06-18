@@ -37,7 +37,7 @@
 			<?php else: ?>
 			<li class="dropdown" style="background: none">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw"></i> <?=$_COOKIE["usuario"]?> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="<?=base_url()?>usuario/perfilUsuario"><i class="fas fa-user"></i>Perfil de usuario</a>

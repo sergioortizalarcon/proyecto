@@ -18,7 +18,6 @@ function verInfo(idd){
   </script>
 <style>
 div.contenido{
-	border:3px solid black;
 	height: 345px;
 	width: 200px;
   background: white;
@@ -51,7 +50,7 @@ a:link {
       <li> 
         <a href="javascript:void(0);" onclick="verInfo('id_pelicula');">
         <div class="contenido">
-          <form id="idFormulario" name="idFormulario" action="<?=base_url()?>pelicula/abrirFicha" mehotd="GET">
+          <form id="idFormulario" name="idFormulario" action="<?=base_url()?>pelicula/abrirFicha" method="GET">
         <input type="hidden" name="id_pelicula" id="id_pelicula" value="<?=$value['id']?>">
         </form>
           <img src="<?=$value['ruta_cartel']?>"/>
@@ -65,7 +64,6 @@ a:link {
       </li>
       <?php endforeach ?>
     <?php elseif(isset($repartos) && $repartos!=0):?>
-      <?php print_r($repartos) ?>
        <?php foreach ($repartos as $value): ?>
     <li> 
       <a href="javascript:void(0);" onclick="verInfo('id_reparto');">

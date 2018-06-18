@@ -158,10 +158,14 @@ class Administrador_model extends CI_Model {
 
 
 
-	public function borrar($user_id,$pwd) {
+	public function borrar($user_id,$pwd,$cambioDatos) {
 		$us = R::load ('usuarios',$user_id);
 		if ($us->id != 0) {
+			$mailAnt = $us->email;
+			$aliasAnt = $us->alias;
 			// R::trash ( $us );
+			$us->alias=$aliasAnt+$cambioDatos;
+			$us->email=$aliasAnt+$cambioDatos;
 			$us->desactivado_user=1;
 			R::store($us);
 			return true;

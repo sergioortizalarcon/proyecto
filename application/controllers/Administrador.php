@@ -265,15 +265,15 @@ class Administrador extends CI_Controller {
 //Para usar esto hay q instalar phpmailer ( con composer en la raiz del proyecto)
 	public function enviarCorreoAUsuario($correo,$alias_user,$token,$user_id) {
 		$url = base_url().'login/cambiar_pass?user_id='.$user_id.'&token='.$token;
-		$the_subject = "Petici&oacute;n de recuperaci&oacute;n de contrase&ntilde;a.";
+		$the_subject = "Petición de recuperación de contraseña.";
 		$email_user = "usuariodosfilms@gmail.com";
 		$email_word = "usuarioDosFilm";
 		$cuerpoMensaje ="<br/>Fecha y Hora: ".date("d-m-Y h:i:s")."<br/><br/>";
 		$cuerpoMensaje .= "<strong>Hola ". $alias_user.",</strong><br/><br/>";
 		$cuerpoMensaje .= 'Recientemente se solicit&oacute; la recuperaci&oacute;n de la  contrase&ntilde;a asociada a la cuenta de correo: '.$correo;
-		$cuerpoMensaje .="Para cambiar su contrase&ntilde;a debes visitar la siguiente direcci&oacute;n: ".$url."<br/><br/>";
-		$cuerpoMensaje .="Si no ha pedido un reinicio de contrase&ntilde;a le pedimos encarecidamente que ignore este mensaje. <br/>Gracias, <br/><br/>";
-		$cuerpoMensaje .="Att. El Staff de WatchFilms<br/><br/>";
+		$cuerpoMensaje .="<br/>Para cambiar su contrase&ntilde;a debes visitar la siguiente direcci&oacute;n: ".$url."<br/><br/>";
+		$cuerpoMensaje .="Si no ha pedido un reinicio de contrase&ntilde;a le pedimos encarecidamente que ignore este mensaje. <br/><br/>Gracias, <br/>";
+		$cuerpoMensaje .="Att. Staff de WatchFilms<br/><br/>";
 		$cuerpoMensaje .='<a href="'.base_url().'">WatchFilms</a>';
 
 		$mail = new PHPMailer(true); 
@@ -423,14 +423,22 @@ class Administrador extends CI_Controller {
 
 		/*		BLOQUEO DE CUENTA			*/	
 
+
+
+
 	public function cancelarCuenta(){
+		$longitud = 4;
+		$cambioDatos = substr( md5(microtime()), 1, $longitud);
+
+
+
 		$this->load->model("administrador_model");
 		$user_id= isset($_POST["idUsu"])?$_POST["idUsu"]:null;
 		$pwd = isset($_POST["hash_pwd"])?$_POST["hash_pwd"]:null;
 		$existe = $this->administrador_model->getByID($user_id);
 		if ($existe['id']!=0) {
 			try{
-				$this->administrador_model->borrar($existe['id'],$pwd);
+				$this->administrador_model->borrar($existe['id'],$pwd,$cambioDatos);
 				header("location:".base_url()."login/loginOut");
 			} catch (Exception $e) {
 				header("location:".base_url()."administrador/borradoError");

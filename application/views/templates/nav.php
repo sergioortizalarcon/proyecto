@@ -6,7 +6,7 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="<?=base_url()?>">CRUD</a>
+		<a class="navbar-brand" href="<?=base_url()?>">WatchFilms</a>
 	</div>
 	<div class="collapse navbar-collapse" id="navegacionPagina">
 		<ul class="nav navbar-nav" style="padding:7px;">

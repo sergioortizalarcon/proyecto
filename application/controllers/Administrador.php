@@ -265,16 +265,16 @@ class Administrador extends CI_Controller {
 //Para usar esto hay q instalar phpmailer ( con composer en la raiz del proyecto)
 	public function enviarCorreoAUsuario($correo,$alias_user,$token,$user_id) {
 		$url = base_url().'login/cambiar_pass?user_id='.$user_id.'&token='.$token;
-		$the_subject = "Petición de recuperación de  contrase&ntilde;a.";
+		$the_subject = "Petici&oacute;n de recuperaci&oacute;n de contrase&ntilde;a.";
 		$email_user = "usuariodosfilms@gmail.com";
 		$email_word = "usuarioDosFilm";
-		$cuerpoMensaje = "<strong>Hola ". $alias_user.",</strong><br/><br/>";
-		$cuerpoMensaje .= 'Recientemente se solicitó la recuperación de la  contrase&ntilde;a asociada a la cuenta de correo: '.$correo;
-		$cuerpoMensaje .="<br/>Fecha y Hora: ".date("d-m-Y h:i:s")."<br/>";
-		$cuerpoMensaje .="Para cambian tu contrase&ntilde;a debes visitar la siguiente direcci&oacute;n: ".$url."<br/><br/>";
-		$cuerpoMensaje .="Le recomendamos encarecidamente que actualice la  contrase&ntilde; después de iniciar sesión correctamente. <br/>Gracias, <br/><br/>";
-		$cuerpoMensaje .="Att. Staff de blablabla<br/><br/>";
-		$cuerpoMensaje .='<a href="#">WhatviewNow</a>';
+		$cuerpoMensaje ="<br/>Fecha y Hora: ".date("d-m-Y h:i:s")."<br/><br/>";
+		$cuerpoMensaje .= "<strong>Hola ". $alias_user.",</strong><br/><br/>";
+		$cuerpoMensaje .= 'Recientemente se solicit&oacute; la recuperaci&oacute;n de la  contrase&ntilde;a asociada a la cuenta de correo: '.$correo;
+		$cuerpoMensaje .="Para cambiar su contrase&ntilde;a debes visitar la siguiente direcci&oacute;n: ".$url."<br/><br/>";
+		$cuerpoMensaje .="Si no ha pedido un reinicio de contrase&ntilde;a le pedimos encarecidamente que ignore este mensaje. <br/>Gracias, <br/><br/>";
+		$cuerpoMensaje .="Att. El Staff de WatchFilms<br/><br/>";
+		$cuerpoMensaje .='<a href="'.base_url().'">WatchFilms</a>';
 
 		$mail = new PHPMailer(true); 
 		try {

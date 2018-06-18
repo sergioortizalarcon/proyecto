@@ -43,6 +43,7 @@
 					</thead>
 					<tbody>
         					<?php foreach ($body['paises'] as $pais): ?>
+		                        <?php if($pais -> nombre != null): ?>
             					<?php if($pais-> activo != 'inactivo'):?>
             						<tr id="<?= $pais->id ?>">
 							<td><?= $pais->id?></td>
@@ -88,6 +89,7 @@
 							</td>
 						</tr>
             					<?php endif;?>
+            					<?php endif; ?>
         					<?php endforeach;?>
         				</tbody>
 					<tfoot>

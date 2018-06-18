@@ -129,18 +129,20 @@
         				<tbody>
         					<?php foreach ($body['repartos'] as $reparto): ?>
         						<?php if ($reparto -> nombre != null): ?>
-            					<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
-            						<td><img src="<?= $reparto->ruta_foto ?>" class="imgFotoListado"></td>
-            						<td><?= $reparto->nombre ?></td>
-            						<td><?= $reparto->apellido1 ?></td>
-            						<td><?= $reparto->fecha_nacimiento ?></td>
-            						<td><?= $reparto->paises['nombre'] ?></td>
-            						<td>
-                                        <?php foreach ($reparto->sharedProfesionesList as $prof): ?>
-                                            || <?= $prof->nombre ?> ||
-                                        <?php endforeach; ?>
-                                    </td>
-                                <?php endif; ?>
+	        						<?php if ($reparto -> estado != 'Inactivo'): ?>
+	            					<tr id="<?= $reparto->id ?>"onclick="mostrarFicha(this.id);" >
+	            						<td><img src="<?= $reparto->ruta_foto ?>" class="imgFotoListado"></td>
+	            						<td><?= $reparto->nombre ?></td>
+	            						<td><?= $reparto->apellido1 ?></td>
+	            						<td><?= $reparto->fecha_nacimiento ?></td>
+	            						<td><?= $reparto->paises['nombre'] ?></td>
+	            						<td>
+	                                        <?php foreach ($reparto->sharedProfesionesList as $prof): ?>
+	                                            || <?= $prof->nombre ?> ||
+	                                        <?php endforeach; ?>
+	                                    </td>
+	                                <?php endif; ?>
+	                            <?php endif; ?>
             				<?php endforeach; ?>
         				</tbody>
         				<tfoot>

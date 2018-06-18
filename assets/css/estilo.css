@@ -255,3 +255,8 @@ float:left;
 	height:400px;
 	overflow:auto;
 }
+
+hr {
+	align:center;
+	border:1px solid #D3D3D3;
+}

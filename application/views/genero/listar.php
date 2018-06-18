@@ -32,6 +32,7 @@
 					</thead>
 					<tbody>
         					<?php foreach ($body['generos'] as $genero): ?>
+		                        <?php if($genero -> nombre != null): ?>
             					<?php if($genero-> estado != 'Inactivo'):?>
             						<tr id="<?= $genero->id ?>">
 							<td><?= $genero->nombre ?></td>
@@ -75,6 +76,7 @@
 							</td>
 						</tr>
             					<?php endif;?>
+            					<?php endif; ?>
         					<?php endforeach;?>
         				</tbody>
 					<tfoot>

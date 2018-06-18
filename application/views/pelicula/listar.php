@@ -50,55 +50,57 @@
 	                    	</thead>
 	                    	<tbody>
 		                        <?php foreach ($body['peliculas'] as $pelicula): ?>
-	    	                        <?php if($pelicula -> estado != 'Inactivo'):?>
-	        	                        <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
-	            	                        <td><?=$pelicula->id?></td>
-	                	                    <td><img src="<?= $pelicula->ruta_cartel ?>" class="imgFotoListado"></td>
-	                        	            <td><?= $pelicula->titulo ?></td>
-	                                    	<td><?= $pelicula->titulo_original ?></td>
-	                                    	<td><?= $pelicula->fecha_lanzamiento ?></td>
-	                                    	<td><?= $pelicula->popularidad ?></td>
-	                                    	<td><?= $pelicula->adulto ?></td>
-	                                        <td><?= $pelicula->original_language ?></td>
-	                                        <td><?= $pelicula->estado ?>
-	                                        <td>
-	                                            <form class="listado" id="idFormEdit<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/editar" method="post">
-	                                                <input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>">
-	                                                <button class="btn btn-info btn-sm" onclick="function f() {document.getElementById('Borrar<?= $pelicula->id ?>').submit();}">
-	                                                <i class="fas fa-edit"></i>
-	                                                </button>
-	                                            </form>
-	                                            <form class="listado" id="idFormRemove<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/borrarPost" method="post">
-	                                                <input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>">
-	                                                <input type="hidden" name="v" value="listarTodos">
-	                                                <button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Editar<?= $pelicula->id ?>').submit();}">
-	                                                <i class="fas fa-trash"></i>
-	                                                </button>
-	                                            </form>
-	                                        </td>
-	                                    </tr>
-	                                <?php else: ?>
-	                                    <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
-	                                        <td><?=$pelicula->id?></td>
-	                	                    <td><img src="<?= $pelicula->ruta_cartel ?>" class="imgFotoListado"></td>
-	                        	            <td><?= $pelicula->titulo ?></td>
-	                                    	<td><?= $pelicula->titulo_original ?></td>
-	                                    	<td><?= $pelicula->fecha_lanzamiento ?></td>
-	                                    	<td><?= $pelicula->popularidad ?></td>
-	                                    	<td><?= $pelicula->adulto ?></td>
-	                                        <td><?= $pelicula->original_language ?></td>
-	                                        <td><?= $pelicula->estado ?>
-	                                        <td>
-	                                            <form class="listado" id="idFormActive<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/activarPost" method="post">
-	                                                <input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>" height="80" width="70">
-	                                                <input type="hidden" name="v" value="listarTodos">
-	                                                <button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Activar<?= $pelicula->id ?>').submit();}">
-	                                                    <i class="fas fa-plus-circle"></i>
-	                                                </button>
-	                                            </form>
-	                                        </td>
-	                                    </tr>
-	                                <?php endif;?>
+		                        	<?php if($pelicula -> titulo != null): ?>
+		    	                        <?php if($pelicula -> estado != 'Inactivo'):?>
+		        	                        <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
+		            	                        <td><?=$pelicula->id?></td>
+		                	                    <td><img src="<?= $pelicula->ruta_cartel ?>" class="imgFotoListado"></td>
+		                        	            <td><?= $pelicula->titulo ?></td>
+		                                    	<td><?= $pelicula->titulo_original ?></td>
+		                                    	<td><?= $pelicula->fecha_lanzamiento ?></td>
+		                                    	<td><?= $pelicula->popularidad ?></td>
+		                                    	<td><?= $pelicula->adulto ?></td>
+		                                        <td><?= $pelicula->original_language ?></td>
+		                                        <td><?= $pelicula->estado ?>
+		                                        <td>
+		                                            <form class="listado" id="idFormEdit<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/editar" method="post">
+		                                                <input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>">
+		                                                <button class="btn btn-info btn-sm" onclick="function f() {document.getElementById('Borrar<?= $pelicula->id ?>').submit();}">
+		                                                <i class="fas fa-edit"></i>
+		                                                </button>
+		                                            </form>
+		                                            <form class="listado" id="idFormRemove<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/borrarPost" method="post">
+		                                                <input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>">
+		                                                <input type="hidden" name="v" value="listarTodos">
+		                                                <button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Editar<?= $pelicula->id ?>').submit();}">
+		                                                <i class="fas fa-trash"></i>
+		                                                </button>
+		                                            </form>
+		                                        </td>
+		                                    </tr>
+		                                <?php else: ?>
+		                                    <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
+		                                        <td><?=$pelicula->id?></td>
+		                	                    <td><img src="<?= $pelicula->ruta_cartel ?>" class="imgFotoListado"></td>
+		                        	            <td><?= $pelicula->titulo ?></td>
+		                                    	<td><?= $pelicula->titulo_original ?></td>
+		                                    	<td><?= $pelicula->fecha_lanzamiento ?></td>
+		                                    	<td><?= $pelicula->popularidad ?></td>
+		                                    	<td><?= $pelicula->adulto ?></td>
+		                                        <td><?= $pelicula->original_language ?></td>
+		                                        <td><?= $pelicula->estado ?>
+		                                        <td>
+		                                            <form class="listado" id="idFormActive<?= $pelicula->id ?>" action="<?=base_url()?>pelicula/activarPost" method="post">
+		                                                <input type="hidden" name="id_pelicula" value="<?= $pelicula -> id?>" height="80" width="70">
+		                                                <input type="hidden" name="v" value="listarTodos">
+		                                                <button class="btn btn-warning btn-sm" onclick="function f() {document.getElementById('Activar<?= $pelicula->id ?>').submit();}">
+		                                                    <i class="fas fa-plus-circle"></i>
+		                                                </button>
+		                                            </form>
+		                                        </td>
+		                                    </tr>
+		                                <?php endif;?>
+		                            <?php endif; ?>
 	                            <?php endforeach;?>
 	                        </tbody>
 	                        <tfoot>
@@ -133,16 +135,18 @@
 	                    	</thead>
 	                    	<tbody>
 	                    		<?php foreach ($body['peliculas'] as $pelicula): ?>
-	    	                        <?php if($pelicula -> estado != 'Inactivo'):?>
-	        	                        <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
-	                	                    <td><img src="<?= $pelicula->ruta_cartel ?>" class="imgFotoListado"></td>
-	                                    	<td><?= $pelicula->titulo ?></td>
-	                                    	<td><?= $pelicula->titulo_original ?></td>
-	                                    	<td><?= $pelicula->fecha_lanzamiento ?></td>
-	                                    	<td><?= $pelicula->popularidad ?></td>
-	                                    	<td><?= $pelicula->adulto ?></td>
-	                                        <td><?= $pelicula->original_language ?></td>
-	                                    </tr>
+		                        	<?php if($pelicula -> titulo != null): ?>
+		    	                        <?php if($pelicula -> estado != 'Inactivo'):?>
+		        	                        <tr id="<?= $pelicula->id ?>"onclick="mostrarFicha(this.id);" >
+		                	                    <td><img src="<?= $pelicula->ruta_cartel ?>" class="imgFotoListado"></td>
+		                                    	<td><?= $pelicula->titulo ?></td>
+		                                    	<td><?= $pelicula->titulo_original ?></td>
+		                                    	<td><?= $pelicula->fecha_lanzamiento ?></td>
+		                                    	<td><?= $pelicula->popularidad ?></td>
+		                                    	<td><?= $pelicula->adulto ?></td>
+		                                        <td><?= $pelicula->original_language ?></td>
+		                                    </tr>
+		                                <?php endif; ?>
 	                                <?php endif; ?>
 	                            <?php endforeach; ?>
 	                        </tbody>

@@ -10,6 +10,7 @@
 	</section>
 	<section class="content">
 		<h2>Últimas películas</h2>
+		<hr/>
 		<div id="body">
 			<div class="col-md-12 divPeliculas">
 					<?php foreach($body['peliculas'] as $pel): ?>

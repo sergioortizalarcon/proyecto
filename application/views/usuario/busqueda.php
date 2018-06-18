@@ -45,6 +45,7 @@ a:link {
 </style>
 <div id="content" class="defaults container">
   <ul id="itemContainer" style="position: relative;left: 4%;">
+  <?php if($peliculas != 0): ?>
     <?php foreach ($peliculas as $value): ?>
     <li> 
       <a href="javascript:void(0);" onclick="verInfo();">
@@ -62,6 +63,10 @@ a:link {
       </a>
     </li>
     <?php endforeach ?>
+    <?php else: ?>
+      <?php print_r($peliculas) ?>
+          <h3 style="text-align: center;">NO SE HA ENCONTRADO NINGÚN RESULTADO</h3>
+        <?php endif;?>
   </ul>
   <!-- navigation holder -->
   <div class="holder">

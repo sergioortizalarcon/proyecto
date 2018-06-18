@@ -87,10 +87,10 @@
 				</div>
 				<div class="col-md-9">
     				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
-    					<h4>Director:</h4>
+    					<h4>Reparto de la película:</h4>
     					<?php foreach($body['repartos'] as $reparto): ?>
     						<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
-								<?php if($prof->nombre == 'Director'):?>
+								<!-- ?php if($prof->nombre == 'Director'):?> -->
 									<div class="col-md-6" id="<?= $reparto->id ?>" onclick="mostrarFicha(this.id);">
     									<div class="row-md-3" style="display:inline">
 	    									<img src="<?= $reparto->ruta_foto ?>" style="width:100px; height:150px;" />
@@ -100,10 +100,10 @@
 				    						<?= $reparto->apellido1 ?>
 		    							</div>
     								</div>
-								<?php endif; ?>
+								<!-- ?php endif; ?> -->
 							<?php endforeach; ?>
     					<?php endforeach; ?>
-    					<h4>Actores:</h4>
+    					<!-- <h4>Actores:</h4>
     					<?php foreach($body['repartos'] as $reparto): ?>
     						<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
 								<?php if($prof->nombre == 'Actor'):?>
@@ -118,7 +118,7 @@
     								</div>
 								<?php endif; ?>
 							<?php endforeach; ?>
-    					<?php endforeach; ?>
+    					<?php endforeach; ?> -->
     				</div>
 				</div>
 			</div>
@@ -223,7 +223,7 @@
                 <div class="posicion-div-info">
                     <div>
                         <div>
-                        <h4>Director:</h4>
+                        <h4>Reparto de la película:</h4>
                         <?php foreach($body['peliculas']->sharedRepartosList as $dir): ?>
                         <img src="<?= $dir->ruta_foto ?>" class="imgPerfilFichaIndividual" />
                         <?= $dir->nombre ?> <?= $dir->apellido1 ?> <?= $dir->apellido2 ?>
@@ -231,12 +231,12 @@
                         <?php endforeach; ?>
                         </div>
 
-                        <h4>Actores:</h4>
+                    <!-- <h4>Actores:</h4>
                         <?php foreach($body['peliculas']->sharedActoresList as $reparto): ?>
                             <img src="<?= $reparto->ruta_foto ?>" class="imgPerfilFichaIndividual" />
                                 <?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>
                             <?php echo "<br>" ?>
-                        <?php endforeach; ?>
+                        <?php endforeach; ?> -->
                     </div>
                 </div>
             </div>

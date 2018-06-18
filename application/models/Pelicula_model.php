@@ -26,9 +26,8 @@ class Pelicula_model extends CI_Model {
             foreach ($cadRepartosDirector as $director) {
                 $pelicula->sharedRepartosList[] = R::load('repartos',$director);
             }
-             R::store($pelicula);
             foreach ($cadRepartosActor as $actor) {
-                $pelicula->sharedActoresList[] = R::load('repartos',$actor);
+                $pelicula->sharedRepartosList[] = R::load('repartos',$actor);
             }
 
             R::store($pelicula);

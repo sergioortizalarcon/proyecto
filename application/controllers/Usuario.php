@@ -346,12 +346,12 @@ class Usuario extends CI_Controller {
 		} else if($indice =="genero"){
 			$res = $this->genero_model->buscarGen($valor);
 				
-				// foreach ($search->sharedGenerosList as $gen){
-				// 	if ($gen == $valor) {
-				// 		array_push($res,$search);
-				// 	}
-				// }
-				// print_r($res);
+			// 	foreach ($search->sharedGenerosList as $gen){
+			// 		if ($gen == $valor) {
+			// 			array_push($res,$search);
+			// 		}
+			// 	}
+			// 	print_r($res);
 			// }
 
 		}

@@ -65,7 +65,7 @@ class Genero_model extends CI_Model {
 
 
 	public function buscarGen($valor) {
-		$v = R::findAll("peliculas",$valor);
+		return $v = R::findAll("peliculas");
 	}
 }
 

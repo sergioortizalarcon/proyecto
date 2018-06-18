@@ -32,22 +32,37 @@ class Welcome extends CI_Controller {
 		if ($this->comprobarRol()) {
 			if(isset($_SESSION['vista_user']) && $_SESSION['vista_user']=='permiso'){
 				$this->load->model("pelicula_model");
-				/*$var = $this->pelicula_model->getUltimas();
-				$datos['peliculas'] = count($var);*/
 				$datos['body']['peliculas'] = $this->pelicula_model->getUltimas();
 				enmarcar($this, 'welcome_message', $datos);
 			} else {
 				$this->load->model("pelicula_model");
-				/*$var = $this->pelicula_model->getUltimas();
-				$datos['peliculas'] = count($var);*/
-				$datos['body']['peliculas'] = $this->pelicula_model->getUltimas();
+				$this->load->model("reparto_model");
+				$this->load->model("administrador_model");
+				$this->load->model("pais_model");
+				$this->load->model("genero_model");
+				$this->load->model("idioma_model");
+				$this->load->model("profesion_model");
+
+				$var = $this->pelicula_model->getUltimas();
+				$treparto = $this->reparto_model->getAll();
+				$tuser = $this->administrador_model->getAll();
+				$tpais = $this->pais_model->getTodos();
+				$tgenero = $this->genero_model->getTodos();
+				$tidioma = $this->idioma_model->getTodos();
+				$tprofesion = $this->profesion_model->getAll();
+
+				$datos['peliculas'] = count($var);
+				$datos['reparto'] = count($treparto);
+				$datos['usuarios'] = count($tuser);
+				$datos['pais'] = count($tpais);
+				$datos['genero'] = count($tgenero);
+				$datos['idioma'] = count($tidioma);
+				$datos['profesion'] = count($tprofesion);
 				enmarcar($this, 'templates_admin/dashboard',$datos);
 			}
 			
 		} else {
 			$this->load->model("pelicula_model");
-			/*$var = $this->pelicula_model->getUltimas();
-			$datos['peliculas'] = count($var);*/
 			$datos['body']['peliculas'] = $this->pelicula_model->getUltimas();
 			enmarcar($this, 'welcome_message', $datos);
 		}

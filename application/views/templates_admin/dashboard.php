@@ -19,7 +19,7 @@
               <div class="small-box bg-aqua">
                 <div class="inner">
                 <a class="dash_info" href="<?=base_url()?>Pelicula/crear">
-                  <h3><?php print_r($peliculas) ?></h3>
+                  <h3><?php echo isset($peliculas)?$peliculas:"0" ?></h3>
                   <p>Agregar nueva película</p>
                 <div class="icon">
                   <i class="fas fa-film"></i>
@@ -35,7 +35,7 @@
               <div class="small-box bg-orange">
                 <div class="inner">
                   <a class="dash_info" href="<?=base_url()?>Reparto/crear">
-                  <h3>53<sup style="font-size: 20px">%</sup></h3>
+                  <h3><?php echo isset($reparto)?$reparto:"0"?></h3>
                   <p>Agregar a reparto</p>
                   <div class="icon">
                     <i class="fas fa-address-card"></i>
@@ -50,7 +50,7 @@
               <div class="small-box bg-red">
                 <div class="inner">
                 <a class="dash_info" href="<?=base_url()?>Administrador/listar">
-                  <h3>44</h3>
+                  <h3><?php echo isset($usuarios)?$usuarios:"0"?></h3>
                   <p>Gestionar usuarios</p>
                 <div class="icon">
                   <i class="fa fa-users"></i>
@@ -65,7 +65,7 @@
               <div class="small-box bg-green">
                 <div class="inner">
                   <a class="dash_info" href="<?=base_url()?>Pelicula/crear">
-                  <h3>65</h3>
+                  <h3><?php echo isset($profesion)?$profesion:"0"?></h3>
                   <p>Agregar nueva profesión</p>
                 <div class="icon">
                   <i class="fas fa-people-carry"></i>
@@ -81,7 +81,7 @@
               <div class="small-box bg-blue">
                 <div class="inner">
                   <a class="dash_info" href="<?=base_url()?>Pais/crear">
-                  <h3>65</h3>
+                  <h3><?php echo isset($pais)?$pais:"0" ?></h3>
                   <p>Agregar nuevo país</p>
                   <div class="icon">
                     <i class="fas fa-globe"></i>
@@ -97,7 +97,7 @@
               <div class="small-box bg-gray">
                 <div class="inner">
                   <a class="dash_info" href="<?=base_url()?>Genero/crear">
-                  <h3>65</h3>
+                  <h3><?php echo isset($genero)?$genero:"0" ?></h3>
                   <p>Agregar nuevo género</p>
                   <div class="icon">
                     <i class="far fa-folder-open"></i>
@@ -112,7 +112,7 @@
               <div class="small-box bg-yellow">
                 <div class="inner">
                   <a class="dash_info" href="<?= base_url()?>Idioma/crear">
-                  <h3>65</h3>
+                  <h3><?php echo isset($idioma)?$idioma:"0" ?></h3>
                   <p>Agregar nuevo idioma</p>
                 <div class="icon">
                   <i class="fas fa-language"></i>

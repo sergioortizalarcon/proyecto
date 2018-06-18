@@ -12,11 +12,11 @@
 		<h2>Últimas películas</h2>
 		<div id="body">
 			<div class="col-md-12 divPeliculas">
-				<?php foreach($body['peliculas'] as $pel): ?>
-					<div class="col-md-4 imgPrincipal">
-						<img src="<?= $pel->ruta_cartel ?>" id="<?= $pel->id ?>" onclick="mostrarFicha(this.id);">
-					</div>
-				<?php endforeach; ?>
+					<?php foreach($body['peliculas'] as $pel): ?>
+						<div class="col-md-4 imgPrincipal">
+							<img src="<?= $pel->ruta_cartel ?>" id="<?= $pel->id ?>" onclick="mostrarFicha(this.id);">
+						</div>
+					<?php endforeach; ?>
 			</div>
 		</div>
 	</section>

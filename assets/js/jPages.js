@@ -15,12 +15,12 @@
       defaults = {
         containerID: "",
         first: false,
-        previous: "← previous",
-        next: "next →",
+        previous: "← Anterior",
+        next: "Siguiente →",
         last: false,
         links: "numeric", // blank || title
         startPage: 1,
-        perPage: 10,
+        perPage: 12,
         midRange: 5,
         startRange: 1,
         endRange: 1,

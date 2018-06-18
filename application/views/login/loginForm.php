@@ -75,13 +75,13 @@ function validarPass() {
 				Usuario o contraseña incorrecto 
 			</span>
 				<form id="idFormulario" name="idFormulario" class="form-horizontal" action="<?=base_url()?>login/loginPost" method="post">
-				    <div class="form-group">
+				    <div class="form-group padding-left-1em">
 				    <label for="nUsuario">Nombre:</label><br>
-				   		<input type="text" class="form-control" id="nUsuario" placeholder="nombre" name="nUsuario" data-toogle="tooltip" data-placement="left" title="Nick o correo electrónico"/>
+				   		<input type="text" class="form-control width70" id="nUsuario" placeholder="nombre" name="nUsuario" data-toogle="tooltip" data-placement="left" title="Nick o correo electrónico"/>
 				    </div>
-					<div class="form-group">
-						<label for="pwd">contraseña:</label><br>
-					    <input type="password" class="form-control" id="pwd" placeholder="contraseña" data-toogle="tooltip" data-placement="left" title="contraseña"/>
+					<div class="form-group padding-left-1em">
+						<label for="pwd">Contraseña:</label><br>
+					    <input type="password" class="form-control width70" id="pwd" placeholder="contraseña" data-toogle="tooltip" data-placement="left" title="contraseña"/>
 					    <input type="hidden" class="form-control" name="hash_passwrd"/>
 					</div>
 					<a href="<?=base_url()?>usuario/recuperarPwd" id="edit-forgotten">¿Has olvidado tu contraseña?</a>
@@ -96,9 +96,6 @@ function validarPass() {
 					</div>
 		  		</form>
 		</div>
-<script>
-	document.getElementById("pwd").value="23aA$@$!%*?&";
-	</script>
 	<div class="col-md-5" id="crear">
 		<div class="form-group">
 			<h2>Unete a WatchFilms!</h2>

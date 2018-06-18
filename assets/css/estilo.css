@@ -115,6 +115,9 @@ li{
 	width: 50%;
 	margin: 0 auto;
 }
+.width70{
+	width: 70%;
+}
 .float-left{
 	float: left;
 }
@@ -197,7 +200,9 @@ i.perfil-arrow,span.formato-datos {
 	 height:100px;
 	 width:90;
 }
-
+.padding-left-1em{
+	padding-left: 1em;
+}
 .divPestanas {
 	 height:500px;
 	 overflow:scroll;

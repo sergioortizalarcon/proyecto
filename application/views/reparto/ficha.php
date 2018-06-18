@@ -14,7 +14,7 @@
 		
 			<div id="perfil"> 
 				<div class="col-md-3" style="padding-top:20px;">
-    				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
+    				<div class="rowd datosReparto">
     					<div class="col-md-12">
     						<img src="<?= $body['repartos']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
     					</div>
@@ -24,7 +24,7 @@
     				</div>
 				</div>
 				<div class="col-md-9" style="float:left;padding-top:20px;">
-    				<div class="row-md-12" style="height: 100%;margin: 1% 1% 5% 0;">
+    				<div class="row-md-12 datosDentro">
     					<h5>
 							<?php foreach($body['profesiones'] as $profesion): ?>
     							<?= $profesion->nombre ?> ||
@@ -38,7 +38,7 @@
 			
 			<div id="bio">
 				<div class="col-md-3" style="padding-top:20px;">
-    				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
+    				<div class="rowd datosReparto">
     					<div class="col-md-12" >
     						<img src="<?= $body['repartos']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
     					</div>
@@ -47,8 +47,8 @@
     					</div>
     				</div>
 				</div>
-    			<div class="col-md-9" style="float:left;padding-top:20px;">
-    				<div class="row-md-12" style=";height: 100%;margin: 1% 1% 5% 0;">
+    			<div class="col-md-9 datosDentro">
+    				<div class="row-md-12">
     					<?= $body['repartos']->biografia ?>
     				</div>
 				</div>
@@ -56,7 +56,7 @@
 			
 			<div id="filmog">
 				<div class="col-md-3" style="padding-top:20px;">
-					<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
+					<div class="rowd datosReparto">
     					<div class="col-md-12">
     						<img src="<?= $body['repartos']->rutaFoto ?>" class="imgPerfilFichaIndividual" />
     					</div>
@@ -65,15 +65,15 @@
     					</div>
     				</div>
 				</div>
-				<div class="col-md-9">
-    				<div class="col-md-6" style="height: 100%;margin: 1% 1% 5% 0;">
-    					<h4>Películas en las que participa:</h4>
+				<div class="col-md-9 datosDentro">
+    				<div class="col-md-12">
+    					<h3>Películas en las que participa:</h3>
     					<?php foreach ($body['repartos']->sharedPeliculasList as $pel): ?>
-							<div class="row-md-12" id="<?= $pel->id ?>"onclick="mostrarFicha(this.id);" >
+							<div class="col-md-6" id="<?= $pel->id ?>"onclick="mostrarFicha(this.id);" style="margin-top:40px;">
     							<div class="row-md-3" style="display:inline">
 	    							<img src="<?= $pel->ruta_cartel ?>" style="width:100px; height:150px;" />
 	    						</div>
-		    					<div class="row-md-8" style="display:inline">
+		    					<div class="col-md-8" style="display:inline">
 				    				<?= $pel->titulo ?> 
 		    					</div>
     						</div>
@@ -84,7 +84,7 @@
 			
 			<div id="galeria">
 				<div class="col-md-3" style="padding-top:20px;">
-    				<div class="rowd" style="float: left;display: inline-grid;height: 100%;margin: 1% 1% 5% 0;">
+    				<div class="rowd datosReparto">
     					<div class="col-md-12">
     						<img src="<?= $body['repartos']->rutaFoto ?>" style="width:250px; height:300px;" class="imgPerfilFichaIndividual" />
     					</div>

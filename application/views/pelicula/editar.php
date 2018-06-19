@@ -313,14 +313,10 @@ function borrarRepartoDirector(value,id) {
                 <div class="form-group col-md-6">
                     <label for="idDirectoresElegidos">Personas que participan en esta película:</label>
                     <select class="basic-multiple form-control" id="idDirectoresElegidos" name="repartoDirector[]" multiple size="5">
-                        <?php foreach($body['repartos'] as $reparto):?>
-							<?php foreach ($reparto->sharedProfesionesList as $prof): ?>
-								<?php if($prof->nombre == 'Director'):?>
-									<option onclick="borrarRepartoDirector(this.value, this.id);" id="<?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>" value="<?=$reparto -> id?>" <?=($reparto -> id == "1")?"selected='selected'":" "?>>
-										<?= $reparto->nombre ?> <?= $reparto->apellido1?> <?= $reparto->apellido2 ?>
-									</option>
-								<?php endif; ?>
-							<?php endforeach; ?>
+                         <?php foreach($body['peliculas']->sharedRepartosList as $reparto):?>
+							<option onclick="borrarRepartoDirector(this.value, this.id);" id="<?= $reparto->nombre ?> <?= $reparto->apellido1 ?> <?= $reparto->apellido2 ?>" value="<?=$reparto -> id?>">
+								<?= $reparto->nombre ?> <?= $reparto->apellido1?> <?= $reparto->apellido2 ?>
+							</option>
                         <?php endforeach; ?>
                     </select>
                 </div>
